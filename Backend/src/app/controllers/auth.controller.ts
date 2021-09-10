@@ -1,11 +1,13 @@
 import { Request, Response } from "express";
 import validator from "validator";
-import jwt from "jsonwebtoken";
+
 import { AppError } from "../../config/error/appError";
+import { encryptPassword, verifyPassword } from "../libraries/encryptation.library";
+
 import * as postulantesService from "../services/postulantes.service";
 import * as usuariosService from "../services/usuarios.service";
 import * as empresasService from "../services/empresas.service";
-import { Postulante } from "../models/postulante.model";
+import { createToken } from "../libraries/tokens.library";
 
 /* ---------------------------------------< AUTH CONTROLLER >--------------------------------------- */
 
@@ -16,11 +18,13 @@ export const registrarse = async (request: Request, response: Response): Promise
 
     if (await usuariosService.getByEmail(request.body.email)) throw AppError.badRequestError("Ya existe un usuario con el email ingresado");
 
+    request.body.contrasenia = await encryptPassword(request.body.contrasenia);
+
     const result = await postulantesService.post(request.body);
 
-    const token = jwt.sign({ usuario: result }, process.env.SECRET as string, { expiresIn: "1d" });
+    const { token, exp } = createToken(result.email);
 
-    return response.status(201).json(token);
+    return response.status(201).json({ token, exp });
 }
 
 export const iniciarSesion = async (request: Request, response: Response): Promise<Response> => {
@@ -31,11 +35,11 @@ export const iniciarSesion = async (request: Request, response: Response): Promi
 
     if (!usuario) throw AppError.badRequestError("No existe un usuario con el email ingresado");
 
-    console.log(usuario);
+    if (!await verifyPassword(request.body.contrasenia, usuario.contrasenia)) throw AppError.badRequestError("La contraseña ingresada es incorrecta");
 
-    const token = jwt.sign({ usuario }, process.env.SECRET as string, { expiresIn: "1d" });
+    const { token, exp } = createToken(usuario.email);
 
-    return response.status(201).json(token);
+    return response.status(200).json({ token, exp });
 }
 
 export const solicitarEmpresa = async (request: Request, response: Response): Promise<Response> => {
@@ -45,9 +49,11 @@ export const solicitarEmpresa = async (request: Request, response: Response): Pr
 
     if (await usuariosService.getByEmail(request.body.email)) throw AppError.badRequestError("Ya existe un usuario con el email ingresado");
 
+    request.body.contrasenia = await encryptPassword(request.body.contrasenia);
+
     const result = await empresasService.post(request.body);
 
-    const token = jwt.sign({ usuario: result }, process.env.SECRET as string, { expiresIn: "1d" });
+    const { token, exp } = createToken(result.email);
 
-    return response.status(201).json(token);
+    return response.status(201).json({ token, exp });
 }

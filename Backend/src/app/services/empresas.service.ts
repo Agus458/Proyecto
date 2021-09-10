@@ -21,7 +21,7 @@ export const getByEmail = async (email: string): Promise<Empresa | undefined> =>
 };
 
 // Almacena en el sistema una nueva empresa.
-export const post = async (data: DeepPartial<Empresa>[]): Promise<Empresa[]> => {
+export const post = async (data: DeepPartial<Empresa>): Promise<Empresa> => {
     const nuevaEmpresa = getRepository(Empresa).create(data);
     
     return await getRepository(Empresa).save(nuevaEmpresa);

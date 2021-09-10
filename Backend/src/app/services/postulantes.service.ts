@@ -21,7 +21,7 @@ export const getByEmail = async (email: string): Promise<Postulante | undefined>
 };
 
 // Almacenados en el sistema un nuevo postulante.
-export const post = async (data: DeepPartial<Postulante>[]): Promise<Postulante[]> => {
+export const post = async (data: DeepPartial<Postulante>): Promise<Postulante> => {
     const nuevoPostulante = getRepository(Postulante).create(data);
 
     return await getRepository(Postulante).save(nuevoPostulante);
