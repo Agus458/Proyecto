@@ -7,7 +7,9 @@ import { iniciarSesion, registrarse, solicitarEmpresa } from "../controllers/aut
 const router = Router();
 
 router.post("/registrarse", handleRequest(registrarse));
+
 router.post("/iniciarSesion", handleRequest(iniciarSesion));
+
 router.post("/solicitarEmpresa", handleRequest(solicitarEmpresa));
 
 export default router;

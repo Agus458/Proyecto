@@ -1,11 +1,7 @@
 import { BaseEntity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { EstadoUsuario } from "./enums";
 
 /* ---------------------------------------< USUARIO MODEL >--------------------------------------- */
-
-export enum EstadoUsuario {
-    ACTIVO,
-    INACTIVO
-}
 
 export abstract class Usuario extends BaseEntity {
 

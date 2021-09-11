@@ -1,6 +1,6 @@
 import { Administrador } from "../models/administrador.model";
 import { Empresa } from "../models/empresa.model";
-import { Postulante } from "../models/postulante.model";
+import { Postulante } from "../models/postulante/postulante.model";
 import * as postulantesService from "./postulantes.service";
 import * as empresasService from "./empresas.service";
 
