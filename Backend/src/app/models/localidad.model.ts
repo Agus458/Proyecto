@@ -1,6 +1,6 @@
 import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Departamento } from "./departamento";
-import { Domicilio } from "./domicilio";
+import { Departamento } from "./departamento.model";
+import { Domicilio } from "./domicilio.model";
 
 @Entity("localidades")
 export class Localidad extends BaseEntity {

@@ -8,6 +8,7 @@ import * as postulantesService from "../services/postulantes.service";
 import * as usuariosService from "../services/usuarios.service";
 import * as empresasService from "../services/empresas.service";
 import { createToken } from "../libraries/tokens.library";
+import { EstadoUsuario } from "../models/enums";
 
 /* ---------------------------------------< AUTH CONTROLLER >--------------------------------------- */
 
@@ -19,6 +20,7 @@ export const registrarse = async (request: Request, response: Response): Promise
     if (await usuariosService.getByEmail(request.body.email)) throw AppError.badRequestError("Ya existe un usuario con el email ingresado");
 
     request.body.contrasenia = await encryptPassword(request.body.contrasenia);
+    request.body.estado = EstadoUsuario.ACTIVO;
 
     const result = await postulantesService.post(request.body);
 

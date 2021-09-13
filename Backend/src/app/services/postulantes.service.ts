@@ -1,5 +1,5 @@
 import { DeepPartial, getRepository } from "typeorm";
-import { Postulante } from "../models/postulante/postulante.model";
+import { Postulante } from "../models/postulante.model";
 
 /* ---------------------------------------< POSTULANTES SERVICE >--------------------------------------- */
 

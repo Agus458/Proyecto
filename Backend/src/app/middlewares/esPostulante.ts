@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { Postulante } from "../models/postulante/postulante.model";
+import { Postulante } from "../models/postulante.model";
 
 export const esPostulante = async (request: Request, response: Response, next: NextFunction) => {
     if(request.user && request.user instanceof Postulante){

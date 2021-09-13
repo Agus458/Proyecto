@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
-import { Sexo, TipoDocumento } from "../enums";
-import { Usuario } from "../usuario.model";
-import { Domicilio } from "./domicilio/domicilio";
+import { Sexo, TipoDocumento } from "./enums";
+import { Usuario } from "./usuario.model";
+import { Domicilio } from "./domicilio.model";
 
 /* ---------------------------------------< POSTULANTE MODEL >--------------------------------------- */
 

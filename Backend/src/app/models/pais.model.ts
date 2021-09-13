@@ -1,6 +1,6 @@
 import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Departamento } from "./departamento";
-import { Domicilio } from "./domicilio";
+import { Departamento } from "./departamento.model";
+import { Domicilio } from "./domicilio.model";
 
 @Entity("paises")
 export class Pais extends BaseEntity {
