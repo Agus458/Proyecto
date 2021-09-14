@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import validator from "validator";
 
 import { AppError } from "../../config/error/appError";
 import * as paisesService from "../services/paises.service";
@@ -24,6 +23,8 @@ export const getPaisById = async (request: Request, response: Response): Promise
 }
 
 export const postPais = async (request: Request, response: Response): Promise<Response> => {
+    if(!request.body.nombre) throw AppError.badRequestError("No se ingreso el nombre del pais");
+    
     await paisesService.post(request.body);
 
     return response.status(201).json();

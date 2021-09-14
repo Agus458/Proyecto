@@ -6,18 +6,16 @@ import * as empresasService from "./empresas.service";
 import * as administradoresService from "./administradores.service";
 
 export const getByEmail = async (email: string): Promise<Postulante | Empresa | Administrador | undefined> => {
-    const usuario = undefined;
-    
-    let aux: Postulante | Empresa | Administrador | undefined;
+    let usuario: Postulante | Empresa | Administrador | undefined;
 
-    aux = await postulantesService.getByEmail(email);
-    if(aux) return aux;
+    usuario = await postulantesService.getByEmail(email);
+    if(usuario) return usuario;
 
-    aux = await empresasService.getByEmail(email);
-    if(aux) return aux;
+    usuario = await empresasService.getByEmail(email);
+    if(usuario) return usuario;
 
-    aux = await administradoresService.getByEmail(email);
-    if(aux) return aux;
+    usuario = await administradoresService.getByEmail(email);
+    if(usuario) return usuario;
 
     return usuario;
 };

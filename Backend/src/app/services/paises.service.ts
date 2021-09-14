@@ -10,6 +10,8 @@ export const get = async (): Promise<Pais[]> => {
 
 // Retorna el Pais almacenado en el sistema cuyo id sea el ingresado.
 export const getById = async (id: number): Promise<Pais | undefined> => {
+    console.log(id);
+    
     return await getRepository(Pais).findOne(id);
 };
 

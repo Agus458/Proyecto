@@ -14,6 +14,6 @@ router.get("/:id", [], handleRequest(paisesController.getPaisById));
 
 router.post("/", [isLoggedIn, esAdmin], handleRequest(paisesController.postPais));
 
-router.post("/:id", [isLoggedIn, esAdmin], handleRequest(paisesController.putPais));
+router.put("/:id", [isLoggedIn, esAdmin], handleRequest(paisesController.putPais));
 
 export default router;
