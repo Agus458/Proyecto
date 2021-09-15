@@ -56,6 +56,7 @@ export class Postulante extends Usuario {
     @Column({ nullable: true })
     estadoNivelEducativo: string;
 
+    //? hace falta?
     @Column({ nullable: true })
     orientacion: string;
 
