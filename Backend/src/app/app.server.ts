@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 import routes from "./app.routes";
 import { notFound } from "../config/notFound.config";
 import { connect } from "../config/connection.config";
+import { esPublico } from "./middlewares/esPublico";
 
 /* ---------------------------------------< APP CONFIGURATION >--------------------------------------- */
 
@@ -20,6 +21,9 @@ app.set("port", process.env.PORT || 3000);
 
 // Connexion a la base de datos.
 connect();
+
+// Configuracion del directorio de archivos subidos.
+app.use("/uploads", esPublico, express.static("uploads"))
 
 /* ------------------------------------------< MIDDLEWARES >------------------------------------------ */
 
@@ -41,3 +45,5 @@ app.use("/api", routes);
 app.use(notFound);
 
 export default app;
+
+export const baseDir = __dirname;

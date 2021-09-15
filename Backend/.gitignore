@@ -1,2 +1,4 @@
 node_modules
 dist
+uploads/perfil/cvs/*
+uploads/perfil/imagenes/*

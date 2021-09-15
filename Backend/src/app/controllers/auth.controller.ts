@@ -26,7 +26,7 @@ export const registrarse = async (request: Request, response: Response): Promise
 
     const { token, exp } = createToken(result.email);
 
-    return response.status(201).json({ token, exp });
+    return response.status(201).json({ usuario: { email: result.email, tipo: result.constructor.name }, token, exp });
 }
 
 export const iniciarSesion = async (request: Request, response: Response): Promise<Response> => {
@@ -41,7 +41,7 @@ export const iniciarSesion = async (request: Request, response: Response): Promi
 
     const { token, exp } = createToken(usuario.email);
 
-    return response.status(200).json({ token, exp });
+    return response.status(200).json({ usuario: { email: usuario.email, tipo: usuario.constructor.name }, token, exp });
 }
 
 export const solicitarEmpresa = async (request: Request, response: Response): Promise<Response> => {
@@ -57,5 +57,5 @@ export const solicitarEmpresa = async (request: Request, response: Response): Pr
 
     const { token, exp } = createToken(result.email);
 
-    return response.status(201).json({ token, exp });
+    return response.status(201).json({ usuario: { email: result.email, tipo: result.constructor.name }, token, exp });
 }

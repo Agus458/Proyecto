@@ -11,7 +11,7 @@ const router = Router();
 // Rutas de autenticacion.
 router.use("/auth", authRoutes);
 
-router.use("/postulante", postulantesRoutes);
+router.use("/postulantes", postulantesRoutes);
 
 router.use("/paises", paisesRoutes);
 
