@@ -1,0 +1,42 @@
+<div fxLayout="row" fxLayoutAlign="center">
+    <mat-card fxFlex.lt-sm="100" fxFlex.gt-sm="40" fxFlex.gt-lg="25" class="card">
+        <mat-card-content>
+
+            <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="space-around center">
+                <h1>Registrarse</h1>
+
+                <p>Ya tienes una cuenta <a class="link" [routerLink]="['/iniciarSesion']">inicia sesion</a></p>
+
+                <mat-form-field class="block">
+                    <mat-label>Email</mat-label>
+                    <input type="email" matInput placeholder="Email" value="">
+                    <mat-icon matSuffix>email</mat-icon>
+                </mat-form-field>
+
+                <mat-form-field class="block">
+                    <mat-label>Contraseña</mat-label>
+                    <input type="password" matInput placeholder="Contraseña">
+                    <mat-icon matSuffix>vpn_key</mat-icon>
+                </mat-form-field>
+
+                <mat-form-field class="block">
+                    <mat-label>Repita Contraseña</mat-label>
+                    <input type="password" matInput placeholder="Repita contraseña">
+                    <mat-icon matSuffix>vpn_key</mat-icon>
+                </mat-form-field>
+
+                <button class="block" mat-flat-button color="primary" >Registrarse</button>
+
+                <mat-divider [inset]="true"></mat-divider>
+
+                <p>O iniciar sesion con redes sociales</p>
+
+                <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayoutAlign="space-between center">
+                    <button mat-fab><i class="fab fa-google fa-2x"></i></button>
+                    <button mat-fab color="primary"><i class="fab fa-facebook-f fa-2x"></i></button>
+                </div>
+            
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

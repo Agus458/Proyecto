@@ -1,0 +1,20 @@
+<mat-toolbar class="navbar" color="primary">
+    <mat-toolbar-row fxLayoutAlign="space-between center">
+        <div fxLayout="row" fxLayoutAlign="center">
+            <button mat-icon-button (click)="showSidenav()">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <button class="home" [routerLink]="['']" mat-button>Bolsa de Trabajo</button>
+        </div>
+
+        <div *ngIf="!mobile">
+            <app-navbar-buttons [logeado]="authService.isLogged()" (cerrarSesionEvent)="authService.cerrarSesion()">
+            </app-navbar-buttons>
+        </div>
+    </mat-toolbar-row>
+
+    <mat-toolbar-row *ngIf="mobile" fxLayout="row" fxLayoutAlign="space-around center">
+        <app-navbar-buttons [logeado]="authService.isLogged()" [usuario]="authService.getUser()" (cerrarSesionEvent)="authService.cerrarSesion()">
+        </app-navbar-buttons>
+    </mat-toolbar-row>
+</mat-toolbar>

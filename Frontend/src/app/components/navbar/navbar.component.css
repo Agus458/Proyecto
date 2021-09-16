@@ -1,0 +1,8 @@
+.home {
+    font-size: 20px;
+}
+
+mat-raised-button {
+    display: block;
+    width: 100%;
+}
