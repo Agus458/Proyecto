@@ -18,7 +18,7 @@ export const esPublico = async (request: Request, response: Response, next: Next
     if(id && validator.isInt(id)){
         const perfil = await postulantesService.getPerfilById(Number.parseInt(id));
 
-        if(perfil && perfil.perfilPublico) return next();
+        if(id == request.user.id || (perfil && perfil.perfilPublico)) return next();
     }
 
     return response.status(404).json({ message: "Este archivo es privado", status: 404 });
