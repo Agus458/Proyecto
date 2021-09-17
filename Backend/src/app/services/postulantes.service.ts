@@ -36,5 +36,6 @@ export const post = async (data: DeepPartial<Postulante>): Promise<Postulante> =
 
 // Almacena en el sistema un nuevo postulante.
 export const put = async (id: number, data: DeepPartial<Postulante>): Promise<void> => {
-    await getRepository(Postulante).update(id, data);
+    data.id = id;
+    await getRepository(Postulante).save(data);
 };

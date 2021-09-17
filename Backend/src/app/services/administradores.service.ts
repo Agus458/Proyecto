@@ -29,5 +29,6 @@ export const post = async (data: DeepPartial<Administrador>): Promise<Administra
 
 // Actualiza un Administrador almacenado en el sistema.
 export const put = async (id: number, data: DeepPartial<Administrador>): Promise<void> => {
-    await getRepository(Administrador).update(id, data);
+    data.id = id;
+    await getRepository(Administrador).save(data);
 };

@@ -23,7 +23,7 @@ export class Postulante extends Usuario {
     @Column({ nullable: true })
     imagen: string;
 
-    @OneToOne(() => Domicilio, domicilio => domicilio.postulante)
+    @OneToOne(() => Domicilio, domicilio => domicilio.postulante, { cascade: true })
     @JoinColumn()
     domicilio: Domicilio;
 

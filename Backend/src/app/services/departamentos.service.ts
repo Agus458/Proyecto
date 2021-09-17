@@ -10,14 +10,15 @@ export const get = async (): Promise<Departamento[]> => {
 };
 
 // Retorna el Departamento almacenado en el sistema cuyo id sea el ingresado.
-export const getById = async (id: number): Promise<Departamento | undefined> => {    
-    return await getRepository(Departamento).findOne(id);
+export const getById = async (id: number): Promise<Departamento | undefined> => {
+    return await getRepository(Departamento).findOne(id, { relations: ["pais"] });
 };
 
 // Retorna los Departamentos almacenado en el sistema cuyo pais sea el ingresado.
 export const getByPais = async (pais: Pais): Promise<Departamento[]> => {
     return await getRepository(Departamento).find({
-        where: { pais }
+        where: { pais },
+        relations: ["pais"]
     });
 };
 
@@ -30,5 +31,6 @@ export const post = async (data: DeepPartial<Departamento>): Promise<Departament
 
 // Actualiza un Departamento almacenado en el sistema.
 export const put = async (id: number, data: DeepPartial<Departamento>): Promise<void> => {
-    await getRepository(Departamento).update(id, data);
+    data.id = id;
+    await getRepository(Departamento).save(data);
 };

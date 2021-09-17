@@ -11,13 +11,14 @@ export const get = async (): Promise<Localidad[]> => {
 
 // Retorna el Localidad almacenado en el sistema cuyo id sea el ingresado.
 export const getById = async (id: number): Promise<Localidad | undefined> => {
-    return await getRepository(Localidad).findOne(id);
+    return await getRepository(Localidad).findOne(id, { relations: ["departamento"] });
 };
 
 // Retorna los Localidads almacenado en el sistema cuyo Departamento sea el ingresado.
 export const getByDepartamento = async (departamento: Departamento): Promise<Localidad[]> => {
     return await getRepository(Localidad).find({
-        where: { departamento }
+        where: { departamento },
+        relations: ["departamento"]
     });
 };
 
@@ -30,5 +31,6 @@ export const post = async (data: DeepPartial<Localidad>): Promise<Localidad> => 
 
 // Actualiza un Localidad almacenado en el sistema.
 export const put = async (id: number, data: DeepPartial<Localidad>): Promise<void> => {
-    await getRepository(Departamento).update(id, data);
+    data.id = id;
+    await getRepository(Departamento).save(data);
 };
