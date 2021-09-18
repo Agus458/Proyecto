@@ -1,6 +1,6 @@
 import { Column,Entity } from "typeorm";
 import { Departamento } from "./departamento.model";
-import { Educacion, Sexo, TipoDeEducacionTercearia} from "./enums";
+import {Sexo} from "./enums";
 import { Postulante } from "./postulante.model";
 import { Usuario } from "./usuario.model";
 
@@ -25,7 +25,7 @@ telefono:number;
 
 })
 sexo:Sexo;
-
+/*
 @Column({
   type: "enum",
     enum:Educacion,
@@ -40,6 +40,8 @@ Educacion:Educacion;
         default:TipoDeEducacionTercearia.NoDice
 })
 TipodeEducacionTerceario:TipoDeEducacionTercearia;
+*/
+
 
 
 @Column({
@@ -49,6 +51,8 @@ TipodeEducacionTerceario:TipoDeEducacionTercearia;
 
 })
 Departamento:Departamento;
+
+
 /*
 @Column({ nullable: true})
 estudios:string;

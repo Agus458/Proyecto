@@ -1,5 +1,4 @@
 import { Column,Entity,JoinColumn,OneToOne } from "typeorm";
-import {TipoDocumento,} from "./enums";
 import { Usuario } from "./usuario.model";
 import { Domicilio } from "./domicilio.model";
 
@@ -32,6 +31,8 @@ export class Offerta extends Usuario
     @OneToOne(() => Domicilio,domicilio => domicilio.postulante)
     @JoinColumn()
     domicilio:Domicilio;
+
+    
     
     //@OneToOne(()=> , )
     
