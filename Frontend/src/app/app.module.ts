@@ -15,6 +15,10 @@ import { RegistarseComponent } from './components/registarse/registarse.componen
 import { InicioComponent } from './components/inicio/inicio.component';
 import { NavbarButtonsComponent } from './components/navbar/navbar-buttons/navbar-buttons.component';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { DatosPostulanteComponent } from './components/datos-postulante/datos-postulante.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 
 @NgModule({
   declarations: [
@@ -24,18 +28,24 @@ import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
     IniciarSesionComponent,
     RegistarseComponent,
     InicioComponent,
-    NavbarButtonsComponent
+    NavbarButtonsComponent,
+    DatosPostulanteComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     MaterialModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatDatepickerModule, 
+    MatMomentDateModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } }
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
+    {provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true} }
   ],
   bootstrap: [AppComponent]
 })

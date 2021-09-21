@@ -1,0 +1,303 @@
+<h1>Mis Datos</h1>
+<mat-divider></mat-divider>
+<mat-stepper orientation="vertical" [linear]="false" #stepper>
+    <mat-step [stepControl]="datospersonalesGroup">
+        <form [formGroup]="datospersonalesGroup">
+            <ng-template matStepLabel>Datos Personales</ng-template>
+            <div fxLayout="row" fxLayoutAlign="space-start start" fxLayout.xs="column">
+                <div fxLayout="column" fxLayoutAlign="space-evenly start" style="padding-right: 5%;">
+                    <h3 style="padding-top: 5px;   color:#026d30;">Identificación</h3>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Tipo de Documento</mat-label>
+                        <mat-select required>
+                            <mat-option value="one">Cedula</mat-option>
+                            <mat-option value="two">Pasaporte</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Numero de Documento</mat-label>
+                        <input matInput placeholder="12345678" formControlName="numerodocumento" required>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Primer Nombre</mat-label>
+                        <input matInput placeholder="Primer Nombre" formControlName="primernombre" required>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Segundo Nombre</mat-label>
+                        <input matInput placeholder="Segundo Nombre">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Primer Apellido</mat-label>
+                        <input matInput placeholder="Primer Apellido" formControlName="primerapellido" required>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Segundo Apellido</mat-label>
+                        <input matInput placeholder="Segundo Apellido">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Sexo</mat-label>
+                        <mat-select>
+                            <mat-option value="two">Femenino</mat-option>
+                            <mat-option value="one">Masculino</mat-option>
+                            <mat-option value="two">Otro</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" style="max-width: 201px;">
+                        <mat-label>Fecha de Nac.</mat-label>
+                        <input matInput [matDatepicker]="picker" placeholder="00/00/0000"
+                            formControlName="fechanacimiento">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+
+                </div>
+                <div fxLayout="column" fxLayoutAlign="space-evenly start" style="padding-right: 5%;">
+                    <h3 style="padding-top: 5px;   color:#026d30;">Domicilio</h3>
+                    <mat-form-field appearance="fill">
+                        <mat-label>País</mat-label>
+                        <mat-select required>
+                            <mat-option value="one">Uruguay</mat-option>
+                            <mat-option value="two">Otro</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <div fxLayout="column" fxLayoutAlign="space-evenly start">
+                        <mat-form-field appearance="fill">
+                            <mat-label required>Departamento</mat-label>
+                            <mat-select required>
+                                <mat-option value="one">Uruguay</mat-option>
+                                <mat-option value="two">Otro</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Localidad</mat-label>
+                            <mat-select required>
+                                <mat-option value="one">Uruguay</mat-option>
+                                <mat-option value="two">Otro</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Barrio</mat-label>
+                        <input matInput placeholder="Barrio">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Dirección</mat-label>
+                        <input matInput placeholder="Dirección" formControlName="direccion" required>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="column" fxLayoutAlign="space-evenly start" style="padding-right: 5%;">
+                    <h3 style="padding-top: 5px;   color:#026d30;">Contacto</h3>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Primer Telefono/Celular</mat-label>
+                        <input matInput placeholder="Primer Telefono/Celular" formControlName="celular" required>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Segundo Telefono/Celular</mat-label>
+                        <input matInput placeholder="Segundo Telefono/Celular">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Correo Electronico</mat-label>
+                        <input matInput placeholder="Correo Electronico" formControlName="correoelectronico" required>
+                    </mat-form-field>
+                    <mat-checkbox class="example-margin">Deseo recibir ofertas laborales por mail</mat-checkbox>
+                </div>
+            </div>
+            <button mat-button matStepperNext color="primary">Siguiente</button>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="educacionformacionGroup">
+        <form [formGroup]="educacionformacionGroup">
+            <ng-template matStepLabel>Educación y Formación</ng-template>
+            <div fxLayout="row" fxLayoutAlign="space-start start" fxLayout.xs="column">
+                <div fxLayout="column" fxLayoutAlign="space-evenly start" style="padding-right: 3%;">
+                    <h3 style="padding-top: 5px;   color:#026d30;">Nivel Educativo Formal</h3>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Maximo Nivel Educativo</mat-label>
+                        <mat-select required>
+                            <mat-option value="one">Primaria</mat-option>
+                            <mat-option value="two">Ciclo Basico Liceo</mat-option>
+                            <mat-option value="two">Ciclo Basico UTU</mat-option>
+                            <mat-option value="two">Bachillerato Liceo</mat-option>
+                            <mat-option value="two">Bachillerato UTU</mat-option>
+                            <mat-option value="two">Técnico Profesional UTU</mat-option>
+                            <mat-option value="two">Magisterio - Profesorado</mat-option>
+                            <mat-option value="two">Terciario no universitario</mat-option>
+                            <mat-option value="two">Universitario</mat-option>
+                            <mat-option value="two">Posgrado - Master - Doctorado</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Estado</mat-label>
+                        <mat-select required>
+                            <mat-option value="one">Completo</mat-option>
+                            <mat-option value="two">Incompleto</mat-option>
+                            <mat-option value="two">Cursando</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="column" fxLayoutAlign="space-evenly start" style="padding-right: 3%;">
+                    <h3 style="padding-top: 5px;   color:#026d30;">Capacitación y Formación adicional <button
+                            mat-button>Nuevo</button> </h3>
+                    <mat-accordion class="example-headers-align" multi>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Curso
+                                </mat-panel-title>
+
+                            </mat-expansion-panel-header>
+                            <div fxLayout="column" fxLayoutAlign="space-evenly start" style="padding-right: 3%;">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Nombre</mat-label>
+                                    <input matInput placeholder="Nombre" formControlName="nombrecurso" required>
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Área Temática</mat-label>
+                                    <mat-select required>
+                                        <mat-option value="one">Area</mat-option>
+                                        <mat-option value="two">Area</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Institución Educativa</mat-label>
+                                    <input matInput placeholder="Institución Educativa" required>
+                                </mat-form-field>
+                                <mat-form-field appearance="fill" style="max-width: 201px;">
+                                    <mat-label>Fecha de Inicio</mat-label>
+                                    <input matInput [matDatepicker]="picker2" placeholder="00/00/0000">
+                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker2></mat-datepicker>
+                                </mat-form-field>
+                                <mat-form-field appearance="fill" style="max-width: 201px;">
+                                    <mat-label>Fecha de Fin</mat-label>
+                                    <input matInput [matDatepicker]="picker3" placeholder="00/00/0000">
+                                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker3></mat-datepicker>
+                                </mat-form-field>
+                                <mat-checkbox class="example-margin">Actualidad</mat-checkbox>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Estado</mat-label>
+                                    <mat-select required>
+                                        <mat-option value="one">Completo</mat-option>
+                                        <mat-option value="two">Incompleto</mat-option>
+                                        <mat-option value="two">Cursando</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                            </div>
+                        </mat-expansion-panel>
+
+                    </mat-accordion>
+                </div>
+                <div fxLayout="column" fxLayoutAlign="space-evenly start" style="padding-right: 5%;">
+                    <h3 style="padding-top: 5px;   color:#026d30;">Conocimientos Informaticos <button mat-button>Nuevo</button> </h3>
+                    <mat-accordion class="example-headers-align" multi>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Conocimiento Inf.
+                                </mat-panel-title>
+
+                            </mat-expansion-panel-header>
+                            <div fxLayout="column" fxLayoutAlign="space-evenly start">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Nombre</mat-label>
+                                    <input matInput placeholder="Nombre" required>
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Categoría</mat-label>
+                                    <mat-select required>
+                                        <mat-option value="one">Categoría</mat-option>
+                                        <mat-option value="two">Categoría</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Nivel</mat-label>
+                                    <mat-select required>
+                                        <mat-option value="one">Usuario</mat-option>
+                                        <mat-option value="two">Profesional</mat-option>
+                                        <mat-option value="two">Experto</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </mat-expansion-panel>
+
+                    </mat-accordion>
+                </div>
+                <div fxLayout="column" fxLayoutAlign="space-evenly start" style="padding-right: 3%;">
+                    <h3 style="padding-top: 5px; color:#026d30;">Idiomas <button mat-button>Nuevo</button> </h3>
+                    <mat-accordion class="example-headers-align" multi>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Idioma
+                                </mat-panel-title>
+
+                            </mat-expansion-panel-header>
+                            <div fxLayout="column" fxLayoutAlign="space-evenly start">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Idioma</mat-label>
+                                    <mat-select required>
+                                        <mat-option value="one">Idioma</mat-option>
+                                        <mat-option value="two">Idioma</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Habla / Conversación</mat-label>
+                                    <mat-select required>
+                                        <mat-option value="one">No</mat-option>
+                                        <mat-option value="two">Basico</mat-option>
+                                        <mat-option value="two">Regular</mat-option>
+                                        <mat-option value="two">Fluido</mat-option>
+                                        <mat-option value="two">Nativo</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Comprensión Auditiva</mat-label>
+                                    <mat-select required>
+                                        <mat-option value="one">No</mat-option>
+                                        <mat-option value="two">Basico</mat-option>
+                                        <mat-option value="two">Regular</mat-option>
+                                        <mat-option value="two">Fluido</mat-option>
+                                        <mat-option value="two">Nativo</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Comprensión Lectora</mat-label>
+                                    <mat-select required>
+                                        <mat-option value="one">No</mat-option>
+                                        <mat-option value="two">Basico</mat-option>
+                                        <mat-option value="two">Regular</mat-option>
+                                        <mat-option value="two">Fluido</mat-option>
+                                        <mat-option value="two">Nativo</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Escritura</mat-label>
+                                    <mat-select required>
+                                        <mat-option value="one">No</mat-option>
+                                        <mat-option value="two">Basico</mat-option>
+                                        <mat-option value="two">Regular</mat-option>
+                                        <mat-option value="two">Fluido</mat-option>
+                                        <mat-option value="two">Nativo</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </mat-expansion-panel>
+
+                    </mat-accordion>
+                </div>
+            </div>
+            <button mat-button matStepperPrevious>Volver</button>
+            <button mat-button matStepperNext>Siguiente</button>
+        </form>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <p>You are now done.</p>
+        <div>
+            <button mat-button matStepperPrevious>Volver</button>
+            <button mat-button (click)="stepper.reset()">Reset</button>
+        </div>
+    </mat-step>
+</mat-stepper>
