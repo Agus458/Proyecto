@@ -1,6 +1,8 @@
 import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Postulante } from "./postulante.model";
 
+/* ---------------------------------------< CAPACITACION MODEL >--------------------------------------- */
+
 @Entity('capacitaciones')
 export class Capacitacion extends BaseEntity {
 

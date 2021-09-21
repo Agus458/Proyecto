@@ -6,7 +6,6 @@ import validator from "validator";
 import { AppError } from "../../config/error/appError";
 import { removerArchivo } from "../libraries/file.library";
 import { validarCapacitaciones, validarDocumento, validarDomicilio } from "../libraries/validation.library";
-import { Sexo } from "../models/enums";
 import { Postulante } from "../models/postulante.model";
 import { create } from "../services/capacitaciones.service";
 import * as postulantesService from "../services/postulantes.service";
@@ -45,7 +44,7 @@ export const putPostulante = async (request: Request, response: Response): Promi
     request.body.domicilio = await validarDomicilio(request.body.domicilio, postulante.domicilio);
 
     if (request.body.sexo) {
-        if (typeof request.body.sexo != "number" || !Sexo[request.body.sexo]) throw AppError.badRequestError("Sexo invalido");
+        if (typeof request.body.sexo != "string") throw AppError.badRequestError("Sexo invalido");
     }
 
     if (request.body.fechaNacimiento) {
