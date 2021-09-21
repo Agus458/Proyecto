@@ -10,7 +10,7 @@ export const perfilStorage = () => {
                 return callback(null, "uploads/perfil/imagenes");
             } else {
                 if (file.mimetype == "application/pdf") {
-                    return callback(null, "uploads/perfil/cvs");
+                    return callback(null, "uploads/perfil/documentos");
                 }
             }
 

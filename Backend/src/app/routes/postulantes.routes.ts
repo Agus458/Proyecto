@@ -1,5 +1,5 @@
 import { Router } from "express";
-import multer, { Field } from "multer";
+import multer from "multer";
 
 import { handleRequest } from "../../config/error/handleRequest";
 import * as postulantesController from "../controllers/postulantes.controller";
@@ -11,12 +11,6 @@ import { tieneRol } from "../middlewares/tieneRol";
 
 const router = Router();
 
-const fields: Field[] = [
-    { name: "imagen", maxCount: 1 },
-    { name: "cv", maxCount: 1 },
-    { name: "certificados" }
-];
-
 const upload = multer({ storage: perfilStorage() });
 
 router.get("/perfil", [isLoggedIn, tieneRol(["Postulante"])], handleRequest(postulantesController.getPerfil));
@@ -25,6 +19,6 @@ router.get("/perfil/:id", [isLoggedIn, tieneRol(["Empresa", "Administrador"])], 
 
 router.put("/perfil", [isLoggedIn, tieneRol(["Postulante"])], handleRequest(postulantesController.putPostulante));
 
-router.put("/perfil/archivos", [isLoggedIn, tieneRol(["Postulante"]), upload.fields(fields)], handleRequest(postulantesController.putArchivos));
+router.put("/perfil/imagen", [isLoggedIn, tieneRol(["Postulante"]), upload.single("imagen")], handleRequest(postulantesController.putImagen));
 
 export default router;

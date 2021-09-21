@@ -1,7 +1,8 @@
-import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
 import { Sexo, TipoDocumento } from "./enums";
 import { Usuario } from "./usuario.model";
 import { Domicilio } from "./domicilio.model";
+import { Capacitacion } from "./capacitacion.model";
 
 /* ---------------------------------------< POSTULANTE MODEL >--------------------------------------- */
 
@@ -67,5 +68,8 @@ export class Postulante extends Usuario {
 
     @Column({ nullable: true })
     perfilPublico: boolean;
+
+    @OneToMany(() => Capacitacion, capacitacion => capacitacion.postulante)
+    capacitaciones: Capacitacion[];
 
 }
