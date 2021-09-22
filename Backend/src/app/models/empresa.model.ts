@@ -1,4 +1,5 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
+import { Domicilio } from "./domicilio.model";
 import { Usuario } from "./usuario.model";
 
 /* ---------------------------------------< EMPRESA MODEL >--------------------------------------- */
@@ -17,5 +18,9 @@ export class Empresa extends Usuario {
 
     @Column({ nullable: true })
     socia: boolean;
+
+    @OneToOne(() => Domicilio, domicilio => domicilio.Empresa)
+    @JoinColumn()
+    domicilio: Domicilio;
 
 }

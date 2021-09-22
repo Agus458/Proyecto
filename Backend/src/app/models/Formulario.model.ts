@@ -1,17 +1,74 @@
-import { BaseEntity, Column,Entity, ManyToOne, OneToOne,JoinColumn, PrimaryGeneratedColumn } from "typeorm";
+import {  Column,Entity, ManyToOne, OneToOne,JoinColumn, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Idiomas } from "./Idioma.Model";
+import { Experiencia} from "./ExperienciaLaboral.model"
+import { jornadaLaboral } from "./JornadaLaboral.model";
+import { PermisosYLicencias } from "./PermisosYLicensias.Module";
+import { informatico } from "./Informatico.model";
+import { ReferenciaLaboral } from "./ReferenciaLaboral.model";
 import { Postulante } from "./postulante.model";
-import {Sexo,MaximoNivelEducactivo} from "./enums";
-import { Domicilio } from "./domicilio.model";
+import { Educacion } from "./Educacion.model";
 
- export class Formulario 
+
+
+ export class Formulario  
  {
+
+    
+
+    
+    
+/*
+    @Column({nullable: true})
+     primerNombre:string;
+*/
+
+     @OneToOne(() => Postulante,postulante => postulante )
+     @JoinColumn()
+     postulante:Postulante;
+
+
+     @OneToMany(() =>Idiomas, idiomas => idiomas)
+     @JoinColumn()
+     idiomas:Idiomas;
      
-    @PrimaryGeneratedColumn()
-    id: number;
+     @OneToMany(() => Experiencia, Experiencia => Experiencia)
+     @JoinColumn()
+     ExperienciaLaboral:Experiencia;
 
-    @Column()
-    NroDocumento: String;
+     @OneToMany(() => jornadaLaboral, jornadaLaboral => jornadaLaboral)
+     @JoinColumn()
+     jornadaLaboral:jornadaLaboral;
 
+    @OneToMany(() => PermisosYLicencias, PermisosYLicencias => PermisosYLicencias)
+    @JoinColumn()
+    PermisosYLicencias:PermisosYLicencias;
+
+    @OneToMany(() => informatico, informatico => informatico)
+    @JoinColumn()
+    Informatico:informatico;
+
+    @OneToMany(() => ReferenciaLaboral, ReferenciaLaboral => ReferenciaLaboral)
+    @JoinColumn()
+    ReferenciaLaboral:ReferenciaLaboral;
+
+    @OneToMany(() => Educacion, Educacion => Educacion)
+    @JoinColumn()
+    Educacion:Educacion;
+
+
+
+
+     
+     /*
+     @Column({nullable: true})
+     primerNombre:string;
+
+     @Column({nullable:true})
+    */
+
+
+
+    /*
     @Column()
     primerApellido:string;
     
@@ -42,7 +99,7 @@ import { Domicilio } from "./domicilio.model";
     })
     MaximoNovelEducativo:MaximoNivelEducactivo
     
-    
+    */
  
 
 

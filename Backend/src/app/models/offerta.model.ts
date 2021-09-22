@@ -1,4 +1,5 @@
 import { Column,Entity,JoinColumn,OneToOne } from "typeorm";
+import {TipoDocumento,} from "./enums";
 import { Usuario } from "./usuario.model";
 import { Domicilio } from "./domicilio.model";
 
@@ -26,11 +27,13 @@ export class Offerta extends Usuario
     @Column({nullable: true})
     fechaLimite:Date;
 
-
     
-    @OneToOne(() => Domicilio,domicilio => domicilio.postulante)
+    
+    @OneToOne(() => Domicilio,domicilio => domicilio.Empresa)
     @JoinColumn()
     domicilio:Domicilio;
+
+    
 
     
     

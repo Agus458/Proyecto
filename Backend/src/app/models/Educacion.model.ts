@@ -1,8 +1,8 @@
 import { Column, BaseEntity,Entity, JoinColumn,OneToOne} from "typeorm";
 import { MaximoNivelEducactivo, Estado, } from "./enums";
 
-@Entity("domicilio")
-export class Domicilio extends BaseEntity {
+@Entity("Educacion")
+export class Educacion extends BaseEntity {
     
     @Column({
         type: "enum",

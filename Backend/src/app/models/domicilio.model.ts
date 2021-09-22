@@ -3,6 +3,7 @@ import { Postulante } from "./postulante.model";
 import { Departamento } from "./departamento.model";
 import { Localidad } from "./localidad.model";
 import { Pais } from "./pais.model";
+import { Empresa } from "./empresa.model";
 
 @Entity("domicilios")
 export class Domicilio extends BaseEntity {
@@ -27,5 +28,8 @@ export class Domicilio extends BaseEntity {
 
     @OneToOne(() => Postulante, postulante => postulante.domicilio)
     postulante: Postulante;
+
+    @OneToOne(() => Empresa, Empresa => Empresa.domicilio)
+    Empresa:Empresa;
 
 }
