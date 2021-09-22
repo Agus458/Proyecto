@@ -11,7 +11,7 @@ export abstract class Usuario extends BaseEntity {
     @Column({ unique: true })
     email: string;
 
-    @Column()
+    @Column({ select: false })
     contrasenia: string;
 
     @Column({ type: "enum", enum: EstadoUsuario })

@@ -2,34 +2,42 @@
     <mat-card fxFlex.lt-sm="100" fxFlex.gt-sm="40" fxFlex.gt-lg="25" class="card">
         <mat-card-content>
 
-            <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="space-around center">
-                <h1>Iniciar Sesion</h1>
+            <form [formGroup]="loginForm" (ngSubmit)="ngOnSubmit()">
 
-                <p>No tienes una cuenta <a class="link" [routerLink]="['/registrarse']">registrate</a></p>
+                <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="space-around center">
+                    <h1>Iniciar Sesion</h1>
 
-                <mat-form-field class="block">
-                    <mat-label>Email</mat-label>
-                    <input type="email" matInput placeholder="Email" value="">
-                    <mat-icon matSuffix>email</mat-icon>
-                </mat-form-field>
+                    <p class="text-center">No tienes una cuenta <a class="link"
+                            [routerLink]="['/registrarse']">registrate</a></p>
 
-                <mat-form-field class="block">
-                    <mat-label>Contraseña</mat-label>
-                    <input type="password" matInput placeholder="Password">
-                    <mat-icon matSuffix>vpn_key</mat-icon>
-                </mat-form-field>
-                <button class="block" mat-flat-button color="primary" (click)="iniciarSesion()">Login</button>
+                    <mat-form-field class="block">
+                        <mat-label>Email</mat-label>
+                        <input type="email" matInput formControlName="email">
+                        <mat-icon matSuffix>email</mat-icon>
+                    </mat-form-field>
 
-                <mat-divider [inset]="true"></mat-divider>
+                    <mat-form-field class="block">
+                        <mat-label>Contraseña</mat-label>
+                        <input type="password" matInput formControlName="contrasenia">
+                        <mat-icon matSuffix>vpn_key</mat-icon>
+                    </mat-form-field>
 
-                <p>O iniciar sesion con redes sociales</p>
+                    <button class="block" [disabled]="loginForm.invalid" type="submit" mat-flat-button
+                        color="primary">
+                        Iniciar Sesion
+                    </button>
 
-                <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayoutAlign="space-between center">
-                    <button mat-fab><i class="fab fa-google fa-2x"></i></button>
-                    <button mat-fab color="primary"><i class="fab fa-facebook-f fa-2x"></i></button>
+                    <mat-divider [inset]="true"></mat-divider>
+
+                    <p class="text-center">O iniciar sesion con redes sociales</p>
+
+                    <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="space-between center">
+                        <button mat-fab type="button"><i class="fab fa-google fa-2x"></i></button>
+                        <button mat-fab color="primary" type="button"><i class="fab fa-facebook-f fa-2x"></i></button>
+                    </div>
+
                 </div>
-            
-            </div>
+            </form>
         </mat-card-content>
     </mat-card>
 </div>

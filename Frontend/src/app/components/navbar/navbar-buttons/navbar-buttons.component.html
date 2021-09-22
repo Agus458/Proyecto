@@ -4,9 +4,10 @@
 </div>
 
 <ng-template #sesioniniciada>
-    <button mat-button [matMenuTriggerFor]="menu">{{ usuario ? usuario.email : "" }}</button>
-    <mat-menu #menu="matMenu">
-        <button mat-menu-item>Perfil</button>
-        <button mat-menu-item (click)="cerrarSesion()">Cerrar Sesion</button>
-    </mat-menu>
+    <button mat-icon-button>
+        <mat-icon>account_circle</mat-icon>
+    </button>
+    <button mat-icon-button (click)="cerrarSesion()">
+        <mat-icon>logout</mat-icon>
+    </button>
 </ng-template>

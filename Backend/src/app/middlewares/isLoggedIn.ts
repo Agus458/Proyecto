@@ -8,7 +8,7 @@ export const isLoggedIn = async (request: Request, response: Response, next: Nex
     const authHeader = request.headers.authorization;
 
     // Verifica que se haya mandado un token de autorizacion.
-    if (authHeader) {
+    if (authHeader && authHeader.startsWith("Bearer")) {
 
         const bearer = authHeader.split(" ");
         const token = bearer[1];

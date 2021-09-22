@@ -11,11 +11,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatMenuModule } from '@angular/material/menu';
-import {MatStepperModule} from '@angular/material/stepper';
-import {MatSelectModule} from '@angular/material/select';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
         MatSelectModule,
         MatDatepickerModule,
         MatCheckboxModule,
-        MatExpansionModule
+        MatExpansionModule,
+        MatSnackBarModule
     ],
     exports: [
         FlexLayoutModule,
@@ -53,7 +55,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
         MatSelectModule,
         MatDatepickerModule,
         MatCheckboxModule,
-        MatExpansionModule
+        MatExpansionModule,
+        MatSnackBarModule
     ]
 })
 export class MaterialModule { }

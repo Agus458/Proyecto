@@ -1,13 +1,9 @@
 import { Request, Response } from "express";
-import moment from "moment";
-import { DeepPartial } from "typeorm";
 import validator from "validator";
 
 import { AppError } from "../../config/error/appError";
 import { removerArchivo } from "../libraries/file.library";
-import { validarCapacitaciones, validarDocumento, validarDomicilio } from "../libraries/validation.library";
-import { Postulante } from "../models/postulante.model";
-import { create } from "../services/capacitaciones.service";
+import { validarCapacitaciones, validarDatosPersonales, validarDomicilio } from "../libraries/validation.library";
 import * as postulantesService from "../services/postulantes.service";
 
 /* ---------------------------------------< POSTULANTES CONTROLLER >--------------------------------------- */
@@ -32,27 +28,16 @@ export const getPerfilById = async (request: Request, response: Response): Promi
 }
 
 export const putPostulante = async (request: Request, response: Response): Promise<Response> => {
+    console.log(request.body);
+    
     const postulante = await postulantesService.getPerfilById(request.user.id);
     if (!postulante) throw AppError.badRequestError("No se encontro el postulante");
 
-    // Validacion del documento del Postulante.
-    if (request.body.tipoDocumento || request.body.documento) {
-        validarDocumento(request.body.tipoDocumento, request.body.documento);
-    }
-
+    // Validacion de datos personales del Postulante.
+    validarDatosPersonales(request.body);
+    
     // Validacion del domicilio.
     request.body.domicilio = await validarDomicilio(request.body.domicilio, postulante.domicilio);
-
-    if (request.body.sexo) {
-        if (typeof request.body.sexo != "string") throw AppError.badRequestError("Sexo invalido");
-    }
-
-    if (request.body.fechaNacimiento) {
-        if (typeof request.body.fechaNacimiento != "string" || validator.isDate(request.body.fechaNacimiento)) throw AppError.badRequestError("Fecha de nacimiento invalida");
-        const fechaNacimiento = moment(request.body.fechaNacimiento, "DD-MM-YYYY");
-        if(fechaNacimiento.isAfter(moment())) throw AppError.badRequestError("Fecha de nacimiento debe ser anterior a la fecha actual");
-        request.body.fechaNacimiento = fechaNacimiento.toDate();
-    }
 
     if(request.body.capacitaciones){
         validarCapacitaciones(request.body.capacitaciones);

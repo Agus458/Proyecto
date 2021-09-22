@@ -12,7 +12,7 @@
         
 
         <div *ngIf="!mobile">
-            <app-navbar-buttons [logeado]="authService.isLogged()" (cerrarSesionEvent)="authService.cerrarSesion()">
+            <app-navbar-buttons [logeado]="authService.isLogged()" [usuario]="authService.getUser()" (cerrarSesionEvent)="authService.cerrarSesion()">
             </app-navbar-buttons>
         </div>
     </mat-toolbar-row>

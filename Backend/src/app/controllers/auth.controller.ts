@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import validator from "validator";
 
 import { AppError } from "../../config/error/appError";
-import { encryptPassword, verifyPassword } from "../libraries/encryptation.library";
+import { encryptPassword } from "../libraries/encryptation.library";
 
 import * as postulantesService from "../services/postulantes.service";
 import * as usuariosService from "../services/usuarios.service";
@@ -33,11 +33,9 @@ export const iniciarSesion = async (request: Request, response: Response): Promi
     if (!request.body.email) throw AppError.badRequestError("No se ingreso el email");
     if (!request.body.contrasenia) throw AppError.badRequestError("No se ingreso la contraseña");
 
-    const usuario = await usuariosService.getByEmail(request.body.email);
+    const usuario = await usuariosService.getByEmailContrasenia(request.body.email, request.body.contrasenia);
 
-    if (!usuario) throw AppError.badRequestError("No existe un usuario con el email ingresado");
-
-    if (!await verifyPassword(request.body.contrasenia, usuario.contrasenia)) throw AppError.badRequestError("La contraseña ingresada es incorrecta");
+    if (!usuario) throw AppError.badRequestError("Credenciales Invalidas");
 
     const { token, exp } = createToken(usuario.email);
 
