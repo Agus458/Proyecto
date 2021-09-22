@@ -7,6 +7,10 @@
             <button class="home" [routerLink]="['']" mat-button>Bolsa de Trabajo</button>
         </div>
 
+        
+            <img src="https://ccisanjose.com.uy/wp-content/uploads/2021/04/cropped-CCISJ-logo-sin-fondo-blanco-e1618519493910.png" [ngStyle.xs]="['display:none']" height="40" alt="Centro Comercial e Industrial de San José"/>
+        
+
         <div *ngIf="!mobile">
             <app-navbar-buttons [logeado]="authService.isLogged()" (cerrarSesionEvent)="authService.cerrarSesion()">
             </app-navbar-buttons>

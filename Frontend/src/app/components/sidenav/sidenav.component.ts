@@ -14,7 +14,7 @@ export class SidenavComponent implements OnInit {
 
   ngOnInit(): void {
     this.links = [
-      { link: "home", label: "Home", icon: "home" },
+      { link: "misdatos", label: "Mis Datos", icon: "sticky_note_2"},
       { link: "home", label: "Home", icon: "home" },
       { link: "home", label: "Home", icon: "home" }
     ]
