@@ -5,9 +5,9 @@ import validator from "validator";
 
 import { AppError } from "../../config/error/appError";
 import { removerArchivo } from "../libraries/file.library";
-import { validarDocumento, validarDomicilio } from "../libraries/validation.library";
-import { Sexo } from "../models/enums";
+import { validarCapacitaciones, validarDocumento, validarDomicilio } from "../libraries/validation.library";
 import { Postulante } from "../models/postulante.model";
+import { create } from "../services/capacitaciones.service";
 import * as postulantesService from "../services/postulantes.service";
 
 /* ---------------------------------------< POSTULANTES CONTROLLER >--------------------------------------- */
@@ -44,42 +44,38 @@ export const putPostulante = async (request: Request, response: Response): Promi
     request.body.domicilio = await validarDomicilio(request.body.domicilio, postulante.domicilio);
 
     if (request.body.sexo) {
-        if (typeof request.body.sexo != "number" || !Sexo[request.body.sexo]) throw AppError.badRequestError("Sexo invalido");
+        if (typeof request.body.sexo != "string") throw AppError.badRequestError("Sexo invalido");
     }
 
     if (request.body.fechaNacimiento) {
         if (typeof request.body.fechaNacimiento != "string" || validator.isDate(request.body.fechaNacimiento)) throw AppError.badRequestError("Fecha de nacimiento invalida");
-        request.body.fechaNacimiento = moment(request.body.fechaNacimiento, "DD-MM-YYYY").toDate();
+        const fechaNacimiento = moment(request.body.fechaNacimiento, "DD-MM-YYYY");
+        if(fechaNacimiento.isAfter(moment())) throw AppError.badRequestError("Fecha de nacimiento debe ser anterior a la fecha actual");
+        request.body.fechaNacimiento = fechaNacimiento.toDate();
     }
 
-    await postulantesService.put(request.user.id, request.body);
+    if(request.body.capacitaciones){
+        validarCapacitaciones(request.body.capacitaciones);
+    }
+
+    await postulantesService.put(postulante.id, request.body);
 
     return response.status(201).json();
 }
 
-export const putArchivos = async (request: Request, response: Response): Promise<Response> => {
+export const putImagen = async (request: Request, response: Response): Promise<Response> => {
     const postulante = await postulantesService.getPerfilById(request.user.id);
     if (!postulante) throw AppError.badRequestError("No se encontro el postulante");
 
-    let data: DeepPartial<Postulante> = {};
-
     // Validacion de archivos
-    if (request.files) {
-        let files = request.files as any;
-        if (typeof files == "object") {
-
-            // Imagen de perfil.
-            if (files.imagen) {
-                if(postulante.imagen) {
-                    removerArchivo(postulante.imagen);
-                }
-                data.imagen = files.imagen[0].destination + "/" + files.imagen[0].filename;
-            }
-
+    if (request.file) {
+        if (postulante.imagen) {
+            removerArchivo(postulante.imagen);
         }
+        postulante.imagen = request.file.destination + "/" + request.file.filename;
     }
 
-    await postulantesService.put(request.user.id, data);
+    await postulantesService.put(postulante.id, postulante);
 
     return response.status(201).json();
 }

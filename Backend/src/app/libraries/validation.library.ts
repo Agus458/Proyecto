@@ -61,3 +61,12 @@ export const validarDomicilio = async (domicilio: any, domicilioPostulante: any)
 
     return domicilio;
 }
+
+export const validarCapacitaciones = (capacitaciones: any) => {
+    if(capacitaciones instanceof Array) throw AppError.badRequestError("Capacitaciones invalidas");
+
+    capacitaciones.forEach((capacitacion: any) => {
+        if(typeof capacitacion == "object") throw AppError.badRequestError("Capacitacion invalida");
+        
+    });
+}
