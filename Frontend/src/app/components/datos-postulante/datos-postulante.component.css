@@ -25,4 +25,7 @@
     margin-left: 8px;
   }
 
-  
+  ul {
+    list-style-type: none;
+    margin-top: 4px;
+  }

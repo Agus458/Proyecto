@@ -1,6 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatAccordion } from '@angular/material/expansion';
+import {ThemePalette} from '@angular/material/core';
+
+export interface Task {
+  name: string;
+  completed: boolean;
+  color: ThemePalette;
+  subtasks?: Task[];
+}
 
 @Component({
   selector: 'app-datos-postulante',
@@ -49,6 +57,23 @@ export class DatosPostulanteComponent implements OnInit {
     });
   }
 
+  task: Task = {
+    name: 'Indiferente',
+    completed: false,
+    color: 'primary',
+    subtasks: [
+      {name: 'Completa', completed: false, color: 'primary'},
+      {name: 'Medio Turno Mañana', completed: false, color: 'primary'},
+      {name: 'Medio Turno Tarde', completed: false, color: 'primary'},
+      {name: 'Medio Turno Noche', completed: false, color: 'primary'}
+    ]
+  };
+
+  allComplete: boolean = false;
+
 }
+
+
+
 
 
