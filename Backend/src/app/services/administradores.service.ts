@@ -1,4 +1,5 @@
 import { DeepPartial, getRepository } from "typeorm";
+import { verifyPassword } from "../libraries/encryptation.library";
 import { Administrador } from "../models/administrador.model";
 
 /* ---------------------------------------< ADMINISTRADORES SERVICE >--------------------------------------- */
@@ -18,6 +19,18 @@ export const getByEmail = async (email: string): Promise<Administrador | undefin
     return await getRepository(Administrador).findOne({
         where: { email }
     });
+};
+
+// Retorna el administrador almacenado en el sistema cuyo email y contrasenia sea el ingresado.
+export const getByEmailContrasenia = async (email: string, contrasenia: string): Promise<Administrador | undefined> => {
+    const usuario = await getRepository(Administrador).findOne({
+        select: ["id", "email", "contrasenia"],
+        where: { email }
+    });
+
+    if (usuario && await verifyPassword(contrasenia, usuario.contrasenia)) return usuario;
+
+    return undefined;
 };
 
 // Almacena en el sistema un nuevo Administrador.

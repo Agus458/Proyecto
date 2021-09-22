@@ -1,20 +1,37 @@
 import validator from "validator";
 
 import { AppError } from "../../config/error/appError";
-import { Domicilio } from "../models/domicilio.model";
 import { TipoDocumento } from "../models/enums"
 import * as paisesService from "../services/paises.service";
 import * as departamentosService from "../services/departamentos.service";
 import * as localidadesService from "../services/localidades.service";
+import moment from "moment";
 
-// Valida que el documento y el tipo correspondiente sean correctos.
-export const validarDocumento = (tipoDocumento: TipoDocumento | undefined, documento: string | undefined) => {
-    if (!documento) throw AppError.badRequestError("Falta el documento del postulante");
-    if (!tipoDocumento) throw AppError.badRequestError("Falta el tipo del documento del postulante");
-    if (!TipoDocumento[tipoDocumento]) throw AppError.badRequestError("Tipo de documento invalido");
+// Valida que los datos personales del postulante sean correctos.
+export const validarDatosPersonales = (data: any) => {
+    if (data.tipoDocumento || data.documento) {
+        if (typeof data.tipoDocumento == "undefined") throw AppError.badRequestError("Falta el tipo del documento del postulante");
+        if (typeof data.tipoDocumento != "number" || !TipoDocumento[data.tipoDocumento]) throw AppError.badRequestError("Tipo de documento invalido");
+        if (!data.documento) throw AppError.badRequestError("Falta el documento del postulante");
 
-    if (tipoDocumento.valueOf() == TipoDocumento.CI.valueOf() && (!validator.isInt(documento) || !validator.isLength(documento, { max: 8, min: 8 }))) throw AppError.badRequestError("Cedula invalida");
-    if (tipoDocumento.valueOf() == TipoDocumento.PASAPORTE.valueOf() && !validator.isPassportNumber(documento, "UY")) throw AppError.badRequestError("Pasaporte invalido");
+        if (data.tipoDocumento.valueOf() == TipoDocumento.CI.valueOf() && (!validator.isInt(data.documento) || !validator.isLength(data.documento, { max: 8, min: 8 }))) throw AppError.badRequestError("Cedula invalida");
+    }
+
+    if (data.sexo) {
+        if (typeof data.sexo != "string") throw AppError.badRequestError("Sexo invalido");
+    }
+
+    if(data.primerNombre && typeof data.primerNombre != "string") throw AppError.badRequestError("Primer Nombre invalido");
+    if(data.segundoNombre && typeof data.segundoNombre != "string") throw AppError.badRequestError("Segundo Nombre invalido");
+    if(data.primerApellido && typeof data.primerApellido != "string") throw AppError.badRequestError("Primer Apellido invalido");
+    if(data.segundoApellido && typeof data.segundoApellido != "string") throw AppError.badRequestError("Segundo Apellido invalido");
+
+    if (data.fechaNacimiento) {
+        if (typeof data.fechaNacimiento != "string" || validator.isDate(data.fechaNacimiento)) throw AppError.badRequestError("Fecha de nacimiento invalida");
+        const fechaNacimiento = moment(data.fechaNacimiento, "DD-MM-YYYY");
+        if(fechaNacimiento.isAfter(moment())) throw AppError.badRequestError("Fecha de nacimiento debe ser anterior a la fecha actual");
+        data.fechaNacimiento = fechaNacimiento.toDate();
+    }
 }
 
 // Valida que el domicilio sea correctos.
@@ -63,10 +80,10 @@ export const validarDomicilio = async (domicilio: any, domicilioPostulante: any)
 }
 
 export const validarCapacitaciones = (capacitaciones: any) => {
-    if(capacitaciones instanceof Array) throw AppError.badRequestError("Capacitaciones invalidas");
+    if (capacitaciones! instanceof Array) throw AppError.badRequestError("Capacitaciones invalidas");
 
     capacitaciones.forEach((capacitacion: any) => {
-        if(typeof capacitacion == "object") throw AppError.badRequestError("Capacitacion invalida");
-        
+        if (typeof capacitacion != "object") throw AppError.badRequestError("Capacitacion invalida");
+
     });
 }

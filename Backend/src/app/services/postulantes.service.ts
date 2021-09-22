@@ -1,4 +1,5 @@
 import { DeepPartial, getRepository } from "typeorm";
+import { verifyPassword } from "../libraries/encryptation.library";
 import { Postulante } from "../models/postulante.model";
 
 /* ---------------------------------------< POSTULANTES SERVICE >--------------------------------------- */
@@ -18,6 +19,25 @@ export const getByEmail = async (email: string): Promise<Postulante | undefined>
     return await getRepository(Postulante).findOne({
         where: { email }
     });
+};
+
+// Retorna el postulante almacenado en el sistema cuyo email sea el ingresado.
+export const getByDocumento = async (documento: string): Promise<Postulante | undefined> => {
+    return await getRepository(Postulante).findOne({
+        where: { documento }
+    });
+};
+
+// Retorna el postulante almacenado en el sistema cuyo email y contrasenia sea el ingresado.
+export const getByEmailContrasenia = async (email: string, contrasenia: string): Promise<Postulante | undefined> => {
+    const usuario = await getRepository(Postulante).findOne({
+        select: ["id", "email", "contrasenia"],
+        where: { email }
+    });    
+
+    if (usuario && await verifyPassword(contrasenia, usuario.contrasenia)) return usuario;
+
+    return undefined;
 };
 
 // Retorna el perfil completo del postulante almacenado en el sistema cuyo id sea el ingresado.

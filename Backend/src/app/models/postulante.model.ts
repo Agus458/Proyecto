@@ -45,7 +45,7 @@ export class Postulante extends Usuario {
     })
     tipoDocumento: TipoDocumento;
 
-    @Column({ nullable: true, unique: true })
+    @Column({ nullable: true })
     documento: string;
 
     @Column({ nullable: true })

@@ -9,13 +9,28 @@ export const getByEmail = async (email: string): Promise<Postulante | Empresa | 
     let usuario: Postulante | Empresa | Administrador | undefined;
 
     usuario = await postulantesService.getByEmail(email);
-    if(usuario) return usuario;
+    if (usuario) return usuario;
 
     usuario = await empresasService.getByEmail(email);
-    if(usuario) return usuario;
+    if (usuario) return usuario;
 
     usuario = await administradoresService.getByEmail(email);
-    if(usuario) return usuario;
+    if (usuario) return usuario;
+
+    return usuario;
+};
+
+export const getByEmailContrasenia = async (email: string, contrasenia: string): Promise<Postulante | Empresa | Administrador | undefined> => {
+    let usuario: Postulante | Empresa | Administrador | undefined;
+
+    usuario = await postulantesService.getByEmailContrasenia(email, contrasenia);
+    if (usuario) return usuario;
+
+    usuario = await empresasService.getByEmailContrasenia(email, contrasenia);
+    if (usuario) return usuario;
+
+    usuario = await administradoresService.getByEmailContrasenia(email, contrasenia);
+    if (usuario) return usuario;
 
     return usuario;
 };

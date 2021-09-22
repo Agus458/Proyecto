@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { Usuario } from 'src/app/models/usuario.model';
 
 @Injectable({
@@ -7,7 +9,13 @@ import { Usuario } from 'src/app/models/usuario.model';
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  private url: string = "http://localhost:3000/api/auth";
+
+  constructor(
+    private http: HttpClient,
+    private snackBar: MatSnackBar,
+    private router: Router
+  ) { }
 
   getToken(): string | null {
     return localStorage.getItem("token");
@@ -15,8 +23,7 @@ export class AuthService {
 
   getUser(): Usuario | null {
     const usuario = localStorage.getItem("usuario");
-    console.log(usuario);
-    
+
     if (usuario) {
       return JSON.parse(usuario);
     }
@@ -29,7 +36,19 @@ export class AuthService {
   }
 
   iniciarSesion(email: string, contrasenia: string) {
-    return this.http.post<any>("http://localhost:3000/api/auth/iniciarSesion", { email, contrasenia });
+    this.http.post<any>(this.url + "/iniciarSesion", { email, contrasenia }).subscribe(
+      result => {
+        localStorage.setItem("token", JSON.stringify(result.token));
+        localStorage.setItem("usuario", JSON.stringify(result.usuario));
+
+        this.snackBar.open("Login exitoso!!!", "Close", { duration: 5000 });
+        
+        this.router.navigateByUrl("/");
+      },
+      error => {
+        this.snackBar.open(error.error.message, "Close", { duration: 5000 });
+      }
+    );
   }
 
   cerrarSesion() {
