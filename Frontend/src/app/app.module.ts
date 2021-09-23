@@ -19,6 +19,7 @@ import { DatosPostulanteComponent } from './components/datos-postulante/datos-po
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/m
     RegistarseComponent,
     InicioComponent,
     NavbarButtonsComponent,
-    DatosPostulanteComponent
+    DatosPostulanteComponent,
+    MiPerfilComponent
   ],
   imports: [
     BrowserModule,

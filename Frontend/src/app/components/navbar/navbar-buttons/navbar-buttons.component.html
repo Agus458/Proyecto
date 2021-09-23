@@ -4,7 +4,7 @@
 </div>
 
 <ng-template #sesioniniciada>
-    <button mat-icon-button>
+    <button mat-icon-button [routerLink]="['miperfil']">
         <mat-icon>account_circle</mat-icon>
     </button>
     <button mat-icon-button (click)="cerrarSesion()">

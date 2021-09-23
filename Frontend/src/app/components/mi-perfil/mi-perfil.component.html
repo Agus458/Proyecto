@@ -1,0 +1,214 @@
+<div fxLayout="row" fxLayoutAlign="space-evenly start" fxLayout.xs="column" fxLayoutAlign.xs="center center">
+    <div>
+        <mat-card class="example-card" style="margin-top: 10px;">
+            <mat-card-header>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-title>Nombre Usuario</mat-card-title>
+                <mat-card-subtitle>Titulo o cargo</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-actions>
+                <button mat-button>Compartir</button>
+                <button mat-button>Contactar</button>
+            </mat-card-actions>
+        </mat-card>
+
+        <mat-card style="margin-top: 10px;">
+            <mat-card-header>
+                <mat-card-title>Mi CV</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <button mat-raised-button color="primary">
+                    <mat-icon>description</mat-icon>Currículum Vitae
+                </button>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="infoperfil" [ngStyle.xs]="['width: 100%']">
+        <mat-card style="margin-top: 10px;">
+            <mat-card-content>
+                <mat-tab-group color="primary" backgroundColor="primary">
+                    <mat-tab label="Datos Personales">
+                        <div fxLayout="row" fxLayoutAlign="space-evenly start">
+                            <div fxLayout="column" fxLayoutAlign="space-evenly start">
+                                <h3 style="padding-top: 5px;   color:#026d30;"><strong>Identificación</strong></h3>
+                                <p><strong>Documento:</strong> Cedula </p>
+                                <p><strong>Numero de Documento:</strong> C12345678</p>
+                                <p><strong>Primer Nombre:</strong> $pnombre</p>
+                                <p><strong>Segundo Nombre:</strong> $snombre</p>
+                                <p><strong>Primer Apellido:</strong> $pApellido</p>
+                                <p><strong>Segundo Apellido:</strong> $sApellido</p>
+                                <p><strong>Sexo:</strong> $sexo</p>
+                                <p><strong>Fecha de Nacimiento:</strong> 00/00/0000</p>
+                            </div>
+                            <div fxLayout="column" fxLayoutAlign="space-evenly start">
+                                <h3 style="padding-top: 5px;   color:#026d30;"><strong>Domicilio</strong></h3>
+                                <p><strong>Pais:</strong> Pais </p>
+                                <p><strong>Departamento:</strong> $departamento</p>
+                                <p><strong>Localidad:</strong> $localidad</p>
+                                <p><strong>Barrio:</strong> $barrio</p>
+                                <p><strong>Direccion:</strong> $direccion</p>
+                            </div>
+                            <div fxLayout="column" fxLayoutAlign="space-evenly start">
+                                <h3 style="padding-top: 5px;   color:#026d30;"><strong>Contacto</strong></h3>
+                                <p><strong>Primer Telefono/Celular:</strong> 123456789</p>
+                                <p><strong>Segundo Telefono/Celular:</strong> 123456789</p>
+                                <p><strong>Correo Electronico:</strong> $correo@correo.com</p>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Educación y Formación">
+                        <div fxLayout="row" fxLayoutAlign="space-evenly start">
+                            <div fxLayout="column" fxLayoutAlign="space-evenly start">
+                                <div>
+                                    <h3 style="padding-top: 5px;   color:#026d30;"><strong>Nivel Educativo
+                                            Formal</strong></h3>
+                                    <p><strong>Maximo Nivel Educativo:</strong> Liceo </p>
+                                    <p><strong>Estado:</strong> Completo</p>
+                                </div>
+                                <div>
+                                    <h3 style="padding-top: 5px;   color:#026d30;"><strong>Conocimientos
+                                            Informaticos</strong></h3>
+                                    <p><strong>Maximo Nivel Educativo:</strong> Liceo </p>
+                                    <p><strong>Estado:</strong> Completo</p>
+                                </div>
+                            </div>
+                            <div fxLayout="column" fxLayoutAlign="space-evenly start">
+                                <div>
+                                    <h3 style="padding-top: 5px;   color:#026d30;"><strong>Capacitación y Formacion
+                                            Adicional</strong></h3>
+                                </div>
+                                <div fxLayout="column" fxLayoutAlign="space-evenly start">
+                                    <h3 style="padding-top: 5px;   color:#026d30;"><strong>Idiomas</strong></h3>
+
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Experiencia Laboral">
+                        <div fxLayout="row" fxLayoutAlign="space-evenly start">
+                            <div fxLayout="column" fxLayoutAlign="space-evenly start">
+                                <div>
+                                    <h3 style="padding-top: 5px;   color:#026d30;"><strong>Nombre de Empresa</strong>
+                                    </h3>
+                                    <p><strong>Cargo:</strong> Cargo</p>
+                                    <p><strong>Área o rubro:</strong> Área</p>
+                                    <p><strong>Nivel Jerárquico:</strong> Nivel</p>
+                                    <p><strong>Tareas:</strong></p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Tarea 1</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Tarea 2</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Tarea 3</p>
+                                    <p><strong>Periodo:</strong></p>
+                                    <p><strong>Desde:</strong> 00/00/0000<strong>&nbsp;&nbsp;Hasta:</strong> 00/00/0000
+                                    </p>
+                                </div>
+                                <div>
+                                    <h3 style="padding-top: 5px;   color:#026d30;"><strong>Nombre de Empresa</strong>
+                                    </h3>
+                                    <p><strong>Cargo:</strong> Cargo</p>
+                                    <p><strong>Área o rubro:</strong> Área</p>
+                                    <p><strong>Nivel Jerárquico:</strong> Nivel</p>
+                                    <p><strong>Tareas:</strong></p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Tarea 1</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Tarea 2</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Tarea 3</p>
+                                    <p><strong>Periodo:</strong></p>
+                                    <p><strong>Desde:</strong> 00/00/0000<strong>&nbsp;&nbsp;Hasta:</strong> 00/00/0000
+                                    </p>
+                                </div>
+                            </div>
+                            <div fxLayout="column" fxLayoutAlign="space-evenly start">
+                                <div>
+                                    <h3 style="padding-top: 5px;   color:#026d30;"><strong>Nombre de Empresa</strong>
+                                    </h3>
+                                    <p><strong>Cargo:</strong> Cargo</p>
+                                    <p><strong>Área o rubro:</strong> Área</p>
+                                    <p><strong>Nivel Jerárquico:</strong> Nivel</p>
+                                    <p><strong>Tareas:</strong></p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Tarea 1</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Tarea 2</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Tarea 3</p>
+                                    <p><strong>Periodo:</strong></p>
+                                    <p><strong>Desde:</strong> 00/00/0000<strong>&nbsp;&nbsp;Hasta:</strong> 00/00/0000
+                                    </p>
+                                </div>
+                                <div>
+                                    <h3 style="padding-top: 5px;   color:#026d30;"><strong>Nombre de Empresa</strong>
+                                    </h3>
+                                    <p><strong>Cargo:</strong> Cargo</p>
+                                    <p><strong>Área o rubro:</strong> Área</p>
+                                    <p><strong>Nivel Jerárquico:</strong> Nivel</p>
+                                    <p><strong>Tareas:</strong></p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Tarea 1</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Tarea 2</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Tarea 3</p>
+                                    <p><strong>Periodo:</strong></p>
+                                    <p><strong>Desde:</strong> 00/00/0000<strong>&nbsp;&nbsp;Hasta:</strong> 00/00/0000
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Permisos y Licencias">
+                        <div fxLayout="row" fxLayoutAlign="space-evenly start">
+                            <div fxLayout="column" fxLayoutAlign="space-evenly start">
+                                <div>
+                                    <h3 style="padding-top: 5px;   color:#026d30;"><strong>Permisos 1</strong></h3>
+                                    <p><strong>Vigencia:</strong> 00/00/0000</p>
+                                </div>
+                                <div>
+                                    <h3 style="padding-top: 5px;   color:#026d30;"><strong>Permisos 2</strong></h3>
+                                    <p><strong>Vigencia:</strong> 00/00/0000</p>
+                                </div>
+                            </div>
+                            <div fxLayout="column" fxLayoutAlign="space-evenly start">
+                                <div>
+                                    <h3 style="padding-top: 5px;   color:#026d30;"><strong>Licencia 1</strong></h3>
+                                    <p><strong>Vigencia:</strong> 00/00/0000</p>
+                                </div>
+                                <div>
+                                    <h3 style="padding-top: 5px;   color:#026d30;"><strong>Licencia 2</strong></h3>
+                                    <p><strong>Vigencia:</strong> 00/00/0000</p>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Intereses y Preferencias">
+                        <div fxLayout="row" fxLayoutAlign="space-evenly start">
+                            <div fxLayout="column" fxLayoutAlign="space-evenly start">
+                                <div>
+                                    <h3 style="padding-top: 5px;   color:#026d30;"><strong></strong></h3>
+                                    <p><strong>Jornada Laboral Preferida:</strong> Medio Turno Mañana</p>
+                                </div>
+                                <div>
+                                    <h3 style="padding-top: 5px;   color:#026d30;"><strong>Preferencias
+                                            Laborales</strong>
+                                    </h3>
+                                    <p><strong>Puesto 1:</strong></p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Área o rubro:</strong> Área</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Aspiración Salarial:</strong> $99999</p>
+                                    <p><strong>Puesto 2:</strong></p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Área o rubro:</strong> Área</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Aspiración Salarial:</strong> $99999</p>
+                                    <p><strong>Puesto 3:</strong></p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Área o rubro:</strong> Área</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Aspiración Salarial:</strong> $99999</p>
+                                </div>
+                            </div>
+                            <div>
+                                <br><br><br><br><br>
+                                <p><strong>Puesto 4:</strong></p>
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Área o rubro:</strong> Área</p>
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Aspiración Salarial:</strong> $99999</p>
+                                <p><strong>Puesto 5:</strong></p>
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Área o rubro:</strong> Área</p>
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Aspiración Salarial:</strong> $99999</p>
+
+                            </div>
+
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
