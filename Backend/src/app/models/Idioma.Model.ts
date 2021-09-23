@@ -32,7 +32,7 @@ export class Idiomas extends BaseEntity
         enum: nivel,
         default: nivel.No
         })
-        Escritura:nivela;
+        Escritura:nivel;
     
        
    

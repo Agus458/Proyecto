@@ -26,3 +26,9 @@ export const post = async (data: DeepPartial<Empresa>): Promise<Empresa> => {
     
     return await getRepository(Empresa).save(nuevaEmpresa);
 };
+
+
+export const put = async (id:number,data:DeepPartial<Empresa>):Promise<void> =>
+{
+    await getRepository(Empresa).update(id,data);
+}
