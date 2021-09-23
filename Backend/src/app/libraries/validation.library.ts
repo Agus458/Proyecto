@@ -11,6 +11,8 @@ import * as capacitacionesService from "../services/capacitaciones.service";
 import * as conocimientosService from "../services/conocimientos.service";
 import * as idiomasService from "../services/idiomas.service";
 import * as experienciasLaboralesService from "../services/experienciasLaborales.service";
+import * as permisosService from "../services/permisos.service";
+import * as preferenciasLaboralesService from "../services/preferenciasLaborales.service";
 
 // Valida que los datos personales del postulante sean correctos.
 export const validarDatosPersonales = (data: any) => {
@@ -93,6 +95,7 @@ export const validarDomicilio = async (domicilio: any, domicilioPostulante: any)
     return domicilio;
 }
 
+// Valida que las capacitaciones sean correctas.
 export const validarCapacitaciones = async (capacitaciones: any, postulante: Postulante) => {
     if (capacitaciones.constructor != Array) throw AppError.badRequestError("Capacitaciones invalidas");
 
@@ -120,6 +123,7 @@ export const validarCapacitaciones = async (capacitaciones: any, postulante: Pos
     return capacitaciones;
 }
 
+// Valida que los Conocimientos sean correctos.
 export const validarConocimientoInformatico = async (conocimientos: any, postulante: Postulante) => {
     if (conocimientos.constructor != Array) throw AppError.badRequestError("Conocimientos Informaticos invalidas");
 
@@ -143,6 +147,7 @@ export const validarConocimientoInformatico = async (conocimientos: any, postula
     return conocimientos;
 }
 
+// Valida que los idiomas sean correctos.
 export const validarIdiomas = async (idiomas: any, postulante: Postulante) => {
     if (idiomas.constructor != Array) throw AppError.badRequestError("Idiomas invalidos");
 
@@ -169,6 +174,7 @@ export const validarIdiomas = async (idiomas: any, postulante: Postulante) => {
     return idiomas;
 }
 
+// Valida que las experiencias sean correctos.
 export const validarExperienciasLaborales = async (experienciasLaborales: any, postulante: Postulante) => {
     if (experienciasLaborales.constructor != Array) throw AppError.badRequestError("Experiencias Laborales invalidos");
 
@@ -216,4 +222,52 @@ export const validarExperienciasLaborales = async (experienciasLaborales: any, p
     }
 
     return experienciasLaborales;
+}
+
+// Valida que los Permisos sean correctos.
+export const validarPermisos = async (permisos: any, postulante: Postulante) => {
+    if (permisos.constructor != Array) throw AppError.badRequestError("Permisos invalidas");
+
+    for (let index = 0; index < permisos.length; index++) {
+        const permiso = permisos[index];
+        if (typeof permiso != "object") throw AppError.badRequestError("Permiso invalido");
+
+        if (permiso.id) {
+            if (typeof permiso.id != "number") throw AppError.badRequestError("Id de permiso invalido");
+            const permisoGuardado = await permisosService.getById(permiso.id);
+            if (!permisoGuardado) throw AppError.badRequestError("No existe un permiso con el id: " + permiso.id);
+            if (permisoGuardado.postulante.id != postulante.id) throw AppError.badRequestError("El permiso con el id: " + permiso.id + " no pretenece al usuario");
+        }
+        if (typeof permiso.tipoDocumento != "string") throw AppError.badRequestError("Tipo de Documento de permiso invalido o no ingresado");
+        if (typeof permiso.vigencia != "string") throw AppError.badRequestError("Vigencia de permiso invalido o no ingresado");
+        if (permiso.especificacion && typeof permiso.especificacion != "string") throw AppError.badRequestError("Especificacion de permiso invalido o no ingresado");
+        
+        permiso.postulante = postulante;
+    }
+
+    return permisos;
+}
+
+// Valida que las Preferencias Laborales sean correctos.
+export const validarPreferenciasLaborales = async (preferenciasLaborales: any, postulante: Postulante) => {
+    if (preferenciasLaborales.constructor != Array) throw AppError.badRequestError("Preferencias Laborales invalidas");
+
+    for (let index = 0; index < preferenciasLaborales.length; index++) {
+        const preferenciaLaboral = preferenciasLaborales[index];
+        if (typeof preferenciaLaboral != "object") throw AppError.badRequestError("preferenciaLaboral invalido");
+
+        if (preferenciaLaboral.id) {
+            if (typeof preferenciaLaboral.id != "number") throw AppError.badRequestError("Id de Preferencia Laboral invalido");
+            const preferenciaLaboralGuardado = await preferenciasLaboralesService.getById(preferenciaLaboral.id);
+            if (!preferenciaLaboralGuardado) throw AppError.badRequestError("No existe una Preferencia Laboral con el id: " + preferenciaLaboral.id);
+            if (preferenciaLaboralGuardado.postulante.id != postulante.id) throw AppError.badRequestError("La Preferencia Laboral con el id: " + preferenciaLaboral.id + " no pretenece al usuario");
+        }
+        if (typeof preferenciaLaboral.puestoPreferido != "string") throw AppError.badRequestError("Puesto Preferido de Preferencia Laboral invalido o no ingresado");
+        if (typeof preferenciaLaboral.areasInteres != "string") throw AppError.badRequestError("Areas Interes de Preferencia Laboral invalido o no ingresado");
+        if (typeof preferenciaLaboral.aspiracionSalarial != "number") throw AppError.badRequestError("Aspiracion Salarial de Preferencia Laboral invalido o no ingresado");
+
+        preferenciaLaboral.postulante = postulante;
+    }
+
+    return preferenciasLaborales;
 }

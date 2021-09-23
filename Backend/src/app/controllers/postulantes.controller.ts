@@ -3,7 +3,7 @@ import validator from "validator";
 
 import { AppError } from "../../config/error/appError";
 import { removerArchivo } from "../libraries/file.library";
-import { validarCapacitaciones, validarConocimientoInformatico, validarDatosPersonales, validarDomicilio, validarExperienciasLaborales, validarIdiomas } from "../libraries/validation.library";
+import { validarCapacitaciones, validarConocimientoInformatico, validarDatosPersonales, validarDomicilio, validarExperienciasLaborales, validarIdiomas, validarPermisos, validarPreferenciasLaborales } from "../libraries/validation.library";
 import * as postulantesService from "../services/postulantes.service";
 
 /* ---------------------------------------< POSTULANTES CONTROLLER >--------------------------------------- */
@@ -52,7 +52,15 @@ export const putPostulante = async (request: Request, response: Response): Promi
     if(request.body.experienciasLaborales){
         request.body.experienciasLaborales = await validarExperienciasLaborales(request.body.experienciasLaborales, postulante);
     }
+
+    if(request.body.permisos){
+        request.body.permisos = await validarPermisos(request.body.permisos, postulante);
+    }
     
+    if(request.body.preferenciasLaborales){
+        request.body.preferenciasLaborales = await validarPreferenciasLaborales(request.body.preferenciasLaborales, postulante);
+    }
+
     await postulantesService.put(postulante.id, request.body);
 
     return response.status(201).json();
