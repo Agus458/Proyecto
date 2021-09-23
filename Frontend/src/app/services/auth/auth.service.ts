@@ -41,7 +41,7 @@ export class AuthService {
         localStorage.setItem("token", JSON.stringify(result.token));
         localStorage.setItem("usuario", JSON.stringify(result.usuario));
 
-        this.snackBar.open("Login exitoso!!!", "Close", { duration: 5000 });
+        this.snackBar.open("Login exitoso!", "Close", { duration: 5000 });
         
         this.router.navigateByUrl("/");
       },

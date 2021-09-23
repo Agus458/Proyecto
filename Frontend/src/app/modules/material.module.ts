@@ -17,6 +17,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 
 @NgModule({
@@ -37,7 +39,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
         MatDatepickerModule,
         MatCheckboxModule,
         MatExpansionModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        MatTabsModule,
+        MatGridListModule
     ],
     exports: [
         FlexLayoutModule,
@@ -56,7 +60,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
         MatDatepickerModule,
         MatCheckboxModule,
         MatExpansionModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        MatTabsModule,
+        MatGridListModule
     ]
 })
 export class MaterialModule { }
