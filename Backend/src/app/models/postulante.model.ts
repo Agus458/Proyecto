@@ -55,10 +55,10 @@ export class Postulante extends Usuario {
     fechaNacimiento: Date;
 
     @Column({ nullable: true })
-    primerTelefono: number;
+    primerTelefono: string;
 
     @Column({ nullable: true })
-    segundoTelefono: number;
+    segundoTelefono: string;
 
     @Column({ nullable: true })
     nivelEducativo: string;
@@ -75,37 +75,37 @@ export class Postulante extends Usuario {
     @Column({ nullable: true })
     perfilPublico: boolean;
 
-    @Column({nullable: true})
+    @Column({ nullable: true })
     jornadaIndiferente: boolean;
 
-    @Column({nullable: true})
+    @Column({ nullable: true })
     jornadaCompleta: boolean;
 
-    @Column({nullable: true})
+    @Column({ nullable: true })
     jornadaManiana: boolean;
 
-    @Column({nullable: true})
+    @Column({ nullable: true })
     jornadaTarde: boolean;
 
-    @Column({nullable: true})
+    @Column({ nullable: true })
     jornadaNoche: boolean;
 
-    @OneToMany(() => Capacitacion, capacitacion => capacitacion.postulante)
+    @OneToMany(() => Capacitacion, capacitacion => capacitacion.postulante, { cascade: true })
     capacitaciones: Capacitacion[];
 
-    @OneToMany(() => ConocimientoInformatico, conocimiento => conocimiento.postulante)
+    @OneToMany(() => ConocimientoInformatico, conocimiento => conocimiento.postulante, { cascade: true })
     conocimientosInformaticos: ConocimientoInformatico[];
 
-    @OneToMany(() => Idioma, idioma => idioma.postulante)
+    @OneToMany(() => Idioma, idioma => idioma.postulante, { cascade: true })
     idiomas: Idioma[];
 
-    @OneToMany(() => ExperienciaLaboral, experiencia => experiencia.postulante)
+    @OneToMany(() => ExperienciaLaboral, experiencia => experiencia.postulante, { cascade: true })
     experienciasLaborales: ExperienciaLaboral[];
 
-    @OneToMany(() => PreferenciaLaboral, preferenciaLaboral => preferenciaLaboral.postulante)
+    @OneToMany(() => PreferenciaLaboral, preferenciaLaboral => preferenciaLaboral.postulante, { cascade: true })
     preferenciasLaborales: PreferenciaLaboral[];
 
-    @OneToMany(() => Permiso, permiso => permiso.postulante)
+    @OneToMany(() => Permiso, permiso => permiso.postulante, { cascade: true })
     permisos: Permiso[];
 
 }

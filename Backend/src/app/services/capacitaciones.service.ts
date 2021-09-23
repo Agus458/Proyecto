@@ -1,7 +1,7 @@
 import { DeepPartial, getRepository } from "typeorm";
 import { Capacitacion } from "../models/capacitacion.model";
 
-/* ---------------------------------------< DEPARTAMENTOS SERVICE >--------------------------------------- */
+/* ---------------------------------------< CAPACITACIONES SERVICE >--------------------------------------- */
 
 // Retorna todas las Capacitacion almacenados en el sistema.
 export const get = async (): Promise<Capacitacion[]> => {
@@ -10,7 +10,7 @@ export const get = async (): Promise<Capacitacion[]> => {
 
 // Retorna el Capacitacion almacenado en el sistema cuyo id sea el ingresado.
 export const getById = async (id: number): Promise<Capacitacion | undefined> => {
-    return await getRepository(Capacitacion).findOne(id);
+    return await getRepository(Capacitacion).findOne(id, { relations: ["postulante"] });
 };
 
 // Crea una nueva Capacitacion sin persistirla.

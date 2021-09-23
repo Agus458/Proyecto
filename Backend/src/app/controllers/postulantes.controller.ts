@@ -3,7 +3,7 @@ import validator from "validator";
 
 import { AppError } from "../../config/error/appError";
 import { removerArchivo } from "../libraries/file.library";
-import { validarCapacitaciones, validarDatosPersonales, validarDomicilio } from "../libraries/validation.library";
+import { validarCapacitaciones, validarConocimientoInformatico, validarDatosPersonales, validarDomicilio, validarExperienciasLaborales, validarIdiomas } from "../libraries/validation.library";
 import * as postulantesService from "../services/postulantes.service";
 
 /* ---------------------------------------< POSTULANTES CONTROLLER >--------------------------------------- */
@@ -27,9 +27,7 @@ export const getPerfilById = async (request: Request, response: Response): Promi
     return response.status(200).json(postulante);
 }
 
-export const putPostulante = async (request: Request, response: Response): Promise<Response> => {
-    console.log(request.body);
-    
+export const putPostulante = async (request: Request, response: Response): Promise<Response> => {    
     const postulante = await postulantesService.getPerfilById(request.user.id);
     if (!postulante) throw AppError.badRequestError("No se encontro el postulante");
 
@@ -40,9 +38,21 @@ export const putPostulante = async (request: Request, response: Response): Promi
     request.body.domicilio = await validarDomicilio(request.body.domicilio, postulante.domicilio);
 
     if(request.body.capacitaciones){
-        validarCapacitaciones(request.body.capacitaciones);
+        request.body.capacitaciones = await validarCapacitaciones(request.body.capacitaciones, postulante);
     }
 
+    if(request.body.conocimientosInformaticos){
+        request.body.conocimientosInformaticos = await validarConocimientoInformatico(request.body.conocimientosInformaticos, postulante);
+    }
+
+    if(request.body.idiomas){
+        request.body.idiomas = await validarIdiomas(request.body.idiomas, postulante);
+    }
+
+    if(request.body.experienciasLaborales){
+        request.body.experienciasLaborales = await validarExperienciasLaborales(request.body.experienciasLaborales, postulante);
+    }
+    
     await postulantesService.put(postulante.id, request.body);
 
     return response.status(201).json();

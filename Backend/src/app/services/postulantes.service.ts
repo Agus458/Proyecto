@@ -33,7 +33,7 @@ export const getByEmailContrasenia = async (email: string, contrasenia: string):
     const usuario = await getRepository(Postulante).findOne({
         select: ["id", "email", "contrasenia"],
         where: { email }
-    });    
+    });
 
     if (usuario && await verifyPassword(contrasenia, usuario.contrasenia)) return usuario;
 
@@ -43,7 +43,7 @@ export const getByEmailContrasenia = async (email: string, contrasenia: string):
 // Retorna el perfil completo del postulante almacenado en el sistema cuyo id sea el ingresado.
 export const getPerfilById = async (id: number): Promise<Postulante | undefined> => {
     return await getRepository(Postulante).findOne(id, {
-        relations: ["domicilio"]
+        relations: ["domicilio", "capacitaciones", "conocimientosInformaticos", "idiomas", "experienciasLaborales", "preferenciasLaborales", "permisos"]
     });
 };
 

@@ -19,7 +19,7 @@ export class Capacitacion extends BaseEntity {
     institucion: string;
 
     @Column()
-    añoInicio: string;
+    anioInicio: string;
 
     @Column()
     duracion: string;
