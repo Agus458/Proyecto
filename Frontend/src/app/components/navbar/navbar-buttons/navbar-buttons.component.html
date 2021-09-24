@@ -1,0 +1,13 @@
+<div *ngIf="!logeado; else sesioniniciada">
+    <button mat-button [routerLink]="['/iniciarSesion']">Iniciar Sesion</button>
+    <button mat-button [routerLink]="['/registrarse']">Registrarse</button>
+</div>
+
+<ng-template #sesioniniciada>
+    <button mat-icon-button [routerLink]="['miperfil']">
+        <mat-icon>account_circle</mat-icon>
+    </button>
+    <button mat-icon-button (click)="cerrarSesion()">
+        <mat-icon>logout</mat-icon>
+    </button>
+</ng-template>

@@ -15,7 +15,7 @@ export const getLocalidades = async (request: Request, response: Response): Prom
 
 export const getLocalidadById = async (request: Request, response: Response): Promise<Response> => {
     if (!request.params.id) throw AppError.badRequestError("No se ingreso el id del localidad");
-    if (validator.isNumeric(request.params.id)) throw AppError.badRequestError("Id de localidad invalido");
+    if (validator.isInt(request.params.id)) throw AppError.badRequestError("Id de localidad invalido");
 
     const localidad = await localidadesService.getById(Number.parseInt(request.params.id));
 
@@ -26,7 +26,7 @@ export const getLocalidadById = async (request: Request, response: Response): Pr
 
 export const getLocalidadesByDepartamento = async (request: Request, response: Response): Promise<Response> => {
     if (!request.params.id) throw AppError.badRequestError("No se ingreso el id del departamento");
-    if (validator.isNumeric(request.params.id)) throw AppError.badRequestError("Id de departamento invalido");
+    if (validator.isInt(request.params.id)) throw AppError.badRequestError("Id de departamento invalido");
 
     const departamento = await departamentosService.getById(Number.parseInt(request.params.id));
     if (!departamento) throw AppError.badRequestError("No existe ningun departamento con el id ingresado");
@@ -51,7 +51,7 @@ export const postLocalidad = async (request: Request, response: Response): Promi
 
 export const putLocalidad = async (request: Request, response: Response): Promise<Response> => {
     if (!request.params.id) throw AppError.badRequestError("No se ingreso el id de la localidad");
-    if (validator.isNumeric(request.params.id)) throw AppError.badRequestError("Id de la localidad invalido");
+    if (validator.isInt(request.params.id)) throw AppError.badRequestError("Id de la localidad invalido");
 
     if (request.body.departamento) {
         if (typeof request.body.departamento != "number") throw AppError.badRequestError("Id de departamento invalido");
@@ -59,7 +59,7 @@ export const putLocalidad = async (request: Request, response: Response): Promis
         if (!await departamentosService.getById(request.body.departamento)) throw AppError.badRequestError("No existe ningun departamento con el id ingresado");
     }
 
-    if (!await localidadesService.getById(Number.parseInt(request.params.id))) throw AppError.badRequestError("No existe ninguna localidad con el id ingresado");
+    if (! await localidadesService.getById(Number.parseInt(request.params.id))) throw AppError.badRequestError("No existe ninguna localidad con el id ingresado");
 
     await localidadesService.put(Number.parseInt(request.params.id), request.body);
 

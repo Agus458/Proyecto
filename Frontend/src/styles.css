@@ -1,0 +1,31 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; margin: 0; }
+body { margin: 0; font-family: 'Raleway', sans-serif; }
+
+.container {
+    padding: 20px;
+}
+
+.block {
+    width: 100%;
+}
+
+.card {
+    padding: 30px !important;
+}
+
+.navbar {
+    background: rgb(9,99,48) !important;
+    background: linear-gradient(90deg, rgba(9,99,48,1) 17%, rgba(3,179,56,1) 89%) !important;
+}
+
+.link {
+    color: #026d30;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.text-center {
+    text-align: center;
+}

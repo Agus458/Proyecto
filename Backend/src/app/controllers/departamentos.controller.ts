@@ -15,7 +15,7 @@ export const getDepartamentos = async (request: Request, response: Response): Pr
 
 export const getDepartamentoById = async (request: Request, response: Response): Promise<Response> => {
     if (!request.params.id) throw AppError.badRequestError("No se ingreso el id del departamento");
-    if (validator.isNumeric(request.params.id)) throw AppError.badRequestError("Id de departamento invalido");
+    if (validator.isInt(request.params.id)) throw AppError.badRequestError("Id de departamento invalido");
 
     const departamento = await departamentosService.getById(Number.parseInt(request.params.id));
 
@@ -26,7 +26,7 @@ export const getDepartamentoById = async (request: Request, response: Response):
 
 export const getDepartamentosByPais = async (request: Request, response: Response): Promise<Response> => {
     if (!request.params.id) throw AppError.badRequestError("No se ingreso el id del pais");
-    if (validator.isNumeric(request.params.id)) throw AppError.badRequestError("Id de pais invalido");
+    if (validator.isInt(request.params.id)) throw AppError.badRequestError("Id de pais invalido");
 
     const pais = await paisesService.getById(Number.parseInt(request.params.id));
     if (!pais) throw AppError.badRequestError("No existe ningun pais con el id ingresado");
@@ -52,7 +52,7 @@ export const postDepartamento = async (request: Request, response: Response): Pr
 
 export const putDepartamento = async (request: Request, response: Response): Promise<Response> => {
     if (!request.params.id) throw AppError.badRequestError("No se ingreso el id del departamento");
-    if (!validator.isNumeric(request.params.id)) throw AppError.badRequestError("Id de departamento invalido");
+    if (!validator.isInt(request.params.id)) throw AppError.badRequestError("Id de departamento invalido");
 
     if (request.body.pais) {
         if (typeof request.body.pais != "number") throw AppError.badRequestError("Id de pais invalido");

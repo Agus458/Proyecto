@@ -6,6 +6,9 @@ import { AppError } from "../../config/error/appError";
 import * as formularioServices from "../services/formulario.service";
 
 
+
+
+
 export const getFormulario = async(request:Request, response:Response ): Promise<Response> => {
     const Formulario = await formularioServices.get();
 
