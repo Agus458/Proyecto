@@ -9,3 +9,4 @@ export const putPostulante = async (request: Request, response: Response): Promi
     
     return response.status(200).json();
 }
+
