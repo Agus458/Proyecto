@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 })
 export class IniciarSesionComponent implements OnInit {
 
-  loginForm: FormGroup = new FormGroup({});
+  iniciarSesionForm: FormGroup = new FormGroup({});
 
   constructor(
     private authService: AuthService,
@@ -17,14 +17,14 @@ export class IniciarSesionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loginForm = this.fb.group({
+    this.iniciarSesionForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       contrasenia: ['', [Validators.required]]
     });
   }
 
   ngOnSubmit(): void {
-    const { email, contrasenia } = this.loginForm.value;
+    const { email, contrasenia } = this.iniciarSesionForm.value;
 
     this.authService.iniciarSesion(email, contrasenia);
   }

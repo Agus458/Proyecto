@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { proyectConfig } from 'proyectConfig';
 import { Usuario } from 'src/app/models/usuario.model';
 
 @Injectable({
@@ -9,7 +10,7 @@ import { Usuario } from 'src/app/models/usuario.model';
 })
 export class AuthService {
 
-  private url: string = "http://localhost:3000/api/auth";
+  private url: string = proyectConfig.backEndURL + "/auth";
 
   constructor(
     private http: HttpClient,
@@ -31,18 +32,34 @@ export class AuthService {
     return null;
   }
 
-  isLogged() {
+  isLogged(): boolean {
     return localStorage.getItem("usuario") != null;
   }
 
-  iniciarSesion(email: string, contrasenia: string) {
+  iniciarSesion(email: string, contrasenia: string): void {
     this.http.post<any>(this.url + "/iniciarSesion", { email, contrasenia }).subscribe(
       result => {
         localStorage.setItem("token", JSON.stringify(result.token));
         localStorage.setItem("usuario", JSON.stringify(result.usuario));
 
         this.snackBar.open("Login exitoso!", "Close", { duration: 5000 });
-        
+
+        this.router.navigateByUrl("/");
+      },
+      error => {
+        this.snackBar.open(error.error.message, "Close", { duration: 5000 });
+      }
+    );
+  }
+
+  registrarse(email: string, contrasenia: string): void {
+    this.http.post<any>(this.url + "/registrarse", { email, contrasenia }).subscribe(
+      result => {
+        localStorage.setItem("token", JSON.stringify(result.token));
+        localStorage.setItem("usuario", JSON.stringify(result.usuario));
+
+        this.snackBar.open("Registro exitoso!", "Close", { duration: 5000 });
+
         this.router.navigateByUrl("/");
       },
       error => {
@@ -52,7 +69,8 @@ export class AuthService {
   }
 
   cerrarSesion() {
-    localStorage.clear()
+    localStorage.clear();
+    this.router.navigateByUrl("/");
   }
 
 }

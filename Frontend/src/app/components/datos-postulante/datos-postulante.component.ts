@@ -1,7 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatAccordion } from '@angular/material/expansion';
-import {ThemePalette} from '@angular/material/core';
+import { ThemePalette } from '@angular/material/core';
+import { Postulante } from 'src/app/models/postulante.model';
+import * as moment from 'moment';
+import { Pais } from 'src/app/models/pais.model';
+import { PaisesService } from 'src/app/services/paises/paises.service';
+import { Departamento } from 'src/app/models/departamento.model';
+import { Localidad } from 'src/app/models/localidad.model';
+import { DepartamentosService } from 'src/app/services/departamentos/departamentos.service';
+import { LocalidadesService } from 'src/app/services/localidades/localidades.service';
 
 export interface Task {
   name: string;
@@ -17,63 +25,111 @@ export interface Task {
 })
 export class DatosPostulanteComponent implements OnInit {
 
-  datospersonalesGroup: FormGroup = new FormGroup({});
-  educacionformacionGroup: FormGroup = new FormGroup({});
-  experiencialaboralGroup: FormGroup = new FormGroup({});
-  permisosGroup: FormGroup = new FormGroup({});
-  interesesGroup: FormGroup = new FormGroup({});
-  cvGroup: FormGroup = new FormGroup({});
+  datosPersonalesForm: FormGroup = new FormGroup({});
+  educacionFormacionForm: FormGroup = new FormGroup({});
+  experienciasLaboralesForm: FormGroup = new FormGroup({});
+  permisosForm: FormGroup = new FormGroup({});
+  interesesForm: FormGroup = new FormGroup({});
+  cvForm: FormGroup = new FormGroup({});
+
+  paises: Pais[] = [];
+  selectedPais: number | undefined;
+
+  departamentos: Departamento[] = [];
+  selectedDepartamento: number | undefined;
+
+  localidades: Localidad[] = [];
 
   @ViewChild(MatAccordion)
   accordion: MatAccordion = new MatAccordion;
 
-
-  constructor(private _formBuilder: FormBuilder) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private paisesService: PaisesService,
+    private departamentosService: DepartamentosService,
+    private localidadesService: LocalidadesService
+  ) { }
 
   ngOnInit() {
-    this.datospersonalesGroup = this._formBuilder.group({
-      numerodocumento: ['', Validators.required],
-      primernombre: ['', Validators.required],
-      primerapellido: ['', Validators.required],
-      fechanacimiento: ['', Validators.required],
+    const domicilio = this.formBuilder.group({
       direccion: ['', Validators.required],
-      celular: ['', Validators.required],
-      correoelectronico: ['', Validators.required],
+      barrio: [''],
+      pais: ['', Validators.required],
     });
-    this.educacionformacionGroup = this._formBuilder.group({
-      nombrecurso: ['', Validators.required],
-    });
-    this.experiencialaboralGroup = this._formBuilder.group({
 
+    this.datosPersonalesForm = this.formBuilder.group({
+      tipoDocumento: ['', Validators.required],
+      documento: ['', Validators.required],
+      primerNombre: ['', Validators.required],
+      segundoNombre: [''],
+      primerApellido: ['', Validators.required],
+      segundoApellido: [''],
+      primerTelefono: ['', Validators.required],
+      segundoTelefono: [''],
+      sexo: ['', Validators.required],
+      fechaNacimiento: [moment(), Validators.required],
+      recivirEmails: [false, Validators.required],
+      domicilio: domicilio,
     });
-    this.permisosGroup = this._formBuilder.group({
 
-    });
-    this.interesesGroup = this._formBuilder.group({
-
-    });
-    this.cvGroup = this._formBuilder.group({
-
-    });
+    this.paisesService.get().subscribe(
+      result => {
+        this.paises = result;
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
-  task: Task = {
-    name: 'Indiferente',
-    completed: false,
-    color: 'primary',
-    subtasks: [
-      {name: 'Completa', completed: false, color: 'primary'},
-      {name: 'Medio Turno Mañana', completed: false, color: 'primary'},
-      {name: 'Medio Turno Tarde', completed: false, color: 'primary'},
-      {name: 'Medio Turno Noche', completed: false, color: 'primary'}
-    ]
-  };
+  ngOnSubmit() {
+    const data: Postulante = {};
 
-  allComplete: boolean = false;
+    Object.assign(data, this.datosPersonalesForm.value);
 
+    console.log(data);
+  }
+
+  onChangePais() {
+    this.selectedPais = this.datosPersonalesForm.get("domicilio")?.get("pais")?.value;
+
+    if (this.selectedPais) {
+      const domicilio = this.datosPersonalesForm.get("domicilio") as FormGroup;
+      if (this.getPais(this.selectedPais)?.nombre === "Uruguay") {
+        domicilio.addControl("departamento", new FormControl('', [Validators.required]));
+        domicilio.addControl("localidad", new FormControl('', [Validators.required]));
+
+        this.departamentosService.getByPais(this.selectedPais).subscribe(
+          result => {
+            this.departamentos = result;
+          },
+          error => {
+            console.log(error);
+          }
+        );
+      } else {
+        domicilio.removeControl("departamento");
+        domicilio.removeControl("localidad");
+      }
+    }
+  }
+
+  getPais(id: number) {
+    return this.paises.find(pais => pais.id === id);
+  }
+
+  onChangeDepartamento(): void {
+    this.selectedDepartamento = this.datosPersonalesForm.get("domicilio")?.get("departamento")?.value;
+
+    if (this.selectedDepartamento) {
+      this.localidadesService.getByDepartamento(this.selectedDepartamento).subscribe(
+        result => {
+          this.localidades = result;
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
 }
-
-
-
-
-

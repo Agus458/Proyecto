@@ -3,7 +3,8 @@
 
         <mat-toolbar>
             <div fxLayout="row" fxLayoutAlign="space-between center">
-                <button class="home" mat-button>Bolsa de Trabajo</button>
+                <button class="home" mat-button [routerLink]="['/']" (click)="sidenav.toggle()">Bolsa de
+                    Trabajo</button>
                 <button mat-icon-button (click)="sidenav.toggle()">
                     <mat-icon>close</mat-icon>
                 </button>
@@ -11,7 +12,7 @@
         </mat-toolbar>
 
         <mat-nav-list>
-            <mat-list-item *ngFor="let link of links">
+            <mat-list-item *ngFor="let link of links" [routerLink]="link.link" (click)="sidenav.toggle()">
                 <mat-icon>{{link.icon}}</mat-icon>
                 <a>{{link.label}}</a>
             </mat-list-item>

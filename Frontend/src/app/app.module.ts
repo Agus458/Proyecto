@@ -31,7 +31,7 @@ import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
     InicioComponent,
     NavbarButtonsComponent,
     DatosPostulanteComponent,
-    MiPerfilComponent
+    MiPerfilComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,13 +41,13 @@ import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    MatDatepickerModule, 
+    MatDatepickerModule,
     MatMomentDateModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
-    {provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true} }
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }
   ],
   bootstrap: [AppComponent]
 })
