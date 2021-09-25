@@ -1,4 +1,5 @@
 import { DeepPartial, getRepository } from "typeorm";
+import { verifyPassword } from "../libraries/encryptation.library";
 import { Postulante } from "../models/postulante.model";
 
 /* ---------------------------------------< POSTULANTES SERVICE >--------------------------------------- */
@@ -20,7 +21,31 @@ export const getByEmail = async (email: string): Promise<Postulante | undefined>
     });
 };
 
+// Retorna el postulante almacenado en el sistema cuyo email sea el ingresado.
+export const getByDocumento = async (documento: string): Promise<Postulante | undefined> => {
+    return await getRepository(Postulante).findOne({
+        where: { documento }
+    });
+};
 
+// Retorna el postulante almacenado en el sistema cuyo email y contrasenia sea el ingresado.
+export const getByEmailContrasenia = async (email: string, contrasenia: string): Promise<Postulante | undefined> => {
+    const usuario = await getRepository(Postulante).findOne({
+        select: ["id", "email", "contrasenia"],
+        where: { email }
+    });
+
+    if (usuario && await verifyPassword(contrasenia, usuario.contrasenia)) return usuario;
+
+    return undefined;
+};
+
+// Retorna el perfil completo del postulante almacenado en el sistema cuyo id sea el ingresado.
+export const getPerfilById = async (id: number): Promise<Postulante | undefined> => {
+    return await getRepository(Postulante).findOne(id, {
+        relations: ["domicilio", "capacitaciones", "conocimientosInformaticos", "idiomas", "experienciasLaborales", "preferenciasLaborales", "permisos"]
+    });
+};
 
 // Almacena en el sistema un nuevo postulante.
 export const post = async (data: DeepPartial<Postulante>): Promise<Postulante> => {
@@ -31,5 +56,6 @@ export const post = async (data: DeepPartial<Postulante>): Promise<Postulante> =
 
 // Almacena en el sistema un nuevo postulante.
 export const put = async (id: number, data: DeepPartial<Postulante>): Promise<void> => {
-    await getRepository(Postulante).update(id, data);
+    data.id = id;
+    await getRepository(Postulante).save(data);
 };

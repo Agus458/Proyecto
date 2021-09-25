@@ -1,5 +1,6 @@
 import { BaseEntity, Column,Entity,JoinColumn,OneToOne } from "typeorm";
 import { idiomas, nivel } from "./enums";
+
 @Entity("Idiomas")
 export class Idiomas extends BaseEntity
 {

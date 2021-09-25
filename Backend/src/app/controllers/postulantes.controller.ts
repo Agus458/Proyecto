@@ -65,7 +65,7 @@ export const putPostulante = async (request: Request, response: Response): Promi
 
     return response.status(201).json();
 }
-
+/*
 export const putImagen = async (request: Request, response: Response): Promise<Response> => {
     const postulante = await postulantesService.getPerfilById(request.user.id);
     if (!postulante) throw AppError.badRequestError("No se encontro el postulante");
@@ -82,3 +82,4 @@ export const putImagen = async (request: Request, response: Response): Promise<R
 
     return response.status(201).json();
 }
+*/

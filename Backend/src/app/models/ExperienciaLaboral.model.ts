@@ -2,6 +2,7 @@ import { BaseEntity, Column,Entity, ManyToOne, OneToOne,JoinColumn, PrimaryGener
 import {Sexo,MaximoNivelEducactivo, Nivel_Jerarquico, AreaORubro} from "./enums";
 import { ReferenciaLaboral } from "./ReferenciaLaboral.model";
 //import { Domicilio } from "./domicilio.model";
+
 @Entity("ExperienciaLaboral")
 export class Experiencia extends BaseEntity
 {
@@ -36,6 +37,7 @@ hasta:Date;
 @OneToMany(() => ReferenciaLaboral, ReferenciaLaboral => ReferenciaLaboral)
 ReferenciaLaboral: ReferenciaLaboral;
 
-
+@Column()
+Descripcion:Text;
 
 }
