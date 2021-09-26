@@ -50,7 +50,7 @@ export const putOfferta = async(request:Request,response:Response) : Promise<Res
     return response.status(200).json();
 }
 
-
+/*
 export const isExpirate= async(request:Request, response:Response):Promise<Response> =>{
     if(!request.params.data) throw AppError.badRequestError("No se ingreso datos validos");
     if(validator.isDate(request.body.data.Date)) throw AppError.badRequestError("No existe ninguna offerta la fecha expirada");
@@ -60,3 +60,4 @@ export const isExpirate= async(request:Request, response:Response):Promise<Respo
     }
     if(!await offertaService.getBySExpira(request.params.Date))throw AppError.badRequestError("");
 }
+*/
