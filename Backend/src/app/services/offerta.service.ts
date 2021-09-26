@@ -34,5 +34,5 @@ export const post = async (data: DeepPartial<Offerta>): Promise<Offerta> => {
 
 export const put = async (id:number, data:DeepPartial<Offerta>): Promise<void> =>
 {
-   await getRepository(Offerta).update(id,data); 
+   // await getRepository(Offerta).update(id,data);
 }

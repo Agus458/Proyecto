@@ -8,7 +8,7 @@ import internal from "stream";
 import { informatico } from "./Informatico.model";
 import { Curso } from "./Curso.model";
 import { SelectQueryBuilderOption } from "typeorm/query-builder/SelectQueryBuilderOption";
-import { Idiomas } from "./idioma.model";
+import { Idioma } from "../models/Idioma.Model";
 
 @Entity("offerta")
 export class Offerta extends Usuario
@@ -81,12 +81,12 @@ export class Offerta extends Usuario
     Cargo:string;
 */
 
-    @OneToMany(()=> Idiomas,Idiomas => Idiomas)
+    @OneToMany(()=> Idioma,Idioma => Idioma)
     @JoinColumn()
-    Idiomas:Idiomas;
+    Idiomas:Idioma;
 
 
-    
+
     
 
 
