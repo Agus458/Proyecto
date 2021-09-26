@@ -2,6 +2,8 @@ import { Request,Response } from "express";
 import validator from "validator";
 import { AppError } from "../../config/error/appError";
 import * as offertaService from "../../app/services/offerta.service";
+import { request } from "http";
+import app from "../app.server";
 
 
 export const getOfferta = async(request:Request,response:Response):Promise<Response>=>{
@@ -44,6 +46,17 @@ export const putOfferta = async(request:Request,response:Response) : Promise<Res
         if(typeof request.body.offerta != "number") throw AppError.badRequestError("No existe ninguna offerta con el id ingresado");
     }
     if(! await offertaService.getById(Number.parseInt(request.params.id))) throw AppError.badRequestError("No existe ninguna offerta con el id ingresado ");
-    await offertaService.put(Number.parseInt(request.params.id),request.body)));
+    await offertaService.put(Number.parseInt(request.params.id),request.body);
     return response.status(200).json();
+}
+
+
+export const isExpirate= async(request:Request, response:Response):Promise<Response> =>{
+    if(!request.params.data) throw AppError.badRequestError("No se ingreso datos validos");
+    if(validator.isDate(request.body.data.Date)) throw AppError.badRequestError("No existe ninguna offerta la fecha expirada");
+    if(request.body.data.Date)
+    {
+            if(typeof request.body.expirada <= request.body.Date) throw AppError.badRequestError("La Fecha es invalida");
+    }
+    if(!await offertaService.getBySExpira(request.params.Date))throw AppError.badRequestError("");
 }

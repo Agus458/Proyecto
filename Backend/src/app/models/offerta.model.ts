@@ -26,10 +26,10 @@ export class Offerta extends Usuario
 
     @Column({nullable:true})
     salario:string;
-
+/*
     @Column({ nullable:true })
     nivelEducativo:string
-
+*/
     
     @Column({nullable: true})
     fechaLimite:Date;
@@ -66,12 +66,14 @@ export class Offerta extends Usuario
 
     @Column({nullable:true})
     BuscandoPersonas:Boolean;
-
+/*
     @Column()
     Titulo:string;
-
+    */
+/*
     @Column()
     Descripcion:Text;
+    */
 
     @OneToMany(()=> informatico,informatico => informatico)
     @JoinColumn()
@@ -85,10 +87,11 @@ export class Offerta extends Usuario
     @JoinColumn()
     Idiomas:Idioma;
 
-
-
     
-
+    @Column()
+    Expira:Date;
+    
+    
 
     /*
     @OneToOne(() => jornadaLaboral, jornadaLaboral => jornadaLaboral)
