@@ -10,7 +10,7 @@ import { Pais } from 'src/app/models/pais.model';
 })
 export class PaisesService {
 
-  private url = proyectConfig.backEndURL + "/paises";
+  private url = proyectConfig.backEndURL + "/api/paises";
 
   constructor(
     private http: HttpClient,

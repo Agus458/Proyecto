@@ -6,7 +6,7 @@ import * as usuariosService from "../services/usuarios.service";
 
 export const isLoggedIn = async (request: Request, response: Response, next: NextFunction) => {
     const authHeader = request.headers.authorization;
-
+    
     // Verifica que se haya mandado un token de autorizacion.
     if (authHeader && authHeader.startsWith("Bearer")) {
 

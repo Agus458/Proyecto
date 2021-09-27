@@ -1,0 +1,106 @@
+<form [formGroup]="experienciasLaboralesForm">
+    <div fxLayout="row" fxLayoutAlign="space-start start" fxLayout.xs="column">
+        <div fxLayout="column" fxLayoutAlign="space-evenly start" style="padding-right: 5%;">
+            <h3 class="link"><button mat-button>Nuevo</button> </h3>
+            <mat-accordion class="example-headers-align" multi>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Experiencia Laboral
+                        </mat-panel-title>
+
+                    </mat-expansion-panel-header>
+                    <div fxLayout="column" fxLayoutAlign="space-evenly start">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Nombre de la Empresa</mat-label>
+                            <input matInput placeholder="Empresa">
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Cargo que Ocupó</mat-label>
+                            <input matInput placeholder="Cargo">
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Área o Rubro</mat-label>
+                            <mat-select>
+                                <mat-option value="one">Categoría</mat-option>
+                                <mat-option value="two">Categoría</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Nivel Jerárquico</mat-label>
+                            <mat-select>
+                                <mat-option value="one">Usuario</mat-option>
+                                <mat-option value="two">Profesional</mat-option>
+                                <mat-option value="two">Experto</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Tareas Realizadas</mat-label>
+                            <textarea matInput></textarea>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" style="max-width: 201px;">
+                            <mat-label>Fecha de Inicio</mat-label>
+                            <input matInput [matDatepicker]="picker4" placeholder="00/00/0000">
+                            <mat-datepicker-toggle matSuffix [for]="picker4">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker4></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" style="max-width: 201px;">
+                            <mat-label>Fecha de Fin</mat-label>
+                            <input matInput [matDatepicker]="picker5" placeholder="00/00/0000">
+                            <mat-datepicker-toggle matSuffix [for]="picker5">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker5></mat-datepicker>
+                        </mat-form-field>
+                        <mat-checkbox class="example-margin">Actualidad</mat-checkbox>
+                    </div>
+                </mat-expansion-panel>
+
+            </mat-accordion>
+        </div>
+        <div fxLayout="column" fxLayoutAlign="space-evenly start" style="padding-right: 3%;">
+            <h3 class="link">Referencias Laborales<button mat-button>Nuevo</button> </h3>
+            <mat-accordion class="example-headers-align" multi>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Referencia
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div fxLayout="column" fxLayoutAlign="space-evenly start"
+                        style="padding-right: 3%;">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Nombre</mat-label>
+                            <input matInput placeholder="Nombre">
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Apellido</mat-label>
+                            <input matInput placeholder="Apellido">
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Empresa</mat-label>
+                            <input matInput placeholder="Empresa">
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Cargo</mat-label>
+                            <input matInput placeholder="Cargo">
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Telefono/Celular</mat-label>
+                            <input matInput placeholder="Telefono/Celular">
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Correo Electronico</mat-label>
+                            <input matInput placeholder="Correo">
+                        </mat-form-field>
+
+                    </div>
+                </mat-expansion-panel>
+
+            </mat-accordion>
+        </div>
+    </div>
+    <h1></h1>
+    <button mat-button matStepperPrevious>Volver</button>
+    <button mat-button matStepperNext>Siguiente</button>
+</form>

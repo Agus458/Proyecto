@@ -9,13 +9,13 @@ import { Localidad } from 'src/app/models/localidad.model';
 })
 export class LocalidadesService {
 
-  private url = proyectConfig.backEndURL + "/localidades";
+  private url = proyectConfig.backEndURL + "/api/localidades";
 
   constructor(
     private http: HttpClient
   ) { }
 
-  getByDepartamento(id: number): Observable<Localidad[]> {
+  getByDepartamento(id: any): Observable<Localidad[]> {
     return this.http.get<Localidad[]>(this.url + "/departamento/" + id);
   }
 

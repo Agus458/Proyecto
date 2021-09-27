@@ -1,0 +1,115 @@
+<div [formGroup]="datosPersonalesForm">
+    <div fxLayout="row" fxLayoutAlign="space-start start" fxLayout.xs="column" fxLayoutGap="20px">
+        <div fxLayout="column" fxLayoutAlign="space-evenly start">
+            <h3 class="link">Identificación</h3>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Tipo de Documento</mat-label>
+                <mat-select formControlName="tipoDocumento">
+                    <mat-option [value]="0">Cedula</mat-option>
+                    <mat-option [value]="1">Pasaporte</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Documento</mat-label>
+                <input matInput formControlName="documento">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Primer Nombre</mat-label>
+                <input matInput formControlName="primerNombre">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Segundo Nombre</mat-label>
+                <input matInput formControlName="segundoNombre">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Primer Apellido</mat-label>
+                <input matInput formControlName="primerApellido">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Segundo Apellido</mat-label>
+                <input matInput formControlName="segundoApellido">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Sexo</mat-label>
+                <mat-select formControlName="sexo">
+                    <mat-option value="Femenino">Femenino</mat-option>
+                    <mat-option value="Masculino">Masculino</mat-option>
+                    <mat-option value="Otro">Otro</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" style="max-width: 201px;">
+                <mat-label>Fecha de Nacimiento</mat-label>
+                <input matInput [matDatepicker]="picker" placeholder="00/00/0000" formControlName="fechaNacimiento">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+        </div>
+
+        <div formGroupName="domicilio" fxLayout="column" fxLayoutAlign="space-evenly start">
+            <h3 class="link">Domicilio</h3>
+            <mat-form-field appearance="fill">
+                <mat-label>País</mat-label>
+                <mat-select formControlName="pais" (selectionChange)="onChangePais()">
+                    <mat-option *ngFor="let pais of paises" [value]="pais.id">{{pais.nombre}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div fxLayout="column" fxLayoutAlign="space-evenly start"
+                *ngIf="selectedPais ? getPais(selectedPais)?.nombre == 'Uruguay' : false">
+                <mat-form-field appearance="fill">
+                    <mat-label>Departamento</mat-label>
+                    <mat-select formControlName="departamento" (selectionChange)="onChangeDepartamento()">
+                        <mat-option *ngFor="let departamento of departamentos" [value]="departamento.id">
+                            {{departamento.nombre}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Localidad</mat-label>
+                    <mat-select formControlName="localidad">
+                        <mat-option *ngFor="let localidad of localidades" [value]="localidad.id">
+                            {{localidad.nombre}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <mat-form-field appearance="fill">
+                <mat-label>Barrio</mat-label>
+                <input matInput formControlName="barrio">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Dirección</mat-label>
+                <input matInput formControlName="direccion">
+            </mat-form-field>
+        </div>
+
+        <div fxLayout="column" fxLayoutAlign="space-evenly start">
+            <h3 class="link">Contacto</h3>
+            <mat-form-field appearance="fill">
+                <mat-label>Primer Telefono/Celular</mat-label>
+                <input matInput formControlName="primerTelefono">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Segundo Telefono/Celular</mat-label>
+                <input matInput formControlName="segundoTelefono">
+            </mat-form-field>
+            <mat-checkbox formControlName="recivirEmails">
+                Deseo recibir ofertas laborales por mail
+            </mat-checkbox>
+        </div>
+
+        <div fxLayout="column" fxLayoutAlign="space-evenly start"><img *ngIf="imagen" mat-card-xl-image
+                [src]="imagen | safeUrl"></div>
+
+    </div>
+
+    <button mat-button type="button" [disabled]="datosPersonalesForm.invalid" matStepperNext
+        color="primary">Siguiente</button>
+</div>

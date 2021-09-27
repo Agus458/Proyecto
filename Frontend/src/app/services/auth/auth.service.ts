@@ -10,7 +10,7 @@ import { Usuario } from 'src/app/models/usuario.model';
 })
 export class AuthService {
 
-  private url: string = proyectConfig.backEndURL + "/auth";
+  private url: string = proyectConfig.backEndURL + "/api/auth";
 
   constructor(
     private http: HttpClient,
@@ -39,7 +39,7 @@ export class AuthService {
   iniciarSesion(email: string, contrasenia: string): void {
     this.http.post<any>(this.url + "/iniciarSesion", { email, contrasenia }).subscribe(
       result => {
-        localStorage.setItem("token", JSON.stringify(result.token));
+        localStorage.setItem("token", result.token);
         localStorage.setItem("usuario", JSON.stringify(result.usuario));
 
         this.snackBar.open("Login exitoso!", "Close", { duration: 5000 });
@@ -55,7 +55,7 @@ export class AuthService {
   registrarse(email: string, contrasenia: string): void {
     this.http.post<any>(this.url + "/registrarse", { email, contrasenia }).subscribe(
       result => {
-        localStorage.setItem("token", JSON.stringify(result.token));
+        localStorage.setItem("token", result.token);
         localStorage.setItem("usuario", JSON.stringify(result.usuario));
 
         this.snackBar.open("Registro exitoso!", "Close", { duration: 5000 });

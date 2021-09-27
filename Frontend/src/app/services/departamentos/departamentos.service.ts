@@ -9,13 +9,13 @@ import { Departamento } from 'src/app/models/departamento.model';
 })
 export class DepartamentosService {
 
-  private url = proyectConfig.backEndURL + "/departamentos";
+  private url = proyectConfig.backEndURL + "/api/departamentos";
 
   constructor(
     private http: HttpClient
   ) { }
 
-  getByPais(id: number): Observable<Departamento[]> {
+  getByPais(id: any): Observable<Departamento[]> {
     return this.http.get<Departamento[]>(this.url + "/pais/" + id);
   }
   

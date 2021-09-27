@@ -8,6 +8,7 @@ import routes from "./app.routes";
 import { notFound } from "../config/notFound.config";
 import { connect } from "../config/connection.config";
 import { esPublico } from "./middlewares/esPublico";
+import { isLoggedIn } from "./middlewares/isLoggedIn";
 
 /* ---------------------------------------< APP CONFIGURATION >--------------------------------------- */
 
@@ -22,9 +23,6 @@ app.set("port", process.env.PORT || 3000);
 // Connexion a la base de datos.
 connect();
 
-// Configuracion del directorio de archivos subidos.
-app.use("/uploads", esPublico, express.static("uploads"))
-
 /* ------------------------------------------< MIDDLEWARES >------------------------------------------ */
 
 // Permite que la aplicación se comunique con otros servidores.
@@ -37,6 +35,9 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 /* ---------------------------------------------< ROUTES >--------------------------------------------- */
+
+// Configuracion del directorio de archivos subidos.
+app.use("/uploads", [isLoggedIn, esPublico], express.static("uploads"))
 
 // Rutas de la aplicacion.
 app.use("/api", routes);

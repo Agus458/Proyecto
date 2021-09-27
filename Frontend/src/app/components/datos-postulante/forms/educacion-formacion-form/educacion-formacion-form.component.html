@@ -1,0 +1,198 @@
+<div [formGroup]="educacionFormacionForm">
+    <div fxLayout="column" fxLayoutAlign="space-between start" fxLayoutGap="20px">
+        <div fxLayout="column" fxLayoutAlign="space-evenly start">
+            <h3 class="link">Nivel Educativo Formal</h3>
+            <mat-form-field appearance="fill">
+                <mat-label>Maximo Nivel Educativo</mat-label>
+                <mat-select formControlName="nivelEducativo">
+                    <mat-option value="Primaria">Primaria</mat-option>
+                    <mat-option value="Ciclo Basico Liceo">Ciclo Basico Liceo</mat-option>
+                    <mat-option value="Ciclo Basico UTU">Ciclo Basico UTU</mat-option>
+                    <mat-option value="Bachillerato Liceo">Bachillerato Liceo</mat-option>
+                    <mat-option value="Bachillerato UTU">Bachillerato UTU</mat-option>
+                    <mat-option value="Técnico Profesional UTU">Técnico Profesional UTU</mat-option>
+                    <mat-option value="Magisterio - Profesorado">Magisterio - Profesorado</mat-option>
+                    <mat-option value="Terciario no universitario">Terciario no universitario</mat-option>
+                    <mat-option value="Universitario">Universitario</mat-option>
+                    <mat-option value="Posgrado - Master - Doctorado">Posgrado - Master - Doctorado</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Estado</mat-label>
+                <mat-select formControlName="estadoNivelEducativo">
+                    <mat-option value="Completo">Completo</mat-option>
+                    <mat-option value="Incompleto">Incompleto</mat-option>
+                    <mat-option value="Cursando">Cursando</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <div fxLayout="column">
+            <h3 class="link">Capacitación y Formación adicional
+                <button mat-button type="button" (click)="addCapacitacion(false)">Nuevo</button>
+            </h3>
+
+            <mat-accordion formArrayName="capacitaciones" multi>
+
+                <mat-expansion-panel class="block"
+                    *ngFor="let capacitacion of capacitacionesForm.controls; let i = index" [formGroupName]="i">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Curso
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput formControlName="nombreCurso">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Área Temática</mat-label>
+                        <mat-select formControlName="areaTematica">
+                            <mat-option *ngFor="let areaTematica of areasTematicas" value="{{areaTematica}}">
+                                {{areaTematica}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Institución Educativa</mat-label>
+                        <input matInput formControlName="institucion">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Año de Inicio</mat-label>
+                        <input matInput formControlName="anioInicio">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Duracion</mat-label>
+                        <input matInput formControlName="duracion">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Tipo de Duracion</mat-label>
+                        <input matInput formControlName="tipoDuracion">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Estado</mat-label>
+                        <mat-select formControlName="estadoCurso">
+                            <mat-option value="Completo">Completo</mat-option>
+                            <mat-option value="Incompleto">Incompleto</mat-option>
+                            <mat-option value="Cursando">Cursando</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <button mat-icon-button type="button" color="warn" (click)="deleteCapacitacion(i)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </mat-expansion-panel>
+
+            </mat-accordion>
+        </div>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <div fxLayout="column">
+            <h3 class="link">Conocimientos Informaticos
+                <button mat-button type="button" (click)="addConocimientoInformatico(false)">Nuevo</button>
+            </h3>
+            <mat-accordion formArrayName="conocimientosInformaticos" multi>
+                <mat-expansion-panel
+                    *ngFor="let conocimientoInformatico of conocimientosInformaticosForm.controls; let i = index"
+                    [formGroupName]="i">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Conocimiento Inf.
+                        </mat-panel-title>
+
+                    </mat-expansion-panel-header>
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput formControlName="nombreAplicacion">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Categoría</mat-label>
+                        <mat-select formControlName="categoria">
+                            <mat-option *ngFor="let categoria of categorias" value="{{categoria}}">{{categoria}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nivel</mat-label>
+                        <mat-select formControlName="nivelConocimiento">
+                            <mat-option value="Usuario">Usuario</mat-option>
+                            <mat-option value="Profesional">Profesional</mat-option>
+                            <mat-option value="Experto">Experto</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <button mat-icon-button type="button" color="warn" (click)="deleteConocimientoInformatico(i)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <div fxLayout="column">
+            <h3 class="link">Idiomas
+                <button mat-button type="button" (click)="addIdioma(false)">Nuevo</button>
+            </h3>
+            <mat-accordion formArrayName="idiomas" multi>
+                <mat-expansion-panel *ngFor="let idioma of idiomasForm.controls; let i = index" [formGroupName]="i">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Idioma
+                        </mat-panel-title>
+
+                    </mat-expansion-panel-header>
+                    <div fxLayout="column" fxLayoutAlign="space-evenly start">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Idioma</mat-label>
+                            <mat-select formControlName="nombreIdioma">
+                                <mat-option *ngFor="let idioma of idiomas" value="{{idioma}}">{{idioma}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Especificacion</mat-label>
+                            <input matInput formControlName="especificacion">
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Habla / Conversación</mat-label>
+                            <mat-select formControlName="habla">
+                                <mat-option *ngFor="let nivel of niveles" value="{{nivel}}">{{nivel}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Comprensión Auditiva</mat-label>
+                            <mat-select formControlName="comprensionAuditiva">
+                                <mat-option *ngFor="let nivel of niveles" value="{{nivel}}">{{nivel}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Comprensión Lectora</mat-label>
+                            <mat-select formControlName="comprensionLectora">
+                                <mat-option *ngFor="let nivel of niveles" value="{{nivel}}">{{nivel}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Escritura</mat-label>
+                            <mat-select formControlName="escritura">
+                                <mat-option *ngFor="let nivel of niveles" value="{{nivel}}">{{nivel}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <button mat-icon-button type="button" color="warn" (click)="deleteIdioma(i)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </mat-expansion-panel>
+
+            </mat-accordion>
+        </div>
+    </div>
+    <button mat-button type="button" matStepperPrevious>Volver</button>
+    <button mat-button type="button" [disabled]="educacionFormacionForm.invalid" matStepperNext
+        color="primary">Siguiente</button>
+</div>

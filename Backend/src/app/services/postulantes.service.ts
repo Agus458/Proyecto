@@ -1,5 +1,6 @@
 import { DeepPartial, getRepository } from "typeorm";
 import { verifyPassword } from "../libraries/encryptation.library";
+import { Domicilio } from "../models/domicilio.model";
 import { Postulante } from "../models/postulante.model";
 
 /* ---------------------------------------< POSTULANTES SERVICE >--------------------------------------- */
@@ -42,9 +43,30 @@ export const getByEmailContrasenia = async (email: string, contrasenia: string):
 
 // Retorna el perfil completo del postulante almacenado en el sistema cuyo id sea el ingresado.
 export const getPerfilById = async (id: number): Promise<Postulante | undefined> => {
-    return await getRepository(Postulante).findOne(id, {
+    const postulante: any = await getRepository(Postulante).findOne(id, {
         relations: ["domicilio", "capacitaciones", "conocimientosInformaticos", "idiomas", "experienciasLaborales", "preferenciasLaborales", "permisos"]
     });
+
+    if (postulante) {
+        const domicilio = await getRepository(Domicilio).findOne(postulante.domicilio.id, {
+            relations: ["pais", "departamento", "localidad"]
+        });
+
+        if (domicilio){
+            const dataDomicilio = {
+                id: domicilio.id,
+                pais: domicilio.pais.id,
+                barrio: domicilio.barrio,
+                direccion: domicilio.direccion,
+                localidad: domicilio.localidad.id,
+                departamento: domicilio.departamento.id
+            }
+
+            postulante.domicilio = dataDomicilio;
+        }
+    }
+
+    return postulante;
 };
 
 // Almacena en el sistema un nuevo postulante.

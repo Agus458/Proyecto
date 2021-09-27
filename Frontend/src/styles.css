@@ -39,3 +39,7 @@ body { margin: 0; font-family: 'Raleway', sans-serif; }
     border-color: #a1121285;
     border-width: 1px;
 }
+
+.divider {
+    margin: 20px 0 !important;
+}

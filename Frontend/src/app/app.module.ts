@@ -20,6 +20,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatMomentDateModule, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
+import { DatosPersonalesFormComponent } from './components/datos-postulante/forms/datos-personales-form/datos-personales-form.component';
+import { EducacionFormacionFormComponent } from './components/datos-postulante/forms/educacion-formacion-form/educacion-formacion-form.component';
+import { ExperienciasLaboralesFormComponent } from './components/datos-postulante/forms/experiencias-laborales-form/experiencias-laborales-form.component';
+import { SafeUrlPipe } from './pipes/safe-url.pipe';
 
 @NgModule({
   declarations: [
@@ -32,6 +36,10 @@ import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
     NavbarButtonsComponent,
     DatosPostulanteComponent,
     MiPerfilComponent,
+    DatosPersonalesFormComponent,
+    EducacionFormacionFormComponent,
+    ExperienciasLaboralesFormComponent,
+    SafeUrlPipe,
   ],
   imports: [
     BrowserModule,
