@@ -22,6 +22,10 @@ export class AuthService {
     return localStorage.getItem("token");
   }
 
+  getExp(): string | null {
+    return localStorage.getItem("exp");
+  }
+
   getUser(): Usuario | null {
     const usuario = localStorage.getItem("usuario");
 
@@ -40,6 +44,7 @@ export class AuthService {
     this.http.post<any>(this.url + "/iniciarSesion", { email, contrasenia }).subscribe(
       result => {
         localStorage.setItem("token", result.token);
+        localStorage.setItem("exp", result.exp);
         localStorage.setItem("usuario", JSON.stringify(result.usuario));
 
         this.snackBar.open("Login exitoso!", "Close", { duration: 5000 });
@@ -56,6 +61,7 @@ export class AuthService {
     this.http.post<any>(this.url + "/registrarse", { email, contrasenia }).subscribe(
       result => {
         localStorage.setItem("token", result.token);
+        localStorage.setItem("exp", result.exp);
         localStorage.setItem("usuario", JSON.stringify(result.usuario));
 
         this.snackBar.open("Registro exitoso!", "Close", { duration: 5000 });

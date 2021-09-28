@@ -41,4 +41,40 @@ export class PostulantesService {
     return imagen;
   }
 
+  putImagen(formData: FormData) {
+    return this.http.put(this.url + "/perfil/imagen", formData);
+  }
+
+  putCV(formData: FormData) {
+    return this.http.put(this.url + "/perfil/cv", formData);
+  }
+
+  putPerfil(data: Postulante) {
+    return this.http.put(this.url + "/perfil", data);
+  }
+
+  deleteCapacitacion(id: number) {
+    return this.http.delete(this.url + "/perfil/capacitacion/" + id);
+  }
+
+  deleteConocimientoInformatico(id: number) {
+    return this.http.delete(this.url + "/perfil/conocimientoInformatico/" + id);
+  }
+
+  deleteExperienciaLaboral(id: number) {
+    return this.http.delete(this.url + "/perfil/experienciaLaboral/" + id);
+  }
+
+  deleteIdioma(id: number) {
+    return this.http.delete(this.url + "/perfil/idioma/" + id);
+  }
+
+  deletePermiso(id: number) {
+    return this.http.delete(this.url + "/perfil/permiso/" + id);
+  }
+
+  deletePreferenciaLaboral(id: number) {
+    return this.http.delete(this.url + "/perfil/preferenciaLaboral/" + id);
+  }
+
 }

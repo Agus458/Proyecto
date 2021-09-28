@@ -30,3 +30,8 @@ export const put = async (id: number, data: DeepPartial<Idioma>): Promise<void> 
     data.id = id;
     await getRepository(Idioma).save(data);
 };
+
+// Elimina un Idioma almacenada en el sistema.
+export const _delete = async (id: number): Promise<void> => {
+    await getRepository(Idioma).delete(id);
+};

@@ -43,3 +43,13 @@ body { margin: 0; font-family: 'Raleway', sans-serif; }
 .divider {
     margin: 20px 0 !important;
 }
+
+.selected {
+    background-color: #026d30;
+    color: white !important;
+}
+
+.selected:hover {
+    background-color: #003a19 !important;
+    color: white !important;
+}

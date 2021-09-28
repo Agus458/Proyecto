@@ -30,3 +30,8 @@ export const put = async (id: number, data: DeepPartial<PreferenciaLaboral>): Pr
     data.id = id;
     await getRepository(PreferenciaLaboral).save(data);
 };
+
+// Elimina una Preferencia Laboral almacenada en el sistema.
+export const _delete = async (id: number): Promise<void> => {
+    await getRepository(PreferenciaLaboral).delete(id);
+};

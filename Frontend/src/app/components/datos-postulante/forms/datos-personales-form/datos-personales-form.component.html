@@ -107,6 +107,7 @@
 
         <div fxLayout="column" fxLayoutAlign="space-evenly start"><img *ngIf="imagen" mat-card-xl-image
                 [src]="imagen | safeUrl"></div>
+        <input type="file" name="imagen" (change)="onFileSelect($event)" />
 
     </div>
 

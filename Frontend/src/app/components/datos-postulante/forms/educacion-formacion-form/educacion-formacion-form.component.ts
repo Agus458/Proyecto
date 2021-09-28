@@ -95,6 +95,11 @@ export class EducacionFormacionFormComponent implements OnInit {
   }
 
   deleteCapacitacion(index: number) {
+    const id = this.capacitacionesForm.at(index).get("id");
+    if (id) {
+      this.postulantesService.deleteCapacitacion(id.value).subscribe();
+    }
+
     this.capacitacionesForm.removeAt(index);
   }
 
@@ -116,6 +121,11 @@ export class EducacionFormacionFormComponent implements OnInit {
   }
 
   deleteConocimientoInformatico(index: number) {
+    const id = this.conocimientosInformaticosForm.at(index).get("id");
+    if (id) {
+      this.postulantesService.deleteConocimientoInformatico(id.value).subscribe();
+    }
+
     this.conocimientosInformaticosForm.removeAt(index);
   }
 
@@ -140,6 +150,11 @@ export class EducacionFormacionFormComponent implements OnInit {
   }
 
   deleteIdioma(index: number) {
+    const id = this.idiomasForm.at(index).get("id");
+    if (id) {
+      this.postulantesService.deleteIdioma(id.value).subscribe();
+    }
+
     this.idiomasForm.removeAt(index);
   }
 

@@ -21,48 +21,13 @@
 
                 <mat-step [stepControl]="experienciasLaboralesForm">
                     <ng-template matStepLabel>Experiencias Laborales</ng-template>
-                    <app-experiencias-laborales-form (formReady)="experienciasLaboralesFormInitialized($event)"></app-experiencias-laborales-form>
+                    <app-experiencias-laborales-form (formReady)="experienciasLaboralesFormInitialized($event)">
+                    </app-experiencias-laborales-form>
                 </mat-step>
 
-                <!-- <mat-step [stepControl]="permisosForm">
-                    <form [formGroup]="permisosForm">
-                        <ng-template matStepLabel>Permisos y Licencias</ng-template>
-                        <div fxLayout="row" fxLayoutAlign="space-start start" fxLayout.xs="column">
-                            <div fxLayout="column" fxLayoutAlign="space-evenly start" style="padding-right: 5%;">
-                                <h3 class="link"><button mat-button>Nuevo</button> </h3>
-                                <mat-accordion class="example-headers-align" multi>
-                                    <mat-expansion-panel>
-                                        <mat-expansion-panel-header>
-                                            <mat-panel-title>
-                                                Permiso
-                                            </mat-panel-title>
-
-                                        </mat-expansion-panel-header>
-                                        <div fxLayout="column" fxLayoutAlign="space-evenly start">
-                                            <mat-form-field appearance="fill">
-                                                <mat-label>Tipo de Documento</mat-label>
-                                                <mat-select>
-                                                    <mat-option value="one">Categoría</mat-option>
-                                                    <mat-option value="two">Categoría</mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                            <mat-form-field appearance="fill" style="max-width: 201px;">
-                                                <mat-label>Fecha de Vencimiento</mat-label>
-                                                <input matInput [matDatepicker]="picker6" placeholder="00/00/0000">
-                                                <mat-datepicker-toggle matSuffix [for]="picker6">
-                                                </mat-datepicker-toggle>
-                                                <mat-datepicker #picker6></mat-datepicker>
-                                            </mat-form-field>
-                                        </div>
-                                    </mat-expansion-panel>
-
-                                </mat-accordion>
-                            </div>
-                        </div>
-                        <h1></h1>
-                        <button mat-button matStepperPrevious>Volver</button>
-                        <button mat-button matStepperNext>Siguiente</button>
-                    </form>
+                <mat-step [stepControl]="permisosForm">
+                    <ng-template matStepLabel>Permisos</ng-template>
+                    <app-permisos-form (formReady)="permisosFormInitialized($event)"></app-permisos-form>
                 </mat-step>
 
                 <mat-step [stepControl]="interesesForm">
@@ -145,7 +110,7 @@
                         <button mat-button matStepperPrevious>Volver</button>
                         <button mat-button matStepperNext>Siguiente</button>
                     </form>
-                </mat-step> -->
+                </mat-step>
 
                 <mat-step>
                     <ng-template matStepLabel>Confirmar</ng-template>

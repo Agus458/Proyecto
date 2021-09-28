@@ -24,6 +24,8 @@ import { DatosPersonalesFormComponent } from './components/datos-postulante/form
 import { EducacionFormacionFormComponent } from './components/datos-postulante/forms/educacion-formacion-form/educacion-formacion-form.component';
 import { ExperienciasLaboralesFormComponent } from './components/datos-postulante/forms/experiencias-laborales-form/experiencias-laborales-form.component';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { PermisosFormComponent } from './components/datos-postulante/forms/permisos-form/permisos-form.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { SafeUrlPipe } from './pipes/safe-url.pipe';
     EducacionFormacionFormComponent,
     ExperienciasLaboralesFormComponent,
     SafeUrlPipe,
+    PageNotFoundComponent,
+    PermisosFormComponent,
   ],
   imports: [
     BrowserModule,

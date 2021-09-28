@@ -30,3 +30,8 @@ export const put = async (id: number, data: DeepPartial<ExperienciaLaboral>): Pr
     data.id = id;
     await getRepository(ExperienciaLaboral).save(data);
 };
+
+// Elimina una Experiencia Laboral almacenada en el sistema.
+export const _delete = async (id: number): Promise<void> => {
+    await getRepository(ExperienciaLaboral).delete(id);
+};

@@ -48,6 +48,7 @@ export class DatosPersonalesFormComponent implements OnInit {
     });
 
     this.datosPersonalesForm = this.formBuilder.group({
+      imagenPerfil: [''],
       tipoDocumento: [Number, Validators.required],
       documento: ['', Validators.required],
       primerNombre: ['', Validators.required],
@@ -76,7 +77,9 @@ export class DatosPersonalesFormComponent implements OnInit {
       domicilio.addControl("localidad", new FormControl('', [Validators.required]));
 
       this.datosPersonalesForm.patchValue(result);
-      this.imagen = await this.postulantesService.getImagen(proyectConfig.backEndURL + "/" + result.imagen);
+      if (result.imagen) {
+        this.imagen = await this.postulantesService.getImagen(proyectConfig.backEndURL + "/" + result.imagen);
+      }
 
       this.onChangePais();
       this.onChangeDepartamento();
@@ -128,6 +131,13 @@ export class DatosPersonalesFormComponent implements OnInit {
           console.log(error);
         }
       );
+    }
+  }
+
+  onFileSelect(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.datosPersonalesForm.get('imagenPerfil')?.setValue(file);
     }
   }
 

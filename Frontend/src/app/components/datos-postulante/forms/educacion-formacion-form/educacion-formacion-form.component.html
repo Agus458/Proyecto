@@ -40,7 +40,8 @@
                     *ngFor="let capacitacion of capacitacionesForm.controls; let i = index" [formGroupName]="i">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                            Curso
+                            {{capacitacion.get("nombreCurso")?.value != "" ? capacitacion.get("nombreCurso")?.value :
+                            "Nueva Capacitacion"}}
                         </mat-panel-title>
                     </mat-expansion-panel-header>
 
@@ -100,7 +101,8 @@
                     [formGroupName]="i">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                            Conocimiento Inf.
+                            {{conocimientoInformatico.get("nombreAplicacion")?.value != "" ?
+                            conocimientoInformatico.get("nombreAplicacion")?.value : "Nuevo Conocimiento"}}
                         </mat-panel-title>
 
                     </mat-expansion-panel-header>
@@ -143,7 +145,8 @@
                 <mat-expansion-panel *ngFor="let idioma of idiomasForm.controls; let i = index" [formGroupName]="i">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                            Idioma
+                            {{idioma.get("nombreIdioma")?.value != "" ?
+                            idioma.get("nombreIdioma")?.value : "Nuevo Idioma"}}
                         </mat-panel-title>
 
                     </mat-expansion-panel-header>

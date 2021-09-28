@@ -1,0 +1,52 @@
+<div [formGroup]="permisosForm">
+    <ng-template matStepLabel>Permisos y Licencias</ng-template>
+    <div fxLayout="row" fxLayoutAlign="space-start start" fxLayout.xs="column">
+        <div fxLayout="column" fxLayoutAlign="space-evenly start" style="padding-right: 5%;">
+
+            <h3 class="link">
+                <button mat-button type="button" (click)="addPermiso(false)">Nuevo</button>
+            </h3>
+
+            <mat-accordion formArrayName="permisos" multi>
+                <mat-expansion-panel *ngFor="let permiso of permisos.controls; let i = index" [formGroupName]="i">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{permiso.get("tipoDocumento")?.value != "" ?
+                            permiso.get("tipoDocumento")?.value : "Nuevo Permiso"}}
+                        </mat-panel-title>
+
+                    </mat-expansion-panel-header>
+                    <div fxLayout="column" fxLayoutAlign="space-evenly start">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Tipo de Documento</mat-label>
+                            <mat-select formControlName="tipoDocumento" (selectionChange)="onChangeTipoDocumento(i)">
+                                <mat-option *ngFor="let tipos of tiposDocumentos" value="{{tipos}}">{{tipos}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" style="max-width: 201px;">
+                            <mat-label>Fecha de Vencimiento</mat-label>
+                            <input matInput [matDatepicker]="picker6" placeholder="00/00/0000"
+                                formControlName="vigencia">
+                            <mat-datepicker-toggle matSuffix [for]="picker6">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #picker6></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field *ngIf="getTipoDocumento(i) == 'Otro'" appearance="fill">
+                            <mat-label>Especificacion</mat-label>
+                            <input matInput formControlName="especificacion">
+                        </mat-form-field>
+
+                        <button mat-icon-button type="button" color="warn" (click)="deletePermiso(i)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </mat-expansion-panel>
+
+            </mat-accordion>
+        </div>
+    </div>
+    <h1></h1>
+    <button mat-button type="button" matStepperPrevious>Volver</button>
+    <button mat-button type="button" [disabled]="permisosForm.invalid" matStepperNext>Siguiente</button>
+</div>

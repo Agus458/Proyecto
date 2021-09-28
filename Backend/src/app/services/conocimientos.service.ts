@@ -30,3 +30,8 @@ export const put = async (id: number, data: DeepPartial<ConocimientoInformatico>
     data.id = id;
     await getRepository(ConocimientoInformatico).save(data);
 };
+
+// Elimina un Conocimiento almacenada en el sistema.
+export const _delete = async (id: number): Promise<void> => {
+    await getRepository(ConocimientoInformatico).delete(id);
+};
