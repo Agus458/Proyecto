@@ -47,12 +47,12 @@ export const getPerfilById = async (id: number): Promise<Postulante | undefined>
         relations: ["domicilio", "capacitaciones", "conocimientosInformaticos", "idiomas", "experienciasLaborales", "preferenciasLaborales", "permisos"]
     });
 
-    if (postulante) {
+    if (postulante && postulante.domicilio) {
         const domicilio = await getRepository(Domicilio).findOne(postulante.domicilio.id, {
             relations: ["pais", "departamento", "localidad"]
         });
 
-        if (domicilio){
+        if (domicilio) {
             const dataDomicilio = {
                 id: domicilio.id,
                 pais: domicilio.pais.id,
