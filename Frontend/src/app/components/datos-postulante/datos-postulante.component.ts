@@ -4,6 +4,7 @@ import { MatAccordion } from '@angular/material/expansion';
 import { ThemePalette } from '@angular/material/core';
 import { Postulante } from 'src/app/models/postulante.model';
 import { PostulantesService } from 'src/app/services/postulantes/postulantes.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-datos-postulante',
@@ -23,7 +24,8 @@ export class DatosPostulanteComponent implements OnInit {
   accordion: MatAccordion = new MatAccordion;
 
   constructor(
-    private postulantesService: PostulantesService
+    private postulantesService: PostulantesService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -50,7 +52,16 @@ export class DatosPostulanteComponent implements OnInit {
         await this.postulantesService.putImagen(formData).toPromise();
       }
 
+      const cvPerfil = this.cvForm.get("cvPerfil");
+      if (cvPerfil && cvPerfil.value instanceof File) {
+        const formData = new FormData();
+        formData.append("cv", cvPerfil.value);
+        await this.postulantesService.putCV(formData).toPromise();
+      }
+
       await this.postulantesService.putPerfil(data).toPromise();
+
+      this.redirectTo(this.router.url);
 
       console.log("work");
     } catch (error) {
@@ -82,5 +93,10 @@ export class DatosPostulanteComponent implements OnInit {
   cvFormInitialized(form: FormGroup) {
     this.cvForm = form;
   }
-  
+
+  redirectTo(uri: string) {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
+      this.router.navigate([uri]));
+  }
+
 }

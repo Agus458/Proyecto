@@ -7,10 +7,10 @@ import * as postulantesService from "../services/postulantes.service";
 import validator from "validator";
 
 export const esPublico = async (request: Request, response: Response, next: NextFunction) => {
-    const url = request.url;
+    const url = request.baseUrl + request.url;
     const fileName = request.url.split("/").pop();
-    const filePath = path.join(baseDir + "/../../uploads" + url);
-
+    const filePath = path.join(baseDir + "/../../" + url);
+    
     if (!fs.existsSync(filePath)) return response.status(404).json({ message: "Archivo no encontrado", status: 404 });
 
     const id = fileName?.split("-")[0];

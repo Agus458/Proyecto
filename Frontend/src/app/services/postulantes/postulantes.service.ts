@@ -25,20 +25,20 @@ export class PostulantesService {
     return this.postulanteActual;
   }
 
-  async getImagen(url: string) {
-    let imagen;
+  async getArchivo(url: string) {
+    let archivo;
 
     try {
       const response = await this.http.get(url, {
         observe: 'response', responseType: 'blob'
       }).toPromise();
 
-      imagen = URL.createObjectURL(response.body);
+      archivo = URL.createObjectURL(response.body);
     } catch (error) {
       console.log(error);
     }
 
-    return imagen;
+    return archivo;
   }
 
   putImagen(formData: FormData) {

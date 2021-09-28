@@ -7,8 +7,7 @@ import dotenv from "dotenv";
 import routes from "./app.routes";
 import { notFound } from "../config/notFound.config";
 import { connect } from "../config/connection.config";
-import { esPublico } from "./middlewares/esPublico";
-import { isLoggedIn } from "./middlewares/isLoggedIn";
+import filesRoutes from "./routes/files.routes";
 
 /* ---------------------------------------< APP CONFIGURATION >--------------------------------------- */
 
@@ -36,11 +35,10 @@ app.use(express.json());
 
 /* ---------------------------------------------< ROUTES >--------------------------------------------- */
 
-// Configuracion del directorio de archivos subidos.
-app.use("/uploads", [isLoggedIn, esPublico], express.static("uploads"))
-
 // Rutas de la aplicacion.
 app.use("/api", routes);
+
+app.use("/uploads", filesRoutes);
 
 // Ruta por defecto cuando la uri no coincide con ninguna de las expuestas.
 app.use(notFound);

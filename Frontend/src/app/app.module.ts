@@ -26,6 +26,8 @@ import { ExperienciasLaboralesFormComponent } from './components/datos-postulant
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { PermisosFormComponent } from './components/datos-postulante/forms/permisos-form/permisos-form.component';
+import { PreferenciasLaboralesFormComponent } from './components/datos-postulante/forms/preferencias-laborales-form/preferencias-laborales-form.component';
+import { CVFormComponent } from './components/datos-postulante/forms/cvform/cvform.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,8 @@ import { PermisosFormComponent } from './components/datos-postulante/forms/permi
     SafeUrlPipe,
     PageNotFoundComponent,
     PermisosFormComponent,
+    PreferenciasLaboralesFormComponent,
+    CVFormComponent,
   ],
   imports: [
     BrowserModule,

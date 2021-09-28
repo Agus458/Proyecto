@@ -1,0 +1,73 @@
+<div [formGroup]="preferenciasLaboralesForm">
+
+    <div fxLayout="row" fxLayoutAlign="space-start start" fxLayout.xs="column">
+        <div fxLayout="column" fxLayoutAlign="space-evenly start" style="padding-right: 3%;">
+            <h3 style="padding-top: 5px; color:#026d30;">Jornada Laboral Preferida</h3>
+
+            <mat-checkbox formControlName="jornadaIndiferente">
+                Indiferente
+            </mat-checkbox>
+            <mat-checkbox formControlName="jornadaCompleta">
+                Completa
+            </mat-checkbox>
+            <mat-checkbox formControlName="jornadaManiana">
+                Mañana
+            </mat-checkbox>
+            <mat-checkbox formControlName="jornadaTarde">
+                Tarde
+            </mat-checkbox>
+            <mat-checkbox formControlName="jornadaNoche">
+                Nocturna
+            </mat-checkbox>
+
+        </div>
+        <div fxLayout="column" fxLayoutAlign="space-evenly start" style="padding-right: 3%;">
+            <h3 class="link">
+                Preferencias Laborales
+                <button mat-button type="button" (click)="addPreferenciaLaboral(false)">Nuevo</button>
+            </h3>
+
+            <mat-accordion formArrayName="preferenciasLaborales" multi>
+
+                <mat-expansion-panel *ngFor="let preferencia of preferenciasLaborales.controls; let i = index"
+                    [formGroupName]="i">
+
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{preferencia.get("puestoPreferido")?.value != "" ?
+                            preferencia.get("puestoPreferido")?.value : "Nueva Preferencia Laboral"}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div fxLayout="column" fxLayoutAlign="space-evenly start">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Puesto Preferido</mat-label>
+                            <input matInput formControlName="puestoPreferido">
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Área de interes laboral</mat-label>
+                            <mat-select formControlName="areasInteres">
+                                <mat-option *ngFor="let area of areas" value="{{area}}">{{area}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" floatLabel="always">
+                            <mat-label>Aspiración Salarial Nominal</mat-label>
+                            <input matInput type="number" placeholder="0" formControlName="aspiracionSalarial">
+                            <span matPrefix>$&nbsp;</span>
+                        </mat-form-field>
+
+                        <button mat-icon-button type="button" color="warn" (click)="deletePreferenciaLaboral(i)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </mat-expansion-panel>
+
+            </mat-accordion>
+        </div>
+    </div>
+    <h1></h1>
+    <button mat-button type="button" matStepperPrevious>Volver</button>
+    <button mat-button type="button" [disabled]="preferenciasLaboralesForm.invalid" matStepperNext>Siguiente</button>
+
+</div>

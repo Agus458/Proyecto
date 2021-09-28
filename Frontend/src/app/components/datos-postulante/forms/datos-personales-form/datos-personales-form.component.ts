@@ -78,7 +78,7 @@ export class DatosPersonalesFormComponent implements OnInit {
 
       this.datosPersonalesForm.patchValue(result);
       if (result.imagen) {
-        this.imagen = await this.postulantesService.getImagen(proyectConfig.backEndURL + "/" + result.imagen);
+        this.imagen = await this.postulantesService.getArchivo(proyectConfig.backEndURL + "/" + result.imagen);
       }
 
       this.onChangePais();

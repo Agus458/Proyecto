@@ -31,94 +31,22 @@
                 </mat-step>
 
                 <mat-step [stepControl]="interesesForm">
-                    <form [formGroup]="interesesForm">
-                        <ng-template matStepLabel>Intereses y Preferencias</ng-template>
-                        <div fxLayout="row" fxLayoutAlign="space-start start" fxLayout.xs="column">
-                            <div fxLayout="column" fxLayoutAlign="space-evenly start" style="padding-right: 3%;">
-                                <h3 style="padding-top: 5px; color:#026d30;">Jornada Laboral Preferida</h3>
-                                <section class="example-section">
-
-                                </section>
-                            </div>
-                            <div fxLayout="column" fxLayoutAlign="space-evenly start" style="padding-right: 3%;">
-                                <h3 style="padding-top: 5px; color:#026d30;">Preferencias Laborales</h3>
-                                <mat-accordion class="example-headers-align" multi>
-                                    <mat-expansion-panel>
-                                        <mat-expansion-panel-header>
-                                            <mat-panel-title>
-                                                Preferencia
-                                            </mat-panel-title>
-                                        </mat-expansion-panel-header>
-                                        <div fxLayout="column" fxLayoutAlign="space-evenly start">
-                                            <mat-form-field appearance="fill">
-                                                <mat-label>Puesto Preferido</mat-label>
-                                                <input matInput placeholder="Correo">
-                                            </mat-form-field>
-                                            <mat-form-field appearance="fill">
-                                                <mat-label>Área de interes laboral</mat-label>
-                                                <mat-select>
-                                                    <mat-option value="one">Categoría</mat-option>
-                                                    <mat-option value="two">Categoría</mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                            <mat-form-field appearance="fill" floatLabel="always">
-                                                <mat-label>Aspiración Salarial Nominal</mat-label>
-                                                <input matInput type="number" class="example-right-align"
-                                                    placeholder="0">
-                                                <span matPrefix>$&nbsp;</span>
-                                            </mat-form-field>
-                                        </div>
-                                    </mat-expansion-panel>
-
-                                </mat-accordion>
-                            </div>
-                        </div>
-                        <h1></h1>
-                        <button mat-button matStepperPrevious>Volver</button>
-                        <button mat-button matStepperNext>Siguiente</button>
-                    </form>
+                    <ng-template matStepLabel>Intereses y Preferencias</ng-template>
+                    <app-preferencias-laborales-form (formReady)="preferenciasLaboralesFormInitialized($event)">
+                    </app-preferencias-laborales-form>
                 </mat-step>
 
                 <mat-step [stepControl]="cvForm">
-                    <form [formGroup]="cvForm">
-                        <ng-template matStepLabel>CV y Permisos Legales</ng-template>
-                        <div fxLayout="row" fxLayoutAlign="space-start start" fxLayout.xs="column">
-                            <div fxLayout="column" fxLayoutAlign="space-evenly start" style="padding-right: 3%;">
-                                <h3 style="padding-top: 5px; color:#026d30;">Currículum Vitae</h3>
-                                <button mat-raised-button color="primary">
-                                    <mat-icon>add</mat-icon>AGREGAR ARCHIVO
-                                </button>
-                            </div>
-                            <div fxLayout="column" fxLayoutAlign="space-evenly start" style="padding-right: 3%;">
-                                <h3 style="padding-top: 5px; color:#026d30;">Terminos y Condiciones</h3>
-                                <span>Para mayor seguridad de los usuarios, las empresas que buscan personal<br>
-                                    podrán acceder a sus datos personales y perfil laboral, <br>
-                                    solo si usted aprueba la visibilidad de su perfil. La información proporcionada <br>
-                                    será visible SOLO para aquellas empresas que publiquen ofertas <br>
-                                    y/o realicen búsquedas en el Portal de Empleo San José. Usted podrá modificar <br>
-                                    y cambiar el nivel de visibilidad en cualquier momento.
-                                </span>
-                                <br>
-                                <mat-checkbox>Deseo que mi perfil sea visible para empresas que buscan personal
-                                </mat-checkbox>
-                                <br>
-                                <mat-checkbox><a class="link" router-link="">Acepto Términos y Condiciones</a>
-                                </mat-checkbox>
-                            </div>
-                        </div>
-                        <h1></h1>
-                        <button mat-button matStepperPrevious>Volver</button>
-                        <button mat-button matStepperNext>Siguiente</button>
-                    </form>
+                    <ng-template matStepLabel>CV y Permisos Legales</ng-template>
+                    <app-cvform (formReady)="cvFormInitialized($event)"></app-cvform>
                 </mat-step>
 
                 <mat-step>
                     <ng-template matStepLabel>Confirmar</ng-template>
                     <p>¿Desea confirmar todos los cambios?</p>
                     <div>
-                        <button mat-button matStepperPrevious>Volver</button>
+                        <button mat-button type="button" matStepperPrevious>Volver</button>
                         <button mat-button type="submit">Confirmar</button>
-                        <button mat-button (click)="stepper.reset()">Revisar</button>
                     </div>
                 </mat-step>
 
