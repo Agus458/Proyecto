@@ -29,6 +29,13 @@ export const getByDocumento = async (documento: string): Promise<Postulante | un
     });
 };
 
+export const getContraseniaByEmail = async (email: string): Promise<Postulante | undefined> => {
+    return await getRepository(Postulante).findOne({
+        select: ["id", "email", "contrasenia"],
+        where: { email }
+    });
+};
+
 // Retorna el postulante almacenado en el sistema cuyo email y contrasenia sea el ingresado.
 export const getByEmailContrasenia = async (email: string, contrasenia: string): Promise<Postulante | undefined> => {
     const usuario = await getRepository(Postulante).findOne({

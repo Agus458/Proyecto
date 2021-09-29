@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import validator from "validator";
+import jwt from "jsonwebtoken";
 
 import { AppError } from "../../config/error/appError";
 import { encryptPassword } from "../libraries/encryptation.library";
@@ -7,7 +8,8 @@ import { encryptPassword } from "../libraries/encryptation.library";
 import * as postulantesService from "../services/postulantes.service";
 import * as usuariosService from "../services/usuarios.service";
 import * as empresasService from "../services/empresas.service";
-import { createToken } from "../libraries/tokens.library";
+import * as restablecerContraseniaService from "../services/restablecerContrasenia.service";
+import { createToken, verifyToken } from "../libraries/tokens.library";
 import { EstadoUsuario } from "../models/enums";
 
 /* ---------------------------------------< AUTH CONTROLLER >--------------------------------------- */
@@ -56,4 +58,39 @@ export const solicitarEmpresa = async (request: Request, response: Response): Pr
     const { token, exp } = createToken(result.email);
 
     return response.status(201).json({ usuario: { email: result.email, tipo: result.constructor.name }, token, exp });
+}
+
+export const restablecerContrasenia = async (request: Request, response: Response): Promise<Response> => {
+    if (typeof request.body.email != "string") throw AppError.badRequestError("Email invalido o no ingresado");
+
+    const usuario = await usuariosService.getContraseniaByEmail(request.body.email);
+    if (!usuario) throw AppError.badRequestError("No existe un usuario con el email ingresado");
+
+    const token = jwt.sign({ email: usuario.email }, process.env.SECRET + usuario.contrasenia as string, { expiresIn: "15m" });
+
+    await restablecerContraseniaService.post(token, usuario.email);
+
+    return response.status(200).json(token);
+}
+
+export const cambiarContrasenia = async (request: Request, response: Response): Promise<Response> => {
+    const token = request.body.token;
+    if (typeof token != "string") throw AppError.badRequestError("No se ingreso el token");
+    if (typeof request.body.contrasenia != "string") throw AppError.badRequestError("No se ingreso la nueva contraseña");
+
+    const rest = await restablecerContraseniaService.getByToken(token);
+    if (!rest) throw AppError.badRequestError("Token invalido");
+
+    const usuario = await usuariosService.getContraseniaByEmail(rest.email);
+    if (!usuario) throw AppError.badRequestError("No existe el usuario");
+
+    const email = verifyToken(token, process.env.SECRET + usuario.contrasenia as string);
+
+    if(!email) throw AppError.badRequestError("Token ya utilizado o invalido");
+
+    usuario.contrasenia = await encryptPassword(request.body.contrasenia);
+
+    usuariosService.actualizar(usuario);
+
+    return response.status(200).json();
 }

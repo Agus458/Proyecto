@@ -21,6 +21,13 @@ export const getByEmail = async (email: string): Promise<Empresa | undefined> =>
     });
 };
 
+export const getContraseniaByEmail = async (email: string): Promise<Empresa | undefined> => {
+    return await getRepository(Empresa).findOne({
+        select: ["id", "email", "contrasenia"],
+        where: { email }
+    });
+};
+
 // Retorna la Empresa almacenada en el sistema cuyo email y contrasenia sea el ingresado.
 export const getByEmailContrasenia = async (email: string, contrasenia: string): Promise<Empresa | undefined> => {
     const usuario = await getRepository(Empresa).findOne({

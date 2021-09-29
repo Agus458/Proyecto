@@ -8,11 +8,11 @@ export const createToken = (email: string): { token: string, exp: number } => {
     };
 }
 
-export const verifyToken = (token: string) => {
+export const verifyToken = (token: string, secret: string) => {
     let decode = undefined;
     
     try {
-        decode = jwt.verify(token, process.env.SECRET as string);
+        decode = jwt.verify(token, secret);
     } catch (error) {
         
     }
