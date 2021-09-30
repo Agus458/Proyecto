@@ -16,4 +16,6 @@ router.post("/", [isLoggedIn, tieneRol(["Administrador"])], handleRequest(noveda
 
 router.put("/:id", [isLoggedIn, tieneRol(["Administrador"])], handleRequest(novedadesController.put));
 
+router.delete("/:id", [isLoggedIn, tieneRol(["Administrador"])], handleRequest(novedadesController._delete));
+
 export default router;

@@ -28,3 +28,8 @@ export const put = async (id: number, data: DeepPartial<Novedad>): Promise<void>
     data.id = id;
     await getRepository(Novedad).save(data);
 };
+
+// Elimina una Novedad almacenada en el sistema.
+export const _delete = async (id: number): Promise<void> => {
+    await getRepository(Novedad).delete(id);
+};

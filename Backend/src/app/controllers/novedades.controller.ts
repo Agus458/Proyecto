@@ -42,5 +42,13 @@ export const put = async (request: Request, response: Response): Promise<Respons
 
     await novedadesService.put(Number.parseInt(request.params.id), request.body);
 
-    return response.status(201).json();
+    return response.status(200).json();
+}
+
+export const _delete = async (request: Request, response: Response): Promise<Response> => {
+    if (typeof request.params.id != "string" || !validator.isInt(request.params.id)) throw AppError.badRequestError("Id invalido");
+
+    await novedadesService._delete(Number.parseInt(request.params.id));
+
+    return response.status(200).json();
 }
