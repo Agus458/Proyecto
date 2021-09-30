@@ -4,7 +4,7 @@ import * as localidadesController from "../controllers/localidades.controller";
 import { isLoggedIn } from "../middlewares/isLoggedIn";
 import { tieneRol } from "../middlewares/tieneRol";
 
-/* ---------------------------------------< PAISES ROUTES >--------------------------------------- */
+/* ---------------------------------------< LOCALIDADES ROUTES >--------------------------------------- */
 
 const router = Router();
 
