@@ -11,4 +11,5 @@ export class RestablecerContrasenia extends BaseEntity {
 
     @Column()
     token: string;
+    
 }

@@ -1,3 +1,4 @@
+import moment from "moment";
 import { DeepPartial, getRepository } from "typeorm";
 import { verifyPassword } from "../libraries/encryptation.library";
 import { Domicilio } from "../models/domicilio.model";
@@ -88,3 +89,46 @@ export const put = async (id: number, data: DeepPartial<Postulante>): Promise<vo
     data.id = id;
     await getRepository(Postulante).save(data);
 };
+
+export const getFiltered = async (filters: any): Promise<{ postulantes: Postulante[], cantidad: number }> => {
+    const query = getRepository(Postulante).createQueryBuilder("postulante");
+
+    // Relaciones
+
+    query.leftJoinAndSelect("postulante.domicilio", "domicilio")
+    query.leftJoinAndSelect("domicilio.pais", "pais")
+    query.leftJoinAndSelect("domicilio.departamento", "departamento")
+    query.leftJoinAndSelect("domicilio.localidad", "localidad")
+    query.leftJoinAndSelect("postulante.capacitaciones", "capacitacion")
+    query.leftJoinAndSelect("postulante.conocimientosInformaticos", "conocimientoInformatico")
+    query.leftJoinAndSelect("postulante.experienciasLaborales", "experienciaLaboral")
+    query.leftJoinAndSelect("postulante.idiomas", "idioma")
+    query.leftJoinAndSelect("postulante.permisos", "permiso")
+    query.leftJoinAndSelect("postulante.preferenciasLaborales", "preferenciaLaboral");
+    query.where("postulante.perfilPublico = true")
+
+    // Filtros
+
+    if (filters.sexo) query.andWhere("postulante.sexo = :sexo", { sexo: filters.sexo });
+    if (filters.edad) query.andWhere("EXTRACT(DAY FROM ((NOW() - postulante.fechaNacimiento)/365)) = :edad", { edad: filters.edad });
+    if (filters.departamento) query.andWhere("departamento.nombre = :departamento", { departamento: filters.departamento });
+    if (filters.localidad) query.andWhere("localidad.nombre = :localidad", { localidad: filters.localidad });
+    if (filters.areaTematica) query.andWhere("capacitacion.areaTematica = :areaTematica", { areaTematica: filters.areaTematica });
+    if (filters.nivelEducativo) query.andWhere("postulante.nivelEducativo = :nivelEducativo", { nivelEducativo: filters.nivelEducativo });
+    if (filters.estadoNivelEducativo) query.andWhere("postulante.estadoNivelEducativo = :estadoNivelEducativo", { estadoNivelEducativo: filters.estadoNivelEducativo });
+    if (filters.idioma) query.andWhere("idioma.nombreIdioma = :idioma", { idioma: filters.idioma });
+    if (filters.rubro) query.andWhere("experienciaLaboral.rubro = :rubro", { rubro: filters.rubro });
+    if (filters.tipoDocumento) query.andWhere("permiso.tipoDocumento = :tipoDocumento", { tipoDocumento: filters.tipoDocumento });
+    if (filters.areasInteres) query.andWhere("preferenciaLaboral.areasInteres = :areasInteres", { areasInteres: filters.areasInteres });
+
+    // Paginado
+
+    if (filters.skip) query.skip(filters.skip);
+    if (filters.take) query.take(filters.take);
+
+    // Ejecucion
+
+    const result = await query.getManyAndCount();
+
+    return { postulantes: result[0], cantidad: result[1] }
+}

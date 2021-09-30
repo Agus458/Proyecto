@@ -115,7 +115,7 @@ export const deleteCapacitcion = async (request: Request, response: Response): P
     const capacitacionGuardado = await capacitacionesService.getById(Number.parseInt(request.params.id));
     if (!capacitacionGuardado) throw AppError.badRequestError("No existe una Capacitacion con el id: " + request.params.id);
     if (capacitacionGuardado.postulante.id != postulante.id) throw AppError.badRequestError("La Capacitacion con el id: " + request.params.id + " no pretenece al usuario");
-    
+
     capacitacionesService._delete(Number.parseInt(request.params.id));
 
     return response.status(200).json();
@@ -130,7 +130,7 @@ export const deleteConocimientoInformatico = async (request: Request, response: 
     const conocimientoGuardado = await conocimientosInformaticosService.getById(Number.parseInt(request.params.id));
     if (!conocimientoGuardado) throw AppError.badRequestError("No existe un Conocimiento Informatico con el id: " + request.params.id);
     if (conocimientoGuardado.postulante.id != postulante.id) throw AppError.badRequestError("L Conocimiento Informatico con el id: " + request.params.id + " no pretenece al usuario");
-    
+
     conocimientosInformaticosService._delete(Number.parseInt(request.params.id));
 
     return response.status(200).json();
@@ -145,7 +145,7 @@ export const deleteExperienciaLaboral = async (request: Request, response: Respo
     const saved = await experienciasLaboralesService.getById(Number.parseInt(request.params.id));
     if (!saved) throw AppError.badRequestError("No existe una Experiencia Laboral con el id: " + request.params.id);
     if (saved.postulante.id != postulante.id) throw AppError.badRequestError("La Experiencia Laboral con el id: " + request.params.id + " no pretenece al usuario");
-    
+
     experienciasLaboralesService._delete(Number.parseInt(request.params.id));
 
     return response.status(200).json();
@@ -160,7 +160,7 @@ export const deleteIdioma = async (request: Request, response: Response): Promis
     const saved = await idiomasService.getById(Number.parseInt(request.params.id));
     if (!saved) throw AppError.badRequestError("No existe un Idioma con el id: " + request.params.id);
     if (saved.postulante.id != postulante.id) throw AppError.badRequestError("El Idioma con el id: " + request.params.id + " no pretenece al usuario");
-    
+
     idiomasService._delete(Number.parseInt(request.params.id));
 
     return response.status(200).json();
@@ -175,7 +175,7 @@ export const deletePermiso = async (request: Request, response: Response): Promi
     const saved = await permisosService.getById(Number.parseInt(request.params.id));
     if (!saved) throw AppError.badRequestError("No existe un Permiso con el id: " + request.params.id);
     if (saved.postulante.id != postulante.id) throw AppError.badRequestError("El Permiso con el id: " + request.params.id + " no pretenece al usuario");
-    
+
     permisosService._delete(Number.parseInt(request.params.id));
 
     return response.status(200).json();
@@ -190,8 +190,16 @@ export const deletePreferenciaLaboral = async (request: Request, response: Respo
     const saved = await preferenciasLaboralesService.getById(Number.parseInt(request.params.id));
     if (!saved) throw AppError.badRequestError("No existe una Preferencia Laboral con el id: " + request.params.id);
     if (saved.postulante.id != postulante.id) throw AppError.badRequestError("La Preferencia Laboral con el id: " + request.params.id + " no pretenece al usuario");
-    
+
     preferenciasLaboralesService._delete(Number.parseInt(request.params.id));
 
     return response.status(200).json();
+}
+
+export const getPostulantes = async (request: Request, response: Response): Promise<Response> => {
+    const query = request.query;
+
+    const postulantes = await postulantesService.getFiltered(query);
+
+    return response.json(postulantes);
 }

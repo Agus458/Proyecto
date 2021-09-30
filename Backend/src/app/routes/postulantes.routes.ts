@@ -13,6 +13,7 @@ const router = Router();
 
 const upload = multer({ storage: perfilStorage() });
 
+// Rutas Perfil de Postulante
 
 router.get("/perfil", [isLoggedIn, tieneRol(["Postulante"])], handleRequest(postulantesController.getPerfil));
 
@@ -37,5 +38,9 @@ router.delete("/perfil/idioma/:id", [isLoggedIn, tieneRol(["Postulante"])], hand
 router.delete("/perfil/permiso/:id", [isLoggedIn, tieneRol(["Postulante"])], handleRequest(postulantesController.deletePermiso));
 
 router.delete("/perfil/preferenciaLaboral/:id", [isLoggedIn, tieneRol(["Postulante"])], handleRequest(postulantesController.deletePreferenciaLaboral));
+
+// Rutas Postulante
+
+router.get("/", [isLoggedIn, tieneRol(["Empresa", "Administrador"])], handleRequest(postulantesController.getPostulantes))
 
 export default router;
