@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { request, Request, Response } from "express";
 import validator from "validator";
 
 import { AppError } from "../../config/error/appError";
@@ -7,8 +7,13 @@ import { encryptPassword } from "../libraries/encryptation.library";
 import * as postulantesService from "../services/postulantes.service";
 import * as usuariosService from "../services/usuarios.service";
 import * as empresasService from "../services/empresas.service";
+import * as offertaService from "../services/offerta.service";
 import { createToken } from "../libraries/tokens.library";
 import { EstadoUsuario } from "../models/enums";
+import { isLoggedIn } from "../middlewares/isLoggedIn";
+import { threadId } from "worker_threads";
+import { RepositoryNotTreeError } from "typeorm";
+import { Offerta } from "../models/offerta.model";
 
 /* ---------------------------------------< AUTH CONTROLLER >--------------------------------------- */
 
@@ -57,3 +62,26 @@ export const solicitarEmpresa = async (request: Request, response: Response): Pr
 
     return response.status(201).json({ usuario: { email: result.email, tipo: result.constructor.name }, token, exp });
 }
+
+export const CrearOfferta = async(request:Request, response: Response):Promise<Response>=>
+{
+
+if(!isLoggedIn) throw AppError.badRequestError("No se esta loggeado");
+if(!request.body.nombreEmpresa) throw AppError.badRequestError("No hay nombre de empresa");
+if(!request.body.RutEmpresa) throw AppError.badRequestError("No hay Rut de la empresa");
+
+if(await offertaService.getByRut(request.body.Rut)) throw AppError.badRequestError("Ya existe un Rut de la empresa");
+
+const result = await offertaService.post(request.body);
+
+return response.status(201).json({offerta:{Rut:result.RutEmpresa,tipo: request.body}})
+    
+}
+/*
+export const InscribirseAOfferta = async(request:Request,response:Response):Promise<Response>=>
+{
+
+
+    return response.status(201).json({})
+}
+*/

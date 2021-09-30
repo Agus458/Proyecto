@@ -1,11 +1,12 @@
 //import { Request,Response } from "express";
 //import * as
-import { DeepPartial,getRepository } from "typeorm";
+import { DeepPartial,getRepository, Repository } from "typeorm";
 import { Domicilio } from "../models/domicilio.model";
 import { MaximoNivelEducactivo } from "../models/enums";
 import { Idioma } from "../models/Idioma.Model";
 import { informatico } from "../models/Informatico.model";
 import { jornadaLaboral } from "../models/JornadaLaboral.model";
+import { Localidad } from "../models/localidad.model";
 import { Offerta} from "../models/offerta.model";
 
 export const get = async(): Promise<Offerta[]> =>{
@@ -18,6 +19,25 @@ export const getById = async(id:number):Promise<Offerta | undefined>=>{
     return await getRepository(Offerta).findOne(id);
 }
 
+export const getByRut = async(RUT:number):Promise<Offerta | undefined>=>{
+    return await getRepository(Offerta).findOne({
+        where:{RUT}
+    })
+}
+
+
+export const getByRazonSocial = async(id:string):Promise<Offerta | undefined>=>{
+    console.log(id);
+
+    return await getRepository(Offerta).findOne(id);
+}
+
+
+export const getByTelefonoContacto = async(TelefonoContacto:number):Promise<Offerta|undefined>=>{
+    return await getRepository(Offerta).findOne({
+        where:{}
+    })
+}
 
 
 export const getByNameEnterprise = async(nombreEmpresa:string): Promise<Offerta | undefined> =>{
@@ -26,18 +46,77 @@ export const getByNameEnterprise = async(nombreEmpresa:string): Promise<Offerta 
     });
 }
 
+export const getByEmailContacto = async(EmailEmpresa:string): Promise<Offerta | undefined> =>{
+    return await getRepository(Offerta).findOne({
+        where: {EmailEmpresa}
+    });
+}
+export const getByVacantes = async(Vacantes:Number): Promise<Offerta | undefined> =>{
+    return await getRepository(Offerta).findOne({
+        where: {Vacantes}
+    });
+}
+
+export const getByRequisitosExcluyentes = async(RequisitosExcluyente:string): Promise<Offerta | undefined> =>{
+    return await getRepository(Offerta).findOne({
+        where: {RequisitosExcluyente}
+    });
+}
+export const getByRequisitosValorados = async(RequisitosValorados:string): Promise<Offerta | undefined> =>{
+    return await getRepository(Offerta).findOne({
+        where: {RequisitosValorados}
+    });
+}
+
 export const getByPuesto = async(puesto:string): Promise<Offerta | undefined>=>{
     return await getRepository(Offerta).findOne({
         where:{ puesto}
     });
 }
-//export const getByPuesto = async(nombre)
 
-export const getByIdioma = async(Idioma:Idioma): Promise<Offerta | undefined> =>{
+export const getByHorarioTrabajo = async(HorarioTrabajo:TimeRanges): Promise<Offerta | undefined>=>{
     return await getRepository(Offerta).findOne({
-        where: { Idioma }
+        where:{HorarioTrabajo}
     });
 }
+
+export const getByRangoSalario = async(RangoSalario:string): Promise<Offerta | undefined>=>{
+    return await getRepository(Offerta).findOne({
+        where:{RangoSalario}
+    });
+}
+export const getByNombreOfferta = async(NombreOfferta:string): Promise<Offerta | undefined>=>{
+    return await getRepository(Offerta).findOne({
+        where:{NombreOfferta}
+    });
+}
+
+export const getByNombreEmpresa = async(NombreEmpresa:string): Promise<Offerta | undefined>=>{
+    return await getRepository(Offerta).findOne({
+        where:{NombreEmpresa}
+    });
+}
+export const getByDescripcion = async(descripcion:string): Promise<Offerta | undefined>=>{
+    return await getRepository(Offerta).findOne({
+        where:{descripcion}
+    });
+}
+export const getByfechaLimite = async(fechaLimite:Date): Promise<Offerta | undefined>=>{
+    return await getRepository(Offerta).findOne({
+        where:{fechaLimite}
+    });
+}
+
+export const getByfechaPublicacion = async(fechaPublicacion:Date): Promise<Offerta | undefined>=>{
+    return await getRepository(Offerta).findOne({
+        where:{fechaPublicacion}
+    });
+}
+
+
+//export const getByPuesto = async(nombre)
+
+
 
 export const getByIdNombreOfferta = async(nombreOfferta:string):Promise<Offerta | undefined> =>{
     return await getRepository(Offerta).findOne({
@@ -45,78 +124,38 @@ export const getByIdNombreOfferta = async(nombreOfferta:string):Promise<Offerta 
     });
 }
 
-export const getByDescripcion = async(Descripcion:Text):Promise<Offerta | undefined> =>{
+
+
+
+
+
+
+
+
+
+
+
+
+
+export const getByFechaLimite = async(FechaLimite:Date):Promise<Offerta | undefined> =>{
     return await getRepository(Offerta).findOne ({
-        where:{ Descripcion }
+        where:{ FechaLimite }
         
     });
 }
-export const getBySalario = async(Sueldo:Number):Promise<Offerta | undefined> =>{
+export const getByFechaCierre = async(FechaCierre:Date):Promise<Offerta | undefined> =>{
     return await getRepository(Offerta).findOne ({
-        where:{ Sueldo }
-        
-    });
-}
-
-export const getBySMaximoNivelEducativo = async(nivelEducativo:MaximoNivelEducactivo):Promise<Offerta | undefined> =>{
-    return await getRepository(Offerta).findOne ({
-        where:{ nivelEducativo }
-        
-    });
-}
-
-export const getBySCantidadEmpleados = async(CantidaddeEmpleados:Number):Promise<Offerta | undefined> =>{
-    return await getRepository(Offerta).findOne ({
-        where:{ CantidaddeEmpleados}
-        
-    });
-}
-
-
-export const getBySBuscandoPersonal = async(isPersonal:Boolean):Promise<Offerta | undefined> =>{
-    return await getRepository(Offerta).findOne ({
-        where:{ isPersonal}
+        where:{FechaCierre }
         
     });
 }
 
-export const getBySAutor = async(Autor:String):Promise<Offerta | undefined> =>{
-    return await getRepository(Offerta).findOne ({
-        where:{ Autor}
+export const getByVsible = async(Visible:boolean):Promise<Offerta | undefined>=>{
+    return await getRepository(Offerta).findOne({
+        where:{ Visible}
         
-    });
+    })
 }
-
-export const getBySJornadaLaboral = async(jornadaLaboral:jornadaLaboral):Promise<Offerta | undefined> =>{
-    return await getRepository(Offerta).findOne ({
-        where:{ jornadaLaboral}
-        
-    });
-}
-
-export const getBySInformatico = async(Informatico:informatico):Promise<Offerta | undefined> =>{
-    return await getRepository(Offerta).findOne ({
-        where:{ Informatico }
-        
-    });
-}
-
-export const getBySDomicilio = async(Domicilio:Domicilio):Promise<Offerta | undefined> =>{
-    return await getRepository(Offerta).findOne ({
-        where:{ Domicilio }
-        
-    });
-}
-
-export const getBySExpira = async(Expira:Date):Promise<Offerta | undefined> =>{
-    return await getRepository(Offerta).findOne ({
-        where:{ Expira }
-        
-    });
-}
-
-
-
 //Para probar en testing
 /*
 export const getByEducacion = async(Educacion:string):Promise<Offerta | undefined> =>{
@@ -126,7 +165,6 @@ export const getByEducacion = async(Educacion:string):Promise<Offerta | undefine
     });
 }
 */
-
 
 export const post = async (data: DeepPartial<Offerta>): Promise<Offerta> => {
     const nuevaOfferta = getRepository(Offerta).create(data);

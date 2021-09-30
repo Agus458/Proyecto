@@ -1,5 +1,5 @@
 import {  Column,Entity, ManyToOne, OneToOne,JoinColumn, PrimaryGeneratedColumn, OneToMany } from "typeorm";
-import { Idiomas } from "./Idioma.Model";
+//import { Idiomas } from "./Idioma.Model";
 import { Experiencia} from "./ExperienciaLaboral.model"
 import { jornadaLaboral } from "./JornadaLaboral.model";
 import { PermisosYLicencias } from "./PermisosYLicensias.Module";
@@ -25,12 +25,12 @@ import { Educacion } from "./Educacion.model";
      @OneToOne(() => Postulante,postulante => postulante )
      @JoinColumn()
      postulante:Postulante;
-
+/*
 
      @OneToMany(() =>Idiomas, idiomas => idiomas)
      @JoinColumn()
      idiomas:Idiomas;
-     
+     */
      @OneToMany(() => Experiencia, Experiencia => Experiencia)
      @JoinColumn()
      ExperienciaLaboral:Experiencia;

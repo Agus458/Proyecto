@@ -37,7 +37,6 @@ hasta:Date;
 @OneToMany(() => ReferenciaLaboral, ReferenciaLaboral => ReferenciaLaboral)
 ReferenciaLaboral: ReferenciaLaboral;
 
-@Column()
-Descripcion:Text;
+
 
 }

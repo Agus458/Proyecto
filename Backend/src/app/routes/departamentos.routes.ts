@@ -18,4 +18,6 @@ router.post("/", [isLoggedIn, esAdmin], handleRequest(departamentosController.po
 
 router.put("/:id", [isLoggedIn, esAdmin], handleRequest(departamentosController.putDepartamento));
 
+
+
 export default router;

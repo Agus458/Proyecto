@@ -1,18 +1,60 @@
 import { Column,Entity,JoinColumn,OneToMany,OneToOne } from "typeorm";
-import {MaximoNivelEducactivo, TipoDocumento,} from "./enums";
+import {AreaDeInteres, MaximoNivelEducactivo, TipoDocumento,} from "./enums";
 import { Usuario } from "./usuario.model";
 import { Domicilio } from "./domicilio.model";
-import { Educacion } from "./Educacion.model";
-import { jornadaLaboral } from "./JornadaLaboral.model";
-import internal from "stream";
-import { informatico } from "./Informatico.model";
-import { Curso } from "./Curso.model";
-import { SelectQueryBuilderOption } from "typeorm/query-builder/SelectQueryBuilderOption";
-import { Idioma } from "../models/Idioma.Model";
+import { Localidad } from "./localidad.model";
 
 @Entity("offerta")
 export class Offerta extends Usuario
 {
+
+
+    @Column()
+    RutEmpresa:string;
+    
+    @Column()
+    RazonSocial:string;
+
+   @Column()
+   TelefonoContacto:number;
+
+   @Column()
+   EmailContacto:string
+
+   @Column()
+   Vacantes:Number;
+
+     
+   @Column({
+    type: "enum",
+    enum: AreaDeInteres,
+    default:AreaDeInteres,
+
+})
+AreasDeInteres:AreaDeInteres;
+
+@Column()
+FuncionesDePuesto:string;
+
+@Column()
+RequisitosExcluyente:string;
+
+@Column()
+RequisitosValorados:string;
+
+@Column()
+HorarioDeTrabajo:TimeRanges;
+
+@Column()
+RangoSalario:String;
+
+    
+@OneToOne(() => Domicilio,LugarDeTrabajo => LugarDeTrabajo.Empresa)
+@JoinColumn()
+LugarDeTrabajo:Domicilio;
+
+
+
     @Column({nullable:true })
     nombreOfferta:string;
     @Column({ nullable:true})
@@ -26,46 +68,35 @@ export class Offerta extends Usuario
 
     @Column({nullable:true})
     salario:string;
-/*
-    @Column({ nullable:true })
-    nivelEducativo:string
-*/
     
     @Column({nullable: true})
     fechaLimite:Date;
 
+    @Column()
+    fechaPublicacion:Date;
+
+    @Column()
+    fechaCierre:Date;
   
 
     
     
-    @Column({
-        type: "enum",
-        enum: MaximoNivelEducactivo,
-        default:MaximoNivelEducactivo.BachilleratoLiceo,
-
-    })
-    NivelEducativoPedido:MaximoNivelEducactivo;
-
-
+ 
     
     
     
-    @OneToOne(() => Domicilio,domicilio => domicilio.Empresa)
+    @OneToOne(() =>Localidad,Localidad => Localidad)
     @JoinColumn()
-    domicilio:Domicilio;
+    localidad:Localidad;
 
+    
         
-    @Column({nullable: true})
-    jornadaLaboral:String;
+
 
     @Column({nullable: true})
     CantidaddeEmpleados:number;
 
-    @Column({nullable:true})
-    Autor:String;
-
-    @Column({nullable:true})
-    BuscandoPersonas:Boolean;
+ 
 /*
     @Column()
     Titulo:string;
@@ -75,22 +106,17 @@ export class Offerta extends Usuario
     Descripcion:Text;
     */
 
-    @OneToMany(()=> informatico,informatico => informatico)
-    @JoinColumn()
-    RequerimientosTecnicos:informatico;
+   
 /*
     @Column()
     Cargo:string;
 */
 
-    @OneToMany(()=> Idioma,Idioma => Idioma)
-    @JoinColumn()
-    Idiomas:Idioma;
 
-    
+    /*
     @Column()
     Expira:Date;
-    
+    */
     
 
     /*

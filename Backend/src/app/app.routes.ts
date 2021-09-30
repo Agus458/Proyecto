@@ -3,6 +3,7 @@ import authRoutes from "./routes/auth.routes";
 import postulantesRoutes from "./routes/postulantes.routes";
 import paisesRoutes from "./routes/pasises.routes";
 import departamentosRoutes from "./routes/departamentos.routes";
+import offertaRouter from "./routes/offerta.router";
 
 /* ---------------------------------------< API ROUTES >--------------------------------------- */
 
@@ -17,4 +18,5 @@ router.use("/paises", paisesRoutes);
 
 router.use("/departamentos", departamentosRoutes);
 
+router.use("/offerta", offertaRouter);
 export default router;
