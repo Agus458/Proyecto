@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { handleRequest } from "../../config/error/handleRequest";
-import { cambiarContrasenia, iniciarSesion, registrarse, restablecerContrasenia, solicitarEmpresa } from "../controllers/auth.controller";
+import { cambiarContrasenia, confirmarSolicitud, iniciarSesion, registrarse, restablecerContrasenia, solicitarEmpresa } from "../controllers/auth.controller";
 
 /* ---------------------------------------< AUTH ROUTES >--------------------------------------- */
 
@@ -11,6 +11,8 @@ router.post("/registrarse", handleRequest(registrarse));
 router.post("/iniciarSesion", handleRequest(iniciarSesion));
 
 router.post("/solicitarEmpresa", handleRequest(solicitarEmpresa));
+
+router.post("/confirmarSolicitud", handleRequest(confirmarSolicitud));
 
 router.post("/restablecerContrasenia", handleRequest(restablecerContrasenia));
 

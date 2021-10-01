@@ -21,6 +21,15 @@ export const getByEmail = async (email: string): Promise<Empresa | undefined> =>
     });
 };
 
+// Retorna la Empresa almacenada en el sistema cuyo rut sea el ingresado.
+export const getByRut = async (rut: string): Promise<Empresa | undefined> => {
+    return await getRepository(Empresa).findOne({
+        where: { rut },
+        select: ["rut", "id", "contrasenia", "email", "nombreFantasia", "telefono", "visibilidad", "razonSocial", "socia", "estado"],
+        relations: ["localidad"]
+    });
+};
+
 export const getContraseniaByEmail = async (email: string): Promise<Empresa | undefined> => {
     return await getRepository(Empresa).findOne({
         select: ["id", "email", "contrasenia"],
@@ -31,7 +40,7 @@ export const getContraseniaByEmail = async (email: string): Promise<Empresa | un
 // Retorna la Empresa almacenada en el sistema cuyo email y contrasenia sea el ingresado.
 export const getByEmailContrasenia = async (email: string, contrasenia: string): Promise<Empresa | undefined> => {
     const usuario = await getRepository(Empresa).findOne({
-        select: ["id", "email", "contrasenia"],
+        select: ["id", "email", "contrasenia", "estado"],
         where: { email }
     });
 

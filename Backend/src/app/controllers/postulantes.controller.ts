@@ -197,9 +197,5 @@ export const deletePreferenciaLaboral = async (request: Request, response: Respo
 }
 
 export const getPostulantes = async (request: Request, response: Response): Promise<Response> => {
-    const query = request.query;
-
-    const postulantes = await postulantesService.getFiltered(query);
-
-    return response.json(postulantes);
+    return response.status(200).json(await postulantesService.getFiltered(request.query));
 }

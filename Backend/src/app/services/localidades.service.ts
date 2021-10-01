@@ -9,12 +9,17 @@ export const get = async (): Promise<Localidad[]> => {
     return await getRepository(Localidad).find();
 };
 
-// Retorna el Localidad almacenado en el sistema cuyo id sea el ingresado.
+// Retorna la Localidad almacenado en el sistema cuyo id sea el ingresado.
 export const getById = async (id: number): Promise<Localidad | undefined> => {
     return await getRepository(Localidad).findOne(id, { relations: ["departamento"] });
 };
 
-// Retorna los Localidads almacenado en el sistema cuyo Departamento sea el ingresado.
+// Retorna la Localidad almacenado en el sistema cuyo nombre sea el ingresado.
+export const getByNombre = async (nombre: string): Promise<Localidad | undefined> => {
+    return await getRepository(Localidad).findOne({ where: { nombre }, relations: ["departamento"] });
+};
+
+// Retorna las Localidads almacenado en el sistema cuyo Departamento sea el ingresado.
 export const getByDepartamento = async (departamento: Departamento): Promise<Localidad[]> => {
     return await getRepository(Localidad).find({
         where: { departamento },

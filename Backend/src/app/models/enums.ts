@@ -1,5 +1,5 @@
 export enum EstadoUsuario {
-    ACTIVO, INACTIVO
+    ACTIVO, INACTIVO, PENDIENTE
 }
 
 export enum TipoDocumento {

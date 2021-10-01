@@ -1,4 +1,5 @@
-{
+[{
+    "name": "default",
     "type": "postgres",
     "host": "localhost",
     "port": 5432,
@@ -10,4 +11,14 @@
     "entities": [
         "dist/app/models/**/*.js"
     ]
-}
+},{
+    "name": "appsocios",
+    "type": "postgres",
+    "host": "db.cpyxafjlyybbgggzhnfd.supabase.co",
+    "port": 5432,
+    "username": "postgres",
+    "password": "MaxiSebaMartin",
+    "database": "postgres",
+    "synchronize": false,
+    "logging": false
+}]
