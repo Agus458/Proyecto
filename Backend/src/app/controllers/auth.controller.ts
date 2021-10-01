@@ -14,6 +14,7 @@ import * as restablecerContraseniaService from "../services/restablecerContrasen
 import * as solicitudesEmpresaService from "../services/solicitudesEmpresa.service";
 import { createToken, verifyToken } from "../libraries/tokens.library";
 import { EstadoUsuario } from "../models/enums";
+import { sendEmail } from "../libraries/email.library";
 
 /* ---------------------------------------< AUTH CONTROLLER >--------------------------------------- */
 
@@ -114,6 +115,8 @@ export const confirmarSolicitud = async (request: Request, response: Response): 
     empresa.contrasenia = await encryptPassword(request.body.contrasenia);
 
     usuariosService.actualizar(empresa);
+
+    sendEmail("aguperaza458@gmail.com", "Solicitud de Empresa", `La empresa ${empresa.razonSocial} con rut ${empresa.rut} solicita la habilitacion de su usuario.`);
 
     return response.status(200).json();
 }

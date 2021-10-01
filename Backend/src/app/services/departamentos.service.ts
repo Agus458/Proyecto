@@ -22,8 +22,14 @@ export const getByPais = async (pais: Pais): Promise<Departamento[]> => {
     });
 };
 
+// Retorna la cantidad de Departamentos almacenados en el sistema.
+export const getCant = async (): Promise<number> => {
+    return await getRepository(Departamento).count();
+}
+
+
 // Almacena en el sistema un nuevo Departamento.
-export const post = async (data: DeepPartial<Departamento>): Promise<Departamento> => {
+export const post = async (data: DeepPartial<Departamento>[]): Promise<Departamento[]> => {
     const nuevoDepartamento = getRepository(Departamento).create(data);
 
     return await getRepository(Departamento).save(nuevoDepartamento);

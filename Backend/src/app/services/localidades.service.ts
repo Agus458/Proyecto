@@ -27,8 +27,14 @@ export const getByDepartamento = async (departamento: Departamento): Promise<Loc
     });
 };
 
+// Retorna la cantidad de Localidades almacenados en el sistema.
+export const getCant = async (): Promise<number> => {
+    return await getRepository(Localidad).count();
+}
+
+
 // Almacena en el sistema un nuevo Localidad.
-export const post = async (data: DeepPartial<Localidad>): Promise<Localidad> => {
+export const post = async (data: DeepPartial<Localidad>[]): Promise<Localidad[]> => {
     const nuevoLocalidad = getRepository(Localidad).create(data);
 
     return await getRepository(Localidad).save(nuevoLocalidad);
