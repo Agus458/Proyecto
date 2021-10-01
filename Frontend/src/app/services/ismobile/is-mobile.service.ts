@@ -1,35 +1,24 @@
 import { Injectable } from '@angular/core';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { Observable, Subscription, of as observableOf } from 'rxjs';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-
 
 @Injectable({
   providedIn: 'root'
 })
-export class IsMobileService implements OnInit, OnDestroy {
-  
+export class IsMobileService {
+
   mediaSub: Subscription | undefined;
 
-  public mobile!: Observable<boolean>;
+  public mobile: boolean = false;
 
-  constructor(public mediaObserver: MediaObserver) { }
-
-  ngOnInit(): void {
+  constructor(public mediaObserver: MediaObserver) {
     this.mediaSub = this.mediaObserver.media$.subscribe((result: MediaChange) => {
-      this.mobile = observableOf(result.mqAlias == 'xs');
-      console.log(this.mobile);
-      
+      this.mobile = result.mqAlias == 'xs';
     });
   }
 
-  ngOnDestroy(): void {
-    this.mediaSub?.unsubscribe();
-  }
-
-  getMobile(): Observable<boolean>{
+  getMobile(): boolean {
     return this.mobile;
   }
 
-  
 }

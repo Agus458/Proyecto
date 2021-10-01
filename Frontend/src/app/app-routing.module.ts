@@ -16,11 +16,9 @@ const routes: Routes = [
   { path: "", component: InicioComponent },
   { path: "iniciarSesion", component: IniciarSesionComponent },
   { path: "registrarse", component: RegistarseComponent },
-  { path: "misdatos", component: DatosPostulanteComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: {roles: ['Postulante']}},
-  { path: "miperfil", component: MiPerfilComponent, canActivate: [IsLoggedInGuard] },
+  { path: "misdatos", component: DatosPostulanteComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Postulante'] } },
+  { path: "miperfil", component: MiPerfilComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Postulante'] } },
   { path: "nuevaoferta", component: NuevaOfertaComponent },
-  
-
 
 
   { path: '**', component: PageNotFoundComponent },

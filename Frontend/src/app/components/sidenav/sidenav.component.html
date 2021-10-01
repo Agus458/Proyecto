@@ -2,9 +2,10 @@
     <mat-sidenav #sidenav [ngStyle.xs]="{'width': '90%'}">
 
         <mat-toolbar>
-            <div fxLayout="row" fxLayoutAlign="space-between center">
-                <button class="home" mat-button [routerLink]="['/']" (click)="sidenav.toggle()">Bolsa de
-                    Trabajo</button>
+            <div fxLayout="row" fxLayoutAlign="space-between center" class="block">
+                <button class="home" mat-button [routerLink]="['/']" (click)="sidenav.toggle()">
+                    Bolsa de Trabajo
+                </button>
                 <button mat-icon-button (click)="sidenav.toggle()">
                     <mat-icon>close</mat-icon>
                 </button>
@@ -12,7 +13,8 @@
         </mat-toolbar>
 
         <mat-nav-list>
-            <mat-list-item *ngFor="let link of links" [routerLink]="link.link" routerLinkActive="selected" (click)="sidenav.toggle()">
+            <mat-list-item *ngFor="let link of links" [routerLink]="link.link" routerLinkActive="selected"
+                (click)="sidenav.toggle()">
                 <mat-icon>{{link.icon}}</mat-icon>
                 {{link.label}}
             </mat-list-item>
@@ -21,7 +23,7 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-        <app-navbar [mobile]="mobile" (showSidenavEvent)="sidenav.toggle()"></app-navbar>
+        <app-navbar [mobile]="ismobile.getMobile()" (showSidenavEvent)="sidenav.toggle()"></app-navbar>
 
         <div class="container">
             <ng-content></ng-content>

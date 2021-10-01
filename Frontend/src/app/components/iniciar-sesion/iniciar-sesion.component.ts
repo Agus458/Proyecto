@@ -29,4 +29,12 @@ export class IniciarSesionComponent implements OnInit {
     this.authService.iniciarSesion(email, contrasenia);
   }
 
+  signInWithGoogle(): void {
+    this.authService.signInWithGoogle();
+  }
+
+  signInWithFB(): void {
+    this.authService.signInWithFB();
+  }
+
 }

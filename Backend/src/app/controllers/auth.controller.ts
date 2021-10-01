@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import validator from "validator";
 import jwt from "jsonwebtoken";
+import crypto from "crypto";
 
 import { AppError } from "../../config/error/appError";
 import { encryptPassword } from "../libraries/encryptation.library";
@@ -15,6 +16,7 @@ import * as solicitudesEmpresaService from "../services/solicitudesEmpresa.servi
 import { createToken, verifyToken } from "../libraries/tokens.library";
 import { EstadoUsuario } from "../models/enums";
 import { sendEmail } from "../libraries/email.library";
+import { verifyGoogleIdToken } from "../libraries/google.library";
 
 /* ---------------------------------------< AUTH CONTROLLER >--------------------------------------- */
 
@@ -154,4 +156,30 @@ export const cambiarContrasenia = async (request: Request, response: Response): 
     usuariosService.actualizar(usuario);
 
     return response.status(200).json();
+}
+
+export const iniciarSocial = async (request: Request, response: Response): Promise<Response> => {
+    if (!request.body.user) throw AppError.badRequestError("No se ingreso el usuario");
+    if (!request.body.user.email) throw AppError.badRequestError("No se ingreso el email del usuario");
+
+    if (request.body.user.provider == "GOOGLE") {
+        if (! await verifyGoogleIdToken(request.body.user.idToken)) throw AppError.badRequestError("Token de sesion invalido");
+    } else {
+        throw AppError.badRequestError("Proveedor Invalido");
+    }
+
+    let usuario = await usuariosService.getByEmail(request.body.user.email);
+    if (!usuario) {
+        request.body.estado = EstadoUsuario.ACTIVO;
+
+        usuario = await postulantesService.post({
+            email: request.body.user.email,
+            contrasenia: await encryptPassword(crypto.randomBytes(20).toString('hex')),
+            estado: EstadoUsuario.ACTIVO
+        });
+    }
+
+    const { token, exp } = createToken(usuario.email);
+
+    return response.status(200).json({ usuario: { email: usuario.email, tipo: usuario.constructor.name }, token, exp });
 }
