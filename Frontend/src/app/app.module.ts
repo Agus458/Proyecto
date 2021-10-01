@@ -28,6 +28,10 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { PermisosFormComponent } from './components/datos-postulante/forms/permisos-form/permisos-form.component';
 import { PreferenciasLaboralesFormComponent } from './components/datos-postulante/forms/preferencias-laborales-form/preferencias-laborales-form.component';
 import { CVFormComponent } from './components/datos-postulante/forms/cvform/cvform.component';
+import { NuevaOfertaComponent } from './components/nueva-oferta/nueva-oferta.component';
+import { PostularseComponent } from './components/postularse/postularse.component';
+import { CarruselComponent } from './components/carrusel/carrusel.component';
+import {IvyCarouselModule} from 'angular-responsive-carousel';
 
 @NgModule({
   declarations: [
@@ -48,6 +52,9 @@ import { CVFormComponent } from './components/datos-postulante/forms/cvform/cvfo
     PermisosFormComponent,
     PreferenciasLaboralesFormComponent,
     CVFormComponent,
+    NuevaOfertaComponent,
+    PostularseComponent,
+    CarruselComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,7 +65,8 @@ import { CVFormComponent } from './components/datos-postulante/forms/cvform/cvfo
     FormsModule,
     ReactiveFormsModule,
     MatDatepickerModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    IvyCarouselModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
