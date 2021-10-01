@@ -74,14 +74,36 @@ if(await offertaService.getByRut(request.body.Rut)) throw AppError.badRequestErr
 
 const result = await offertaService.post(request.body);
 
-return response.status(201).json({offerta:{Rut:result.RutEmpresa,tipo: request.body}})
+return response.status(201).json({offerta:{Rut:result.RutEmpresa,tipo: result.constructor.name}})
     
 }
-/*
+
 export const InscribirseAOfferta = async(request:Request,response:Response):Promise<Response>=>
 {
+if(!isLoggedIn) throw AppError.badRequestError("No se a loggeado");
+if(!request.body.id) throw AppError.badRequestError("no existe el id del propueste")
+if(!request.body.RutEmpresa)throw AppError.badRequestError("No existe el Rut");
+if(!request.body.email) throw AppError.badRequestError("No existe ese email");
+//if(await offertaService.getByRut(request.body.Rut)) throw AppError.badRequestError("No existe ")
 
+const result = await offertaService.put(request.body.id,request.body);
 
-    return response.status(201).json({})
+//if(!request.body.email) throw AppError.badRequestError("no hay email del postulante");
+//if(!request.body.contrasenia) throw AppError.badRequestError("no se ingreso la cntraseña");
+//return response.status(201).json({offerta:{Rut:result,tipo: result.constructor.}})
+return response.status(201).json();
 }
-*/
+
+export const ObtenerInscriptosAOfferta = async(request:Request, response:Response):Promise<Response> =>
+{
+    if(!isLoggedIn) throw AppError.badRequestError("No se a loggeado");
+    if(!request.body.id) throw AppError.badRequestError("no existe el id del propueste")
+    if(!request.body.RutEmpresa)throw AppError.badRequestError("No existe el Rut");
+    if(!request.body.email) throw AppError.badRequestError("No existe ese email");
+
+    const result = await offertaService.getByInscripciones(request.body.postulantesService.email);
+
+    
+
+    return response.status(201).json({offerta:{Email:result?.puesto,Rut:result?.RutEmpresa}});
+}

@@ -8,6 +8,7 @@ import { informatico } from "../models/Informatico.model";
 import { jornadaLaboral } from "../models/JornadaLaboral.model";
 import { Localidad } from "../models/localidad.model";
 import { Offerta} from "../models/offerta.model";
+import { Postulante } from "../models/postulante.model";
 
 export const get = async(): Promise<Offerta[]> =>{
 return await getRepository(Offerta).find();
@@ -137,12 +138,6 @@ export const getByIdNombreOfferta = async(nombreOfferta:string):Promise<Offerta 
 
 
 
-export const getByFechaLimite = async(FechaLimite:Date):Promise<Offerta | undefined> =>{
-    return await getRepository(Offerta).findOne ({
-        where:{ FechaLimite }
-        
-    });
-}
 export const getByFechaCierre = async(FechaCierre:Date):Promise<Offerta | undefined> =>{
     return await getRepository(Offerta).findOne ({
         where:{FechaCierre }
@@ -165,7 +160,12 @@ export const getByEducacion = async(Educacion:string):Promise<Offerta | undefine
     });
 }
 */
-
+export const getByInscripciones = async(Inscripciones:Postulante[]):Promise<Offerta | undefined>=>
+{
+    return await getRepository(Offerta).findOne({
+        where:{Inscripciones}
+    });
+}
 export const post = async (data: DeepPartial<Offerta>): Promise<Offerta> => {
     const nuevaOfferta = getRepository(Offerta).create(data);
 
