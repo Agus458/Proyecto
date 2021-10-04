@@ -66,8 +66,14 @@ export const getPerfilById = async (id: number): Promise<Postulante | undefined>
                 pais: domicilio.pais.id,
                 barrio: domicilio.barrio,
                 direccion: domicilio.direccion,
-                localidad: domicilio.localidad.id,
-                departamento: domicilio.departamento.id
+            }
+
+            if (domicilio.localidad) {
+                Object.assign(dataDomicilio, { localidad: domicilio.localidad.id });
+            }
+
+            if (domicilio.departamento) {
+                Object.assign(dataDomicilio, { departamento: domicilio.departamento.id });
             }
 
             postulante.domicilio = dataDomicilio;

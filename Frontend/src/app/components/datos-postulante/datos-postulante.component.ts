@@ -61,7 +61,7 @@ export class DatosPostulanteComponent implements OnInit {
 
       await this.postulantesService.putPerfil(data).toPromise();
 
-      this.redirectTo(this.router.url);
+      this.router.navigateByUrl(this.router.url);
 
       console.log("work");
     } catch (error) {

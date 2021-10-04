@@ -107,7 +107,11 @@
 
         <div fxLayout="column" fxLayoutAlign="space-evenly start"><img *ngIf="imagen" mat-card-xl-image
                 [src]="imagen | safeUrl"></div>
-        <input type="file" name="imagen" (change)="onFileSelect($event)" />
+
+        <button mat-raised-button type="button" color="primary" (click)="imageInput.click()">
+            <mat-icon>add</mat-icon>AGREGAR IMAGEN
+        </button>
+        <input type="file" name="imagen" hidden="true" (change)="onFileSelect($event)" #imageInput />
 
     </div>
 

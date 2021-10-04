@@ -138,6 +138,7 @@ export class DatosPersonalesFormComponent implements OnInit {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
       this.datosPersonalesForm.get('imagenPerfil')?.setValue(file);
+      this.imagen = URL.createObjectURL(file);
     }
   }
 

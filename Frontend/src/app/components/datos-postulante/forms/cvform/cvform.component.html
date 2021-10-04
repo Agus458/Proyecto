@@ -5,14 +5,15 @@
             <h3 style="padding-top: 5px; color:#026d30;">Currículum Vitae</h3>
 
             <a mat-raised-button *ngIf="cv" target="_blank" [href]="cv | safeUrl" type="button" color="accent">
-                <mat-icon>open</mat-icon>Ver Perfil
+                <mat-icon>search</mat-icon>Ver Perfil
             </a>
-            
-            <input type="file" name="cv" (change)="onFileSelect($event)" />
 
-            <button mat-raised-button type="button" color="primary">
+            <button mat-raised-button type="button" color="primary" (click)="cvInput.click()">
                 <mat-icon>add</mat-icon>AGREGAR ARCHIVO
             </button>
+
+            <input type="file" name="cv" hidden="true" (change)="onFileSelect($event)" #cvInput />
+
         </div>
         <div fxLayout="column" fxLayoutAlign="space-evenly start" style="padding-right: 3%;">
             <h3 style="padding-top: 5px; color:#026d30;">Terminos y Condiciones</h3>
