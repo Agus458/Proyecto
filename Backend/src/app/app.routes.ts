@@ -5,6 +5,8 @@ import paisesRoutes from "./routes/pasises.routes";
 import departamentosRoutes from "./routes/departamentos.routes";
 import localidadesRoutes from "./routes/localidades.routes";
 import novedadesRoutes from "./routes/novedades.routes";
+import administradoresRoutes from "./routes/administradores.routes";
+import empresasRoutes from "./routes/empresas.routes";
 
 /* ---------------------------------------< API ROUTES >--------------------------------------- */
 
@@ -22,5 +24,9 @@ router.use("/departamentos", departamentosRoutes);
 router.use("/localidades", localidadesRoutes);
 
 router.use("/novedades", novedadesRoutes);
+
+router.use("/administradores", administradoresRoutes);
+
+router.use("/empresas", empresasRoutes);
 
 export default router;

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { IsMobileService } from 'src/app/services/ismobile/is-mobile.service';
 
 @Component({
   selector: 'app-carrusel',
@@ -7,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CarruselComponent implements OnInit {
 
-  constructor() { }
+  constructor(public ismobile: IsMobileService) { }
 
   ngOnInit(): void {
   }

@@ -1,12 +1,18 @@
 import { DeepPartial, getRepository } from "typeorm";
 import { verifyPassword } from "../libraries/encryptation.library";
 import { Empresa } from "../models/empresa.model";
+import { EstadoUsuario } from "../models/enums";
 
 /* ---------------------------------------< EMPRESAS SERVICE >--------------------------------------- */
 
 // Retorna todos las empresas almacenados en el sistema.
 export const get = async (): Promise<Empresa[]> => {
     return await getRepository(Empresa).find();
+};
+
+// Retorna todas las empresas pendientes almacenadas en el sistema.
+export const getPendientes = async (): Promise<Empresa[]> => {
+    return await getRepository(Empresa).find({ where: { estado: EstadoUsuario.PENDIENTE } });
 };
 
 // Retorna la empresa almacenado en el sistema cuyo id sea el ingresado.

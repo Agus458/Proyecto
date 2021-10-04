@@ -17,6 +17,8 @@ import { createToken, verifyToken } from "../libraries/tokens.library";
 import { EstadoUsuario } from "../models/enums";
 import { sendEmail } from "../libraries/email.library";
 import { verifyGoogleIdToken } from "../libraries/google.library";
+import { Empresa } from "../models/empresa.model";
+import moment from "moment";
 
 /* ---------------------------------------< AUTH CONTROLLER >--------------------------------------- */
 
@@ -46,6 +48,13 @@ export const iniciarSesion = async (request: Request, response: Response): Promi
     if (!usuario) throw AppError.badRequestError("Credenciales Invalidas");
 
     if (usuario.estado != EstadoUsuario.ACTIVO) throw AppError.badRequestError("El usuario no se encuentra activo");
+
+    if (usuario.constructor.toString() == "Empresa") {
+        const empresa: Empresa = usuario as Empresa;
+        if (moment().isAfter(moment(empresa.vencimiento))) {
+            throw AppError.badRequestError("La fecha de utlizacion ya expiro");
+        }
+    }
 
     const { token, exp } = createToken(usuario.email);
 
