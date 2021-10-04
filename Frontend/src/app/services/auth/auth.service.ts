@@ -100,6 +100,8 @@ export class AuthService {
         }
       );
     } catch (error) {
+      console.log(error);
+      
       this.snackBar.open("Error al Iniciar por Google", "Close", { duration: 5000 });
     }
   }
