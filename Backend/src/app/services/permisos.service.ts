@@ -30,3 +30,8 @@ export const put = async (id: number, data: DeepPartial<Permiso>): Promise<void>
     data.id = id;
     await getRepository(Permiso).save(data);
 };
+
+// Elimina un Permiso almacenada en el sistema.
+export const _delete = async (id: number): Promise<void> => {
+    await getRepository(Permiso).delete(id);
+};

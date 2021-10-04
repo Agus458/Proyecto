@@ -1,13 +1,27 @@
-{
-    "type": "mysql",
-    "host": "localhost",
-    "port": 3306,
-    "username": "root",
-    "password": "root",
-    "database": "bolsa-de-trabajo",
-    "synchronize": true,
-    "logging": false,
-    "entities": [
-        "dist/app/models/**/*.js"
-    ]
-}
+[
+    {
+        "name": "default",
+        "type": "postgres",
+        "host": "localhost",
+        "port": 5432,
+        "username": "postgres",
+        "password": "root",
+        "database": "bolsa-de-trabajo",
+        "synchronize": true,
+        "logging": false,
+        "entities": [
+            "dist/app/models/**/*.js"
+        ]
+    },
+    {
+        "name": "appsocios",
+        "type": "postgres",
+        "host": "db.cpyxafjlyybbgggzhnfd.supabase.co",
+        "port": 5432,
+        "username": "postgres",
+        "password": "MaxiSebaMartin",
+        "database": "postgres",
+        "synchronize": false,
+        "logging": false
+    }
+]

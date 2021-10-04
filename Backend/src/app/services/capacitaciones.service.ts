@@ -30,3 +30,8 @@ export const put = async (id: number, data: DeepPartial<Capacitacion>): Promise<
     data.id = id;
     await getRepository(Capacitacion).save(data);
 };
+
+// Elimina una Capacitacion almacenada en el sistema.
+export const _delete = async (id: number): Promise<void> => {
+    await getRepository(Capacitacion).delete(id);
+};

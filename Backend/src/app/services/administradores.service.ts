@@ -21,10 +21,17 @@ export const getByEmail = async (email: string): Promise<Administrador | undefin
     });
 };
 
+export const getContraseniaByEmail = async (email: string): Promise<Administrador | undefined> => {
+    return await getRepository(Administrador).findOne({
+        select: ["id", "email", "contrasenia"],
+        where: { email }
+    });
+};
+
 // Retorna el administrador almacenado en el sistema cuyo email y contrasenia sea el ingresado.
 export const getByEmailContrasenia = async (email: string, contrasenia: string): Promise<Administrador | undefined> => {
     const usuario = await getRepository(Administrador).findOne({
-        select: ["id", "email", "contrasenia"],
+        select: ["id", "email", "contrasenia", "estado"],
         where: { email }
     });
 

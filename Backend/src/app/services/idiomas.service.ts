@@ -1,5 +1,5 @@
 import { DeepPartial, getRepository } from "typeorm";
-import { Idioma } from "../models/Idioma.Model";
+import { Idioma } from "../models/idioma.model";
 
 /* ---------------------------------------< IDIOMAS SERVICE >--------------------------------------- */
 
@@ -27,5 +27,11 @@ export const post = async (data: DeepPartial<Idioma>): Promise<Idioma> => {
 
 // Actualiza un Idioma almacenado en el sistema.
 export const put = async (id: number, data: DeepPartial<Idioma>): Promise<void> => {
+    data.id = id;
     await getRepository(Idioma).save(data);
+};
+
+// Elimina un Idioma almacenada en el sistema.
+export const _delete = async (id: number): Promise<void> => {
+    await getRepository(Idioma).delete(id);
 };

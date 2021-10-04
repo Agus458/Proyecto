@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { handleRequest } from "../../config/error/handleRequest";
-import * as empresasController from "../controllers/empresas.controller";
+import * as administradoresController from "../controllers/administradores.controller";
 import { isLoggedIn } from "../middlewares/isLoggedIn";
 import { tieneRol } from "../middlewares/tieneRol";
 
@@ -8,8 +8,6 @@ import { tieneRol } from "../middlewares/tieneRol";
 
 const router = Router();
 
-router.put("/pendientes", handleRequest(empresasController.getPendientes));
-
-router.put("/:id", handleRequest(empresasController.getById));
+router.put("/habilitarEmpresa/:id", handleRequest(administradoresController.habilitarEmpresa));
 
 export default router;

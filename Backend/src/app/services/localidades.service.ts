@@ -9,12 +9,17 @@ export const get = async (): Promise<Localidad[]> => {
     return await getRepository(Localidad).find();
 };
 
-// Retorna el Localidad almacenado en el sistema cuyo id sea el ingresado.
+// Retorna la Localidad almacenado en el sistema cuyo id sea el ingresado.
 export const getById = async (id: number): Promise<Localidad | undefined> => {
     return await getRepository(Localidad).findOne(id, { relations: ["departamento"] });
 };
 
-// Retorna los Localidads almacenado en el sistema cuyo Departamento sea el ingresado.
+// Retorna la Localidad almacenado en el sistema cuyo nombre sea el ingresado.
+export const getByNombre = async (nombre: string): Promise<Localidad | undefined> => {
+    return await getRepository(Localidad).findOne({ where: { nombre }, relations: ["departamento"] });
+};
+
+// Retorna las Localidads almacenado en el sistema cuyo Departamento sea el ingresado.
 export const getByDepartamento = async (departamento: Departamento): Promise<Localidad[]> => {
     return await getRepository(Localidad).find({
         where: { departamento },
@@ -22,8 +27,14 @@ export const getByDepartamento = async (departamento: Departamento): Promise<Loc
     });
 };
 
+// Retorna la cantidad de Localidades almacenados en el sistema.
+export const getCant = async (): Promise<number> => {
+    return await getRepository(Localidad).count();
+}
+
+
 // Almacena en el sistema un nuevo Localidad.
-export const post = async (data: DeepPartial<Localidad>): Promise<Localidad> => {
+export const post = async (data: DeepPartial<Localidad>[]): Promise<Localidad[]> => {
     const nuevoLocalidad = getRepository(Localidad).create(data);
 
     return await getRepository(Localidad).save(nuevoLocalidad);

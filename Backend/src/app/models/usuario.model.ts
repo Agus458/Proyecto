@@ -8,10 +8,10 @@ export abstract class Usuario extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ unique: true })
+    @Column({ unique: true, nullable: true })
     email: string;
 
-    @Column()
+    @Column({ select: false })
     contrasenia: string;
 
     @Column({ type: "enum", enum: EstadoUsuario })

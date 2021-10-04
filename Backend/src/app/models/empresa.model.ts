@@ -1,5 +1,5 @@
-import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
-import { Domicilio } from "./domicilio.model";
+import { Column, Entity, ManyToOne } from "typeorm";
+import { Localidad } from "./localidad.model";
 import { Usuario } from "./usuario.model";
 
 /* ---------------------------------------< EMPRESA MODEL >--------------------------------------- */
@@ -19,8 +19,16 @@ export class Empresa extends Usuario {
     @Column({ nullable: true })
     socia: boolean;
 
-    @OneToOne(() => Domicilio, domicilio => domicilio.Empresa)
-    @JoinColumn()
-    domicilio: Domicilio;
+    @Column({ nullable: true })
+    telefono: string
+
+    @ManyToOne(() => Localidad)
+    localidad: Localidad;
+
+    @Column({ default: false })
+    visibilidad: boolean;
+
+    @Column({ nullable: true })
+    nombreFantasia: string;
 
 }

@@ -1,5 +1,5 @@
 import { Column,Entity,JoinColumn,OneToMany,OneToOne } from "typeorm";
-import {AreaDeInteres, MaximoNivelEducactivo, TipoDocumento,} from "./enums";
+//import  {  TipoDocumento} from "./enums";
 import { Usuario } from "./usuario.model";
 import { Domicilio } from "./domicilio.model";
 import { Localidad } from "./localidad.model";
@@ -8,13 +8,14 @@ import { Localidad } from "./localidad.model";
 export class Offerta extends Usuario
 {
 
-
+/*
     @Column()
     RutEmpresa:string;
-    
+    */
+   /*
     @Column()
     RazonSocial:string;
-
+*/
    @Column()
    TelefonoContacto:number;
 
@@ -24,16 +25,9 @@ export class Offerta extends Usuario
    @Column()
    Vacantes:Number;
 
-     
-   @Column({
-    type: "enum",
-    enum: AreaDeInteres,
-    default:AreaDeInteres,
 
-})
-AreasDeInteres:AreaDeInteres;
 
-@Column()
+   @Column()
 FuncionesDePuesto:string;
 
 @Column()
@@ -48,12 +42,12 @@ HorarioDeTrabajo:TimeRanges;
 @Column()
 RangoSalario:String;
 
-    
-@OneToOne(() => Domicilio,LugarDeTrabajo => LugarDeTrabajo.Empresa)
+    /*
+@OneToOne(() => Domicilio,LugarDeTrabajo => LugarDeTrabajo.localidad)
 @JoinColumn()
 LugarDeTrabajo:Domicilio;
 
-
+*/
 
     @Column({nullable:true })
     nombreOfferta:string;

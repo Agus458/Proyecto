@@ -1,24 +1,28 @@
 //import { Request,Response } from "express";
 //import * as
 import { DeepPartial,getRepository, Repository } from "typeorm";
-import { Domicilio } from "../models/domicilio.model";
-import { MaximoNivelEducactivo } from "../models/enums";
-import { Idioma } from "../models/Idioma.Model";
-import { informatico } from "../models/Informatico.model";
-import { jornadaLaboral } from "../models/JornadaLaboral.model";
-import { Localidad } from "../models/localidad.model";
+
+
+
 import { Offerta} from "../models/offerta.model";
 import { Postulante } from "../models/postulante.model";
 
-export const get = async(): Promise<Offerta[]> =>{
-return await getRepository(Offerta).find();
-};
 
+export const get = async(skip?:number,take?:number):Promise<{offerta:Offerta[], cantidad:number}> =>{
+    const result = await getRepository(Offerta).findAndCount({
+        skip, take, order: { fechaPublicacion: "DESC" }
+    });
+
+    return { offerta: result[0], cantidad: result[1] };
+}
 export const getById = async(id:number):Promise<Offerta | undefined>=>{
     console.log(id);
 
     return await getRepository(Offerta).findOne(id);
 }
+
+
+
 
 export const getByRut = async(RUT:number):Promise<Offerta | undefined>=>{
     return await getRepository(Offerta).findOne({
@@ -176,6 +180,11 @@ export const post = async (data: DeepPartial<Offerta>): Promise<Offerta> => {
 
 export const put = async (id:number, data:DeepPartial<Offerta>): Promise<void> =>
 {
+    data.id=id;
     await getRepository(Offerta).update(id,data);
    // await getRepository(Offerta).update(id,data);
 };
+
+export const _delete = async (id:number): Promise<void> =>{
+    await getRepository(Offerta).delete(id);
+}

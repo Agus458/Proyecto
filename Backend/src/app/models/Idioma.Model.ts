@@ -1,40 +1,33 @@
-import { BaseEntity, Column,Entity,JoinColumn,OneToOne } from "typeorm";
-import { idiomas, nivel } from "./enums";
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Postulante } from "./postulante.model";
 
-@Entity("Idioma")
-export class Idioma extends BaseEntity
-{
+/* ---------------------------------------< IDIOMA MODEL >--------------------------------------- */
+
+@Entity('idiomas')
+export class Idioma extends BaseEntity {
+
+    @PrimaryGeneratedColumn()
+    id: number;
 
     @Column()
-    Otro:string;
+    nombreIdioma: string;
 
-    @Column({
-        type: "enum",
-        enum: idiomas,
-        default: idiomas.Español
-    })
-    idiomas:idiomas;
-    @Column({
-        type: "enum",
-        enum: nivel,
-        default: nivel.No
-    })
-   Habla_Conversacion:nivel;
+    @Column({ nullable: true })
+    especificacion: string;
 
-   @Column({
-    type: "enum",
-    enum: nivel,
-    default: nivel.No
-    })
-    comprension_Lectora:nivel;
+    @Column()
+    habla: string
 
-    @Column({
-        type: "enum",
-        enum: nivel,
-        default: nivel.No
-        })
-        Escritura:nivel;
-    
-       
-   
+    @Column()
+    comprensionAuditiva: string;
+
+    @Column()
+    comprensionLectora: string;
+
+    @Column()
+    escritura: string;
+
+    @ManyToOne(() => Postulante, postulante => postulante.idiomas)
+    postulante: Postulante;
+
 }

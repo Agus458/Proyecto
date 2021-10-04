@@ -1,10 +1,25 @@
-import { Request,Response } from "express";
+import { request, Request,Response } from "express";
 import validator from "validator";
 import { AppError } from "../../config/error/appError";
 import * as offertaService from "../../app/services/offerta.service";
-import { request } from "http";
-import app from "../app.server";
 
+
+
+export const getAll = async (request: Request, response: Response): Promise<Response> => {
+    let skip = undefined, take = undefined;
+
+    if (request.query.skip) {
+        if (typeof request.query.skip == "string" && validator.isInt(request.query.skip)) { skip = Number.parseInt(request.query.skip) } else { throw AppError.badRequestError("Skip invalido") };
+    }
+
+    if (request.query.take) {
+        if (typeof request.query.take == "string" && validator.isInt(request.query.take)) { take = Number.parseInt(request.query.take) } else { throw AppError.badRequestError("Take invalido") };
+    }
+
+    const offerta = await offertaService.get(skip, take);
+
+    return response.status(200).json(offerta);
+}
 
 export const getOfferta = async(request:Request,response:Response):Promise<Response>=>{
     const Offerta = await offertaService.get();
@@ -49,6 +64,17 @@ export const putOfferta = async(request:Request,response:Response) : Promise<Res
     await offertaService.put(Number.parseInt(request.params.id),request.body);
     return response.status(200).json();
 }
+
+
+export const _delete = async(request:Request,response:Response): Promise<Response>=>{
+    if(typeof request.params.id != "string" || !validator.isInt(request.params.id)) throw AppError.badRequestError("Id invalido");
+
+    await offertaService._delete(Number.parseInt(request.params.id));
+
+    return response.status(200).json();
+}
+
+
 
 /*
 export const isExpirate= async(request:Request, response:Response):Promise<Response> =>{
