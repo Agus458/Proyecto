@@ -4,19 +4,19 @@ import { Pais } from "./pais.model";
 import { Postulante } from "./postulante.model";
 
 export interface Domicilio {
-    
+
     id: number;
 
     barrio: string;
 
     direccion: string;
 
-    pais: Pais;
+    pais: Pais | any;
 
-    departamento: Departamento;
+    departamento: Departamento | any;
 
-    localidad: Localidad;
+    localidad: Localidad | any;
 
     postulante: Postulante;
-    
+
 }

@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatAccordion } from '@angular/material/expansion';
-import { ThemePalette } from '@angular/material/core';
 import { Postulante } from 'src/app/models/postulante.model';
 import { PostulantesService } from 'src/app/services/postulantes/postulantes.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-datos-postulante',
@@ -25,7 +25,8 @@ export class DatosPostulanteComponent implements OnInit {
 
   constructor(
     private postulantesService: PostulantesService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -61,11 +62,10 @@ export class DatosPostulanteComponent implements OnInit {
 
       await this.postulantesService.putPerfil(data).toPromise();
 
-      this.router.navigateByUrl(this.router.url);
-
-      console.log("work");
-    } catch (error) {
-      console.log(error);
+      this.snackBar.open("Actualizacion exitosa!", "Close", { duration: 5000 });
+      this.router.navigateByUrl("/miperfil");
+    } catch (error: any) {
+      this.snackBar.open(error.error.message, "Close", { duration: 5000 });
     }
 
   }
@@ -92,11 +92,6 @@ export class DatosPostulanteComponent implements OnInit {
 
   cvFormInitialized(form: FormGroup) {
     this.cvForm = form;
-  }
-
-  redirectTo(uri: string) {
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
-      this.router.navigate([uri]));
   }
 
 }

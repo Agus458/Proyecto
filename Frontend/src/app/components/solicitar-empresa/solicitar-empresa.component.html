@@ -1,0 +1,31 @@
+<div fxLayout="row" fxLayoutAlign="center">
+    <mat-card fxFlex.lt-sm="100" fxFlex.gt-sm="40" fxFlex.gt-lg="25" class="card">
+        <mat-card-content>
+
+            <form [formGroup]="solicitarEmpresaForm" (ngSubmit)="ngOnSubmit()">
+
+                <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="space-around center">
+                    <h1>Solicitar Acceso Empresa</h1>
+
+                    <div class="error" *ngIf="solicitarEmpresaForm.invalid && solicitarEmpresaForm.touched">
+                        <mat-error>
+                            <strong>Datos Invalidos</strong>
+                        </mat-error>
+                    </div>
+
+                    <mat-form-field class="block">
+                        <mat-label>RUT</mat-label>
+                        <input type="text" matInput formControlName="rut">
+                    </mat-form-field>
+
+                    <button class="block" [disabled]="solicitarEmpresaForm.invalid" type="submit" mat-flat-button
+                        color="primary">
+                        Solicitar Acceso
+                    </button>
+
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>
+

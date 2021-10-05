@@ -78,7 +78,7 @@ export class AuthService {
 
   cerrarSesion() {
     localStorage.clear();
-    
+
     this.router.navigateByUrl("/");
   }
 
@@ -90,9 +90,9 @@ export class AuthService {
           localStorage.setItem("token", result.token);
           localStorage.setItem("exp", result.exp);
           localStorage.setItem("usuario", JSON.stringify(result.usuario));
-  
+
           this.snackBar.open("Login exitoso!", "Close", { duration: 5000 });
-  
+
           this.router.navigateByUrl("/");
         },
         error => {
@@ -101,7 +101,7 @@ export class AuthService {
       );
     } catch (error) {
       console.log(error);
-      
+
       this.snackBar.open("Error al Iniciar por Google", "Close", { duration: 5000 });
     }
   }
@@ -110,4 +110,52 @@ export class AuthService {
     this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
   }
 
+  restablecerContrasenia(email: string) {
+    this.http.post(this.url + "/restablecerContrasenia", { email }).subscribe(
+      ok => {
+        this.snackBar.open("Se a enviado un email", "Close", { duration: 5000 });
+
+        this.router.navigateByUrl("/");
+      },
+      error => {
+        this.snackBar.open(error.error.message, "Close", { duration: 5000 });
+      }
+    );
+  }
+
+  cambiarContrasenia(token: string, contrasenia: string) {
+    this.http.post(this.url + "/cambiarContrasenia", { token, contrasenia }).subscribe(
+      ok => {
+        this.snackBar.open("Contrasenia Restablecida exitosamente!", "Close", { duration: 5000 });
+
+        this.router.navigateByUrl("/iniciarSesion");
+      },
+      error => {
+        this.snackBar.open(error.error.message, "Close", { duration: 5000 });
+      }
+    );
+  }
+
+  solicitarEmpresa(rut: string) {
+    this.http.post(this.url + "/solicitarEmpresa", { rut }).subscribe(
+      (ok: any) => {
+        this.router.navigate(["/confirmarEmpresa"], { queryParams: { token: ok.token, rut: ok.rut } });
+      },
+      error => {
+        this.snackBar.open(error.error.message, "Close", { duration: 5000 });
+      }
+    );
+  }
+
+  confirmarEmpresa(data: any) {
+    this.http.post(this.url + "/confirmarEmpresa", data).subscribe(
+      ok => {
+        this.snackBar.open("Se a enviado un email al administrador", "Close", { duration: 5000 });
+        this.router.navigateByUrl("/");
+      },
+      error => {
+        this.snackBar.open(error.error.message, "Close", { duration: 5000 });
+      }
+    );
+  }
 }

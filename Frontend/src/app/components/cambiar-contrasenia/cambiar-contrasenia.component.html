@@ -1,0 +1,43 @@
+<div fxLayout="row" fxLayoutAlign="center">
+    <mat-card fxFlex.lt-sm="100" fxFlex.gt-sm="40" fxFlex.gt-lg="25" class="card">
+        <mat-card-content>
+
+            <form [formGroup]="cambiarContraseniaForm" (ngSubmit)="ngOnSubmit()">
+
+                <div fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="space-around center">
+                    <h1>Cambiar Contrasenia</h1>
+
+                    <div class="error" *ngIf="cambiarContraseniaForm.invalid && cambiarContraseniaForm.touched">
+                        <mat-error>
+                            <strong>Datos Invalidos</strong>
+                        </mat-error>
+                    </div>
+
+                    <mat-form-field class="block">
+                        <mat-label>Contraseña</mat-label>
+                        <input type="password" matInput formControlName="contrasenia">
+                        <mat-icon matSuffix>vpn_key</mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field class="block">
+                        <mat-label>Repita Contraseña</mat-label>
+                        <input type="password" matInput formControlName="contraseniaRepetida">
+                        <mat-icon matSuffix>vpn_key</mat-icon>
+                        <div
+                            *ngIf="contraseniaRepetida ? contraseniaRepetida.invalid && contraseniaRepetida.touched : undefined">
+                            <mat-error
+                                *ngIf="contraseniaRepetida && contraseniaRepetida.errors ? contraseniaRepetida.errors.match : undefined">
+                                Las contraseñas no coinciden</mat-error>
+                        </div>
+                    </mat-form-field>
+
+                    <button class="block" [disabled]="cambiarContraseniaForm.invalid" type="submit" mat-flat-button
+                        color="primary">
+                        Cambiar Contrasenia
+                    </button>
+
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

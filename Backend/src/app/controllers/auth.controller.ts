@@ -15,7 +15,7 @@ import * as restablecerContraseniaService from "../services/restablecerContrasen
 import * as solicitudesEmpresaService from "../services/solicitudesEmpresa.service";
 import { createToken, verifyToken } from "../libraries/tokens.library";
 import { EstadoUsuario } from "../models/enums";
-import { sendEmail } from "../libraries/email.library";
+import { resetTemplate, sendEmail } from "../libraries/email.library";
 import { verifyGoogleIdToken } from "../libraries/google.library";
 import { Empresa } from "../models/empresa.model";
 import moment from "moment";
@@ -48,7 +48,7 @@ export const iniciarSesion = async (request: Request, response: Response): Promi
     if (!usuario) throw AppError.badRequestError("Credenciales Invalidas");
 
     if (usuario.estado != EstadoUsuario.ACTIVO) throw AppError.badRequestError("El usuario no se encuentra activo");
-    
+
     if (usuario.constructor.name == "Empresa") {
         const empresa: Empresa = usuario as Empresa;
         if (moment().isAfter(moment(empresa.vencimiento))) {
@@ -75,8 +75,10 @@ export const solicitarEmpresa = async (request: Request, response: Response): Pr
 
         if (empresaAppSocios) {
             const localidadAppSocios = await appSociosService.getLocalidad(empresaAppSocios.localidadId);
-            const localidad = await localidadesService.getByNombre(localidadAppSocios.name);
-            request.body.localidad = localidad;
+            if (localidadAppSocios) {
+                const localidad = await localidadesService.getByNombre(localidadAppSocios.name);
+                request.body.localidad = localidad;
+            }
 
             request.body.razonSocial = empresaAppSocios.razon_social;
             request.body.socia = empresaAppSocios.activa;
@@ -96,9 +98,7 @@ export const solicitarEmpresa = async (request: Request, response: Response): Pr
 
     await solicitudesEmpresaService.post(token, empresa.rut.toString());
 
-    empresa.contrasenia = "";
-
-    return response.json({ token, empresa });
+    return response.json({ token, rut: empresa.rut });
 }
 
 export const confirmarSolicitud = async (request: Request, response: Response): Promise<Response> => {
@@ -114,7 +114,7 @@ export const confirmarSolicitud = async (request: Request, response: Response): 
     if (!rest) throw AppError.badRequestError("Token invalido");
 
     const empresa = await empresasService.getByRut(rest.rut);
-    if (!empresa) throw AppError.badRequestError("No existe el usuario");
+    if (!empresa) throw AppError.badRequestError("No existe la empresa");
 
     const data = verifyToken(token, process.env.SECRET + empresa.contrasenia as string);
     if (!data) throw AppError.badRequestError("Token ya utilizado o invalido");
@@ -129,7 +129,7 @@ export const confirmarSolicitud = async (request: Request, response: Response): 
 
     usuariosService.actualizar(empresa);
 
-    // sendEmail("aguperaza458@gmail.com", "Solicitud de Empresa", `La empresa ${empresa.razonSocial} con rut ${empresa.rut} solicita la habilitacion de su usuario.`);
+    sendEmail("aguperaza458@gmail.com", "Solicitud de Empresa", `La empresa ${empresa.razonSocial} con rut ${empresa.rut} solicita la habilitacion de su usuario.`);
 
     return response.status(200).json();
 }
@@ -144,7 +144,9 @@ export const restablecerContrasenia = async (request: Request, response: Respons
 
     await restablecerContraseniaService.post(token, usuario.email);
 
-    return response.status(200).json(token);
+    sendEmail(usuario.email, "Restablecer Contrasenia", resetTemplate(token));
+
+    return response.status(204).json();
 }
 
 export const cambiarContrasenia = async (request: Request, response: Response): Promise<Response> => {

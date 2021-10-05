@@ -76,6 +76,15 @@ export class DatosPersonalesFormComponent implements OnInit {
       domicilio.addControl("departamento", new FormControl('', [Validators.required]));
       domicilio.addControl("localidad", new FormControl('', [Validators.required]));
 
+      if (result.domicilio) {
+        result.domicilio.pais = result.domicilio.pais.id;
+        if (result.domicilio.departamento) {
+          result.domicilio.departamento = result.domicilio.departamento.id;
+          result.domicilio.localidad = result.domicilio.localidad.id;
+        }
+      }
+
+
       this.datosPersonalesForm.patchValue(result);
       if (result.imagen) {
         this.imagen = await this.postulantesService.getArchivo(proyectConfig.backEndURL + "/" + result.imagen);
@@ -103,9 +112,6 @@ export class DatosPersonalesFormComponent implements OnInit {
         this.departamentosService.getByPais(this.selectedPais).subscribe(
           result => {
             this.departamentos = result;
-          },
-          error => {
-            console.log(error);
           }
         );
       } else {
@@ -126,9 +132,6 @@ export class DatosPersonalesFormComponent implements OnInit {
       this.localidadesService.getByDepartamento(this.selectedDepartamento).subscribe(
         result => {
           this.localidades = result;
-        },
-        error => {
-          console.log(error);
         }
       );
     }

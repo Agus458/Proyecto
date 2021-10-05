@@ -44,6 +44,10 @@ import { AuthInterceptor } from './middlewares/auth.interceptor';
 
 // Pipes
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
+import { RestablecerContraseniaComponent } from './components/restablecer-contrasenia/restablecer-contrasenia.component';
+import { CambiarContraseniaComponent } from './components/cambiar-contrasenia/cambiar-contrasenia.component';
+import { SolicitarEmpresaComponent } from './components/solicitar-empresa/solicitar-empresa.component';
+import { ConfirmarEmpresaComponent } from './components/confirmar-empresa/confirmar-empresa.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +71,10 @@ import { SafeUrlPipe } from './pipes/safe-url.pipe';
     NuevaOfertaComponent,
     PostularseComponent,
     CarruselComponent,
+    RestablecerContraseniaComponent,
+    CambiarContraseniaComponent,
+    SolicitarEmpresaComponent,
+    ConfirmarEmpresaComponent,
   ],
   imports: [
     BrowserModule,

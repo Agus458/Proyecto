@@ -30,15 +30,13 @@ export class CVFormComponent implements OnInit {
 
     try {
       const result = await this.postulantesService.getPerfilActual().toPromise();
-      
+
       this.cvForm.patchValue(result);
       if (result.cv) {
         this.cv = await this.postulantesService.getArchivo(proyectConfig.backEndURL + "/" + result.cv);
       }
 
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
 
     this.formReady.emit(this.cvForm);
   }
