@@ -85,8 +85,8 @@ export const validarDomicilio = async (domicilio: any, domicilioPostulante: any)
 
             if (localidad.departamento.id != departamento.id) throw AppError.badRequestError("La localidad no pertence al departamento ingresado");
         } else {
-            domicilio.departamento = undefined;
-            domicilio.localidad = undefined;
+            domicilio.departamento = null;
+            domicilio.localidad = null;
         }
     } else {
         domicilio = domicilioPostulante;
@@ -193,9 +193,9 @@ export const validarExperienciasLaborales = async (experienciasLaborales: any, p
         if (!experienciaLaboral.rubro || typeof experienciaLaboral.rubro != "string") throw AppError.badRequestError("Rubro de Experiencia Laboral invalido o no ingresado");
         if (!experienciaLaboral.nivelJerarquico || typeof experienciaLaboral.nivelJerarquico != "string") throw AppError.badRequestError("Nivel Jerarquico de Experiencia Laboral invalido o no ingresado");
         if (experienciaLaboral.tareasRealizadas && typeof experienciaLaboral.tareasRealizadas != "string") throw AppError.badRequestError("Tareas Realizadas de Experiencia Laboral invalido o no ingresado");
-        
+
         if (!experienciaLaboral.fechaInicio || typeof experienciaLaboral.fechaInicio != "string" || !Date.parse(experienciaLaboral.fechaInicio)) throw AppError.badRequestError("Fecha de Inicio de Experiencia Laboral invalido o no ingresado. Formato Valido: YYYY-MM-DD");
-        
+
         if (typeof experienciaLaboral.trabajando != "boolean") throw AppError.badRequestError("Trabajando en Experiencia Laboral invalido o no ingresado");
         if (!experienciaLaboral.trabajando && (!experienciaLaboral.fechaFin || typeof experienciaLaboral.fechaFin != "string" || !Date.parse(experienciaLaboral.fechaFin))) throw AppError.badRequestError("Fecha de Fin de Experiencia Laboral invalido o no ingresado. Formato Valido: YYYY-MM-DD");
 
@@ -241,7 +241,7 @@ export const validarPermisos = async (permisos: any, postulante: Postulante) => 
         if (typeof permiso.tipoDocumento != "string") throw AppError.badRequestError("Tipo de Documento de permiso invalido o no ingresado");
         if (typeof permiso.vigencia != "string") throw AppError.badRequestError("Vigencia de permiso invalido o no ingresado");
         if (permiso.especificacion && typeof permiso.especificacion != "string") throw AppError.badRequestError("Especificacion de permiso invalido o no ingresado");
-        
+
         permiso.postulante = postulante;
     }
 

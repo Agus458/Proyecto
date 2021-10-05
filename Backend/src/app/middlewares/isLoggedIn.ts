@@ -3,6 +3,7 @@ import moment from "moment";
 import { AppError } from "../../config/error/appError";
 import { verifyToken } from "../libraries/tokens.library";
 import { Empresa } from "../models/empresa.model";
+import { EstadoUsuario } from "../models/enums";
 import * as usuariosService from "../services/usuarios.service";
 
 /* ---------------------------------------< LOGGED IN MIDDLEWARE >--------------------------------------- */
@@ -25,9 +26,11 @@ export const isLoggedIn = async (request: Request, response: Response, next: Nex
                 let usuario = await usuariosService.getByEmail(payload.email);
 
                 if (usuario) {
-                    if (usuario.constructor.toString() == "Empresa") {
+                    if (usuario.constructor.name == "Empresa") {
                         const empresa: Empresa = usuario as Empresa;
                         if (moment().isAfter(moment(empresa.vencimiento))) {
+                            empresa.estado = EstadoUsuario.INACTIVO;
+                            await usuariosService.actualizar(empresa);
                             return response.status(403).json({ message: "La fecha de utlizacion ya expiro", status: 403 });
                         }
                     }

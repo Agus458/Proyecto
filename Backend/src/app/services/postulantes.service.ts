@@ -61,22 +61,7 @@ export const getPerfilById = async (id: number): Promise<Postulante | undefined>
         });
 
         if (domicilio) {
-            const dataDomicilio = {
-                id: domicilio.id,
-                pais: domicilio.pais.id,
-                barrio: domicilio.barrio,
-                direccion: domicilio.direccion,
-            }
-
-            if (domicilio.localidad) {
-                Object.assign(dataDomicilio, { localidad: domicilio.localidad.id });
-            }
-
-            if (domicilio.departamento) {
-                Object.assign(dataDomicilio, { departamento: domicilio.departamento.id });
-            }
-
-            postulante.domicilio = dataDomicilio;
+            postulante.domicilio = domicilio;
         }
     }
 

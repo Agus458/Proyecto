@@ -48,10 +48,12 @@ export const iniciarSesion = async (request: Request, response: Response): Promi
     if (!usuario) throw AppError.badRequestError("Credenciales Invalidas");
 
     if (usuario.estado != EstadoUsuario.ACTIVO) throw AppError.badRequestError("El usuario no se encuentra activo");
-
-    if (usuario.constructor.toString() == "Empresa") {
+    
+    if (usuario.constructor.name == "Empresa") {
         const empresa: Empresa = usuario as Empresa;
         if (moment().isAfter(moment(empresa.vencimiento))) {
+            empresa.estado = EstadoUsuario.INACTIVO;
+            await usuariosService.actualizar(empresa);
             throw AppError.badRequestError("La fecha de utlizacion ya expiro");
         }
     }
@@ -85,14 +87,14 @@ export const solicitarEmpresa = async (request: Request, response: Response): Pr
         empresa = await empresasService.post(request.body);
     }
 
-    let token;
-    if (empresa.estado == EstadoUsuario.PENDIENTE) {
-        token = jwt.sign({ rut: empresa.rut }, process.env.SECRET + empresa.contrasenia as string);
+    if (moment().isBefore(moment(empresa.vencimiento)) && empresa.estado == EstadoUsuario.ACTIVO) throw AppError.badRequestError("Empresa Activa");
 
-        await solicitudesEmpresaService.post(token, empresa.rut.toString());
-    } else {
-        throw AppError.badRequestError("Ya se solicito la empresa");
-    }
+    empresa.estado = EstadoUsuario.PENDIENTE;
+    await usuariosService.actualizar(empresa);
+
+    const token = jwt.sign({ rut: empresa.rut }, process.env.SECRET + empresa.contrasenia as string);
+
+    await solicitudesEmpresaService.post(token, empresa.rut.toString());
 
     empresa.contrasenia = "";
 
@@ -127,7 +129,7 @@ export const confirmarSolicitud = async (request: Request, response: Response): 
 
     usuariosService.actualizar(empresa);
 
-    sendEmail("aguperaza458@gmail.com", "Solicitud de Empresa", `La empresa ${empresa.razonSocial} con rut ${empresa.rut} solicita la habilitacion de su usuario.`);
+    // sendEmail("aguperaza458@gmail.com", "Solicitud de Empresa", `La empresa ${empresa.razonSocial} con rut ${empresa.rut} solicita la habilitacion de su usuario.`);
 
     return response.status(200).json();
 }

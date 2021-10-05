@@ -6,10 +6,10 @@ export class SolicitudEmpresa extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({ unique: true })
     rut: string;
 
     @Column()
     token: string;
-    
+
 }

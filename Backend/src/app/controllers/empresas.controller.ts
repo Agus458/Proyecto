@@ -17,3 +17,8 @@ export const getById = async (request: Request, response: Response): Promise<Res
 
     return response.status(200).json(empresa);
 }
+
+export const put = async (request: Request, response: Response): Promise<Response> => {
+    
+    return response.status(204).json();
+}

@@ -46,7 +46,7 @@ export const getContraseniaByEmail = async (email: string): Promise<Empresa | un
 // Retorna la Empresa almacenada en el sistema cuyo email y contrasenia sea el ingresado.
 export const getByEmailContrasenia = async (email: string, contrasenia: string): Promise<Empresa | undefined> => {
     const usuario = await getRepository(Empresa).findOne({
-        select: ["id", "email", "contrasenia", "estado"],
+        select: ["id", "email", "contrasenia", "estado", "vencimiento"],
         where: { email }
     });
 
@@ -60,4 +60,10 @@ export const post = async (data: DeepPartial<Empresa>): Promise<Empresa> => {
     const nuevaEmpresa = getRepository(Empresa).create(data);
 
     return await getRepository(Empresa).save(nuevaEmpresa);
+};
+
+// Actualiza en el sistema una empresa.
+export const put = async (id: number, data: DeepPartial<Empresa>): Promise<Empresa> => {
+    data.id = id;
+    return await getRepository(Empresa).save(data);
 };
