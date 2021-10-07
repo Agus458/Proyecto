@@ -4,12 +4,12 @@
         <div fxLayout="column" fxLayoutAlign="space-evenly start" style="padding-right: 3%;">
             <h3 style="padding-top: 5px; color:#026d30;">Currículum Vitae</h3>
 
-            <a mat-raised-button *ngIf="cv" target="_blank" [href]="cv | safeUrl" type="button" color="accent">
-                <mat-icon>search</mat-icon>Ver Perfil
+            <a style="margin-bottom: 10px;" mat-raised-button *ngIf="cv" target="_blank" [href]="cv | safeUrl" type="button" color="accent">
+                <mat-icon>search</mat-icon>Ver CV
             </a>
 
             <button mat-raised-button type="button" color="primary" (click)="cvInput.click()">
-                <mat-icon>add</mat-icon>AGREGAR ARCHIVO
+                <mat-icon>add</mat-icon><span>{{cv?"ACTUALIZAR CV" : "AGREGAR ARCHIVO"}}</span>
             </button>
 
             <input type="file" name="cv" hidden="true" (change)="onFileSelect($event)" #cvInput />

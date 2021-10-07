@@ -33,9 +33,12 @@
                     [formGroupName]="i">
 
                     <mat-expansion-panel-header>
-                        <mat-panel-title>
+                        <mat-panel-title style="align-items: center;">
                             {{preferencia.get("puestoPreferido")?.value != "" ?
                             preferencia.get("puestoPreferido")?.value : "Nueva Preferencia Laboral"}}
+                            <button mat-icon-button type="button" color="warn" (click)="deletePreferenciaLaboral(i)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
                         </mat-panel-title>
                     </mat-expansion-panel-header>
 
@@ -57,9 +60,7 @@
                             <span matPrefix>$&nbsp;</span>
                         </mat-form-field>
 
-                        <button mat-icon-button type="button" color="warn" (click)="deletePreferenciaLaboral(i)">
-                            <mat-icon>delete</mat-icon>
-                        </button>
+                        
                     </div>
                 </mat-expansion-panel>
 

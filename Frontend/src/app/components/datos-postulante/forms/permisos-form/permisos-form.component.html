@@ -10,9 +10,12 @@
             <mat-accordion formArrayName="permisos" multi>
                 <mat-expansion-panel *ngFor="let permiso of permisos.controls; let i = index" [formGroupName]="i">
                     <mat-expansion-panel-header>
-                        <mat-panel-title>
+                        <mat-panel-title style="align-items: center;">
                             {{permiso.get("tipoDocumento")?.value != "" ?
                             permiso.get("tipoDocumento")?.value : "Nuevo Permiso"}}
+                            <button mat-icon-button type="button" color="warn" (click)="deletePermiso(i)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
                         </mat-panel-title>
 
                     </mat-expansion-panel-header>
@@ -37,9 +40,7 @@
                             <input matInput formControlName="especificacion">
                         </mat-form-field>
 
-                        <button mat-icon-button type="button" color="warn" (click)="deletePermiso(i)">
-                            <mat-icon>delete</mat-icon>
-                        </button>
+                        
                     </div>
                 </mat-expansion-panel>
 

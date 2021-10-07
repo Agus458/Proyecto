@@ -44,6 +44,7 @@ import { AuthInterceptor } from './middlewares/auth.interceptor';
 
 // Pipes
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
+import { NovedadesComponent } from './components/novedades/novedades.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { SafeUrlPipe } from './pipes/safe-url.pipe';
     NuevaOfertaComponent,
     PostularseComponent,
     CarruselComponent,
+    NovedadesComponent,
   ],
   imports: [
     BrowserModule,

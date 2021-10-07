@@ -61,7 +61,7 @@ export class DatosPostulanteComponent implements OnInit {
 
       await this.postulantesService.putPerfil(data).toPromise();
 
-      this.router.navigateByUrl(this.router.url);
+      this.redirectTo("/miperfil");
 
       console.log("work");
     } catch (error) {
@@ -95,8 +95,7 @@ export class DatosPostulanteComponent implements OnInit {
   }
 
   redirectTo(uri: string) {
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() =>
-      this.router.navigate([uri]));
+      this.router.navigate([uri]);
   }
 
 }

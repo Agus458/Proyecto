@@ -4,6 +4,7 @@ import { DatosPostulanteComponent } from './components/datos-postulante/datos-po
 import { IniciarSesionComponent } from './components/iniciar-sesion/iniciar-sesion.component';
 import { InicioComponent } from './components/inicio/inicio.component';
 import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
+import { NovedadesComponent } from './components/novedades/novedades.component';
 import { NuevaOfertaComponent } from './components/nueva-oferta/nueva-oferta.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { PostularseComponent } from './components/postularse/postularse.component';
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: "misdatos", component: DatosPostulanteComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Postulante'] } },
   { path: "miperfil", component: MiPerfilComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Postulante'] } },
   { path: "nuevaoferta", component: NuevaOfertaComponent },
+  { path: "novedades", component: NovedadesComponent },
 
 
   { path: '**', component: PageNotFoundComponent },
