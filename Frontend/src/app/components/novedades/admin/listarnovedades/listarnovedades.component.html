@@ -1,0 +1,39 @@
+<div class="example-container mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> Id </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Imagen </th>
+            <td mat-cell *matCellDef="let element"> <a mat-flat-button href="https://images.alphacoders.com/943/thumb-1920-943148.jpg"><u> Abrir Imagen</u></a> </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="titulo">
+            <th mat-header-cell *matHeaderCellDef> Titulo </th>
+            <td mat-cell *matCellDef="let element"> {{element.titulo}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="symbol">
+            <th mat-header-cell *matHeaderCellDef> Contenido </th>
+            <td mat-cell *matCellDef="let element" style="max-width: 500px; padding-left: 20px;"> {{element.symbol}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let element"> <button mat-icon-button type="button" color="warn">
+                <mat-icon>delete</mat-icon>
+            </button> </td>
+            
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

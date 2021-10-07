@@ -45,6 +45,8 @@ import { AuthInterceptor } from './middlewares/auth.interceptor';
 // Pipes
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { NovedadesComponent } from './components/novedades/novedades.component';
+import { ListarnovedadesComponent } from './components/novedades/admin/listarnovedades/listarnovedades.component';
+import { AgregarnovedadesComponent } from './components/novedades/admin/agregarnovedades/agregarnovedades.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +71,8 @@ import { NovedadesComponent } from './components/novedades/novedades.component';
     PostularseComponent,
     CarruselComponent,
     NovedadesComponent,
+    ListarnovedadesComponent,
+    AgregarnovedadesComponent,
   ],
   imports: [
     BrowserModule,
