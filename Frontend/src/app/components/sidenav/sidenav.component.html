@@ -17,19 +17,29 @@
                 <mat-icon>sticky_note_2</mat-icon>
                 Novedades
             </mat-list-item>
-            <mat-list-item routerLink="/agregarnovedad" routerLinkActive="selected" (click)="sidenav.toggle()">
-                <mat-icon>sticky_note_2</mat-icon>
-                Agregar Novedad
-            </mat-list-item>
-            <mat-list-item routerLink="/listarnovedades" routerLinkActive="selected" (click)="sidenav.toggle()">
-                <mat-icon>sticky_note_2</mat-icon>
-                Listar Novedades
-            </mat-list-item>
             <mat-list-item routerLink="/ofertas" routerLinkActive="selected" (click)="sidenav.toggle()">
                 <mat-icon>sticky_note_2</mat-icon>
                 Ofertas
             </mat-list-item>
-            
+
+            <ng-container *ngIf="authService.getUser()?.tipo == 'Administrador'">
+                <mat-list-item routerLink="/agregarnovedad" routerLinkActive="selected" (click)="sidenav.toggle()">
+                    <mat-icon>sticky_note_2</mat-icon>
+                    Agregar Novedad
+                </mat-list-item>
+                <mat-list-item routerLink="/listarnovedades" routerLinkActive="selected" (click)="sidenav.toggle()">
+                    <mat-icon>sticky_note_2</mat-icon>
+                    Listar Novedades
+                </mat-list-item>
+            </ng-container>
+
+            <ng-container *ngIf="authService.getUser()?.tipo == 'Administrador' || authService.getUser()?.tipo == 'Empresa'">
+                <mat-list-item routerLink="/nuevaoferta" routerLinkActive="selected" (click)="sidenav.toggle()">
+                    <mat-icon>sticky_note_2</mat-icon>
+                    Agregar Oferta
+                </mat-list-item>
+            </ng-container>
+
         </mat-nav-list>
 
     </mat-sidenav>

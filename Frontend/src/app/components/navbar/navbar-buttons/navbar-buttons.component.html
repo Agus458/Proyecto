@@ -4,8 +4,8 @@
 </div>
 
 <ng-template #sesioniniciada>
-    <button mat-button [routerLink]="['miperfil']">
-        Mi Perfil
+    <button mat-button routerLink="{{usuario?.tipo == 'Postulante'? 'miperfil': ''}}">
+        {{usuario?.email}}
     </button>
     <button mat-button (click)="cerrarSesion()">
         Salir

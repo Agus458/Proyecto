@@ -11,11 +11,9 @@ export class SidenavComponent implements OnInit {
 
   mobile: boolean = false;
 
-  links: { link: string; label: string; icon: string; }[] = [];
-
   constructor(
     public ismobile: IsMobileService,
-    private authService: AuthService
+    public authService: AuthService
   ) { }
 
   ngOnInit(): void {

@@ -5,24 +5,15 @@
             <mat-form-field appearance="fill">
                 <mat-label>Maximo Nivel Educativo</mat-label>
                 <mat-select formControlName="nivelEducativo">
-                    <mat-option value="Primaria">Primaria</mat-option>
-                    <mat-option value="Ciclo Basico Liceo">Ciclo Basico Liceo</mat-option>
-                    <mat-option value="Ciclo Basico UTU">Ciclo Basico UTU</mat-option>
-                    <mat-option value="Bachillerato Liceo">Bachillerato Liceo</mat-option>
-                    <mat-option value="Bachillerato UTU">Bachillerato UTU</mat-option>
-                    <mat-option value="Técnico Profesional UTU">Técnico Profesional UTU</mat-option>
-                    <mat-option value="Magisterio - Profesorado">Magisterio - Profesorado</mat-option>
-                    <mat-option value="Terciario no universitario">Terciario no universitario</mat-option>
-                    <mat-option value="Universitario">Universitario</mat-option>
-                    <mat-option value="Posgrado - Master - Doctorado">Posgrado - Master - Doctorado</mat-option>
+                    <mat-option *ngFor="let nivelEducativo of nivelesEducativos" [value]="nivelEducativo.id">
+                        {{nivelEducativo.nombre}}</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field appearance="fill">
                 <mat-label>Estado</mat-label>
                 <mat-select formControlName="estadoNivelEducativo">
-                    <mat-option value="Completo">Completo</mat-option>
-                    <mat-option value="Incompleto">Incompleto</mat-option>
-                    <mat-option value="Cursando">Cursando</mat-option>
+                    <mat-option *ngFor="let estadoNivelEducativo of estadosNivelEducativo" [value]="estadoNivelEducativo.id">
+                        {{estadoNivelEducativo.nombre}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>

@@ -31,10 +31,10 @@ const routes: Routes = [
 
   { path: "misdatos", component: DatosPostulanteComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Postulante'] } },
   { path: "miperfil", component: MiPerfilComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Postulante'] } },
-  { path: "nuevaoferta", component: NuevaOfertaComponent },
+  { path: "nuevaoferta", component: NuevaOfertaComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador', 'Empresa'] } },
   { path: "novedades", component: NovedadesComponent },
-  { path: "agregarnovedad", component: AgregarnovedadesComponent },
-  { path: "listarnovedades", component: ListarnovedadesComponent },
+  { path: "agregarnovedad", component: AgregarnovedadesComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador'] } },
+  { path: "listarnovedades", component: ListarnovedadesComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador'] } },
 
   { path: '**', component: PageNotFoundComponent },
 ];

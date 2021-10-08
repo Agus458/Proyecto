@@ -35,9 +35,9 @@ export interface Postulante extends Usuario {
 
     segundoTelefono?: string;
 
-    nivelEducativo?: string;
+    nivelEducativo?: any;
 
-    estadoNivelEducativo?: string;
+    estadoNivelEducativo?: any;
 
     orientacion?: string;
 

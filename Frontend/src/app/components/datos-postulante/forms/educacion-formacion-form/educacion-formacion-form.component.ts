@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { PerfilService } from 'src/app/services/perfil/perfil.service';
 import { PostulantesService } from 'src/app/services/postulantes/postulantes.service';
 
 @Component({
@@ -25,16 +26,18 @@ export class EducacionFormacionFormComponent implements OnInit {
     "No", "Basico", "Regular", "Fluido", "Nativo"
   ];
 
-  areasTematicas = [
-    "Administración - Secretariado", "Arte - Cultura", "Atención al Cliente", "Automotriz - Mecánica", "Banca - Servicios Financieros", "Comercio - Maercado - Ventas", "Comunicación", "Oficios - Construcción - Servicios Varios", "Contabilidad - Auditoría - Finanzas", "Diseño - Marketing - Publicidad", "Estética", "Gastronomía", "Idiomas", "Informática", "Recursos Humanos", "Salud", "Seguridad / Vigilancia", "Tecnologías de la Información", "Turismo - Hotelería", "Otro"
-  ];
+  nivelesEducativos: any[] = [];
+  estadosNivelEducativo: any[] = [];
+
+  areasTematicas = [];
 
   constructor(
     private formBuilder: FormBuilder,
-    private postulantesService: PostulantesService
+    private postulantesService: PostulantesService,
+    private perfilService: PerfilService
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.educacionFormacionForm = this.formBuilder.group({
       nivelEducativo: ['', [Validators.required]],
       estadoNivelEducativo: ['', [Validators.required]],
@@ -43,32 +46,45 @@ export class EducacionFormacionFormComponent implements OnInit {
       idiomas: this.formBuilder.array([])
     });
 
-    this.postulantesService.getPerfilActual().subscribe(
-      result => {
-        if (result.capacitaciones) {
-          for (let index = 0; index < result.capacitaciones.length; index++) {
-            this.addCapacitacion(true);
-          }
-        }
+    try {
+      const nivelesEducativos = await this.perfilService.getData("nivelesEducativos").toPromise();
+      this.nivelesEducativos = nivelesEducativos;
 
-        if (result.conocimientosInformaticos) {
-          for (let index = 0; index < result.conocimientosInformaticos.length; index++) {
-            this.addConocimientoInformatico(true);
-          }
-        }
+      const estadosNivelEducativo = await this.perfilService.getData("estadosNivelEducativo").toPromise();
+      this.estadosNivelEducativo = estadosNivelEducativo;
+    } catch (error) {
+      console.log(error);
+    }
 
-        if (result.idiomas) {
-          for (let index = 0; index < result.idiomas.length; index++) {
-            this.addIdioma(true);
-          }
-        }
+    try {
+      const result = await this.postulantesService.getPerfilActual().toPromise();
 
-        this.educacionFormacionForm.patchValue(result);
-      },
-      error => {
-        console.log(error);
+      if (result.nivelEducativo) result.nivelEducativo = result.nivelEducativo.id;
+      if (result.estadoNivelEducativo) result.estadoNivelEducativo = result.estadoNivelEducativo.id;
+
+      if (result.capacitaciones) {
+        for (let index = 0; index < result.capacitaciones.length; index++) {
+          this.addCapacitacion(true);
+        }
       }
-    );
+
+      if (result.conocimientosInformaticos) {
+        for (let index = 0; index < result.conocimientosInformaticos.length; index++) {
+          this.addConocimientoInformatico(true);
+        }
+      }
+
+      if (result.idiomas) {
+        for (let index = 0; index < result.idiomas.length; index++) {
+          this.addIdioma(true);
+        }
+      }
+
+      this.educacionFormacionForm.patchValue(result);
+    } catch (error) {
+
+    }
+
 
     this.formReady.emit(this.educacionFormacionForm);
   }
