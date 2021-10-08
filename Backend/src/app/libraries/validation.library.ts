@@ -13,9 +13,13 @@ import * as idiomasService from "../services/idiomas.service";
 import * as experienciasLaboralesService from "../services/experienciasLaborales.service";
 import * as permisosService from "../services/permisos.service";
 import * as preferenciasLaboralesService from "../services/preferenciasLaborales.service";
+import * as profileService from "../services/profile.service";
+import { NivelEducativo } from "../models/perfil/nivel-educativo";
+import { Estado } from "../models/perfil/estado";
+import { AreaTematica } from "../models/perfil/area-tematica";
 
 // Valida que los datos personales del postulante sean correctos.
-export const validarDatosPersonales = (data: any) => {
+export const validarDatosPersonales = async (data: any) => {
     if (data.tipoDocumento || data.documento) {
         if (typeof data.tipoDocumento == "undefined") throw AppError.badRequestError("Falta el tipo del documento del postulante");
         if (typeof data.tipoDocumento != "number" || !TipoDocumento[data.tipoDocumento]) throw AppError.badRequestError("Tipo de documento invalido");
@@ -44,9 +48,11 @@ export const validarDatosPersonales = (data: any) => {
     if (data.segundoTelefono && typeof data.segundoTelefono != "string") throw AppError.badRequestError("Segundo Telefono invalido");
 
     if (data.recivirEmails && typeof data.recivirEmails != "boolean") throw AppError.badRequestError("Recivir Emails invalido");
+    if (data.aceptaTerminos && typeof data.aceptaTerminos != "boolean") throw AppError.badRequestError("Acepta Terminos invalido");
+    if (data.perfilPublico && typeof data.perfilPublico != "boolean") throw AppError.badRequestError("Perfil publico invalido");
 
-    if (data.nivelEducativo && typeof data.nivelEducativo != "string") throw AppError.badRequestError("Nivel Educativo invalido");
-    if (data.estadoNivelEducativo && typeof data.estadoNivelEducativo != "string") throw AppError.badRequestError("Estado Nivel Educativo invalido");
+    if (data.nivelEducativo && typeof data.nivelEducativo != "number" || !await profileService.getById(NivelEducativo.prototype, data.nivelEducativo)) throw AppError.badRequestError("Nivel Educativo invalido");
+    if (data.estadoNivelEducativo && typeof data.estadoNivelEducativo != "number" || !await profileService.getById(Estado.prototype, data.estadoNivelEducativo)) throw AppError.badRequestError("Estado Nivel Educativo invalido");
     if (data.orientacion && typeof data.orientacion != "string") throw AppError.badRequestError("Orientacion invalida");
 }
 
@@ -111,11 +117,11 @@ export const validarCapacitaciones = async (capacitaciones: any, postulante: Pos
         }
         if (!capacitacion.nombreCurso || typeof capacitacion.nombreCurso != "string") throw AppError.badRequestError("Nombre de Curso de Capacitacion invalido o no ingresado");
         if (!capacitacion.institucion || typeof capacitacion.institucion != "string") throw AppError.badRequestError("Institucion de Capacitacion invalido o no ingresado");
-        if (!capacitacion.areaTematica || typeof capacitacion.areaTematica != "string") throw AppError.badRequestError("Area Tematica de Capacitacion invalido o no ingresado");
+        if (!capacitacion.areaTematica || typeof capacitacion.areaTematica != "number" || ! await profileService.getById(AreaTematica.prototype, capacitacion.areaTematica)) throw AppError.badRequestError("Area Tematica de Capacitacion invalido o no ingresado");
         if (!capacitacion.anioInicio || typeof capacitacion.anioInicio != "string") throw AppError.badRequestError("Año de Inicio de Capacitacion invalido o no ingresado");
         if (!capacitacion.duracion || typeof capacitacion.duracion != "string") throw AppError.badRequestError("Duracion de Capacitacion invalido o no ingresado");
         if (!capacitacion.tipoDuracion || typeof capacitacion.tipoDuracion != "string") throw AppError.badRequestError("Tipo de Duracion de Capacitacion invalido o no ingresado");
-        if (!capacitacion.estadoCurso || typeof capacitacion.estadoCurso != "string") throw AppError.badRequestError("Estado de Curso de Capacitacion invalido o no ingresado");
+        if (!capacitacion.estadoCurso || typeof capacitacion.estadoCurso != "number" || ! await profileService.getById(AreaTematica.prototype, capacitacion.estadoCurso)) throw AppError.badRequestError("Estado de Curso de Capacitacion invalido o no ingresado");
 
         capacitacion.postulante = postulante;
     }

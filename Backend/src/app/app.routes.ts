@@ -7,6 +7,7 @@ import localidadesRoutes from "./routes/localidades.routes";
 import novedadesRoutes from "./routes/novedades.routes";
 import administradoresRoutes from "./routes/administradores.routes";
 import empresasRoutes from "./routes/empresas.routes";
+import perfilRoutes from "./routes/perfil.routes";
 
 /* ---------------------------------------< API ROUTES >--------------------------------------- */
 
@@ -28,5 +29,7 @@ router.use("/novedades", novedadesRoutes);
 router.use("/administradores", administradoresRoutes);
 
 router.use("/empresas", empresasRoutes);
+
+router.use(perfilRoutes);
 
 export default router;

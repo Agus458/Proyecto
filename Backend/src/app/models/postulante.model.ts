@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToMany, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "typeorm";
 import { TipoDocumento } from "./enums";
 import { Usuario } from "./usuario.model";
 import { Domicilio } from "./domicilio.model";
@@ -8,6 +8,8 @@ import { Idioma } from "./idioma.model";
 import { ExperienciaLaboral } from "./experiencia-laboral.model";
 import { PreferenciaLaboral } from "./preferenciaLaboral.model";
 import { Permiso } from "./permiso.model";
+import { NivelEducativo } from "./perfil/nivel-educativo";
+import { Estado } from "./perfil/estado";
 
 /* ---------------------------------------< POSTULANTE MODEL >--------------------------------------- */
 
@@ -60,11 +62,11 @@ export class Postulante extends Usuario {
     @Column({ nullable: true })
     segundoTelefono: string;
 
-    @Column({ nullable: true })
-    nivelEducativo: string;
+    @ManyToOne(() => NivelEducativo)
+    nivelEducativo: NivelEducativo;
 
-    @Column({ nullable: true })
-    estadoNivelEducativo: string;
+    @ManyToOne(() => Estado)
+    estadoNivelEducativo: Estado;
 
     @Column({ nullable: true })
     orientacion: string;
@@ -74,6 +76,9 @@ export class Postulante extends Usuario {
 
     @Column({ nullable: true })
     perfilPublico: boolean;
+
+    @Column({ nullable: true })
+    aceptaTerminos: boolean;
 
     @Column({ nullable: true })
     jornadaIndiferente: boolean;

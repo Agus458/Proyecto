@@ -41,6 +41,8 @@ router.delete("/perfil/preferenciaLaboral/:id", [isLoggedIn, tieneRol(["Postulan
 
 // Rutas Postulante
 
-router.get("/", [isLoggedIn, tieneRol(["Empresa", "Administrador"])], handleRequest(postulantesController.getPostulantes))
+router.get("/", [isLoggedIn, tieneRol(["Empresa", "Administrador"])], handleRequest(postulantesController.getPostulantes));
+
+router.get("/generatePDF/:id", [], handleRequest(postulantesController.generatePDF));
 
 export default router;

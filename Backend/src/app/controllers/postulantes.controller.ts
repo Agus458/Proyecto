@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import validator from "validator";
+import pdf from "html-pdf";
 
 import { AppError } from "../../config/error/appError";
 import { removerArchivo } from "../libraries/file.library";
@@ -11,8 +12,12 @@ import * as experienciasLaboralesService from "../services/experienciasLaborales
 import * as idiomasService from "../services/idiomas.service";
 import * as permisosService from "../services/permisos.service";
 import * as preferenciasLaboralesService from "../services/preferenciasLaborales.service";
+import { profileTemplatePDF } from "../libraries/pdf.library";
+import { baseDir } from "../app.server";
 
 /* ---------------------------------------< POSTULANTES CONTROLLER >--------------------------------------- */
+
+// Perfil
 
 export const getPerfil = async (request: Request, response: Response): Promise<Response> => {
     const postulante = await postulantesService.getPerfilById(request.user.id);
@@ -38,7 +43,7 @@ export const putPostulante = async (request: Request, response: Response): Promi
     if (!postulante) throw AppError.badRequestError("No se encontro el postulante");
 
     // Validacion de datos personales del Postulante.
-    validarDatosPersonales(request.body);
+    await validarDatosPersonales(request.body);
 
     // Validacion del domicilio.
     request.body.domicilio = await validarDomicilio(request.body.domicilio, postulante.domicilio);
@@ -196,6 +201,29 @@ export const deletePreferenciaLaboral = async (request: Request, response: Respo
     return response.status(200).json();
 }
 
+// General
+
 export const getPostulantes = async (request: Request, response: Response): Promise<Response> => {
     return response.status(200).json(await postulantesService.getFiltered(request.query));
+}
+
+export const generatePDF = async (request: Request, response: Response): Promise<Response> => {
+    if (!request.params.id) throw AppError.badRequestError("No se ingreso el id del postulante");
+    if (!validator.isInt(request.params.id)) throw AppError.badRequestError("El id ingresado no es valido");
+
+    const postulante = await postulantesService.getPerfilById(Number.parseInt(request.params.id));
+
+    if (!postulante) throw AppError.badRequestError("No existe un postulante con el id ingresado");
+
+    if (!postulante.perfilPublico) throw AppError.badRequestError("Este perfil es privado");
+    
+    pdf.create(profileTemplatePDF(postulante)).toBuffer((err, res) => {
+        if(err) return Promise.reject;
+
+        response.contentType("aplication/pdf");
+        response.setHeader('Content-Disposition', 'attachment; filename=cv.pdf');
+        return response.end(res);
+    });
+
+    return response;
 }

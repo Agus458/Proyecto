@@ -1,4 +1,6 @@
 import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { AreaTematica } from "./perfil/area-tematica";
+import { Estado } from "./perfil/estado";
 import { Postulante } from "./postulante.model";
 
 /* ---------------------------------------< CAPACITACION MODEL >--------------------------------------- */
@@ -12,8 +14,8 @@ export class Capacitacion extends BaseEntity {
     @Column()
     nombreCurso: string
 
-    @Column()
-    areaTematica: string;
+    @ManyToOne(() => AreaTematica)
+    areaTematica: AreaTematica;
 
     @Column()
     institucion: string;
@@ -27,8 +29,8 @@ export class Capacitacion extends BaseEntity {
     @Column()
     tipoDuracion: string;
 
-    @Column()
-    estadoCurso: string;
+    @ManyToOne(() => Estado)
+    estadoCurso: Estado;
 
     @ManyToOne(() => Postulante, postulante => postulante.capacitaciones)
     postulante: Postulante;

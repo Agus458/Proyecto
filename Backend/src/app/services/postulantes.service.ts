@@ -52,18 +52,8 @@ export const getByEmailContrasenia = async (email: string, contrasenia: string):
 // Retorna el perfil completo del postulante almacenado en el sistema cuyo id sea el ingresado.
 export const getPerfilById = async (id: number): Promise<Postulante | undefined> => {
     const postulante: any = await getRepository(Postulante).findOne(id, {
-        relations: ["domicilio", "capacitaciones", "conocimientosInformaticos", "idiomas", "experienciasLaborales", "preferenciasLaborales", "permisos"]
+        relations: ["domicilio", "domicilio.pais", "domicilio.departamento", "domicilio.localidad", "capacitaciones", "capacitaciones.areaTematica", "capacitaciones.estadoCurso", "conocimientosInformaticos", "idiomas", "experienciasLaborales", "preferenciasLaborales", "permisos", "nivelEducativo", "estadoNivelEducativo"]
     });
-
-    if (postulante && postulante.domicilio) {
-        const domicilio = await getRepository(Domicilio).findOne(postulante.domicilio.id, {
-            relations: ["pais", "departamento", "localidad"]
-        });
-
-        if (domicilio) {
-            postulante.domicilio = domicilio;
-        }
-    }
 
     return postulante;
 };
