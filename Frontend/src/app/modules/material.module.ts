@@ -17,8 +17,11 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTableModule } from '@angular/material/table';
 
 
 @NgModule({
@@ -41,7 +44,10 @@ import {MatGridListModule} from '@angular/material/grid-list';
         MatExpansionModule,
         MatSnackBarModule,
         MatTabsModule,
-        MatGridListModule
+        MatGridListModule,
+        MatPaginatorModule,
+        MatProgressSpinnerModule,
+        MatTableModule
     ],
     exports: [
         FlexLayoutModule,
@@ -62,7 +68,10 @@ import {MatGridListModule} from '@angular/material/grid-list';
         MatExpansionModule,
         MatSnackBarModule,
         MatTabsModule,
-        MatGridListModule
+        MatGridListModule,
+        MatPaginatorModule,
+        MatProgressSpinnerModule,
+        MatTableModule
     ]
 })
 export class MaterialModule { }

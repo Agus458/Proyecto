@@ -5,8 +5,9 @@ import { ExperienciaLaboral } from "./experienciaLaboral.model";
 import { Idioma } from "./idioma.model";
 import { Permiso } from "./permiso.model";
 import { PreferenciaLaboral } from "./preferenciaLaboral.model";
+import { Usuario } from "./usuario.model";
 
-export interface Postulante {
+export interface Postulante extends Usuario {
     
     primerNombre?: string;
 

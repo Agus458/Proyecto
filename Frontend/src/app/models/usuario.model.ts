@@ -1,4 +1,4 @@
 export interface Usuario {
-    email: string;
-    tipo: string;
+    email?: string;
+    tipo?: string;
 }

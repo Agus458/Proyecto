@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { proyectConfig } from 'proyectConfig';
+import { Postulante } from 'src/app/models/postulante.model';
+import { PostulantesService } from 'src/app/services/postulantes/postulantes.service';
 
 @Component({
   selector: 'app-mi-perfil',
@@ -7,9 +10,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MiPerfilComponent implements OnInit {
 
-  constructor() { }
+  postulante: Postulante | undefined;
 
-  ngOnInit(): void {
+  imagen: string | undefined;
+
+  constructor(private postulantes: PostulantesService) { }
+
+  async ngOnInit(): Promise<void> {
+    this.postulantes.getPerfil();
+    this.postulantes.getPerfilActual().subscribe(async result => { 
+      console.log(result);
+      if (result.imagen) {
+        this.imagen = await this.postulantes.getArchivo(proyectConfig.backEndURL + "/" + result.imagen);
+      }
+      this.postulante = result });
   }
+
+
 
 }

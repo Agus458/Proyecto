@@ -39,40 +39,50 @@
                 <mat-expansion-panel class="block"
                     *ngFor="let capacitacion of capacitacionesForm.controls; let i = index" [formGroupName]="i">
                     <mat-expansion-panel-header>
-                        <mat-panel-title>
+                        <mat-panel-title style="align-items: center;">
                             {{capacitacion.get("nombreCurso")?.value != "" ? capacitacion.get("nombreCurso")?.value :
                             "Nueva Capacitacion"}}
+                            <button mat-icon-button type="button" color="warn" (click)="deleteCapacitacion(i)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
                         </mat-panel-title>
                     </mat-expansion-panel-header>
 
-                    <mat-form-field appearance="fill">
+                    <mat-form-field appearance="fill" style="padding-right: 5px;">
                         <mat-label>Nombre</mat-label>
                         <input matInput formControlName="nombreCurso">
                     </mat-form-field>
-                    <mat-form-field appearance="fill">
+                    <mat-form-field appearance="fill" style="padding-right: 5px;">
                         <mat-label>Área Temática</mat-label>
                         <mat-select formControlName="areaTematica">
                             <mat-option *ngFor="let areaTematica of areasTematicas" value="{{areaTematica}}">
                                 {{areaTematica}}</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="fill">
+                    <mat-form-field appearance="fill" style="padding-right: 5px;">
                         <mat-label>Institución Educativa</mat-label>
                         <input matInput formControlName="institucion">
                     </mat-form-field>
-                    <mat-form-field appearance="fill">
+                    <mat-form-field appearance="fill" style="padding-right: 5px;">
                         <mat-label>Año de Inicio</mat-label>
-                        <input matInput formControlName="anioInicio">
+                        <input matInput type="number" formControlName="anioInicio" #anio maxlength="4">
+                        <mat-hint align="end">{{anio.value.length}} / 4</mat-hint>
                     </mat-form-field>
-                    <mat-form-field appearance="fill">
+                    <mat-form-field appearance="fill" style="padding-right: 5px;">
                         <mat-label>Duracion</mat-label>
-                        <input matInput formControlName="duracion">
+                        <input type="number" matInput formControlName="duracion">
                     </mat-form-field>
-                    <mat-form-field appearance="fill">
+                    <mat-form-field appearance="fill" style="padding-right: 5px;">
                         <mat-label>Tipo de Duracion</mat-label>
-                        <input matInput formControlName="tipoDuracion">
+                        <mat-select formControlName="tipoDuracion">
+                            <mat-option value="Horas">Horas</mat-option>
+                            <mat-option value="Dias">Dias</mat-option>
+                            <mat-option value="Semanas">Semanas</mat-option>
+                            <mat-option value="Meses">Meses</mat-option>
+                            <mat-option value="Años">Años</mat-option>
+                        </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="fill">
+                    <mat-form-field appearance="fill" style="padding-right: 5px;">
                         <mat-label>Estado</mat-label>
                         <mat-select formControlName="estadoCurso">
                             <mat-option value="Completo">Completo</mat-option>
@@ -80,12 +90,7 @@
                             <mat-option value="Cursando">Cursando</mat-option>
                         </mat-select>
                     </mat-form-field>
-
-                    <button mat-icon-button type="button" color="warn" (click)="deleteCapacitacion(i)">
-                        <mat-icon>delete</mat-icon>
-                    </button>
                 </mat-expansion-panel>
-
             </mat-accordion>
         </div>
 
@@ -100,25 +105,27 @@
                     *ngFor="let conocimientoInformatico of conocimientosInformaticosForm.controls; let i = index"
                     [formGroupName]="i">
                     <mat-expansion-panel-header>
-                        <mat-panel-title>
+                        <mat-panel-title style="align-items: center;">
                             {{conocimientoInformatico.get("nombreAplicacion")?.value != "" ?
                             conocimientoInformatico.get("nombreAplicacion")?.value : "Nuevo Conocimiento"}}
+                            <button mat-icon-button type="button" color="warn"
+                                (click)="deleteConocimientoInformatico(i)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
                         </mat-panel-title>
-
                     </mat-expansion-panel-header>
-
-                    <mat-form-field appearance="fill">
+                    <mat-form-field appearance="fill" style="padding-right: 5px;">
                         <mat-label>Nombre</mat-label>
                         <input matInput formControlName="nombreAplicacion">
                     </mat-form-field>
-                    <mat-form-field appearance="fill">
+                    <mat-form-field appearance="fill" style="padding-right: 5px;">
                         <mat-label>Categoría</mat-label>
                         <mat-select formControlName="categoria">
                             <mat-option *ngFor="let categoria of categorias" value="{{categoria}}">{{categoria}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="fill">
+                    <mat-form-field appearance="fill" style="padding-right: 5px;">
                         <mat-label>Nivel</mat-label>
                         <mat-select formControlName="nivelConocimiento">
                             <mat-option value="Usuario">Usuario</mat-option>
@@ -126,11 +133,6 @@
                             <mat-option value="Experto">Experto</mat-option>
                         </mat-select>
                     </mat-form-field>
-
-                    <button mat-icon-button type="button" color="warn" (click)="deleteConocimientoInformatico(i)">
-                        <mat-icon>delete</mat-icon>
-                    </button>
-
                 </mat-expansion-panel>
             </mat-accordion>
         </div>
@@ -144,52 +146,53 @@
             <mat-accordion formArrayName="idiomas" multi>
                 <mat-expansion-panel *ngFor="let idioma of idiomasForm.controls; let i = index" [formGroupName]="i">
                     <mat-expansion-panel-header>
-                        <mat-panel-title>
+                        <mat-panel-title style="align-items: center;">
                             {{idioma.get("nombreIdioma")?.value != "" ?
                             idioma.get("nombreIdioma")?.value : "Nuevo Idioma"}}
+                            <button mat-icon-button type="button" color="warn" (click)="deleteIdioma(i)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
                         </mat-panel-title>
 
                     </mat-expansion-panel-header>
-                    <div fxLayout="column" fxLayoutAlign="space-evenly start">
-                        <mat-form-field appearance="fill">
-                            <mat-label>Idioma</mat-label>
-                            <mat-select formControlName="nombreIdioma">
-                                <mat-option *ngFor="let idioma of idiomas" value="{{idioma}}">{{idioma}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <mat-form-field appearance="fill">
-                            <mat-label>Especificacion</mat-label>
-                            <input matInput formControlName="especificacion">
-                        </mat-form-field>
-                        <mat-form-field appearance="fill">
-                            <mat-label>Habla / Conversación</mat-label>
-                            <mat-select formControlName="habla">
-                                <mat-option *ngFor="let nivel of niveles" value="{{nivel}}">{{nivel}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <mat-form-field appearance="fill">
-                            <mat-label>Comprensión Auditiva</mat-label>
-                            <mat-select formControlName="comprensionAuditiva">
-                                <mat-option *ngFor="let nivel of niveles" value="{{nivel}}">{{nivel}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <mat-form-field appearance="fill">
-                            <mat-label>Comprensión Lectora</mat-label>
-                            <mat-select formControlName="comprensionLectora">
-                                <mat-option *ngFor="let nivel of niveles" value="{{nivel}}">{{nivel}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <mat-form-field appearance="fill">
-                            <mat-label>Escritura</mat-label>
-                            <mat-select formControlName="escritura">
-                                <mat-option *ngFor="let nivel of niveles" value="{{nivel}}">{{nivel}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
 
-                        <button mat-icon-button type="button" color="warn" (click)="deleteIdioma(i)">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                    </div>
+                    <mat-form-field appearance="fill" style="padding-right: 5px;">
+                        <mat-label>Idioma</mat-label>
+                        <mat-select formControlName="nombreIdioma">
+                            <mat-option *ngFor="let idioma of idiomas" value="{{idioma}}">{{idioma}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" style="padding-right: 5px;">
+                        <mat-label>Especificacion</mat-label>
+                        <input matInput formControlName="especificacion">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" style="padding-right: 5px;">
+                        <mat-label>Habla / Conversación</mat-label>
+                        <mat-select formControlName="habla">
+                            <mat-option *ngFor="let nivel of niveles" value="{{nivel}}">{{nivel}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" style="padding-right: 5px;">
+                        <mat-label>Comprensión Auditiva</mat-label>
+                        <mat-select formControlName="comprensionAuditiva">
+                            <mat-option *ngFor="let nivel of niveles" value="{{nivel}}">{{nivel}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" style="padding-right: 5px;">
+                        <mat-label>Comprensión Lectora</mat-label>
+                        <mat-select formControlName="comprensionLectora">
+                            <mat-option *ngFor="let nivel of niveles" value="{{nivel}}">{{nivel}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" style="padding-right: 5px;">
+                        <mat-label>Escritura</mat-label>
+                        <mat-select formControlName="escritura">
+                            <mat-option *ngFor="let nivel of niveles" value="{{nivel}}">{{nivel}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+
+
                 </mat-expansion-panel>
 
             </mat-accordion>

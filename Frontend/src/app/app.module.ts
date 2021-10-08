@@ -48,6 +48,9 @@ import { RestablecerContraseniaComponent } from './components/restablecer-contra
 import { CambiarContraseniaComponent } from './components/cambiar-contrasenia/cambiar-contrasenia.component';
 import { SolicitarEmpresaComponent } from './components/solicitar-empresa/solicitar-empresa.component';
 import { ConfirmarEmpresaComponent } from './components/confirmar-empresa/confirmar-empresa.component';
+import { NovedadesComponent } from './components/novedades/novedades.component';
+import { ListarnovedadesComponent } from './components/novedades/admin/listarnovedades/listarnovedades.component';
+import { AgregarnovedadesComponent } from './components/novedades/admin/agregarnovedades/agregarnovedades.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +78,9 @@ import { ConfirmarEmpresaComponent } from './components/confirmar-empresa/confir
     CambiarContraseniaComponent,
     SolicitarEmpresaComponent,
     ConfirmarEmpresaComponent,
+    NovedadesComponent,
+    ListarnovedadesComponent,
+    AgregarnovedadesComponent,
   ],
   imports: [
     BrowserModule,
