@@ -60,8 +60,9 @@ export const putOfferta = async(request:Request,response:Response) : Promise<Res
     {
         if(typeof request.body.offerta != "number") throw AppError.badRequestError("No existe ninguna offerta con el id ingresado");
     }
-    if(! await offertaService.getById(Number.parseInt(request.params.id))) throw AppError.badRequestError("No existe ninguna offerta con el id ingresado ");
-    await offertaService.put(Number.parseInt(request.params.id),request.body);
+  //  if(!offerta)!await offertaService.getById(Number.parseInt(request.params.id))) throw AppError.badRequestError("No existe ninguna offerta con el id ingresado ");
+    
+  await offertaService.put(Number.parseInt(request.params.id),request.body);
     return response.status(200).json();
 }
 

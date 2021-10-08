@@ -1,8 +1,8 @@
-import { Column,Entity,JoinColumn,OneToMany,OneToOne } from "typeorm";
+import { Column,Entity,JoinColumn,OneToOne } from "typeorm";
 //import  {  TipoDocumento} from "./enums";
 import { Usuario } from "./usuario.model";
-import { Domicilio } from "./domicilio.model";
 import { Localidad } from "./localidad.model";
+import { TimerOptions } from "timers";
 
 @Entity("offerta")
 export class Offerta extends Usuario
@@ -35,10 +35,10 @@ RequisitosExcluyente:string;
 
 @Column()
 RequisitosValorados:string;
-
+/*
 @Column()
-HorarioDeTrabajo:TimeRanges;
-
+HorarioDeTrabajo:TimerOptions;
+*/
 @Column()
 RangoSalario:String;
 
@@ -57,13 +57,11 @@ LugarDeTrabajo:Domicilio;
     @Column({ nullable: true})
     descripcion:string;
     
-    @Column({nullable:true})
+    @Column()
     puesto:string;
 
-    @Column({nullable:true})
-    salario:string;
     
-    @Column({nullable: true})
+    @Column()
     fechaLimite:Date;
 
     @Column()

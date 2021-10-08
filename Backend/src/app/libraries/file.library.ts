@@ -1,7 +1,7 @@
 import multer from "multer";
 import path from "path";
 import fs from "fs";
-import { baseDir } from "../app.server";
+import  baseDir  from "../app.server";
 
 export const perfilStorage = () => {
     return multer.diskStorage({

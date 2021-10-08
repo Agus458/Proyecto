@@ -1,6 +1,19 @@
 import { Console } from "console";
 import { DeepPartial,getRepository } from "typeorm";
-import { Formulario } from "../models/Formulario.model";
+
+export function get() {
+    throw new Error("Function not implemented.");
+}
+
+export function getById(arg0: number) {
+    throw new Error("Function not implemented.");
+}
+
+export function post(body: any) {
+    throw new Error("Function not implemented.");
+}
+/*
+import { Formulario } from "../models/f";
 
 export const get = async():Promise<Formulario[]> =>{
     return await getRepository(Formulario).find();
@@ -30,3 +43,4 @@ export const put = async (id:number, data:DeepPartial<Formulario>): Promise<void
 {
     await getRepository(Formulario).update(id,data);
 }
+*/

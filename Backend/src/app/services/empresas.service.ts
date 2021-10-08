@@ -61,3 +61,7 @@ export const post = async (data: DeepPartial<Empresa>): Promise<Empresa> => {
 
     return await getRepository(Empresa).save(nuevaEmpresa);
 };
+
+export function put(id: number, empresa: Empresa) {
+    throw new Error("Function not implemented.");
+}
