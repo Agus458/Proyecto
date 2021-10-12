@@ -4,11 +4,17 @@
 }
 /* Structure */
 
-  
+  .example-container {
+    width: 50%;
+    display: block;
+  }
   table {
     width: 100%;
   }
   
+  .botones {
+    max-width: 50px;
+  }
 
   .mat-column-number,
   .mat-column-state {
