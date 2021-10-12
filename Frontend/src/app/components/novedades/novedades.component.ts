@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Novedad } from 'src/app/models/novedad.model';
+import { NovedadesServicesService } from 'src/app/services/novedades/novedades-services.service';
 
 @Component({
   selector: 'app-novedades',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NovedadesComponent implements OnInit {
 
-  constructor() { }
+  novedades : Novedad[] = [];
+  
+  constructor(private novedadesservice: NovedadesServicesService) { }
 
-  ngOnInit(): void {
+  ngOnInit()  {
+    this.novedadesservice.getNovedades().subscribe(result=> this.novedades= result.novedades);
+
+    
   }
 
 }

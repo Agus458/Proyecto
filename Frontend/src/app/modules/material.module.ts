@@ -22,6 +22,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { MatTableModule } from '@angular/material/table';
         MatGridListModule,
         MatPaginatorModule,
         MatProgressSpinnerModule,
-        MatTableModule
+        MatTableModule,
+        ScrollingModule
     ],
     exports: [
         FlexLayoutModule,
@@ -71,7 +73,8 @@ import { MatTableModule } from '@angular/material/table';
         MatGridListModule,
         MatPaginatorModule,
         MatProgressSpinnerModule,
-        MatTableModule
+        MatTableModule,
+        ScrollingModule
     ]
 })
 export class MaterialModule { }
