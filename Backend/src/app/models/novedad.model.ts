@@ -9,7 +9,7 @@ export class Novedad extends BaseEntity {
     @Column()
     titulo: string;
 
-    @Column()
+    @Column({ nullable: true })
     imagen: string;
 
     @Column({ type: "text" })

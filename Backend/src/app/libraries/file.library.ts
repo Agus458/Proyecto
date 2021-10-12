@@ -23,6 +23,19 @@ export const perfilStorage = () => {
     });
 }
 
+export const imagenNovedadStorage = () => {
+    return multer.diskStorage({
+        destination: (request, file, callback) => {
+            return callback(null, "uploads/novedades");
+        },
+
+        filename: (request, file, callback) => {
+            return callback(null, Date.now() + '-' + Math.round(Math.random() * 1E9) + path.extname(file.originalname));
+        }
+    });
+}
+
+
 export const removerArchivo = (relativePath: string) => {
     fs.unlinkSync(path.join(baseDir + "/../../" + relativePath));
 }

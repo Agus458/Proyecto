@@ -1,22 +1,30 @@
-<mat-card class="card">
-    <mat-card-content>
+<div fxLayout="row" fxLayoutAlign="center">
+    <mat-card fxFlex.lt-sm="100" fxFlex.gt-sm="40" fxFlex.gt-lg="25" class="card">
+        <mat-card-content>
 
-        <h1 color>Nueva Novedad</h1>
-        <mat-divider [inset]="true"></mat-divider>
-        <button mat-raised-button type="button" color="accent" style="margin-top: 16px; margin-bottom: 8px;">
-            <mat-icon>add</mat-icon>Agregar Imagen
-        </button>
-        <form [formGroup]="novedadesForm" class="example-form" (ngSubmit)="ngOnSubmit()">
-            <mat-form-field class="example-full-width" appearance="fill" style="margin-top: 8px;">
-                <mat-label>Titulo</mat-label>
-                <input matInput formControlName="titulo">
-            </mat-form-field>
-            <mat-form-field class="example-full-width" appearance="fill" style="margin-top: 8px;">
-                <mat-label>Contenido</mat-label>
-                <textarea matInput placeholder="Desarrolle la novedad" formControlName="contenido"></textarea>
-            </mat-form-field>
-            <button onclick="history.back(-1)" mat-raised-button type="button" color="primary" style="margin-top: 8px; margin-right: 8px;">Cancelar</button>
-            <button mat-raised-button type="submit" color="primary" style="margin-top: 8px;">Confirmar</button>
-        </form>
-    </mat-card-content>
-</mat-card>
+            <h1 color>Nueva Novedad</h1>
+            <mat-divider [inset]="true"></mat-divider>
+            <form [formGroup]="novedadesForm" class="example-form" (ngSubmit)="ngOnSubmit()">
+
+                <div fxLayout="column" fxLayoutAlign="space-evenly start"><img *ngIf="imagen" [src]="imagen | safeUrl">
+                </div>
+                <button mat-raised-button type="button" color="primary" (click)="imageInput.click()">
+                    <mat-icon>add</mat-icon>AGREGAR IMAGEN
+                </button>
+                <input type="file" name="imagen" hidden="true" (change)="onFileSelect($event)" #imageInput />
+
+                <mat-form-field class="example-full-width" appearance="fill" style="margin-top: 15px;">
+                    <mat-label>Titulo</mat-label>
+                    <input matInput formControlName="titulo">
+                </mat-form-field>
+                <mat-form-field class="example-full-width" appearance="fill" style="margin-top: 8px;">
+                    <mat-label>Contenido</mat-label>
+                    <textarea matInput placeholder="Desarrolle la novedad" formControlName="contenido"></textarea>
+                </mat-form-field>
+                <button onclick="history.back(-1)" mat-raised-button type="button" color="primary"
+                    style="margin-top: 8px; margin-right: 8px;">Cancelar</button>
+                <button mat-raised-button type="submit" color="primary" style="margin-top: 8px;">Confirmar</button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

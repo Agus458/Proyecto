@@ -6,7 +6,7 @@ export interface Novedad {
     titulo: string;
 
     
-    imagen: string;
+    imagen: string | undefined;
 
     
     contenido: string;

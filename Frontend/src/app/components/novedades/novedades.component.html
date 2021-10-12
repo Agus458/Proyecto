@@ -2,9 +2,14 @@
     <h1 color>Portal de Novedades</h1>
     <mat-divider [inset]="true"></mat-divider>
     <div fxLayout="row wrap" fxLayoutAlign="space-evenly start" fxLayout.xs="column" fxLayoutAlign.xs="center center">
-        <div *ngFor="let novedad of novedades;" fxFlex.gt-md="25%" fxLayout="column" fxLayoutAlign="space-evenly start">
-            <mat-card class="imgnovedad" class="example-card">
-                <img src="{{novedad.imagen? novedad.imagen : 'https://www.urbansplash.co.uk/images/placeholder-16-9.jpg'}}">
+        <div *ngFor="let novedad of novedades;" fxFlex.gt-md="25" fxFlexAlign.lt-md="100" fxLayout="column" fxLayoutAlign="space-evenly start">
+            <mat-card class="example-card">
+                <ng-container *ngIf="novedad.imagen; else error">
+                    <img [src]="novedad.imagen | safeUrl">
+                </ng-container>
+                <ng-template #error>
+                    <img src="https://www.urbansplash.co.uk/images/placeholder-16-9.jpg">
+                </ng-template>
                 <mat-card-header class="mat-card-header2">
                     <mat-card-title>{{novedad.titulo}}</mat-card-title>
                     <mat-card-subtitle>Publicado el: {{novedad.fechaPublicacion | date: "shortDate"}}
