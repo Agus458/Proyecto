@@ -3,6 +3,7 @@ import multer from "multer";
 
 import { handleRequest } from "../../config/error/handleRequest";
 import * as postulantesController from "../controllers/postulantes.controller";
+import * as empresasController from "../controllers/empresas.controller";
 import { perfilStorage } from "../libraries/file.library";
 import { isLoggedIn } from "../middlewares/isLoggedIn";
 import { tieneRol } from "../middlewares/tieneRol";
@@ -45,4 +46,5 @@ router.get("/", [isLoggedIn, tieneRol(["Empresa", "Administrador"])], handleRequ
 
 router.get("/generatePDF/:id", [], handleRequest(postulantesController.generatePDF));
 
+router.post("/getOfferta:id",[],handleRequest(empresasController.getOfferta));
 export default router;

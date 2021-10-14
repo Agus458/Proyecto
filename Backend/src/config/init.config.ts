@@ -10,6 +10,7 @@ import * as profileService from "../app/services/profile.service";
 import { NivelEducativo } from "../app/models/perfil/nivel-educativo";
 import { Estado } from "../app/models/perfil/estado";
 import { AreaTematica } from "../app/models/perfil/area-tematica";
+import * as offertaService from "../app/services/offerta.service";
 
 export const onInit = async () => {
 
@@ -20,6 +21,10 @@ export const onInit = async () => {
             contrasenia: await encryptPassword("admin")
         });
     }
+
+   // if(await offertaService.getByNombreEmpresa("Nueva Empresa");
+
+  
 
     if (await paisesService.getCant() <= 0 && await departamentosService.getCant() <= 0 && await localidadesService.getCant() <= 0) {
         const paises = [{ nombre: "Uruguay" }, { nombre: "Brasil" }, { nombre: "Argentina" }];
@@ -47,5 +52,8 @@ export const onInit = async () => {
         const areasTematicas = [{ nombre: "Administración - Secretariado" }, { nombre: "Arte - Cultura" }, { nombre: "Atención al Cliente" }, { nombre: "Automotriz - Mecánica" }, { nombre: "Banca - Servicios Financieros" }, { nombre: "Comercio - Maercado - Ventas" }, { nombre: "Comunicación" }, { nombre: "Oficios - Construcción - Servicios Varios" }, { nombre: "Contabilidad - Auditoría - Finanzas" }, { nombre: "Diseño - Marketing - Publicidad" }, { nombre: "Estética" }, { nombre: "Gastronomía" }, { nombre: "Idiomas" }, { nombre: "Informática" }, { nombre: "Recursos Humanos" }, { nombre: "Salud" }, { nombre: "Seguridad / Vigilancia" }, { nombre: "Tecnologías de la Información" }, { nombre: "Turismo - Hotelería" }, { nombre: "Otro" }];
         await profileService.post(AreaTematica.prototype, areasTematicas);
     }
+  
+   
+
 
 }

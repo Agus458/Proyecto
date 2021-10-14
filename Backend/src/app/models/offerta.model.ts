@@ -1,16 +1,23 @@
-import { Column,Entity,JoinColumn,OneToOne } from "typeorm";
+
+import { BaseEntity, Column,Entity,JoinColumn,OneToOne,ManyToOne,PrimaryGeneratedColumn,PrimaryColumn  } from "typeorm";
+import { Empresa } from "./empresa.model";
 //import  {  TipoDocumento} from "./enums";
-import { Usuario } from "./usuario.model";
-import { Localidad } from "./localidad.model";
-import { TimerOptions } from "timers";
+//import { Usuario } from "./usuario.model";
+//import { Localidad } from "./localidad.model";
+///import { TimerOptions } from "timers";
 import { AreaDeTrabajo } from "../models/enums";
+import { EstadoOfferta } from "./enums";
+//import {Empresa} from "./empresa.model";
 @Entity("offerta")
-export class Offerta extends Usuario
+export class Offerta extends BaseEntity
 {
 
-  
-     @Column({ nullable:true})
-     nombreEmpresa:string;
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    
+    @ManyToOne(() => Empresa)
+    empresa:Empresa;
 
 
     @Column()
@@ -19,29 +26,35 @@ export class Offerta extends Usuario
     @Column()
     EmailContacto:string
  
+ 
     @Column()
     Vacantes:string;
  
     
+    
+   @Column({
+    type: "enum",
+    enum: EstadoOfferta,
+    default: EstadoOfferta.Vigente
+})
+EstadoOfferta: EstadoOfferta;
  
  
    
  
 
  
- @Column()
+ @Column({type:"text"})
  RequisitosValorados:string;
- /*
+ 
+ 
  @Column()
- HorarioDeTrabajo:TimerOptions;
+ HorarioDeTrabajo:string;
 
  
-     /*
- @OneToOne(() => Domicilio,LugarDeTrabajo => LugarDeTrabajo.localidad)
- @JoinColumn()
- LugarDeTrabajo:Domicilio;
  
- */
+ 
+ 
 
 
  @Column({
@@ -55,15 +68,14 @@ AreaDeTrabajo: AreaDeTrabajo;
      nombreOfferta:string;
      
  
-     @Column({ nullable: true})
+     @Column({ type:"text"})
      descripcion:string;
      
      @Column()
      puesto:string;
  
      
-     @Column()
-     fechaLimite:Date;
+ 
  
   
      @Column()
@@ -72,9 +84,6 @@ AreaDeTrabajo: AreaDeTrabajo;
      @Column()
      RequisitosExcluyente:string;
     
-
-     @Column({nullable: true})
-     CantidaddeEmpleados:number;
      
     @Column()
     Horariodetrabajo:string;
@@ -82,13 +91,12 @@ AreaDeTrabajo: AreaDeTrabajo;
      @Column()
      RangoSalario:String;
 
-     @OneToOne(() =>Localidad,lugardetrabajo => lugardetrabajo)
-     @JoinColumn()
-     Lugardetrabajo:Localidad;
+     
 
      @Column()
      FechaPublicacion:Date;
       
      @Column()
-     FechaCierre:Date;  
+     FechaCierre:Date; 
+     
 }

@@ -13,15 +13,22 @@ import * as localidadesService from "../services/localidades.service";
 import * as appSociosService from "../services/appSocios.service";
 import * as restablecerContraseniaService from "../services/restablecerContrasenia.service";
 import * as solicitudesEmpresaService from "../services/solicitudesEmpresa.service";
+import * as offertaService from "../services/offerta.service";
 import { createToken, verifyToken } from "../libraries/tokens.library";
 import { EstadoUsuario } from "../models/enums";
 import { resetTemplate, sendEmail } from "../libraries/email.library";
 import { verifyGoogleIdToken } from "../libraries/google.library";
 import { Empresa } from "../models/empresa.model";
 import moment from "moment";
+import { request } from "http";
 
 /* ---------------------------------------< AUTH CONTROLLER >--------------------------------------- */
+/*
+export const publicarOfferta = async(request: Request, response: Response):Promise<Response>=>{
+    if(!request.body.)
 
+}
+*/
 export const registrarse = async (request: Request, response: Response): Promise<Response> => {
     if (!request.body.email) throw AppError.badRequestError("No se ingreso el email");
     if (!request.body.contrasenia) throw AppError.badRequestError("No se ingreso la contraseña");
@@ -196,3 +203,62 @@ export const iniciarSocial = async (request: Request, response: Response): Promi
 
     return response.status(200).json({ usuario: { email: usuario.email, tipo: usuario.constructor.name }, token, exp });
 }
+/*
+export const putOfferta= async (request:Request,response:Response):Promise<Response>=>{
+    if(!request.body.nombreEmpresa) throw AppError.badRequestError("No se ingreso el nombre de la localidad");
+    //if(!request.body.RutEmpresa) throw AppError.badRequestError("No se ingreso el el Runt de la offerta");
+    
+    const offerta = await offertaService.getById(request.body.offerta);
+    if(!offerta) throw AppError.badRequestError("No existe ningun departamento con el id ingresado");
+    await offertaService.post(request.body);
+    return response.status(201).json();
+    }
+*/
+  export const realizarOfferta = async (request: Request, response: Response): Promise<Response> => {
+    //  if (!request.body.email) throw AppError.badRequestError("No se ingreso el email");
+   // if (!request.body.contrasenia) throw AppError.badRequestError("No se ingreso la contraseña");
+    if (!request.body.nombreEmpresa) throw AppError.badRequestError("No se ingreso el email");
+  //  const usuario = await usuariosService.getByEmailContrasenia(request.body.email, request.body.contrasenia);
+ //  if (!usuario) throw AppError.badRequestError("Credenciales Invalidas");
+   
+   // if (usuario.estado != EstadoUsuario.ACTIVO) throw AppError.badRequestError("El usuario no se encuentra activo");
+const result = await offertaService.post(request.body);
+/*
+    
+    const { token, exp } = createToken(result.email);
+*/
+  //return response.status(201).json({ usuario: { email: result.email, tipo: result.constructor.name },token,exp });
+     return response.status(201).json();
+      }
+/*
+    export const realizarOfferta = async (request: Request, response: Response): Promise<Response> => {
+       if (!request.body.email) throw AppError.badRequestError("No se ingreso el email");
+        if (!request.body.contrasenia) throw AppError.badRequestError("No se ingreso la contraseña");
+         if (!validator.isEmail(request.body.email)) throw AppError.badRequestError("El email ingresado no es valido");
+         if (await usuariosService.getByEmail(request.body.email)) throw AppError.badRequestError("Ya existe un usuario con el email ingresado");
+                
+                if (!usuario) throw AppError.badRequestError("Credenciales Invalidas");
+               
+                 if (usuario.estado != EstadoUsuario.ACTIVO) throw AppError.badRequestError("El usuario no se encuentra activo");
+         
+        
+        }
+        const result = await offertaService.post(request.body);
+
+   
+
+     return response.status(201).json();
+    }
+    */
+    /*if (!request.body.nombreEmpresa) throw AppError.badRequestError("No se ingreso el email");
+    if (!request.body.contrasenia) throw AppError.badRequestError("No se ingreso la contraseña");
+    if (!validator.isEmail(request.body.email)) throw AppError.badRequestError("El email ingresado no es valido");
+*/
+   // if (await offertaService.getByNombreEmpresa(request.body.nombreEmpresa)) throw AppError.badRequestError("Ya existe un usuario con el email ingresado");
+
+    //request.body.contrasenia = await encryptPassword(request.body.contrasenia);
+   // request.body.estado = EstadoUsuario.ACTIVO;
+
+    
+
+
