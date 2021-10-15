@@ -12,7 +12,7 @@ import * as experienciasLaboralesService from "../services/experienciasLaborales
 import * as idiomasService from "../services/idiomas.service";
 import * as permisosService from "../services/permisos.service";
 import * as preferenciasLaboralesService from "../services/preferenciasLaborales.service";
-import { profileTemplatePDF } from "../libraries/pdf.library";
+import { getImagen, profileTemplatePDF } from "../libraries/pdf.library";
 import { baseDir } from "../app.server";
 
 /* ---------------------------------------< POSTULANTES CONTROLLER >--------------------------------------- */
@@ -217,11 +217,12 @@ export const generatePDF = async (request: Request, response: Response): Promise
 
     if (!postulante.perfilPublico) throw AppError.badRequestError("Este perfil es privado");
     
-    pdf.create(profileTemplatePDF(postulante)).toBuffer((err, res) => {
+    pdf.create(await profileTemplatePDF(request.protocol + "://" + request.get("Host"), postulante, request.token)).toBuffer((err, res) => {
         if(err) return Promise.reject;
 
         response.contentType("aplication/pdf");
         response.setHeader('Content-Disposition', 'attachment; filename=cv.pdf');
+
         return response.end(res);
     });
 

@@ -1,4 +1,6 @@
 import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { AreaTematica } from "./perfil/area-tematica";
+import { NivelJerarquico } from "./perfil/nivel-jerarquico.model";
 import { Postulante } from "./postulante.model";
 
 /* ---------------------------------------< EXPERIENCIA LABORAL MODEL >--------------------------------------- */
@@ -15,13 +17,13 @@ export class ExperienciaLaboral extends BaseEntity {
     @Column()
     cargo: string;
 
-    @Column()
-    rubro: string;
+    @ManyToOne(() => AreaTematica)
+    rubro: AreaTematica;
 
-    @Column()
-    nivelJerarquico: string;
+    @ManyToOne(() => NivelJerarquico)
+    nivelJerarquico: NivelJerarquico;
 
-    @Column({ nullable: true })
+    @Column({ nullable: true, type: "text" })
     tareasRealizadas: string;
 
     @Column()

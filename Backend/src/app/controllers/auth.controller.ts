@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import crypto from "crypto";
 
 import { AppError } from "../../config/error/appError";
-import { encryptPassword } from "../libraries/encryptation.library";
+import { encryptPassword, verifyPassword } from "../libraries/encryptation.library";
 
 import * as postulantesService from "../services/postulantes.service";
 import * as usuariosService from "../services/usuarios.service";
@@ -65,10 +65,11 @@ export const iniciarSesion = async (request: Request, response: Response): Promi
 
 export const solicitarEmpresa = async (request: Request, response: Response): Promise<Response> => {
     if (!request.body.rut) throw AppError.badRequestError("No se ingreso el rut de la empresa");
+    if (typeof request.body.contrasenia != "string") throw AppError.badRequestError("No se ingreso la contrasenia de la empresa");
 
     let empresa = await empresasService.getByRut(request.body.rut);
     if (!empresa) {
-        request.body.contrasenia = await encryptPassword(request.body.rut);
+        request.body.contrasenia = await encryptPassword(request.body.contrasenia);
         request.body.estado = EstadoUsuario.PENDIENTE;
 
         const empresaAppSocios = await appSociosService.getEmpresa(request.body.rut);
@@ -89,6 +90,8 @@ export const solicitarEmpresa = async (request: Request, response: Response): Pr
         empresa = await empresasService.post(request.body);
     }
 
+    if(!await verifyPassword(request.body.contrasenia, empresa.contrasenia)) throw AppError.badRequestError("Contraseña Invalida");
+
     if (moment().isBefore(moment(empresa.vencimiento)) && empresa.estado == EstadoUsuario.ACTIVO) throw AppError.badRequestError("Empresa Activa");
 
     empresa.estado = EstadoUsuario.PENDIENTE;
@@ -98,13 +101,13 @@ export const solicitarEmpresa = async (request: Request, response: Response): Pr
 
     await solicitudesEmpresaService.post(token, empresa.rut.toString());
 
-    return response.json({ token, rut: empresa.rut });
+    return response.json({ token, rut: empresa });
 }
 
 export const confirmarSolicitud = async (request: Request, response: Response): Promise<Response> => {
     const token = request.body.token;
     if (typeof token != "string") throw AppError.badRequestError("No se ingreso el token");
-    if (typeof request.body.contrasenia != "string") throw AppError.badRequestError("No se ingreso la nueva contraseña");
+    if (typeof request.body.contrasenia != "string") throw AppError.badRequestError("No se ingreso la contraseña");
     if (!request.body.email) throw AppError.badRequestError("No se ingreso el email");
     if (!validator.isEmail(request.body.email)) throw AppError.badRequestError("El email ingresado no es valido");
 
@@ -115,6 +118,8 @@ export const confirmarSolicitud = async (request: Request, response: Response): 
 
     const empresa = await empresasService.getByRut(rest.rut);
     if (!empresa) throw AppError.badRequestError("No existe la empresa");
+
+    if(!await verifyPassword(request.body.contrasenia, empresa.contrasenia)) throw AppError.badRequestError("Contraseña Invalida");
 
     const data = verifyToken(token, process.env.SECRET + empresa.contrasenia as string);
     if (!data) throw AppError.badRequestError("Token ya utilizado o invalido");

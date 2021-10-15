@@ -1,4 +1,5 @@
 import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { TipoPermiso } from "./perfil/tipo-permiso.model";
 import { Postulante } from "./postulante.model";
 
 /* ---------------------------------------< PERMISO MODEL >--------------------------------------- */
@@ -9,8 +10,8 @@ export class Permiso extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    tipoDocumento: string;
+    @ManyToOne(() => TipoPermiso)
+    tipoDocumento: TipoPermiso;
 
     @Column()
     vigencia: Date;

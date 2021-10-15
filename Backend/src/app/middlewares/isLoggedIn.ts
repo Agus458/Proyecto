@@ -36,6 +36,7 @@ export const isLoggedIn = async (request: Request, response: Response, next: Nex
                     }
 
                     request.user = usuario;
+                    request.token = token;
                     return next();
                 }
 
