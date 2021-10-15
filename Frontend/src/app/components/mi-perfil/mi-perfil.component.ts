@@ -14,6 +14,8 @@ export class MiPerfilComponent implements OnInit {
 
   imagen: string | undefined;
 
+  cv: string | undefined;
+
   constructor(private postulantes: PostulantesService) { }
 
   async ngOnInit(): Promise<void> {
@@ -22,6 +24,9 @@ export class MiPerfilComponent implements OnInit {
       console.log(result);
       if (result.imagen) {
         this.imagen = await this.postulantes.getArchivo(proyectConfig.backEndURL + "/" + result.imagen);
+      }
+      if (result.cv) {
+        this.cv = await this.postulantes.getArchivo(proyectConfig.backEndURL + "/" + result.cv);
       }
       this.postulante = result });
   }

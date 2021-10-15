@@ -14,22 +14,18 @@ export class EducacionFormacionFormComponent implements OnInit {
 
   educacionFormacionForm: FormGroup = new FormGroup({});
 
-  categorias = [
-    "Ofimática", "Base de datos", "Comunicación", "Diseño", "Herramientas de Gestión", "Herramientas de Contabilidad", "Lenguaje de Programación", "Paquetes integrados", "Sistemas Operativos", "Otro"
-  ];
+  categorias: any[] = [];
 
-  idiomas = [
-    "Alemán", "Chino", "Coreano", "Español", "Francés", "Inglés", "Italiano", "Japonés", "Portugués", "Lenguaje de Señas", "Otro"
-  ];
+  idiomas: any[] = [];
 
   niveles = [
     "No", "Basico", "Regular", "Fluido", "Nativo"
   ];
 
   nivelesEducativos: any[] = [];
-  estadosNivelEducativo: any[] = [];
+  estados: any[] = [];
 
-  areasTematicas = [];
+  areasTematicas: any[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -50,8 +46,17 @@ export class EducacionFormacionFormComponent implements OnInit {
       const nivelesEducativos = await this.perfilService.getData("nivelesEducativos").toPromise();
       this.nivelesEducativos = nivelesEducativos;
 
-      const estadosNivelEducativo = await this.perfilService.getData("estadosNivelEducativo").toPromise();
-      this.estadosNivelEducativo = estadosNivelEducativo;
+      const estados = await this.perfilService.getData("estados").toPromise();
+      this.estados = estados;
+
+      const idiomas = await this.perfilService.getData("nombresIdiomas").toPromise();
+      this.idiomas = idiomas;
+
+      const categorias = await this.perfilService.getData("categoriasConocimientos").toPromise();
+      this.categorias = categorias;
+
+      const areasTematicas = await this.perfilService.getData("areasTematicas").toPromise();
+      this.areasTematicas = areasTematicas;
     } catch (error) {
       console.log(error);
     }
@@ -65,18 +70,28 @@ export class EducacionFormacionFormComponent implements OnInit {
       if (result.capacitaciones) {
         for (let index = 0; index < result.capacitaciones.length; index++) {
           this.addCapacitacion(true);
+          
+          const entity = result.capacitaciones[index];
+          if(entity.areaTematica) entity.areaTematica = entity.areaTematica.id;
+          if(entity.estadoCurso) entity.estadoCurso = entity.estadoCurso.id;
         }
       }
 
       if (result.conocimientosInformaticos) {
         for (let index = 0; index < result.conocimientosInformaticos.length; index++) {
           this.addConocimientoInformatico(true);
+          
+          const entity = result.conocimientosInformaticos[index];
+          if(entity.categoria) entity.categoria = entity.categoria.id;
         }
       }
 
       if (result.idiomas) {
         for (let index = 0; index < result.idiomas.length; index++) {
           this.addIdioma(true);
+          
+          const entity = result.idiomas[index];
+          if(entity.nombreIdioma) entity.nombreIdioma = entity.nombreIdioma.id;
         }
       }
 
@@ -172,6 +187,10 @@ export class EducacionFormacionFormComponent implements OnInit {
     }
 
     this.idiomasForm.removeAt(index);
+  }
+
+  buscarIdioma(id: string){
+    return this.idiomas.find(elem => elem.id == id);
   }
 
 }

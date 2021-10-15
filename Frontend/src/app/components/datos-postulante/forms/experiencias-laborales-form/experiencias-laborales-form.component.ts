@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { PerfilService } from 'src/app/services/perfil/perfil.service';
 import { PostulantesService } from 'src/app/services/postulantes/postulantes.service';
 
 @Component({
@@ -13,38 +14,49 @@ export class ExperienciasLaboralesFormComponent implements OnInit {
 
   experienciasLaboralesForm: FormGroup = new FormGroup({});
 
-  areasTematicas = [
-    "Administración - Secretariado", "Arte - Cultura", "Atención al Cliente", "Automotriz - Mecánica", "Banca - Servicios Financieros", "Comercio - Maercado - Ventas", "Comunicación", "Oficios - Construcción - Servicios Varios", "Contabilidad - Auditoría - Finanzas", "Diseño - Marketing - Publicidad", "Estética", "Gastronomía", "Idiomas", "Informática", "Recursos Humanos", "Salud", "Seguridad / Vigilancia", "Tecnologías de la Información", "Turismo - Hotelería", "Otro"
-  ];
+  areasTematicas: any[] = [];
 
-  niveles = [
-    "Independiente", "Empleado", "Supervisor", "Encargado", "Gerente", "Director",
-  ];
+  niveles: any[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
-    private postulantesService: PostulantesService
+    private postulantesService: PostulantesService,
+    private perfilService: PerfilService
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.experienciasLaboralesForm = this.formBuilder.group({
       experienciasLaborales: this.formBuilder.array([])
     })
 
-    this.postulantesService.getPerfilActual().subscribe(
-      result => {
-        if (result.experienciasLaborales) {
-          for (let index = 0; index < result.experienciasLaborales.length; index++) {
-            this.addExperienciaLaboral(true);
-          }
-        }
+    try {
+      const niveles = await this.perfilService.getData("nivelesJerarquicos").toPromise();
+      this.niveles = niveles;
 
-        this.experienciasLaboralesForm.patchValue(result);
-      },
-      error => {
-        console.log(error);
+      const areasTematicas = await this.perfilService.getData("areasTematicas").toPromise();
+      this.areasTematicas = areasTematicas;
+    } catch (error) {
+      
+    }
+
+    try {
+      const result = await this.postulantesService.getPerfilActual().toPromise();
+      
+      if (result.experienciasLaborales) {
+        for (let index = 0; index < result.experienciasLaborales.length; index++) {
+          this.addExperienciaLaboral(true);
+          
+          const entity = result.experienciasLaborales[index];
+          if(entity.rubro) entity.rubro = entity.rubro.id;
+          if(entity.nivelJerarquico) entity.nivelJerarquico = entity.nivelJerarquico.id;
+          console.log(entity);
+        }
       }
-    );
+
+      this.experienciasLaboralesForm.patchValue(result);
+    } catch (error) {
+      console.log(error);
+    }
 
     this.formReady.emit(this.experienciasLaboralesForm);
   }

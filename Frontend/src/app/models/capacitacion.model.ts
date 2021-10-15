@@ -4,7 +4,7 @@ export interface Capacitacion {
 
     nombreCurso?: string;
 
-    areaTematica?: string;
+    areaTematica?: any;
 
     institucion?: string;
 
@@ -14,6 +14,6 @@ export interface Capacitacion {
 
     tipoDuracion?: string;
 
-    estadoCurso?: string;
+    estadoCurso?: any;
 
 }

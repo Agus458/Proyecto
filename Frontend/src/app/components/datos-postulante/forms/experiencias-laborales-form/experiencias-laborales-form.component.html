@@ -29,13 +29,13 @@
                         <mat-form-field appearance="fill">
                             <mat-label>Rubro</mat-label>
                             <mat-select formControlName="rubro">
-                                <mat-option *ngFor="let area of areasTematicas" value="{{area}}">{{area}}</mat-option>
+                                <mat-option *ngFor="let area of areasTematicas" [value]="area.id">{{area.nombre}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field appearance="fill">
                             <mat-label>Nivel Jerárquico</mat-label>
                             <mat-select formControlName="nivelJerarquico">
-                                <mat-option *ngFor="let nivel of niveles" value="{{nivel}}">{{nivel}}</mat-option>
+                                <mat-option *ngFor="let nivel of niveles" [value]="nivel.id">{{nivel.nombre}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                         <mat-form-field>
@@ -62,10 +62,6 @@
                             <mat-datepicker #picker5></mat-datepicker>
                         </mat-form-field>
 
-                        
-                    
-
-                    
                     <div>
                     <h4>Referencia Laboral</h4>
                     <mat-form-field appearance="fill">

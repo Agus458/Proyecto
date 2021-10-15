@@ -6,9 +6,9 @@ export interface ExperienciaLaboral {
 
     cargo: string;
 
-    rubro: string;
+    rubro: any;
 
-    nivelJerarquico: string;
+    nivelJerarquico: any;
 
     tareasRealizadas: string;
 

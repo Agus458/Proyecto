@@ -1,4 +1,5 @@
 import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { CategoriaConocimiento } from "./perfil/categoria-conocimiento.model";
 import { Postulante } from "./postulante.model";
 
 /* ---------------------------------------< CONOCIMIENTO INFORMATICO MODEL >--------------------------------------- */
@@ -12,8 +13,8 @@ export class ConocimientoInformatico extends BaseEntity {
     @Column()
     nombreAplicacion: string;
 
-    @Column()
-    categoria: string;
+    @ManyToOne(() => CategoriaConocimiento)
+    categoria: CategoriaConocimiento;
 
     @Column()
     nivelConocimiento: string;

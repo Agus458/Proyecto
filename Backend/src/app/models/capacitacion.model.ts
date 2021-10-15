@@ -21,10 +21,10 @@ export class Capacitacion extends BaseEntity {
     institucion: string;
 
     @Column()
-    anioInicio: string;
+    anioInicio: number;
 
     @Column()
-    duracion: string;
+    duracion: number;
 
     @Column()
     tipoDuracion: string;

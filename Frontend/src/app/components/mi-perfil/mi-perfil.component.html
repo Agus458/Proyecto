@@ -22,9 +22,9 @@
                 <mat-card-title>Mi CV</mat-card-title>
             </mat-card-header>
             <mat-card-content>
-                <button mat-raised-button color="primary">
-                    <mat-icon>description</mat-icon>Currículum Vitae
-                </button>
+                <a style="margin-bottom: 10px;" mat-raised-button *ngIf="cv" target="_blank" [href]="cv | safeUrl" type="button" color="accent">
+                    <mat-icon>search</mat-icon>Ver CV
+                </a>
             </mat-card-content>
         </mat-card>
     </div>
@@ -78,8 +78,8 @@
                                 <div>
                                     <h3><strong>Nivel Educativo
                                             Formal</strong></h3>
-                                    <p><strong>Maximo Nivel Educativo:</strong> {{postulante?.nivelEducativo}}</p>
-                                    <p><strong>Estado:</strong> {{postulante?.estadoNivelEducativo}}</p>
+                                    <p><strong>Maximo Nivel Educativo:</strong> {{postulante?.nivelEducativo?.nombre}}</p>
+                                    <p><strong>Estado:</strong> {{postulante?.estadoNivelEducativo?.nombre}}</p>
                                 </div>
                                 <div>
                                     <h3><strong>Conocimientos
@@ -91,7 +91,7 @@
                                                     <strong>{{conocimiento.nombreAplicacion}}</strong>
                                                 </mat-panel-title>
                                             </mat-expansion-panel-header>
-                                            <p><strong>Area Tematica:</strong> {{conocimiento.categoria}} </p>
+                                            <p><strong>Area Tematica:</strong> {{conocimiento.categoria?.nombre}} </p>
                                             <p><strong>Nivel:</strong> {{conocimiento.nivelConocimiento}} </p>
                                         </mat-expansion-panel>
                                     </div>
@@ -108,11 +108,11 @@
                                                     <strong>{{capacitacion.nombreCurso}}</strong>
                                                 </mat-panel-title>
                                             </mat-expansion-panel-header>
-                                            <p><strong>Area Tematica:</strong> {{capacitacion.areaTematica}} </p>
+                                            <p><strong>Area Tematica:</strong> {{capacitacion.areaTematica?.nombre}} </p>
                                             <p><strong>Institución:</strong> {{capacitacion.institucion}} </p>
                                             <p><strong>Duracion:</strong> {{capacitacion.duracion}}
                                                 {{capacitacion.tipoDuracion}} </p>
-                                            <p><strong>Estado:</strong> {{capacitacion.estadoCurso}} </p>
+                                            <p><strong>Estado:</strong> {{capacitacion.estadoCurso?.nombre}} </p>
                                         </mat-expansion-panel>
                                     </div>
                                 </div>
@@ -122,7 +122,7 @@
                                         <mat-expansion-panel hideToggle>
                                             <mat-expansion-panel-header>
                                                 <mat-panel-title>
-                                                    <strong>{{idioma.nombreIdioma}}</strong>
+                                                    <strong>{{idioma.nombreIdioma?.nombre}}</strong>
                                                 </mat-panel-title>
                                             </mat-expansion-panel-header>
                                             <p><strong>Especificación:</strong> {{idioma.especificacion}} </p>
@@ -145,8 +145,8 @@
                                     <strong>{{empresa.cargo}}</strong>
                                 </h3>
                                 <p><strong>Empresa:</strong> {{empresa.nombreEmpresa}}</p>
-                                <p><strong>Área o rubro:</strong> {{empresa.rubro}}</p>
-                                <p><strong>Nivel Jerárquico:</strong> {{empresa.nivelJerarquico}}</p>
+                                <p><strong>Área o rubro:</strong> {{empresa.rubro?.nombre}}</p>
+                                <p><strong>Nivel Jerárquico:</strong> {{empresa.nivelJerarquico?.nombre}}</p>
                                 <p><strong>Tareas:</strong></p>
                                 <p style="max-width: 300px;">&nbsp;&nbsp;&nbsp;&nbsp;{{empresa.tareasRealizadas}}</p>
                                 <p><strong>Desde:</strong> {{empresa.fechaInicio | date : "shortDate"}}
@@ -163,7 +163,7 @@
                                 <mat-expansion-panel hideToggle>
                                     <mat-expansion-panel-header>
                                         <mat-panel-title>
-                                            <strong class="titulo">{{permiso.tipoDocumento}}</strong>
+                                            <strong class="titulo">{{permiso.tipoDocumento?.nombre}}</strong>
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
                                     <p><strong>Vigencia:</strong> {{permiso.vigencia | date :
@@ -191,7 +191,7 @@
                                 </h3>
                                 <div *ngFor="let puesto of postulante?.preferenciasLaborales">
                                     <p style="color: #026d30;"><strong>{{puesto.puestoPreferido}}</strong></p>
-                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Área o rubro:</strong> {{puesto.areasInteres}}
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Área o rubro:</strong> {{puesto.areasInteres?.nombre}}
                                     </p>
                                     <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Aspiración Salarial:</strong>
                                         ${{puesto.aspiracionSalarial}}</p>

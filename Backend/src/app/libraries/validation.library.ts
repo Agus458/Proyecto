@@ -20,6 +20,7 @@ import { AreaTematica } from "../models/perfil/area-tematica";
 import { NombreIdioma } from "../models/perfil/nombre-idioma.model";
 import { NivelJerarquico } from "../models/perfil/nivel-jerarquico.model";
 import { TipoPermiso } from "../models/perfil/tipo-permiso.model";
+import { CategoriaConocimiento } from "../models/perfil/categoria-conocimiento.model";
 
 // Valida que los datos personales del postulante sean correctos.
 export const validarDatosPersonales = async (data: any) => {
@@ -121,10 +122,10 @@ export const validarCapacitaciones = async (capacitaciones: any, postulante: Pos
         if (!capacitacion.nombreCurso || typeof capacitacion.nombreCurso != "string") throw AppError.badRequestError("Nombre de Curso de Capacitacion invalido o no ingresado");
         if (!capacitacion.institucion || typeof capacitacion.institucion != "string") throw AppError.badRequestError("Institucion de Capacitacion invalido o no ingresado");
         if (!capacitacion.areaTematica || typeof capacitacion.areaTematica != "number" || ! await profileService.getById(AreaTematica.prototype, capacitacion.areaTematica)) throw AppError.badRequestError("Area Tematica de Capacitacion invalido o no ingresado");
-        if (!capacitacion.anioInicio || typeof capacitacion.anioInicio != "string") throw AppError.badRequestError("Año de Inicio de Capacitacion invalido o no ingresado");
-        if (!capacitacion.duracion || typeof capacitacion.duracion != "string") throw AppError.badRequestError("Duracion de Capacitacion invalido o no ingresado");
+        if (!capacitacion.anioInicio || typeof capacitacion.anioInicio != "number") throw AppError.badRequestError("Año de Inicio de Capacitacion invalido o no ingresado");
+        if (!capacitacion.duracion || typeof capacitacion.duracion != "number") throw AppError.badRequestError("Duracion de Capacitacion invalido o no ingresado");
         if (!capacitacion.tipoDuracion || typeof capacitacion.tipoDuracion != "string") throw AppError.badRequestError("Tipo de Duracion de Capacitacion invalido o no ingresado");
-        if (!capacitacion.estadoCurso || typeof capacitacion.estadoCurso != "number" || ! await profileService.getById(AreaTematica.prototype, capacitacion.estadoCurso)) throw AppError.badRequestError("Estado de Curso de Capacitacion invalido o no ingresado");
+        if (!capacitacion.estadoCurso || typeof capacitacion.estadoCurso != "number" || ! await profileService.getById(Estado.prototype, capacitacion.estadoCurso)) throw AppError.badRequestError("Estado de Curso de Capacitacion invalido o no ingresado");
 
         capacitacion.postulante = postulante;
     }
@@ -147,7 +148,7 @@ export const validarConocimientoInformatico = async (conocimientos: any, postula
             if (conocimientoGuardado.postulante.id != postulante.id) throw AppError.badRequestError("El Conocimiento Informatico con el id: " + conocimiento.id + " no pretenece al usuario");
         }
         if (!conocimiento.nombreAplicacion || typeof conocimiento.nombreAplicacion != "string") throw AppError.badRequestError("Nombre de Aplicacion de Conocimiento Informatico invalido o no ingresado");
-        if (!conocimiento.categoria || typeof conocimiento.categoria != "string") throw AppError.badRequestError("Categoria de Conocimiento Informatico invalido o no ingresado");
+        if (!conocimiento.categoria || typeof conocimiento.categoria != "number" || ! await profileService.getById(CategoriaConocimiento.prototype, conocimiento.categoria)) throw AppError.badRequestError("Categoria de Conocimiento Informatico invalido o no ingresado");
         if (!conocimiento.nivelConocimiento || typeof conocimiento.nivelConocimiento != "string") throw AppError.badRequestError("Nivel de Conocimiento Informatico invalido o no ingresado");
 
         conocimiento.postulante = postulante;
@@ -272,7 +273,7 @@ export const validarPreferenciasLaborales = async (preferenciasLaborales: any, p
             if (preferenciaLaboralGuardado.postulante.id != postulante.id) throw AppError.badRequestError("La Preferencia Laboral con el id: " + preferenciaLaboral.id + " no pretenece al usuario");
         }
         if (typeof preferenciaLaboral.puestoPreferido != "string") throw AppError.badRequestError("Puesto Preferido de Preferencia Laboral invalido o no ingresado");
-        if (typeof preferenciaLaboral.areasInteres != "string") throw AppError.badRequestError("Areas Interes de Preferencia Laboral invalido o no ingresado");
+        if (!preferenciaLaboral.areasInteres || typeof preferenciaLaboral.areasInteres != "number" || ! await profileService.getById(AreaTematica.prototype, preferenciaLaboral.areasInteres)) throw AppError.badRequestError("Areas Interes de Preferencia Laboral invalido o no ingresado");
         if (typeof preferenciaLaboral.aspiracionSalarial != "number") throw AppError.badRequestError("Aspiracion Salarial de Preferencia Laboral invalido o no ingresado");
 
         preferenciaLaboral.postulante = postulante;

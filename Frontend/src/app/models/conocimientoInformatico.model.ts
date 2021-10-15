@@ -4,7 +4,7 @@ export interface ConocimientoInformatico {
 
     nombreAplicacion?: string;
 
-    categoria?: string;
+    categoria?: any;
 
     nivelConocimiento?: string;
 

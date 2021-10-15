@@ -12,7 +12,7 @@
                     <mat-expansion-panel-header>
                         <mat-panel-title style="align-items: center;">
                             {{permiso.get("tipoDocumento")?.value != "" ?
-                            permiso.get("tipoDocumento")?.value : "Nuevo Permiso"}}
+                            buscarPermiso(permiso.get("tipoDocumento")?.value)?.nombre : "Nuevo Permiso"}}
                             <button mat-icon-button type="button" color="warn" (click)="deletePermiso(i)">
                                 <mat-icon>delete</mat-icon>
                             </button>
@@ -23,7 +23,7 @@
                         <mat-form-field appearance="fill">
                             <mat-label>Tipo de Documento</mat-label>
                             <mat-select formControlName="tipoDocumento" (selectionChange)="onChangeTipoDocumento(i)">
-                                <mat-option *ngFor="let tipos of tiposDocumentos" value="{{tipos}}">{{tipos}}
+                                <mat-option *ngFor="let tipos of tiposDocumentos" [value]="tipos.id">{{tipos.nombre}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>

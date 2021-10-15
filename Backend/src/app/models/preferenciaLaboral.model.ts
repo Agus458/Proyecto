@@ -1,4 +1,5 @@
 import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { AreaTematica } from "./perfil/area-tematica";
 import { Postulante } from "./postulante.model";
 
 /* ---------------------------------------< PREFERENCIA LABORAL MODEL >--------------------------------------- */
@@ -12,8 +13,8 @@ export class PreferenciaLaboral extends BaseEntity {
     @Column()
     puestoPreferido: string;
 
-    @Column()
-    areasInteres: string;
+    @ManyToOne(() => AreaTematica)
+    areasInteres: AreaTematica;
 
     @Column()
     aspiracionSalarial: number;

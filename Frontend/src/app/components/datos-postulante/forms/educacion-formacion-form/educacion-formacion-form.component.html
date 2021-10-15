@@ -12,7 +12,7 @@
             <mat-form-field appearance="fill">
                 <mat-label>Estado</mat-label>
                 <mat-select formControlName="estadoNivelEducativo">
-                    <mat-option *ngFor="let estadoNivelEducativo of estadosNivelEducativo" [value]="estadoNivelEducativo.id">
+                    <mat-option *ngFor="let estadoNivelEducativo of estados" [value]="estadoNivelEducativo.id">
                         {{estadoNivelEducativo.nombre}}</mat-option>
                 </mat-select>
             </mat-form-field>
@@ -46,8 +46,8 @@
                     <mat-form-field appearance="fill" style="padding-right: 5px;">
                         <mat-label>Área Temática</mat-label>
                         <mat-select formControlName="areaTematica">
-                            <mat-option *ngFor="let areaTematica of areasTematicas" value="{{areaTematica}}">
-                                {{areaTematica}}</mat-option>
+                            <mat-option *ngFor="let areaTematica of areasTematicas" [value]="areaTematica.id">
+                                {{areaTematica.nombre}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="fill" style="padding-right: 5px;">
@@ -76,9 +76,8 @@
                     <mat-form-field appearance="fill" style="padding-right: 5px;">
                         <mat-label>Estado</mat-label>
                         <mat-select formControlName="estadoCurso">
-                            <mat-option value="Completo">Completo</mat-option>
-                            <mat-option value="Incompleto">Incompleto</mat-option>
-                            <mat-option value="Cursando">Cursando</mat-option>
+                            <mat-option *ngFor="let estado of estados" [value]="estado.id">
+                                {{estado.nombre}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </mat-expansion-panel>
@@ -112,7 +111,7 @@
                     <mat-form-field appearance="fill" style="padding-right: 5px;">
                         <mat-label>Categoría</mat-label>
                         <mat-select formControlName="categoria">
-                            <mat-option *ngFor="let categoria of categorias" value="{{categoria}}">{{categoria}}
+                            <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">{{categoria.nombre}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -139,7 +138,7 @@
                     <mat-expansion-panel-header>
                         <mat-panel-title style="align-items: center;">
                             {{idioma.get("nombreIdioma")?.value != "" ?
-                            idioma.get("nombreIdioma")?.value : "Nuevo Idioma"}}
+                            buscarIdioma(idioma.get("nombreIdioma")?.value)?.nombre : "Nuevo Idioma"}}
                             <button mat-icon-button type="button" color="warn" (click)="deleteIdioma(i)">
                                 <mat-icon>delete</mat-icon>
                             </button>
@@ -150,7 +149,7 @@
                     <mat-form-field appearance="fill" style="padding-right: 5px;">
                         <mat-label>Idioma</mat-label>
                         <mat-select formControlName="nombreIdioma">
-                            <mat-option *ngFor="let idioma of idiomas" value="{{idioma}}">{{idioma}}</mat-option>
+                            <mat-option *ngFor="let idioma of idiomas" [value]="idioma.id">{{idioma.nombre}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="fill" style="padding-right: 5px;">

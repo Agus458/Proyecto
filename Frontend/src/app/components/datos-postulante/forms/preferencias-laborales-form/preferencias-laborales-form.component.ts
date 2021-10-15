@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { PerfilService } from 'src/app/services/perfil/perfil.service';
 import { PostulantesService } from 'src/app/services/postulantes/postulantes.service';
 
 @Component({
@@ -13,16 +14,15 @@ export class PreferenciasLaboralesFormComponent implements OnInit {
 
   preferenciasLaboralesForm: FormGroup = new FormGroup({});
 
-  areas = [
-    "Administración - Secretariado", "Agroindustria", "Alimentos", "Arquitectura - Paisajismo", "Arte - Cultura", "Atención al Cliente", "Automotriz", "Banca - Servicios Financieros", "Cadetería - Cobranzas", "Comercio - Maercado - Ventas", "Comunicación", "Construcción", "Contabilidad - Auditoría - Finanzas", "Deporte - Recreación", "Directivos - Ejecutivos", "Diseño - Decoración", "Distribución - Logística - Almacenamiento", "Eduación - Docencia", "Estética", "Eventos", "Especializaciones", "Gastronomía", "Industria - Producción", "Ingeniería", "Inmobiliario", "Importación - Exportación", "Mantenimiento general", "Mecánica", "Comunicación - Marketing - Publicidad", "Oficios - Servicios Varios", "Pasantías", "Recursos Humanos", "Salud", "Sector Legal/Jurídico", "Seguridad / Vigilancia", "Supermercados - Autoservices", "Tecnologías de la Información", "Trabajo telefónico - Call Center", "Transporte", "Turismo - Hotelería", "Otro"
-  ];
+  areas: any[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
-    private postulantesService: PostulantesService
+    private postulantesService: PostulantesService,
+    private perfilService: PerfilService
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.preferenciasLaboralesForm = this.formBuilder.group({
       jornadaIndiferente: [false],
       jornadaCompleta: [false],
@@ -32,20 +32,31 @@ export class PreferenciasLaboralesFormComponent implements OnInit {
       preferenciasLaborales: this.formBuilder.array([])
     })
 
-    this.postulantesService.getPerfilActual().subscribe(
-      result => {
-        if (result.preferenciasLaborales) {
-          for (let index = 0; index < result.preferenciasLaborales.length; index++) {
-            this.addPreferenciaLaboral(true);
-          }
-        }
+    try {
+      const areas = await this.perfilService.getData("areasTematicas").toPromise();
+      this.areas = areas;
+    } catch (error) {
+      
+    }
 
-        this.preferenciasLaboralesForm.patchValue(result);
-      },
-      error => {
-        console.log(error);
+    try {
+      const result = await this.postulantesService.getPerfilActual().toPromise();
+
+      if (result.preferenciasLaborales) {
+        for (let index = 0; index < result.preferenciasLaborales.length; index++) {
+          this.addPreferenciaLaboral(true);
+
+          const entity = result.preferenciasLaborales[index];
+          if(entity.areasInteres) entity.areasInteres = entity.areasInteres.id;
+        }
       }
-    );
+
+      this.preferenciasLaboralesForm.patchValue(result);
+
+    } catch (error) {
+
+    }
+
 
     this.formReady.emit(this.preferenciasLaboralesForm);
   }

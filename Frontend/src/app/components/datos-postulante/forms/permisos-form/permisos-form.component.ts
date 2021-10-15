@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { PerfilService } from 'src/app/services/perfil/perfil.service';
 import { PostulantesService } from 'src/app/services/postulantes/postulantes.service';
 
 @Component({
@@ -13,34 +14,41 @@ export class PermisosFormComponent implements OnInit {
 
   permisosForm: FormGroup = new FormGroup({});
 
-  tiposDocumentos = [
-    "Carné de salud", "Carné Cuida Coches", "Carné de Aplicación de productos fitosanitarios", "Carné de clasificador", "Carné de Foguista", "Carné de Manipulación de alimentos", "Libreta de conducir Cat. A", "Libreta de conducir Cat. B", "Libreta de conducir Cat. C", "Libreta de conducir Cat. D", "Libreta de conducir Cat. E", "Libreta de conducir Cat. F", "Libreta de conducir Cat. G1", "Libreta de conducir Cat. G2", "Libreta de conducir Cat. G3", "Libreta de conducir Cat. H", "Porte de armas", "Otro"
-  ]
+  tiposDocumentos: any[] = []
 
   constructor(
     private formBuilder: FormBuilder,
-    private postulantesService: PostulantesService
+    private postulantesService: PostulantesService,
+    private perfilService: PerfilService
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.permisosForm = this.formBuilder.group({
       permisos: this.formBuilder.array([])
     })
 
-    this.postulantesService.getPerfilActual().subscribe(
-      result => {
-        if (result.permisos) {
-          for (let index = 0; index < result.permisos.length; index++) {
-            this.addPermiso(true);
-          }
-        }
+    try {
+      const tiposDocumentos = await this.perfilService.getData("tiposPermisos").toPromise();
+      this.tiposDocumentos = tiposDocumentos;
+    } catch (error) {
 
-        this.permisosForm.patchValue(result);
-      },
-      error => {
-        console.log(error);
+    }
+
+    try {
+      const result = await this.postulantesService.getPerfilActual().toPromise();
+      if (result.permisos) {
+        for (let index = 0; index < result.permisos.length; index++) {
+          this.addPermiso(true);
+
+          const entity = result.permisos[index];
+          if(entity.tipoDocumento) entity.tipoDocumento = entity.tipoDocumento.id;
+        }
       }
-    );
+
+      this.permisosForm.patchValue(result);
+    } catch (error) {
+      
+    }
 
     this.formReady.emit(this.permisosForm);
   }
@@ -85,6 +93,10 @@ export class PermisosFormComponent implements OnInit {
 
   getTipoDocumento(index: number) {
     return this.permisos.at(index).get("tipoDocumento")?.value;
+  }
+
+  buscarPermiso(id: string){
+    return this.tiposDocumentos.find(elem => elem.id == id);
   }
 
 }

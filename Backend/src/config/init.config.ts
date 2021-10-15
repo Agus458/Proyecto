@@ -13,6 +13,7 @@ import { AreaTematica } from "../app/models/perfil/area-tematica";
 import { NombreIdioma } from "../app/models/perfil/nombre-idioma.model";
 import { NivelJerarquico } from "../app/models/perfil/nivel-jerarquico.model";
 import { TipoPermiso } from "../app/models/perfil/tipo-permiso.model";
+import { CategoriaConocimiento } from "../app/models/perfil/categoria-conocimiento.model";
 
 export const onInit = async () => {
 
@@ -64,6 +65,11 @@ export const onInit = async () => {
     if (await profileService.getCant(TipoPermiso.prototype) <= 0) {
         const tiposPermisos = [{ nombre: "Carné de salud" }, { nombre: "Carné Cuida Coches" }, { nombre: "Carné de Aplicación de productos fitosanitarios" }, { nombre: "Carné de clasificador" }, { nombre: "Carné de Foguista" }, { nombre: "Carné de Manipulación de alimentos" }, { nombre: "Libreta de conducir Cat. A" }, { nombre: "Libreta de conducir Cat. B" }, { nombre: "Libreta de conducir Cat. C" }, { nombre: "Libreta de conducir Cat. D" }, { nombre: "Libreta de conducir Cat. E" }, { nombre: "Libreta de conducir Cat. F" }, { nombre: "Libreta de conducir Cat. G1" }, { nombre: "Libreta de conducir Cat. G2" }, { nombre: "Libreta de conducir Cat. G3" }, { nombre: "Libreta de conducir Cat. H" }, { nombre: "Porte de armas" }, { nombre: "Otro" }];
         await profileService.post(TipoPermiso.prototype, tiposPermisos);
+    }
+
+    if (await profileService.getCant(CategoriaConocimiento.prototype) <= 0) {
+        const categoriasConocimientos = [{ nombre: "Ofimática" }, { nombre: "Base de datos" }, { nombre: "Comunicación" }, { nombre: "Diseño" }, { nombre: "Herramientas de Gestión" }, { nombre: "Herramientas de Contabilidad" }, { nombre: "Lenguaje de Programación" }, { nombre: "Paquetes integrados" }, { nombre: "Sistemas Operativos" }, { nombre: "Otro" }];
+        await profileService.post(CategoriaConocimiento.prototype, categoriasConocimientos);
     }
 
 }

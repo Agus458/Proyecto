@@ -1,7 +1,7 @@
 export interface PreferenciaLaboral {
     puestoPreferido: string;
     
-    areasInteres: string;
+    areasInteres: any;
 
     aspiracionSalarial: number;
 }

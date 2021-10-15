@@ -1,5 +1,5 @@
 export interface Permiso {
-    tipoDocumento: string;
+    tipoDocumento: any;
 
     vigencia: Date;
 
