@@ -8,7 +8,7 @@
 
                 <div fxLayout="column" fxLayoutAlign="space-evenly start"><img *ngIf="imagen" [src]="imagen | safeUrl">
                 </div>
-                <button mat-raised-button type="button" color="primary" (click)="imageInput.click()">
+                <button mat-raised-button type="button" color="accent" (click)="imageInput.click()" style="margin-top: 13px;">
                     <mat-icon>add</mat-icon>AGREGAR IMAGEN
                 </button>
                 <input type="file" name="imagen" hidden="true" (change)="onFileSelect($event)" #imageInput />

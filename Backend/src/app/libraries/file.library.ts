@@ -37,5 +37,10 @@ export const imagenNovedadStorage = () => {
 
 
 export const removerArchivo = (relativePath: string) => {
-    fs.unlinkSync(path.join(baseDir + "/../../" + relativePath));
+    try {
+        fs.unlinkSync(path.join(baseDir + "/../../" + relativePath));
+    } catch (error) {
+        
+    }
+    
 }

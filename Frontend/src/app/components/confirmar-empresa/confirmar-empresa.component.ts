@@ -27,4 +27,5 @@ export class ConfirmarEmpresaComponent implements OnInit {
     });
   }
 
+  
 }
