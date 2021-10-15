@@ -41,6 +41,22 @@ export class PostulantesService {
     return archivo;
   }
 
+  async generarPdf(id: number) {
+    let archivo;
+
+    try {
+      const response = await this.http.get(this.url + "/generatePDF/" + id, {
+        observe: 'response', responseType: 'blob'
+      }).toPromise();
+
+      archivo = URL.createObjectURL(response.body);
+    } catch (error) {
+      console.log(error);
+    }
+
+    return archivo;
+  }
+
   putImagen(formData: FormData) {
     return this.http.put(this.url + "/perfil/imagen", formData);
   }

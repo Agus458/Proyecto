@@ -22,10 +22,12 @@
                 <mat-card-title>Mi CV</mat-card-title>
             </mat-card-header>
             <mat-card-content>
-                <button mat-raised-button color="primary">
-                    <mat-icon>description</mat-icon>Currículum Vitae
-                </button>
-                <a style="margin-bottom: 10px;" mat-raised-button *ngIf="cv" target="_blank" [href]="cv | safeUrl" type="button" color="accent">
+                <a style="margin-bottom: 10px;" mat-raised-button *ngIf="generatedPdf" target="_blank"
+                    [href]="generatedPdf | safeUrl" type="button" color="accent">
+                    <mat-icon>search</mat-icon>Ver CV Generado
+                </a>
+                <a style="margin-bottom: 10px;" mat-raised-button *ngIf="cv" target="_blank" [href]="cv | safeUrl"
+                    type="button" color="accent">
                     <mat-icon>search</mat-icon>Ver CV
                 </a>
             </mat-card-content>
@@ -81,7 +83,8 @@
                                 <div>
                                     <h3><strong>Nivel Educativo
                                             Formal</strong></h3>
-                                    <p><strong>Maximo Nivel Educativo:</strong> {{postulante?.nivelEducativo?.nombre}}</p>
+                                    <p><strong>Maximo Nivel Educativo:</strong> {{postulante?.nivelEducativo?.nombre}}
+                                    </p>
                                     <p><strong>Estado:</strong> {{postulante?.estadoNivelEducativo?.nombre}}</p>
                                 </div>
                                 <div>
@@ -111,7 +114,8 @@
                                                     <strong>{{capacitacion.nombreCurso}}</strong>
                                                 </mat-panel-title>
                                             </mat-expansion-panel-header>
-                                            <p><strong>Area Tematica:</strong> {{capacitacion.areaTematica?.nombre}} </p>
+                                            <p><strong>Area Tematica:</strong> {{capacitacion.areaTematica?.nombre}}
+                                            </p>
                                             <p><strong>Institución:</strong> {{capacitacion.institucion}} </p>
                                             <p><strong>Duracion:</strong> {{capacitacion.duracion}}
                                                 {{capacitacion.tipoDuracion}} </p>
@@ -143,7 +147,8 @@
                         <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayout.xs="column"
                             style="padding-left: 10px;">
                             <mat-divider [vertical]="true"></mat-divider>
-                            <div *ngFor="let empresa of postulante?.experienciasLaborales;" style="padding-right: 5px;" fxFlex.gt-md="33%">
+                            <div *ngFor="let empresa of postulante?.experienciasLaborales;" style="padding-right: 5px;"
+                                fxFlex.gt-md="33%">
                                 <h3>
                                     <strong>{{empresa.cargo}}</strong>
                                 </h3>
@@ -194,7 +199,8 @@
                                 </h3>
                                 <div *ngFor="let puesto of postulante?.preferenciasLaborales">
                                     <p style="color: #026d30;"><strong>{{puesto.puestoPreferido}}</strong></p>
-                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Área o rubro:</strong> {{puesto.areasInteres?.nombre}}
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Área o rubro:</strong>
+                                        {{puesto.areasInteres?.nombre}}
                                     </p>
                                     <p>&nbsp;&nbsp;&nbsp;&nbsp;<strong>Aspiración Salarial:</strong>
                                         ${{puesto.aspiracionSalarial}}</p>

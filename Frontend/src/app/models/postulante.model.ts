@@ -8,6 +8,8 @@ import { PreferenciaLaboral } from "./preferenciaLaboral.model";
 import { Usuario } from "./usuario.model";
 
 export interface Postulante extends Usuario {
+
+    id?: number;
     
     primerNombre?: string;
 

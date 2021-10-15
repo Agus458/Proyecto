@@ -16,21 +16,24 @@ export class MiPerfilComponent implements OnInit {
 
   cv: string | undefined;
 
+  generatedPdf: string | undefined;
+
   constructor(private postulantes: PostulantesService) { }
 
   async ngOnInit(): Promise<void> {
     this.postulantes.getPerfil();
-    this.postulantes.getPerfilActual().subscribe(async result => { 
-      console.log(result);
+    this.postulantes.getPerfilActual().subscribe(async result => {
       if (result.imagen) {
         this.imagen = await this.postulantes.getArchivo(proyectConfig.backEndURL + "/" + result.imagen);
       }
       if (result.cv) {
         this.cv = await this.postulantes.getArchivo(proyectConfig.backEndURL + "/" + result.cv);
       }
-      this.postulante = result });
+
+      if (result.id) this.generatedPdf = await this.postulantes.generarPdf(result.id);
+
+      this.postulante = result
+    });
   }
-
-
 
 }

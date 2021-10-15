@@ -220,7 +220,7 @@ export const generatePDF = async (request: Request, response: Response): Promise
     pdf.create(await profileTemplatePDF(request.protocol + "://" + request.get("Host"), postulante, request.token)).toBuffer((err, res) => {
         if(err) return Promise.reject;
 
-        response.contentType("aplication/pdf");
+        response.setHeader('Content-Type', 'application/pdf');
         response.setHeader('Content-Disposition', 'attachment; filename=cv.pdf');
 
         return response.end(res);
