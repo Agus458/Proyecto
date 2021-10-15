@@ -1,1 +1,52 @@
-<p>confirmar-empresa works!</p>
+<div fxLayout="row" fxLayoutAlign="center">
+    <mat-card fxFlex.lt-sm="100" fxFlex.gt-sm="40" fxFlex.gt-lg="25" class="card">
+        <mat-card-content>
+
+            <h1 color>Confirmar Empresa</h1>
+            <mat-divider [inset]="true"></mat-divider>
+            <div fxLayout="column" fxLayoutAlign="space-evenly start">
+                <mat-form-field appearance="fill">
+                    <mat-label>RUT</mat-label>
+                    <input matInput>
+                </mat-form-field>
+    
+                <mat-form-field appearance="fill">
+                    <mat-label>Razón Social</mat-label>
+                    <input matInput>
+                </mat-form-field>
+    
+                <mat-form-field appearance="fill">
+                    <mat-label>Socia del Centro</mat-label>
+                    <mat-select formControlName="sexo">
+                        <mat-option value="Femenino">Es Socia</mat-option>
+                        <mat-option value="Masculino">No es Socia</mat-option>
+                    </mat-select>
+                </mat-form-field>
+    
+                <mat-form-field appearance="fill">
+                    <mat-label>Telefono</mat-label>
+                    <input matInput type="number">
+                </mat-form-field>
+    
+                <mat-form-field appearance="fill">
+                    <mat-label>Localidad</mat-label>
+                    <input matInput >
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Nombre Fantasia</mat-label>
+                    <input matInput placeholder="Ej. Reconocida Empresa de.." >
+                </mat-form-field>
+
+                <mat-checkbox>Quiero que mi empresa sea visible
+                </mat-checkbox>
+
+                
+            </div>
+                <button onclick="history.back(-1)" mat-raised-button type="button" color="primary"
+                    style="margin-top: 8px; margin-right: 8px;">Cancelar</button>
+                <button mat-raised-button type="submit" color="primary" style="margin-top: 8px;">Confirmar</button>
+            
+        </mat-card-content>
+    </mat-card>
+</div>

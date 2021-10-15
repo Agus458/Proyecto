@@ -51,6 +51,8 @@ import { ConfirmarEmpresaComponent } from './components/confirmar-empresa/confir
 import { NovedadesComponent } from './components/novedades/novedades.component';
 import { ListarnovedadesComponent } from './components/novedades/admin/listarnovedades/listarnovedades.component';
 import { AgregarnovedadesComponent } from './components/novedades/admin/agregarnovedades/agregarnovedades.component';
+import { OfertasComponent } from './components/ofertas/ofertas.component';
+import { NuevaofertaComponent } from './components/ofertas/nuevaoferta/nuevaoferta.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +83,8 @@ import { AgregarnovedadesComponent } from './components/novedades/admin/agregarn
     NovedadesComponent,
     ListarnovedadesComponent,
     AgregarnovedadesComponent,
+    OfertasComponent,
+    NuevaofertaComponent,
   ],
   imports: [
     BrowserModule,

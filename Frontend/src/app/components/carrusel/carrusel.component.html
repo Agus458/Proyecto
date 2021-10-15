@@ -1,55 +1,54 @@
-<h1>Ultimas Novedades</h1>
-<carousel [cellsToShow]="ismobile.getMobile() ? 1 : 3" [height]="ismobile.getMobile() ? 500 : 700">
-    <div class="carousel-cell">
-        <mat-card class="example-card">
-            <img class="imgnovedad" src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-                alt="Photo of a Shiba Inu">
-            <mat-card-header>
-                <mat-card-title>Titulo</mat-card-title>
-                <mat-card-subtitle>Fecha</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-                <p>
-                    The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-                    A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-                    bred for hunting.
-                </p>
-            </mat-card-content>
-        </mat-card>
+<body>
+    <h1><em>ULTIMAS NOVEDADES</em></h1>
+    <mat-divider></mat-divider>
+    <carousel [cellsToShow]="ismobile.getMobile() ? 1 : 3" [height]="ismobile.getMobile() ? 550 : 700">
+        <div class="carousel-cell" *ngFor="let novedad of novedades;">
+            <mat-card class="example-card">
+                <ng-container *ngIf="novedad.imagen; else error">
+                    <img [src]="novedad.imagen | safeUrl">
+                </ng-container>
+                <ng-template #error>
+                    <img src="https://www.urbansplash.co.uk/images/placeholder-16-9.jpg">
+                </ng-template>
+                <mat-card-header class="mat-card-header2">
+                    <mat-card-title>{{novedad.titulo}}</mat-card-title>
+                    <mat-card-subtitle>Publicado el: {{novedad.fechaPublicacion | date: "shortDate"}}
+                    </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <cdk-virtual-scroll-viewport class="example-viewport" itemSize="60">
+                        <dl class="example-dl">
+                            {{novedad.contenido}}
+                        </dl>
+                    </cdk-virtual-scroll-viewport>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </carousel>
+    <h1><em>ULTIMAS OFERTAS</em></h1>
+    <mat-divider></mat-divider>
+    <div fxLayout="row wrap" fxLayoutAlign="space-evenly start" fxLayout.xs="column" fxLayoutAlign.xs="center center">
+        <div *ngFor="let novedad of novedades;" fxFlex.gt-md="25" fxFlexAlign.lt-md="100" fxLayout="column" fxLayoutAlign="space-evenly start">
+            <mat-card class="example-card">
+                <ng-container *ngIf="novedad.imagen; else error">
+                    <img [src]="novedad.imagen | safeUrl">
+                </ng-container>
+                <ng-template #error>
+                    <img src="https://www.urbansplash.co.uk/images/placeholder-16-9.jpg">
+                </ng-template>
+                <mat-card-header class="mat-card-header2">
+                    <mat-card-title>{{novedad.titulo}}</mat-card-title>
+                    <mat-card-subtitle>Publicado el: {{novedad.fechaPublicacion | date: "shortDate"}}
+                    </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <cdk-virtual-scroll-viewport class="example-viewport" itemSize="60">
+                        <dl class="example-dl">
+                            {{novedad.contenido}}
+                        </dl>
+                    </cdk-virtual-scroll-viewport>
+                </mat-card-content>
+            </mat-card>
+        </div>
     </div>
-    <div class="carousel-cell">
-        <mat-card class="imgnovedad" class="example-card">
-            <img src="https://images.alphacoders.com/943/thumb-1920-943148.jpg"
-                alt="Photo of a Shiba Inu">
-            <mat-card-header>
-                <mat-card-title>Titulo</mat-card-title>
-                <mat-card-subtitle>SubTitulo</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-                <p>
-                    The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-                    A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-                    bred for hunting.
-                </p>
-            </mat-card-content>
-        </mat-card>
-    </div>
-    <div class="carousel-cell">
-        <mat-card class="example-card">
-            <img class="imgnovedad" src="https://images.alphacoders.com/943/thumb-1920-943148.jpg"
-                alt="Photo of a Shiba Inu">
-            <mat-card-header>
-                <mat-card-title>Titulo</mat-card-title>
-                <mat-card-subtitle>SubTitulo</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-                <p>
-                    The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-                    A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-                    bred for hunting.
-                </p>
-            </mat-card-content>
-        </mat-card>
-    </div>
-
-</carousel>
+</body>
