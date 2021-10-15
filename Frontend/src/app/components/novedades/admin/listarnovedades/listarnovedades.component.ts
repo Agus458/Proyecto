@@ -12,10 +12,10 @@ import { NovedadesServicesService } from "src/app/services/novedades/novedades-s
 
 export class ListarnovedadesComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'imagen', 'titulo', 'contenido', 'delete'];
-  novedades: Novedad[] = [];
-  error: string = "Sin Imagen";
-
+  displayedColumns: string[] = ['id', 'imagen', 'titulo', 'fechaPublicacion', 'vacio1', 'delete', 'edit'];
+  novedades : Novedad[] = [];
+  error : string = "Sin Imagen";
+  
   constructor(private novedadesservice: NovedadesServicesService) { }
 
   async ngOnInit() {
