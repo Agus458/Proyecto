@@ -13,6 +13,7 @@ import * as idiomasService from "../services/idiomas.service";
 import * as permisosService from "../services/permisos.service";
 import * as preferenciasLaboralesService from "../services/preferenciasLaborales.service";
 import { profileTemplatePDF } from "../libraries/pdf.library";
+import * as offertaService from "../services/offerta.service";
 import { baseDir } from "../app.server";
 
 /* ---------------------------------------< POSTULANTES CONTROLLER >--------------------------------------- */
@@ -226,4 +227,21 @@ export const generatePDF = async (request: Request, response: Response): Promise
     });
 
     return response;
+}
+export const inscribirseOfferta = async (request:Request, response: Response):Promise<Response> => {
+    if(!request.params.id) throw AppError.badRequestError("No se ingreso el id del postulante");
+    if(!validator.isInt(request.params.id)) throw AppError.badRequestError("El id ingresado no es valido");
+
+    const offerta= await offertaService.getById(Number.parseInt(request.params.id));
+  // const postulante= await postulantesService.getById(Number.parseInt(request.user.id));
+    offerta?.Postulantes.push(request.user.id);
+   // await offertaService.guardarPostulante(Number.parseInt(request.user.id));
+
+
+    return response.status(201).json();
+
+    
+
+  
+
 }

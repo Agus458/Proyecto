@@ -1,5 +1,5 @@
 
-import { BaseEntity, Column,Entity,JoinColumn,OneToOne,ManyToOne,PrimaryGeneratedColumn,PrimaryColumn  } from "typeorm";
+import { BaseEntity, Column,Entity,JoinColumn,OneToOne,ManyToOne,PrimaryGeneratedColumn,PrimaryColumn, ManyToMany  } from "typeorm";
 import { Empresa } from "./empresa.model";
 //import  {  TipoDocumento} from "./enums";
 //import { Usuario } from "./usuario.model";
@@ -7,6 +7,7 @@ import { Empresa } from "./empresa.model";
 ///import { TimerOptions } from "timers";
 import { AreaDeTrabajo } from "../models/enums";
 import { EstadoOfferta } from "./enums";
+import { Postulante } from "./postulante.model";
 //import {Empresa} from "./empresa.model";
 @Entity("offerta")
 export class Offerta extends BaseEntity
@@ -21,14 +22,14 @@ export class Offerta extends BaseEntity
 
 
     @Column()
-    TelefonoContacto:number;
+    telefonoContacto:number;
  
     @Column()
-    EmailContacto:string
+    emailContacto:string
  
  
     @Column()
-    Vacantes:string;
+    vacantes:string;
  
     
     
@@ -37,7 +38,7 @@ export class Offerta extends BaseEntity
     enum: EstadoOfferta,
     default: EstadoOfferta.Vigente
 })
-EstadoOfferta: EstadoOfferta;
+estadoOfferta: EstadoOfferta;
  
  
    
@@ -45,14 +46,17 @@ EstadoOfferta: EstadoOfferta;
 
  
  @Column({type:"text"})
- RequisitosValorados:string;
+ requisitosValorados:string;
  
  
- @Column()
- HorarioDeTrabajo:string;
+ 
 
- 
- 
+    
+ @ManyToMany(() => Postulante)
+ @JoinColumn()
+ Postulantes:Postulante[];
+
+
  
  
 
@@ -62,7 +66,7 @@ EstadoOfferta: EstadoOfferta;
     enum:AreaDeTrabajo,
     default: AreaDeTrabajo.Alimentos
 })
-AreaDeTrabajo: AreaDeTrabajo;
+areaDeTrabajo: AreaDeTrabajo;
  
      @Column({nullable:true })
      nombreOfferta:string;
@@ -79,24 +83,24 @@ AreaDeTrabajo: AreaDeTrabajo;
  
   
      @Column()
-     FuncionesDePuesto:string;
+     funcionesDePuesto:string;
 
      @Column()
-     RequisitosExcluyente:string;
+     requisitosExcluyente:string;
     
      
     @Column()
-    Horariodetrabajo:string;
+    horariodetrabajo:string;
 
      @Column()
-     RangoSalario:String;
+     rangoSalario:String;
 
      
 
      @Column()
-     FechaPublicacion:Date;
+     fechaPublicacion:Date;
       
      @Column()
-     FechaCierre:Date; 
+     fechaCierre:Date; 
      
 }

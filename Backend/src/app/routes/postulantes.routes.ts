@@ -7,6 +7,7 @@ import * as empresasController from "../controllers/empresas.controller";
 import { perfilStorage } from "../libraries/file.library";
 import { isLoggedIn } from "../middlewares/isLoggedIn";
 import { tieneRol } from "../middlewares/tieneRol";
+import { resourceLimits } from "worker_threads";
 
 /* ---------------------------------------< POSTULANTES ROUTES >--------------------------------------- */
 
@@ -46,5 +47,8 @@ router.get("/", [isLoggedIn, tieneRol(["Empresa", "Administrador"])], handleRequ
 
 router.get("/generatePDF/:id", [], handleRequest(postulantesController.generatePDF));
 
-router.post("/getOfferta:id",[],handleRequest(empresasController.getOfferta));
+router.post("/getOfferta/:id",[],handleRequest(empresasController.getOfferta));
+
+router.post("/inscribirseOfferta/:id",[],handleRequest(postulantesController.inscribirseOfferta));
+
 export default router;

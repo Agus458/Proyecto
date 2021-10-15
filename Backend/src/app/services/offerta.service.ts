@@ -1,6 +1,7 @@
+import { json } from "stream/consumers";
 import { DeepPartial,getRepository } from "typeorm";
-import { Offerta } from "../models/offerta.model";
-
+import { Offerta} from "../models/offerta.model";
+import { Request, Response } from "express";
 
 export const get = async (): Promise<Offerta[]> => {
     return await getRepository(Offerta).find();
@@ -32,6 +33,20 @@ export const put = async (id: number, data:DeepPartial<Offerta>): Promise<void> 
     data.id = id;
     await getRepository(Offerta).save(data);
 };
+/*
+export const guardarPostulante= async(request:Request,response:Response):Promise<Response> =>{
 
+     
+   // if(!request.body) throw AppError.badRequestError("No se ingreso el id de la offerta");
+
+   return response.status(201).json();
+}
+*/
+/*
+export const Suscribirse = async(id:number,Suscripcion:boolean,data:DeepPartial<Offerta>): Promise<Offerta>=>{
+    data.id=id;
+    
+}
+*/
 
 
