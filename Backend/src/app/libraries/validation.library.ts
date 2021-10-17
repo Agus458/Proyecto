@@ -14,6 +14,7 @@ import * as experienciasLaboralesService from "../services/experienciasLaborales
 import * as permisosService from "../services/permisos.service";
 import * as preferenciasLaboralesService from "../services/preferenciasLaborales.service";
 import * as profileService from "../services/profile.service";
+import * as offertaService from "../services/offerta.service";
 import { NivelEducativo } from "../models/perfil/nivel-educativo";
 import { Estado } from "../models/perfil/estado";
 import { AreaTematica } from "../models/perfil/area-tematica";
@@ -22,6 +23,15 @@ import { NivelJerarquico } from "../models/perfil/nivel-jerarquico.model";
 import { TipoPermiso } from "../models/perfil/tipo-permiso.model";
 import { CategoriaConocimiento } from "../models/perfil/categoria-conocimiento.model";
 
+/*
+
+//#region validaciondeEmpresa
+export const validarDatosOfferta = async(data:any)
+{
+const offeta = await offertaService.getById(request)
+}
+//#endregion
+*/
 // Valida que los datos personales del postulante sean correctos.
 export const validarDatosPersonales = async (data: any) => {
     if (data.tipoDocumento || data.documento) {
@@ -104,6 +114,8 @@ export const validarDomicilio = async (domicilio: any, domicilioPostulante: any)
 
     return domicilio;
 }
+
+
 
 // Valida que las capacitaciones sean correctas.
 export const validarCapacitaciones = async (capacitaciones: any, postulante: Postulante) => {
@@ -258,6 +270,7 @@ export const validarPermisos = async (permisos: any, postulante: Postulante) => 
     return permisos;
 }
 
+
 // Valida que las Preferencias Laborales sean correctos.
 export const validarPreferenciasLaborales = async (preferenciasLaborales: any, postulante: Postulante) => {
     if (preferenciasLaborales.constructor != Array) throw AppError.badRequestError("Preferencias Laborales invalidas");
@@ -281,3 +294,5 @@ export const validarPreferenciasLaborales = async (preferenciasLaborales: any, p
 
     return preferenciasLaborales;
 }
+
+

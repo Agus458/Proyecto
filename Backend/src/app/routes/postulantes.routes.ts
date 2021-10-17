@@ -3,9 +3,11 @@ import multer from "multer";
 
 import { handleRequest } from "../../config/error/handleRequest";
 import * as postulantesController from "../controllers/postulantes.controller";
+import * as empresasController from "../controllers/empresas.controller";
 import { perfilStorage } from "../libraries/file.library";
 import { isLoggedIn } from "../middlewares/isLoggedIn";
 import { tieneRol } from "../middlewares/tieneRol";
+import { resourceLimits } from "worker_threads";
 
 /* ---------------------------------------< POSTULANTES ROUTES >--------------------------------------- */
 
@@ -44,5 +46,9 @@ router.delete("/perfil/preferenciaLaboral/:id", [isLoggedIn, tieneRol(["Postulan
 router.get("/", [isLoggedIn, tieneRol(["Empresa", "Administrador"])], handleRequest(postulantesController.getPostulantes));
 
 router.get("/generatePDF/:id", [isLoggedIn], handleRequest(postulantesController.generatePDF));
+
+router.post("/getOfferta/:id",[],handleRequest(empresasController.getOfferta));
+
+router.post("/inscribirseOfferta/:id",[],handleRequest(postulantesController.inscribirseOfferta));
 
 export default router;
