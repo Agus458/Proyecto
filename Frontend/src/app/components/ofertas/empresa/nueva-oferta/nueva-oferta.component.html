@@ -1,0 +1,114 @@
+<mat-card class="card">
+    <mat-card-content>
+
+        <h1>Nueva Oferta Laboral</h1>
+        <mat-divider [inset]="true"></mat-divider>
+        <div fxLayout="row" fxLayoutAlign="start start">
+            <div class="columna">
+                <form class="example-form">
+                    <mat-form-field class="example-full-width" appearance="fill" style="margin-top: 8px;">
+                        <mat-label>Vacante o Puesto *</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Área de Trabajo *</mat-label>
+                        <mat-select formControlName="areasInteres">
+                            <mat-option *ngFor="let area of areas" value="{{area}}">{{area}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <p>
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Funciones y Tareas del Puesto *</mat-label>
+                            <textarea matInput placeholder="Funciones y tareas a realizar"></textarea>
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Requisitos Exclueyentes *</mat-label>
+                            <textarea matInput
+                                placeholder="Requisitos que debe cumplir el postulante para presentarse al llamado. (Ej educación mínima requerida Ciclo Básico)."></textarea>
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Competencias claves</mat-label>
+                            <textarea matInput
+                                placeholder="Requisitos que se valorarán para el puesto pero que no son excluyentes. (Ej experiencia laboral, o conocimientos de inglés)."></textarea>
+                        </mat-form-field>
+                    </p>
+
+                    <mat-form-field class="example-full-width" appearance="fill" style="margin-top: 8px;">
+                        <mat-label>Horario de Trabajo *</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+
+                    <mat-form-field class="example-full-width" appearance="fill" style="margin-top: 8px;">
+                        <mat-label>Rango Salarial</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+
+                    <mat-form-field class="example-full-width" appearance="fill" style="margin-top: 8px;">
+                        <mat-label>Lugar de Trabajo *</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+
+                    <table class="example-full-width" cellspacing="0">
+                        <tr>
+                            <td class="td2">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Fecha de Publicación</mat-label>
+                                    <input matInput [matDatepicker]="picker4" placeholder="00/00/0000"
+                                        formControlName="fechaPublicación">
+                                    <mat-datepicker-toggle matSuffix [for]="picker4">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #picker4></mat-datepicker>
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                    <mat-label>Fecha de Cierre</mat-label>
+                                    <input matInput [matDatepicker]="picker5" placeholder="00/00/0000"
+                                        formControlName="fechaCierre">
+                                    <mat-datepicker-toggle matSuffix [for]="picker5">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #picker5></mat-datepicker>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div>
+                <h3 style="margin-top: 15px; margin-bottom: 0px;">Campos no visible para los Postulantes:</h3>
+                <mat-divider [inset]="true" style="margin-bottom: 10px;"></mat-divider>
+                <form class="example-form">
+                    <mat-form-field class="example-full-width" appearance="fill" style="margin-top: 8px;">
+                        <mat-label>Telefono de Contacto *</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+
+                    <mat-form-field class="example-full-width" appearance="fill" style="margin-top: 8px;">
+                        <mat-label>Email de Contacto *</mat-label>
+                        <input matInput type="email">
+                    </mat-form-field>
+
+                    <mat-form-field class="example-full-width" appearance="fill" style="margin-top: 8px;">
+                        <mat-label>Localidad de la Empresa *</mat-label>
+                        <input matInput>
+                    </mat-form-field>
+
+                    <mat-checkbox formControlName="mostrarnombre" (change)="getNombre()" style="margin-bottom: 15px;">Mostrar Nombre de la Empresa en la Oferta Laboral
+                    </mat-checkbox>
+
+                    <mat-form-field *ngIf="visible" appearance="fill" style="max-width: 201px; margin-left: 5px;">
+                        
+                        <mat-label>Nombre Empresa</mat-label>
+                        <mat-select formControlName="sexo">
+                            <mat-option value="Femenino">Nombre Real</mat-option>
+                            <mat-option value="Masculino">Nombre Fantasia</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </form>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

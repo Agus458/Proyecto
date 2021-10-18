@@ -19,13 +19,15 @@ export class SolicitarEmpresaComponent implements OnInit {
   ngOnInit(): void {
     this.solicitarEmpresaForm = this.fb.group({
       rut: ['', [Validators.required]],
+      contrasenia: ['', [Validators.required]],
     });
   }
 
   ngOnSubmit(): void {
-    const { rut } = this.solicitarEmpresaForm.value;
+    const data = this.solicitarEmpresaForm.value;
+    
 
-    this.authService.solicitarEmpresa(rut);
+    this.authService.solicitarEmpresa(data);
   }
 
 }

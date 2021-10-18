@@ -1,0 +1,33 @@
+
+h1{
+    font-weight: 500;
+}
+
+.example-container {
+    width: 50%;
+    
+  }
+  table {
+    width: 100%;
+  }
+  
+  .botones {
+    max-width: 50px;
+  }
+
+  .mat-column-number,
+  .mat-column-state {
+    max-width: 64px;
+  }
+  
+  .mat-column-created {
+    max-width: 124px;
+  }
+  
+.boton {
+    background-color: #026d30;
+    color: white;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-right: 5px;
+}
