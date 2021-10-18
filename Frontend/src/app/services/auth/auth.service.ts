@@ -136,8 +136,8 @@ export class AuthService {
     );
   }
 
-  solicitarEmpresa(rut: string) {
-    this.http.post(this.url + "/solicitarEmpresa", { rut }).subscribe(
+  solicitarEmpresa(data: any) {
+    this.http.post(this.url + "/solicitarEmpresa", data).subscribe(
       (ok: any) => {
         this.router.navigate(["/confirmarEmpresa"], { queryParams: { token: ok.token, rut: ok.rut } });
       },
