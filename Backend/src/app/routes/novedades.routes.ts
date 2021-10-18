@@ -18,7 +18,6 @@ router.get("/:id", [], handleRequest(novedadesController.getById));
 
 router.post("/", [isLoggedIn, tieneRol(["Administrador"])], handleRequest(novedadesController.post));
 
-
 router.put("/:id", [isLoggedIn, tieneRol(["Administrador"])], handleRequest(novedadesController.put));
 
 router.delete("/:id", [isLoggedIn, tieneRol(["Administrador"])], handleRequest(novedadesController._delete));

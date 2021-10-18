@@ -1,5 +1,6 @@
-import { Column, Entity, ManyToOne } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
 import { Localidad } from "./localidad.model";
+import { Oferta } from "./oferta.model";
 import { Usuario } from "./usuario.model";
 
 /* ---------------------------------------< EMPRESA MODEL >--------------------------------------- */
@@ -31,4 +32,7 @@ export class Empresa extends Usuario {
     @Column({ nullable: true })
     nombreFantasia: string;
 
+    @OneToMany(() => Oferta, oferta => oferta.empresa)
+    ofertas: Oferta[];
+    
 }

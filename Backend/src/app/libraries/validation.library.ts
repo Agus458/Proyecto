@@ -14,7 +14,6 @@ import * as experienciasLaboralesService from "../services/experienciasLaborales
 import * as permisosService from "../services/permisos.service";
 import * as preferenciasLaboralesService from "../services/preferenciasLaborales.service";
 import * as profileService from "../services/profile.service";
-import * as offertaService from "../services/offerta.service";
 import { NivelEducativo } from "../models/perfil/nivel-educativo";
 import { Estado } from "../models/perfil/estado";
 import { AreaTematica } from "../models/perfil/area-tematica";

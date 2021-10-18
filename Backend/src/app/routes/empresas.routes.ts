@@ -16,11 +16,6 @@ router.put("/", [isLoggedIn, tieneRol(["Empresa"])], handleRequest(empresasContr
 
 router.put("/",[isLoggedIn,tieneRol(["Empresa"])], handleRequest(empresasController.put));
 
-router.post("/realizarOfferta/:id", [isLoggedIn,tieneRol(["Administrador","Empresa"])],handleRequest(empresasController.realizarOfferta));
-//router.post("/realizarOfferta",[isLoggedIn,tieneRol(["Empresa"])],handleRequest(empresasController.));
-router.post("/actualizarOfferta/:id", [isLoggedIn,tieneRol(["Administrador","Empresa"])],handleRequest(empresasController.realizarOfferta));
-
-
 export default router;
 
 

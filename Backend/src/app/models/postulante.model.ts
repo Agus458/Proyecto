@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, ManyToMany } from "typeorm";
 import { TipoDocumento } from "./enums";
 import { Usuario } from "./usuario.model";
 import { Domicilio } from "./domicilio.model";
@@ -10,6 +10,7 @@ import { PreferenciaLaboral } from "./preferenciaLaboral.model";
 import { Permiso } from "./permiso.model";
 import { NivelEducativo } from "./perfil/nivel-educativo";
 import { Estado } from "./perfil/estado";
+import { Oferta } from "./oferta.model";
 
 /* ---------------------------------------< POSTULANTE MODEL >--------------------------------------- */
 
@@ -113,4 +114,6 @@ export class Postulante extends Usuario {
     @OneToMany(() => Permiso, permiso => permiso.postulante, { cascade: true })
     permisos: Permiso[];
 
+    @ManyToMany(() => Oferta, oferta => oferta.postulantes)
+    ofertas: Oferta[];
 }

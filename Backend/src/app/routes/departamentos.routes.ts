@@ -15,7 +15,7 @@ router.get("/:id", [], handleRequest(departamentosController.getDepartamentoById
 router.get("/pais/:id", [], handleRequest(departamentosController.getDepartamentosByPais));
 
 router.post("/", [isLoggedIn, tieneRol(["Administrador"])], handleRequest(departamentosController.postDepartamento));
-tieneRol
+
 router.put("/:id", [isLoggedIn, tieneRol(["Administrador"])], handleRequest(departamentosController.putDepartamento));
 
 export default router;

@@ -8,6 +8,7 @@ import novedadesRoutes from "./routes/novedades.routes";
 import administradoresRoutes from "./routes/administradores.routes";
 import empresasRoutes from "./routes/empresas.routes";
 import perfilRoutes from "./routes/perfil.routes";
+import ofertasRoutes from "./routes/ofertas.routes";
 
 /* ---------------------------------------< API ROUTES >--------------------------------------- */
 
@@ -29,6 +30,8 @@ router.use("/novedades", novedadesRoutes);
 router.use("/administradores", administradoresRoutes);
 
 router.use("/empresas", empresasRoutes);
+
+router.use("/ofertas", ofertasRoutes);
 
 router.use(perfilRoutes);
 
