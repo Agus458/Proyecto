@@ -21,9 +21,6 @@ export class Oferta extends BaseEntity {
     @Column()
     vacantes: number;
 
-    @Column()
-    activa: boolean;
-
     @Column({ type: "text" })
     requisitosValorados: string;
 

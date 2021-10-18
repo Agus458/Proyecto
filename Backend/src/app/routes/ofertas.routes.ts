@@ -10,6 +10,14 @@ router.get("/:id", [], handleRequest(ofertasController.getOffertaById));
 
 router.get("/", [], handleRequest(ofertasController.getOffertas));
 
+router.get("/all", [isLoggedIn, tieneRol(["Administrador"])], handleRequest(ofertasController.getAllOffertas));
+
+router.get("/empresa", [isLoggedIn, tieneRol(["Empresa"])], handleRequest(ofertasController.getOffertaByEmpresa));
+
+router.get("/empresa/:id", [isLoggedIn, tieneRol(["Administrador"])], handleRequest(ofertasController.getOffertaByEmpresa));
+
+router.get("/postulante", [isLoggedIn, tieneRol(["Postulante"])], handleRequest(ofertasController.getOffertaByPostulante));
+
 router.post("/inscribirse/:id", [isLoggedIn, tieneRol(["Postulante"])], handleRequest(ofertasController.inscribirseOfferta));
 
 router.post("/", [isLoggedIn, tieneRol(["Administrador", "Empresa"])], handleRequest(ofertasController.realizarOfferta));

@@ -5,9 +5,16 @@ import { AppError } from "../../config/error/appError";
 import * as ofertasService from "../services/ofertas.service";
 import * as empresasService from "../services/empresas.service";
 import * as postulantesService from "../services/postulantes.service";
+import { Administrador } from "../models/administrador.model";
 
 export const getOffertas = async (request: Request, response: Response): Promise<Response> => {
     const offerta = await ofertasService.get();
+
+    return response.status(200).json(offerta);
+}
+
+export const getAllOffertas = async (request: Request, response: Response): Promise<Response> => {
+    const offerta = await ofertasService.getAll();
 
     return response.status(200).json(offerta);
 }
@@ -21,6 +28,29 @@ export const getOffertaById = async (request: Request, response: Response): Prom
     if (!offerta) throw AppError.badRequestError("No existe ninguna offerta con el id ingresado");
 
     return response.status(200).json(offerta);
+}
+
+export const getOffertaByPostulante = async (request: Request, response: Response): Promise<Response> => {
+    let empresa;
+    if (request.user instanceof Administrador) {
+        if (!request.params.id) throw AppError.badRequestError("No se ingreso el id de la empresa");
+        if (!validator.isInt(request.params.id)) throw AppError.badRequestError("Id de empresa invalido");
+
+        empresa = await empresasService.getById(Number.parseInt(request.params.id));
+        if (!empresa) throw AppError.badRequestError("No existe ningun empresa con el id ingresado");
+    } else {
+        empresa = request.user;
+    }
+
+    const offertas = await ofertasService.getByEmpresa(empresa);
+
+    return response.status(200).json(offertas);
+}
+
+export const getOffertaByEmpresa = async (request: Request, response: Response): Promise<Response> => {
+    const offertas = await ofertasService.getPostulaciones(request.user);
+
+    return response.status(200).json(offertas);
 }
 
 export const realizarOfferta = async (request: Request, response: Response): Promise<Response> => {
@@ -51,12 +81,12 @@ export const inscribirseOfferta = async (request: Request, response: Response): 
 
     const oferta = await ofertasService.getById(Number.parseInt(request.params.id));
     if (!oferta) throw AppError.badRequestError("No existe ninguna oferta con el id ingresado");
-    
+
     const postulante = await postulantesService.getById(request.user.id);
-    if(!postulante) throw AppError.badRequestError("No se encontro el postulante");
+    if (!postulante) throw AppError.badRequestError("No se encontro el postulante");
 
     oferta.postulantes.push(postulante);
-    
+
     await ofertasService.put(oferta.id, oferta);
 
     return response.status(204).json();

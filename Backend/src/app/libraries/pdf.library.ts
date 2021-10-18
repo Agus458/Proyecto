@@ -1,8 +1,5 @@
 import moment from "moment";
-import path from "path";
-import { baseDir } from "../app.server";
 import { Postulante } from "../models/postulante.model";
-import axios from "axios";
 
 export const profileTemplatePDF = async (host: string, data: Postulante, token: string): Promise<string> => {
     return `
@@ -82,8 +79,7 @@ export const profileTemplatePDF = async (host: string, data: Postulante, token: 
                     <div class="col-md-8">
                         <div class="card-body content">
                             <h1 class="card-title">${data.primerNombre + " " + data.primerApellido}</h1>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                                additional content. This content is a little bit longer.</p>
+                            <p class="card-text">${data.email}</p>
                             <p class="card-text"><small class="text-muted"> PDF generado el ${moment().format("DD-MM-YYYY")}</small></p>
                         </div>
                     </div>
@@ -113,14 +109,14 @@ export const profileTemplatePDF = async (host: string, data: Postulante, token: 
                             <div class="col-12 mb-2"><strong>Barrio:</strong> ${data.domicilio.barrio ? data.domicilio.barrio : "-"}</div>
                             <div class="col-12 mb-2"><strong>Direccion:</strong> ${data.domicilio.direccion ? data.domicilio.direccion : "-"}</div>
                             ` : "No especificado"
-                        }
+        }
                     </div>
                     <br>
                     <h5 class="card-title">Contacto</h5>
                     <hr>
                     <div class="row">
-                        <div class="col-12 mb-2"><strong>Telefono:</strong> Telefono</div>
-                        <div class="col-12 mb-2"><strong>Telefono2:</strong> Telefono2</div>
+                        <div class="col-12 mb-2"><strong>Telefono:</strong> ${data.primerTelefono ? data.primerTelefono : "-"}</div>
+                        <div class="col-12 mb-2"><strong>Telefono2:</strong> ${data.segundoTelefono ? data.segundoTelefono : "-"}</div>
                     </div>
                 </div>
             </div>
@@ -130,54 +126,90 @@ export const profileTemplatePDF = async (host: string, data: Postulante, token: 
                     <h2 class="card-title">Educacion y Formacion</h2>
                     <hr>
                     <div class="row">
-                        <div class="col-12 mb-2"><strong>Nivel Educativo:</strong> Nivel Educativo</div>
-                        <div class="col-12 mb-2"><strong>Estado:</strong> Estado</div>
-                        <div class="col-12 mb-2"><strong>Orientacion:</strong> Orientacion</div>
+                        <div class="col-12 mb-2"><strong>Nivel Educativo:</strong> ${data.nivelEducativo ? data.nivelEducativo.nombre : "-"}</div>
+                        <div class="col-12 mb-2"><strong>Estado:</strong> ${data.estadoNivelEducativo ? data.estadoNivelEducativo.nombre : "-"}</div>
+                        <div class="col-12 mb-2"><strong>Orientacion:</strong> ${data.orientacion ? data.orientacion : "-"}</div>
                     </div>
                     <br>
                     <h5 class="card-title">Capacitaciones</h5>
                     <hr>
                     <ul class="list-group">
-                        <li class="list-group-item">
-                            <div class="content">
-                                <h5 class="card-title">Nombre Curso</h5>
-                                <hr>
-                                <div class="mb-2"><strong>Área temática:</strong> Área temática</div>
-                                <div class="mb-2"><strong>Institución Educativa:</strong> Institución Educativa</div>
-                                <div class="mb-2"><strong>Año de inicio:</strong> Año de inicio</div>
-                                <div class="mb-2"><strong>Duración:</strong> Duración</div>
-                                <div class="mb-2"><strong>Estado del curso:</strong> Estado del curso</div>
-                            </div>
-                        </li>
+                        ${data.capacitaciones ?
+                            data.capacitaciones.map(capacitacion => {
+                                return `
+                                    <li class="list-group-item">
+                                        <div class="content">
+                                            <h5 class="card-title">${capacitacion.nombreCurso}</h5>
+                                            <hr>
+                                            <div class="mb-2"><strong>Área temática:</strong> ${capacitacion.areaTematica ? capacitacion.areaTematica.nombre : "-"}</div>
+                                            <div class="mb-2"><strong>Institución Educativa:</strong> ${capacitacion.institucion ? capacitacion.institucion : "-"}</div>
+                                            <div class="mb-2"><strong>Año de inicio:</strong> ${capacitacion.anioInicio ? capacitacion.anioInicio : "-"}</div>
+                                            <div class="mb-2"><strong>Duración:</strong> ${capacitacion.duracion ? capacitacion.duracion : "-"}</div>
+                                            <div class="mb-2"><strong>Estado del curso:</strong> ${capacitacion.estadoCurso ? capacitacion.estadoCurso.nombre : "-"}</div>
+                                        </div>
+                                    </li>
+                                `;
+                            })
+                        : `
+                            <li class="list-group-item">
+                                <div class="content">
+                                    No Tiene
+                                </div>
+                            </li>
+                        `}
                     </ul>
                     <br>
                     <h5 class="card-title">Conocimientos Informaticos</h5>
                     <hr>
                     <ul class="list-group">
-                        <li class="list-group-item">
-                            <div class="content">
-                                <h5 class="card-title">Nombre Aplicacion</h5>
-                                <hr>
-                                <div class="mb-2"><strong>Categoria:</strong> Categoria</div>
-                                <div class="mb-2"><strong>Nivel Conocimiento:</strong> Nivel Conocimiento</div>
-                            </div>
-                        </li>
+                        ${data.conocimientosInformaticos ?
+                            data.conocimientosInformaticos.map(conocimiento => {
+                                return `
+                                    <li class="list-group-item">
+                                        <div class="content">
+                                            <h5 class="card-title">${conocimiento.nombreAplicacion}</h5>
+                                            <hr>
+                                            <div class="mb-2"><strong>Categoria:</strong> ${conocimiento.categoria ? conocimiento.categoria.nombre : "-"}</div>
+                                            <div class="mb-2"><strong>Nivel Conocimiento:</strong> ${conocimiento.nivelConocimiento ? conocimiento.nivelConocimiento : "-"}</div>
+                                        </div>
+                                    </li>
+                                `;
+                            })
+                        : `
+                            <li class="list-group-item">
+                                <div class="content">
+                                    No Tiene
+                                </div>
+                            </li>
+                        `}
                     </ul>
                     <br>
                     <h5 class="card-title">Idiomas</h5>
                     <hr>
                     <ul class="list-group">
-                        <li class="list-group-item">
-                            <div class="content">
-                                <h5 class="card-title">Idioma</h5>
-                                <hr>
-                                <div class="mb-2"><strong>Especificacion:</strong> Especificacion</div>
-                                <div class="mb-2"><strong>Habla:</strong> Habla</div>
-                                <div class="mb-2"><strong>Comprension Auditiva:</strong> Comprension Auditiva</div>
-                                <div class="mb-2"><strong>Comprension Lectora:</strong> Comprension Lectora</div>
-                                <div class="mb-2"><strong>Escritura:</strong> Escritura</div>
-                            </div>
-                        </li>
+                        ${data.idiomas ?
+                            data.idiomas.map(idioma => {
+                                return `
+                                    <li class="list-group-item">
+                                        <div class="content">
+                                            <h5 class="card-title">${idioma.nombreIdioma ? idioma.nombreIdioma.nombre : "-"}</h5>
+                                            <hr>
+                                            <div class="mb-2"><strong>Especificacion:</strong> ${idioma.especificacion ? idioma.especificacion : "-"}</div>
+                                            <div class="mb-2"><strong>Habla:</strong> ${idioma.habla ? idioma.habla : "-"}</div>
+                                            <div class="mb-2"><strong>Comprension Auditiva:</strong> ${idioma.comprensionAuditiva ? idioma.comprensionAuditiva : "-"}</div>
+                                            <div class="mb-2"><strong>Comprension Lectora:</strong> ${idioma.comprensionLectora ? idioma.comprensionLectora : "-"}</div>
+                                            <div class="mb-2"><strong>Escritura:</strong> ${idioma.escritura ? idioma.escritura : "-"}</div>
+                                        </div>
+                                    </li>
+                                `;
+                            })
+                        : `
+                            <li class="list-group-item">
+                                <div class="content">
+                                    No Tiene
+                                </div>
+                            </li>
+                        `}
                     </ul>
                 </div>
             </div>
@@ -187,27 +219,39 @@ export const profileTemplatePDF = async (host: string, data: Postulante, token: 
                     <h2 class="card-title">Expreiencias Laborales</h2>
                     <hr>
                     <ul class="list-group">
-                        <li class="list-group-item">
-                            <div class="content">
-                                <h5 class="card-title">Nombre Empresa</h5>
-                                <hr>
-                                <div class="mb-2"><strong>Cargo:</strong> Cargo</div>
-                                <div class="mb-2"><strong>Rubro:</strong> Rubro</div>
-                                <div class="mb-2"><strong>Nivel Jerarquico:</strong> Nivel Jerarquico</div>
-                                <div class="mb-2"><strong>Tareas Realizadas:</strong> Tareas Realizadas</div>
-                                <div class="mb-2"><strong>Fecha Inicio:</strong> Fecha Inicio</div>
-                                <div class="mb-2"><strong>Tarbajando:</strong> Tarbajando</div>
-                                <div class="mb-2"><strong>Fecha Fin:</strong> Fecha Fin</div>
-                                <br>
-                                <strong>Referencia</strong>
-                                <hr>
-                                <div class="mb-2"><strong>Nombre:</strong> Nombre</div>
-                                <div class="mb-2"><strong>Apellido:</strong> Apellido</div>
-                                <div class="mb-2"><strong>Cargo:</strong> Cargo</div>
-                                <div class="mb-2"><strong>Email:</strong> Email</div>
-                                <div class="mb-2"><strong>Telefono:</strong> Telefono</div>
-                            </div>
-                        </li>
+                        ${data.experienciasLaborales ?
+                            data.experienciasLaborales.map(experiencia => {
+                                return `
+                                    <li class="list-group-item">
+                                        <div class="content">
+                                            <h5 class="card-title">${experiencia.nombreEmpresa}</h5>
+                                            <hr>
+                                            <div class="mb-2"><strong>Cargo:</strong> ${experiencia.cargo ? experiencia.cargo : "-"}</div>
+                                            <div class="mb-2"><strong>Rubro:</strong> ${experiencia.rubro ? experiencia.rubro.nombre : "-"}</div>
+                                            <div class="mb-2"><strong>Nivel Jerarquico:</strong> ${experiencia.nivelJerarquico ? experiencia.nivelJerarquico.nombre : "-"}</div>
+                                            <div class="mb-2"><strong>Tareas Realizadas:</strong> ${experiencia.tareasRealizadas ? experiencia.tareasRealizadas : "-"}</div>
+                                            <div class="mb-2"><strong>Fecha Inicio:</strong> ${experiencia.fechaInicio ? experiencia.fechaInicio : "-"}</div>
+                                            <div class="mb-2"><strong>Tarbajando:</strong> ${experiencia.trabajando ? "SI" : "NO"}</div>
+                                            <div class="mb-2"><strong>Fecha Fin:</strong> ${experiencia.fechaFin ? experiencia.fechaFin : "-"}</div>
+                                            <br>
+                                            <strong>Referencia</strong>
+                                            <hr>
+                                            <div class="mb-2"><strong>Nombre:</strong> ${experiencia.nombreReferencia ? experiencia.nombreReferencia : "-"}</div>
+                                            <div class="mb-2"><strong>Apellido:</strong> ${experiencia.apellidoReferencia ? experiencia.apellidoReferencia : "-"}</div>
+                                            <div class="mb-2"><strong>Cargo:</strong> ${experiencia.cargoReferencia ? experiencia.cargoReferencia : "-"}</div>
+                                            <div class="mb-2"><strong>Email:</strong> ${experiencia.emailReferencia ? experiencia.emailReferencia : "-"}</div>
+                                            <div class="mb-2"><strong>Telefono:</strong> ${experiencia.telefonoReferencia ? experiencia.telefonoReferencia : "-"}</div>
+                                        </div>
+                                    </li>
+                                `;
+                            })
+                        : `
+                            <li class="list-group-item">
+                                <div class="content">
+                                    No Tiene
+                                </div>
+                            </li>
+                        `}
                     </ul>
                 </div>
             </div>
@@ -217,14 +261,26 @@ export const profileTemplatePDF = async (host: string, data: Postulante, token: 
                     <h2 class="card-title">Permisos y Licencias</h2>
                     <hr>
                     <ul class="list-group">
-                        <li class="list-group-item">
-                            <div class="content">
-                                <h5 class="card-title">Tipo</h5>
-                                <hr>
-                                <div class="mb-2"><strong>Vencimiento:</strong> Vencimiento</div>
-                                <div class="mb-2"><strong>Especificacion:</strong> Especificacion</div>
-                            </div>
-                        </li>
+                        ${data.permisos ?
+                            data.permisos.map(permiso => {
+                                return `
+                                    <li class="list-group-item">
+                                        <div class="content">
+                                            <h5 class="card-title">${permiso.tipoDocumento ? permiso.tipoDocumento.nombre : "-"}</h5>
+                                            <hr>
+                                            <div class="mb-2"><strong>Vencimiento:</strong> ${permiso.vigencia ? permiso.vigencia : "-"}</div>
+                                            <div class="mb-2"><strong>Especificacion:</strong> ${permiso.especificacion ? permiso.especificacion : "-"}</div>
+                                        </div>
+                                    </li>
+                                `;
+                            })
+                        : `
+                            <li class="list-group-item">
+                                <div class="content">
+                                    No Tiene
+                                </div>
+                            </li>
+                        `}
                     </ul>
                 </div>
             </div>
@@ -233,19 +289,31 @@ export const profileTemplatePDF = async (host: string, data: Postulante, token: 
                 <div class="card-body content">
                     <h2 class="card-title">Intereses y preferencias</h2>
                     <hr>
-                    <div class="mb-2"><strong>Jornada Laboral:</strong> Jornada Laboral</div>
+                    <div class="mb-2"><strong>Jornada Laboral:</strong> ${`${data.jornadaCompleta ? "Completa" : ""} ${data.jornadaIndiferente ? "Indiferente" : ""} ${data.jornadaManiana ? "Mañana" : ""} ${data.jornadaNoche ? "Noche" : ""} ${data.jornadaTarde ? "Tarde" : ""}`}</div>
                     <br>
                     <h5 class="card-title">Preferencias Laborales</h5>
                     <hr>
                     <ul class="list-group">
-                        <li class="list-group-item">
-                            <div class="content">
-                                <h5 class="card-title">Puesto</h5>
-                                <hr>
-                                <div class="mb-2"><strong>Area de Interes:</strong> Area de Interes</div>
-                                <div class="mb-2"><strong>Aspiracion Salarial:</strong> Aspiracion Salarial</div>
-                            </div>
-                        </li>
+                        ${data.preferenciasLaborales ?
+                            data.preferenciasLaborales.map(preferencia => {
+                                return `
+                                    <li class="list-group-item">
+                                        <div class="content">
+                                            <h5 class="card-title">${preferencia.puestoPreferido ? preferencia.puestoPreferido : "-"}</h5>
+                                            <hr>
+                                            <div class="mb-2"><strong>Area de Interes:</strong> ${preferencia.areasInteres ? preferencia.areasInteres.nombre : "-"}</div>
+                                            <div class="mb-2"><strong>Aspiracion Salarial:</strong> ${preferencia.aspiracionSalarial ? preferencia.aspiracionSalarial : "-"}</div>
+                                        </div>
+                                    </li>
+                                `;
+                            })
+                        : `
+                            <li class="list-group-item">
+                                <div class="content">
+                                    No Tiene
+                                </div>
+                            </li>
+                        `}
                     </ul>
                 </div>
             </div>
@@ -264,16 +332,23 @@ export const profileTemplatePDF = async (host: string, data: Postulante, token: 
     `;
 }
 
-export const getImagen = async (host: string, url: string, token: string): Promise<string> => {
+export const getImagen = async (host: string, url: string, token: string): Promise<any> => {
     try {
-        const result = await axios.get(host + "/" + url, {
-            responseType: "blob",
-            headers: {"Authorization": "Bearer " + token }
+        const result = await fetch(host + "/" + url, {
+            headers: { "Authorization": "Bearer " + token }
         });
 
-        const imagen =  'data:image/bmp;base64,'+ result;
-        return imagen;
+        var base64String;
+        let blob = await result.blob();
+        var reader = new FileReader();
+        reader.readAsDataURL(blob);
+        reader.onloadend = function () {
+           base64String = reader.result;
+        }
+    
+        return base64String;
     } catch (error) {
     }
+
     return "";
 }
