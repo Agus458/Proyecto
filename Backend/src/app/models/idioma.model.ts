@@ -1,4 +1,5 @@
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { NombreIdioma } from "./perfil/nombre-idioma.model";
 import { Postulante } from "./postulante.model";
 
 /* ---------------------------------------< IDIOMA MODEL >--------------------------------------- */
@@ -9,8 +10,8 @@ export class Idioma extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    nombreIdioma: string;
+    @ManyToOne(() => NombreIdioma)
+    nombreIdioma: NombreIdioma;
 
     @Column({ nullable: true })
     especificacion: string;

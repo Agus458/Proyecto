@@ -17,6 +17,9 @@ import * as profileService from "../services/profile.service";
 import { NivelEducativo } from "../models/perfil/nivel-educativo";
 import { Estado } from "../models/perfil/estado";
 import { AreaTematica } from "../models/perfil/area-tematica";
+import { NombreIdioma } from "../models/perfil/nombre-idioma.model";
+import { NivelJerarquico } from "../models/perfil/nivel-jerarquico.model";
+import { TipoPermiso } from "../models/perfil/tipo-permiso.model";
 
 // Valida que los datos personales del postulante sean correctos.
 export const validarDatosPersonales = async (data: any) => {
@@ -167,7 +170,7 @@ export const validarIdiomas = async (idiomas: any, postulante: Postulante) => {
             if (!idiomaGuardado) throw AppError.badRequestError("No existe un Idioma con el id: " + idioma.id);
             if (idiomaGuardado.postulante.id != postulante.id) throw AppError.badRequestError("El Idioma con el id: " + idioma.id + " no pretenece al usuario");
         }
-        if (!idioma.nombreIdioma || typeof idioma.nombreIdioma != "string") throw AppError.badRequestError("Nombre de Idioma invalido o no ingresado");
+        if (!idioma.nombreIdioma || typeof idioma.nombreIdioma != "number" || ! await profileService.getById(NombreIdioma.prototype, idioma.nombreIdioma)) throw AppError.badRequestError("Nombre de Idioma invalido o no ingresado");
         if (idioma.especificacion && typeof idioma.especificacion != "string") throw AppError.badRequestError("Especificacion de Idioma invalida o no ingresada");
         if (!idioma.habla || typeof idioma.habla != "string") throw AppError.badRequestError("Habla de Idioma invalido o no ingresado");
         if (!idioma.comprensionAuditiva || typeof idioma.comprensionAuditiva != "string") throw AppError.badRequestError("Comprension Auditiva de Idioma invalido o no ingresado");
@@ -196,8 +199,8 @@ export const validarExperienciasLaborales = async (experienciasLaborales: any, p
         }
         if (!experienciaLaboral.nombreEmpresa || typeof experienciaLaboral.nombreEmpresa != "string") throw AppError.badRequestError("Nombre de Empresa de Experiencia Laboral invalido o no ingresado");
         if (!experienciaLaboral.cargo || typeof experienciaLaboral.cargo != "string") throw AppError.badRequestError("Cargo de Experiencia Laboral invalido o no ingresado");
-        if (!experienciaLaboral.rubro || typeof experienciaLaboral.rubro != "string") throw AppError.badRequestError("Rubro de Experiencia Laboral invalido o no ingresado");
-        if (!experienciaLaboral.nivelJerarquico || typeof experienciaLaboral.nivelJerarquico != "string") throw AppError.badRequestError("Nivel Jerarquico de Experiencia Laboral invalido o no ingresado");
+        if (!experienciaLaboral.rubro || typeof experienciaLaboral.rubro != "number" || ! await profileService.getById(AreaTematica.prototype, experienciaLaboral.rubro)) throw AppError.badRequestError("Rubro de Experiencia Laboral invalido o no ingresado");
+        if (!experienciaLaboral.nivelJerarquico || typeof experienciaLaboral.nivelJerarquico != "number" || ! await profileService.getById(NivelJerarquico.prototype, experienciaLaboral.nivelJerarquico)) throw AppError.badRequestError("Nivel Jerarquico de Experiencia Laboral invalido o no ingresado");
         if (experienciaLaboral.tareasRealizadas && typeof experienciaLaboral.tareasRealizadas != "string") throw AppError.badRequestError("Tareas Realizadas de Experiencia Laboral invalido o no ingresado");
 
         if (!experienciaLaboral.fechaInicio || typeof experienciaLaboral.fechaInicio != "string" || !Date.parse(experienciaLaboral.fechaInicio)) throw AppError.badRequestError("Fecha de Inicio de Experiencia Laboral invalido o no ingresado. Formato Valido: YYYY-MM-DD");
@@ -244,7 +247,7 @@ export const validarPermisos = async (permisos: any, postulante: Postulante) => 
             if (!permisoGuardado) throw AppError.badRequestError("No existe un permiso con el id: " + permiso.id);
             if (permisoGuardado.postulante.id != postulante.id) throw AppError.badRequestError("El permiso con el id: " + permiso.id + " no pretenece al usuario");
         }
-        if (typeof permiso.tipoDocumento != "string") throw AppError.badRequestError("Tipo de Documento de permiso invalido o no ingresado");
+        if (!permiso.tipoDocumento || typeof permiso.tipoDocumento != "number" || ! await profileService.getById(TipoPermiso.prototype, permiso.tipoDocumento)) throw AppError.badRequestError("Tipo de Documento de permiso invalido o no ingresado");
         if (typeof permiso.vigencia != "string") throw AppError.badRequestError("Vigencia de permiso invalido o no ingresado");
         if (permiso.especificacion && typeof permiso.especificacion != "string") throw AppError.badRequestError("Especificacion de permiso invalido o no ingresado");
 
