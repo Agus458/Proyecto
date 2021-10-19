@@ -32,7 +32,7 @@ export const getByRut = async (rut: string): Promise<Empresa | undefined> => {
     return await getRepository(Empresa).findOne({
         where: { rut },
         select: ["rut", "id", "contrasenia", "email", "nombreFantasia", "telefono", "visibilidad", "razonSocial", "socia", "estado"],
-        relations: ["localidad"]
+        relations: ["localidad", "localidad.departamento"]
     });
 };
 

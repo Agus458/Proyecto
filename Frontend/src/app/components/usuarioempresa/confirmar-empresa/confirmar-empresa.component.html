@@ -2,43 +2,65 @@
     <mat-card fxFlex.lt-sm="100" fxFlex.gt-sm="40" fxFlex.gt-lg="25" class="card">
         <mat-card-content>
 
-            <h1 color>Confirmar Empresa</h1>
-            <mat-divider [inset]="true"></mat-divider>
-            <div fxLayout="column" fxLayoutAlign="space-evenly start">
-                <mat-form-field appearance="fill">
-                    <mat-label>RUT</mat-label>
-                    <input matInput>
-                </mat-form-field>
-    
-                <mat-form-field appearance="fill">
-                    <mat-label>Razón Social</mat-label>
-                    <input matInput>
-                </mat-form-field>
-    
-                <mat-form-field appearance="fill">
-                    <mat-label>Telefono</mat-label>
-                    <input matInput type="number">
-                </mat-form-field>
-    
-                <mat-form-field appearance="fill">
-                    <mat-label>Localidad</mat-label>
-                    <input matInput >
-                </mat-form-field>
+            <form [formGroup]="confirmarSolicitudForm" (ngSubmit)="ngOnSubmit()">
+                <h1 color>Confirmar Solicitud</h1>
+                <mat-divider [inset]="true"></mat-divider>
+                <div fxLayout="column" fxLayoutAlign="space-evenly start">
+                    <mat-form-field appearance="fill">
+                        <mat-label>RUT</mat-label>
+                        <input matInput formControlName="rut" readonly>
+                    </mat-form-field>
 
-                <mat-form-field appearance="fill">
-                    <mat-label>Nombre Fantasia</mat-label>
-                    <input matInput placeholder="Ej. Reconocida Empresa de.." >
-                </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Razón Social</mat-label>
+                        <input matInput formControlName="razonSocial">
+                    </mat-form-field>
 
-                <mat-checkbox>Quiero que mi empresa sea visible
-                </mat-checkbox>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Telefono</mat-label>
+                        <input matInput type="number" formControlName="telefono">
+                    </mat-form-field>
 
-                
-            </div>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Departamento</mat-label>
+                        <mat-select formControlName="departamento" (selectionChange)="onChangeDepartamento()">
+                            <mat-option *ngFor="let departamento of departamentos" [value]="departamento.id">
+                                {{departamento.nombre}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Localidad</mat-label>
+                        <mat-select formControlName="localidad">
+                            <mat-option *ngFor="let localidad of localidades" [value]="localidad.id">
+                                {{localidad.nombre}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nombre Fantasia</mat-label>
+                        <input matInput placeholder="Ej. Reconocida Empresa de.." formControlName="nombreFantasia">
+                    </mat-form-field>
+
+                    <mat-checkbox formControlName="visivilidad">Quiero que mi empresa sea visible</mat-checkbox>
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>Email</mat-label>
+                        <input matInput type="email" formControlName="email">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>Contrasenia</mat-label>
+                        <input matInput type="password" formControlName="contrasenia">
+                    </mat-form-field>
+
+                </div>
+
                 <button onclick="history.back(-1)" mat-raised-button type="button" color="primary"
                     style="margin-top: 8px; margin-right: 8px;">Cancelar</button>
                 <button mat-raised-button type="submit" color="primary" style="margin-top: 8px;">Confirmar</button>
-            
+
+            </form>
+
         </mat-card-content>
     </mat-card>
 </div>

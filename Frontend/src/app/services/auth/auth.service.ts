@@ -139,7 +139,9 @@ export class AuthService {
   solicitarEmpresa(data: any) {
     this.http.post(this.url + "/solicitarEmpresa", data).subscribe(
       (ok: any) => {
-        this.router.navigate(["/confirmarEmpresa"], { queryParams: { token: ok.token, rut: ok.rut } });
+        localStorage.setItem("empresa", JSON.stringify(ok));
+
+        this.router.navigate(["/confirmarEmpresa"]);
       },
       error => {
         this.snackBar.open(error.error.message, "Close", { duration: 5000 });
@@ -148,7 +150,7 @@ export class AuthService {
   }
 
   confirmarEmpresa(data: any) {
-    this.http.post(this.url + "/confirmarEmpresa", data).subscribe(
+    this.http.post(this.url + "/confirmarSolicitud", data).subscribe(
       ok => {
         this.snackBar.open("Se a enviado un email al administrador", "Close", { duration: 5000 });
         this.router.navigateByUrl("/");

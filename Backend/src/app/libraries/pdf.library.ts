@@ -109,7 +109,7 @@ export const profileTemplatePDF = async (host: string, data: Postulante, token: 
                             <div class="col-12 mb-2"><strong>Barrio:</strong> ${data.domicilio.barrio ? data.domicilio.barrio : "-"}</div>
                             <div class="col-12 mb-2"><strong>Direccion:</strong> ${data.domicilio.direccion ? data.domicilio.direccion : "-"}</div>
                             ` : "No especificado"
-        }
+                        }
                     </div>
                     <br>
                     <h5 class="card-title">Contacto</h5>
@@ -294,7 +294,7 @@ export const profileTemplatePDF = async (host: string, data: Postulante, token: 
                     <h5 class="card-title">Preferencias Laborales</h5>
                     <hr>
                     <ul class="list-group">
-                        ${data.preferenciasLaborales ?
+                        ${data.preferenciasLaborales.length > 0 ?
                             data.preferenciasLaborales.map(preferencia => {
                                 return `
                                     <li class="list-group-item">
