@@ -48,14 +48,25 @@ export const getOffertaByPostulante = async (request: Request, response: Respons
 }
 
 export const getOffertaByEmpresa = async (request: Request, response: Response): Promise<Response> => {
-    const offertas = await ofertasService.getPostulaciones(request.user);
+    console.log(2);
+
+    const offertas = await ofertasService.getByEmpresa(request.user);
 
     return response.status(200).json(offertas);
 }
 
 export const realizarOfferta = async (request: Request, response: Response): Promise<Response> => {
-    const empresa = await empresasService.getById(request.body.empresa);
-    if (!empresa) throw AppError.badRequestError("No existe ningun empresa con el id ingresado");
+    let empresa;
+
+    if (request.user instanceof Administrador) {
+        if(!request.body.empresa) throw AppError.badRequestError("No se ingreso ninguna empresa");
+
+        empresa = await empresasService.getById(request.body.empresa);
+        if (!empresa) throw AppError.badRequestError("No existe ningun empresa con el id ingresado");
+    } else {
+        empresa = await empresasService.getById(request.user.id);
+        if (!empresa) throw AppError.badRequestError("No existe ningun empresa con el id ingresado");
+    }
 
     request.body.empresa = empresa;
     await ofertasService.post(request.body);

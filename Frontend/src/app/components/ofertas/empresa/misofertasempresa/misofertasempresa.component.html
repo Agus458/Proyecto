@@ -1,44 +1,37 @@
 <body>
     <h1><em>Mis Ofertas</em></h1>
     <mat-divider></mat-divider>
-    <button mat-button type="button" class="boton" routerLink="/nuevaoferta">Agregar Oferta</button>
-    <button type="button" mat-button class="boton" (click)="openDialog()">Vista Dialog</button>
-
+    <button mat-button type="button" class="boton" routerLink="/editaroferta">Agregar Oferta</button>
+    
     <div class="example-container mat-elevation-z8 table">
-        <table mat-table>
+        <table mat-table [dataSource]="ofertas">
 
-            <!-- Position Column -->
-            <ng-container matColumnDef="puesto">
-                <th mat-header-cell *matHeaderCellDef> Vacante </th>
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> Id </th>
                 <td mat-cell *matCellDef="let element"> {{element.id}} </td>
             </ng-container>
 
-            <!-- Symbol Column -->
+            <ng-container matColumnDef="puesto">
+                <th mat-header-cell *matHeaderCellDef> Puesto </th>
+                <td mat-cell *matCellDef="let element"> {{element.puesto}} </td>
+            </ng-container>
+
             <ng-container matColumnDef="fechaPublicacion">
                 <th mat-header-cell *matHeaderCellDef> Fecha Publicación </th>
                 <td mat-cell *matCellDef="let element"> {{element.fechaPublicacion | date:'shortDate' }}</td>
             </ng-container>
 
-            <!-- Symbol Column -->
             <ng-container matColumnDef="fechaCierre">
                 <th mat-header-cell *matHeaderCellDef> Fecha Cierre </th>
-                <td mat-cell *matCellDef="let element"> {{element.fechaPublicacion | date:'shortDate' }}</td>
-            </ng-container>
-
-            <ng-container matColumnDef="vacio1">
-                <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let element"></td>
+                <td mat-cell *matCellDef="let element"> {{element.fechaCierre | date:'shortDate' }}</td>
             </ng-container>
 
             <ng-container matColumnDef="mas">
                 <th mat-header-cell *matHeaderCellDef>-.-</th>
-                <td mat-cell *matCellDef="let element"><button mat-icon-button type="button" color="warn">
+                <td mat-cell *matCellDef="let element"><button mat-icon-button type="button" color="warn" (click)="openDialog()">
                         <mat-icon>menu</mat-icon>
                     </button> </td>
             </ng-container>
-
-
-
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

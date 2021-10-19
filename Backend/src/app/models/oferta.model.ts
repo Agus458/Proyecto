@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn, ManyToMany, JoinTable } from "typeorm";
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn, ManyToMany, JoinTable, CreateDateColumn } from "typeorm";
 import { Empresa } from "./empresa.model";
 import { AreaTematica } from "./perfil/area-tematica";
 import { Postulante } from "./postulante.model";
@@ -52,7 +52,7 @@ export class Oferta extends BaseEntity {
     @Column()
     rangoSalario: String;
 
-    @Column()
+    @CreateDateColumn()
     fechaPublicacion: Date;
 
     @Column()

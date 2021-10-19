@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Localidad } from "./localidad.model";
 import { Oferta } from "./oferta.model";
 import { Usuario } from "./usuario.model";
@@ -7,6 +7,9 @@ import { Usuario } from "./usuario.model";
 
 @Entity('empresas')
 export class Empresa extends Usuario {
+
+    @PrimaryGeneratedColumn()
+    id: number;
 
     @Column({ unique: true })
     rut: number;

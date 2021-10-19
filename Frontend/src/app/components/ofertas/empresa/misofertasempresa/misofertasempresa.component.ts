@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Oferta } from 'src/app/models/oferta.model';
+import { OfertaService } from 'src/app/services/ofertas/oferta.service';
 import { DialogofertaComponent } from './dialogoferta/dialogoferta.component';
 
 @Component({
@@ -9,10 +11,11 @@ import { DialogofertaComponent } from './dialogoferta/dialogoferta.component';
 })
 export class MisofertasempresaComponent implements OnInit {
 
-  displayedColumns: string[] = ['puesto', 'fechaPublicacion', 'fechaCierre', 'vacio1', 'mas'];
- 
-  
-  constructor(public dialog: MatDialog) {}
+  displayedColumns: string[] = ['id', 'puesto', 'fechaPublicacion', 'fechaCierre', 'mas'];
+
+  ofertas: Oferta[] = [];
+
+  constructor(public dialog: MatDialog, private ofertasService: OfertaService) { }
 
   openDialog() {
     const dialogRef = this.dialog.open(DialogofertaComponent);
@@ -22,11 +25,21 @@ export class MisofertasempresaComponent implements OnInit {
     });
   }
 
-  async ngOnInit() {
-    
-    }
-  
+  ngOnInit() {
+    this.ofertasService.getOfertasEmpresaActual().subscribe(
+      ok => {
+        console.log(ok);
+        
+        this.ofertas = ok;
+      },
+      error => {
+        console.log(error);
 
-    delete(id: number) {
-    }
+      }
+    );
+  }
+
+  delete(id: number) {
+
+  }
 }

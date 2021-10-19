@@ -30,14 +30,14 @@
             </ng-container>
 
             <ng-container *ngIf="authService.getUser()?.tipo == 'Administrador' || authService.getUser()?.tipo == 'Empresa'">
-                <mat-list-item routerLink="/nuevaoferta" routerLinkActive="selected" (click)="sidenav.toggle()">
+                <mat-list-item routerLink="/editaroferta" routerLinkActive="selected" (click)="sidenav.toggle()">
                     <mat-icon>sticky_note_2</mat-icon>
                     Agregar Oferta
                 </mat-list-item>
             </ng-container>
 
-            <ng-container *ngIf="authService.getUser()?.tipo == 'Administrador' || authService.getUser()?.tipo == 'Empresa'">
-                <mat-list-item routerLink="/misofertasempresa" routerLinkActive="selected" (click)="sidenav.toggle()">
+            <ng-container *ngIf="authService.getUser()?.tipo == 'Empresa'">
+                <mat-list-item routerLink="/listaofertas" routerLinkActive="selected" (click)="sidenav.toggle()">
                     <mat-icon>sticky_note_2</mat-icon>
                     Mis Ofertas
                 </mat-list-item>

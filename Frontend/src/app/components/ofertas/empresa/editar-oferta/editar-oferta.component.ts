@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { OfertaService } from 'src/app/services/ofertas/oferta.service';
+import { PerfilService } from 'src/app/services/perfil/perfil.service';
 
 @Component({
   selector: 'app-editar-oferta',
@@ -9,16 +15,91 @@ export class EditarOfertaComponent implements OnInit {
 
   visible: boolean | undefined;
 
-  areas = [
-    "Administración - Secretariado", "Agroindustria", "Alimentos", "Arquitectura - Paisajismo", "Arte - Cultura", "Atención al Cliente", "Automotriz", "Banca - Servicios Financieros", "Cadetería - Cobranzas", "Comercio - Maercado - Ventas", "Comunicación", "Construcción", "Contabilidad - Auditoría - Finanzas", "Deporte - Recreación", "Directivos - Ejecutivos", "Diseño - Decoración", "Distribución - Logística - Almacenamiento", "Eduación - Docencia", "Estética", "Eventos", "Especializaciones", "Gastronomía", "Industria - Producción", "Ingeniería", "Inmobiliario", "Importación - Exportación", "Mantenimiento general", "Mecánica", "Comunicación - Marketing - Publicidad", "Oficios - Servicios Varios", "Pasantías", "Recursos Humanos", "Salud", "Sector Legal/Jurídico", "Seguridad / Vigilancia", "Supermercados - Autoservices", "Tecnologías de la Información", "Trabajo telefónico - Call Center", "Transporte", "Turismo - Hotelería", "Otro"
-  ];
+  areas: any[] = [];
 
-  constructor() { }
+  ofertaForm: FormGroup = new FormGroup({});
 
-  ngOnInit(): void {
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private route: ActivatedRoute,
+    private ofertasService: OfertaService,
+    private perfilService: PerfilService,
+    private snackBar: MatSnackBar,
+    private router: Router
+  ) { }
+
+  async ngOnInit() {
+    this.ofertaForm = this.formBuilder.group({
+      telefonoContacto: ['', Validators.required],
+      emailContacto: ['', Validators.required],
+      vacantes: ['', Validators.required],
+      requisitosValorados: ['', Validators.required],
+      areaDeTrabajo: ['', Validators.required],
+      nombreOfferta: ['', Validators.required],
+      descripcion: ['', Validators.required],
+      puesto: ['', Validators.required],
+      funcionesDePuesto: ['', Validators.required],
+      requisitosExcluyente: ['', Validators.required],
+      horariodetrabajo: ['', Validators.required],
+      rangoSalario: ['', Validators.required],
+      fechaCierre: ['', Validators.required]
+    });
+
+    try {
+      const areas = await this.perfilService.getData("areasTematicas").toPromise();
+      this.areas = areas;
+    } catch (error) {
+      console.log(error);
+    }
+
+    const routeParams = this.route.snapshot.paramMap;
+    const IdFromRoute = Number(routeParams.get('id'));
+
+    if (IdFromRoute) {
+      try {
+        const oferta = await this.ofertasService.getOferta(IdFromRoute).toPromise();
+
+        if (oferta) {
+          this.ofertaForm.addControl("id", new FormControl('', [Validators.required]));
+
+          if(oferta.areaDeTrabajo){
+            oferta.areaDeTrabajo = oferta.areaDeTrabajo.id;
+          }
+
+          console.log(oferta);
+          
+          this.ofertaForm.patchValue(oferta);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
 
-  getNombre(): void {
-    this.visible = !this.visible;
+  ngOnSubmit() {
+    if (this.ofertaForm.contains("id")) {
+      const id = this.ofertaForm.controls.id.value;
+
+      this.ofertasService.putOferta(id, this.ofertaForm.value).subscribe(
+        ok => {
+          this.snackBar.open("Oferta Actualizada Correctamente", "Cerrar", { duration: 5000 });
+          this.router.navigateByUrl("/listaofertas");
+        },
+        error => {
+          this.snackBar.open(error.error.message, "Close", { duration: 5000 });
+        }
+      );
+    } else {
+      this.ofertasService.postOferta(this.ofertaForm.value).subscribe(
+        ok => {
+          this.snackBar.open("Oferta Creada Correctamente", "Cerrar", { duration: 5000 });
+          this.router.navigateByUrl("/listaofertas");
+        },
+        error => {
+          this.snackBar.open(error.error.message, "Close", { duration: 5000 });
+        }
+      );
+    }
   }
 }

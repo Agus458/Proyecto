@@ -9,7 +9,6 @@ import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
 import { AgregarnovedadesComponent } from './components/novedades/admin/agregarnovedades/agregarnovedades.component';
 import { ListarnovedadesComponent } from './components/novedades/admin/listarnovedades/listarnovedades.component';
 import { NovedadesComponent } from './components/novedades/novedades.component';
-import { NuevaOfertaComponent } from './components/ofertas/empresa/nueva-oferta/nueva-oferta.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { PostularseComponent } from './components/postularse/postularse.component';
 import { RegistarseComponent } from './components/registarse/registarse.component';
@@ -33,9 +32,11 @@ const routes: Routes = [
 
   { path: "misdatos", component: DatosPostulanteComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Postulante'] } },
   { path: "miperfil", component: MiPerfilComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Postulante'] } },
-  { path: "nuevaoferta", component: NuevaOfertaComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador', 'Empresa'] } },
+  
   { path: "editaroferta", component: EditarOfertaComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador', 'Empresa'] } },
-  { path: "misofertasempresa", component: MisofertasempresaComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador', 'Empresa'] } },
+  { path: "editaroferta/:id", component: EditarOfertaComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador', 'Empresa'] } },
+  { path: "listaofertas", component: MisofertasempresaComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador', 'Empresa'] } },
+  
   { path: "novedades", component: NovedadesComponent },
   { path: "agregarnovedad", component: AgregarnovedadesComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador'] } },
   { path: "listarnovedades", component: ListarnovedadesComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador'] } },

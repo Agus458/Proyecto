@@ -6,8 +6,6 @@ import * as ofertasController from "../controllers/ofertas.controller";
 
 const router = Router();
 
-router.get("/:id", [], handleRequest(ofertasController.getOffertaById));
-
 router.get("/", [], handleRequest(ofertasController.getOffertas));
 
 router.get("/all", [isLoggedIn, tieneRol(["Administrador"])], handleRequest(ofertasController.getAllOffertas));
@@ -23,5 +21,7 @@ router.post("/inscribirse/:id", [isLoggedIn, tieneRol(["Postulante"])], handleRe
 router.post("/", [isLoggedIn, tieneRol(["Administrador", "Empresa"])], handleRequest(ofertasController.realizarOfferta));
 
 router.put("/:id", [isLoggedIn, tieneRol(["Administrador", "Empresa"])], handleRequest(ofertasController.realizarOfferta));
+
+router.get("/:id", [], handleRequest(ofertasController.getOffertaById));
 
 export default router;

@@ -42,7 +42,9 @@ export const getPostulaciones = async (postulante: Postulante): Promise<Oferta[]
 }
 
 export const getById = async (id: number): Promise<Oferta | undefined> => {
-    return await getRepository(Oferta).findOne(id);
+    return await getRepository(Oferta).findOne(id, {
+        relations: ["areaDeTrabajo"]
+    });
 };
 
 export const post = async (data: DeepPartial<Oferta>): Promise<Oferta> => {

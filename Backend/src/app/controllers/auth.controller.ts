@@ -15,19 +15,14 @@ import * as restablecerContraseniaService from "../services/restablecerContrasen
 import * as solicitudesEmpresaService from "../services/solicitudesEmpresa.service";
 import { createToken, verifyToken } from "../libraries/tokens.library";
 import { EstadoUsuario } from "../models/enums";
-import { resetTemplate, sendEmail } from "../libraries/email.library";
+import { resetTemplate, sendEmail, solicitudTemplate } from "../libraries/email.library";
 import { verifyGoogleIdToken } from "../libraries/google.library";
 import { Empresa } from "../models/empresa.model";
 import moment from "moment";
 import { request } from "http";
 
 /* ---------------------------------------< AUTH CONTROLLER >--------------------------------------- */
-/*
-export const publicarOfferta = async(request: Request, response: Response):Promise<Response>=>{
-    if(!request.body.)
 
-}
-*/
 export const registrarse = async (request: Request, response: Response): Promise<Response> => {
     if (!request.body.email) throw AppError.badRequestError("No se ingreso el email");
     if (!request.body.contrasenia) throw AppError.badRequestError("No se ingreso la contraseña");
@@ -148,7 +143,7 @@ export const confirmarSolicitud = async (request: Request, response: Response): 
 
     usuariosService.actualizar(empresa);
 
-    sendEmail("aguperaza458@gmail.com", "Solicitud de Empresa", `La empresa ${empresa.razonSocial} con rut ${empresa.rut} solicita la habilitacion de su usuario.`);
+    sendEmail("aguperaza458@gmail.com", "Solicitud de Empresa", solicitudTemplate(empresa));
 
     return response.status(200).json();
 }
