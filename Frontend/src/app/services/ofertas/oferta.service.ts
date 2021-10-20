@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { SocialAuthService } from 'angularx-social-login';
 import { proyectConfig } from 'proyectConfig';
 import { Oferta } from 'src/app/models/oferta.model';
+import { Postulante } from 'src/app/models/postulante.model';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,10 @@ export class OfertaService {
 
   getOferta(id: number){
     return this.http.get<Oferta>(this.url + "/" + id);
+  }
+
+  getPostulantesOferta(id: number){
+    return this.http.get<Postulante[]>(this.url + "/postulantes/" + id);
   }
 
   postOferta(oferta: Oferta) {

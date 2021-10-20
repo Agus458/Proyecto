@@ -18,6 +18,7 @@ import { IsLoggedInGuard } from './guards/is-logged-in/is-logged-in.guard';
 import { TieneRolGuard } from './guards/tiene-rol/tiene-rol.guard';
 import { MisofertasempresaComponent } from './components/ofertas/empresa/misofertasempresa/misofertasempresa.component';
 import { EditarOfertaComponent } from './components/ofertas/empresa/editar-oferta/editar-oferta.component';
+import { ListaPostulantesComponent } from './components/empresa/lista-postulantes/lista-postulantes.component';
 
 
 const routes: Routes = [
@@ -32,11 +33,13 @@ const routes: Routes = [
 
   { path: "misdatos", component: DatosPostulanteComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Postulante'] } },
   { path: "miperfil", component: MiPerfilComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Postulante'] } },
-  
+  { path: "postulante/:id", component: MiPerfilComponent, canActivate: [IsLoggedInGuard]},
+
   { path: "editaroferta", component: EditarOfertaComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador', 'Empresa'] } },
   { path: "editaroferta/:id", component: EditarOfertaComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador', 'Empresa'] } },
   { path: "listaofertas", component: MisofertasempresaComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador', 'Empresa'] } },
-  
+  { path: "postulantesOferta/:id", component: ListaPostulantesComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Empresa'] } },
+
   { path: "novedades", component: NovedadesComponent },
   { path: "agregarnovedad", component: AgregarnovedadesComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador'] } },
   { path: "listarnovedades", component: ListarnovedadesComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador'] } },

@@ -21,6 +21,10 @@ export class PostulantesService {
     this.postulanteActual = this.http.get<Postulante>(this.url + "/perfil");
   }
 
+  getPerfilById(id: number): void {
+    this.postulanteActual = this.http.get<Postulante>(this.url + "/perfil/" + id);
+  }
+
   getPerfilActual(): Observable<Postulante> {
     return this.postulanteActual;
   }

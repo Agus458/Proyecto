@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Oferta } from 'src/app/models/oferta.model';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { OfertaService } from 'src/app/services/ofertas/oferta.service';
 import { DialogofertaComponent } from './dialogoferta/dialogoferta.component';
 
@@ -15,28 +16,34 @@ export class MisofertasempresaComponent implements OnInit {
 
   ofertas: Oferta[] = [];
 
-  constructor(public dialog: MatDialog, private ofertasService: OfertaService) { }
+  constructor(
+    public dialog: MatDialog,
+    private ofertasService: OfertaService,
+    public authService: AuthService,
+  ) { }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(DialogofertaComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+  openDialog(oferta: Oferta) {
+    this.dialog.open(DialogofertaComponent, {
+      data: oferta
     });
   }
 
   ngOnInit() {
-    this.ofertasService.getOfertasEmpresaActual().subscribe(
-      ok => {
-        console.log(ok);
-        
-        this.ofertas = ok;
-      },
-      error => {
-        console.log(error);
-
-      }
-    );
+    if (this.authService.getUser()?.tipo == "Empresa") {
+      this.ofertasService.getOfertasEmpresaActual().subscribe(
+        ok => {
+          this.ofertas = ok;
+        },
+        error => { }
+      );
+    } else {
+      this.ofertasService.getAll().subscribe(
+        ok => {
+          this.ofertas = ok;
+        },
+        error => { }
+      );
+    }
   }
 
   delete(id: number) {

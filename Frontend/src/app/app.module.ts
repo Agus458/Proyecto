@@ -52,11 +52,11 @@ import { ListarnovedadesComponent } from './components/novedades/admin/listarnov
 import { AgregarnovedadesComponent } from './components/novedades/admin/agregarnovedades/agregarnovedades.component';
 import { OfertasComponent } from './components/ofertas/ofertas.component';
 import { EmpresaComponent } from './components/ofertas/empresa/empresa.component';
-import { PostulanteComponent } from './components/ofertas/postulante/postulante.component';
 import { UsuarioempresaComponent } from './components/usuarioempresa/usuarioempresa.component';
 import { MisofertasempresaComponent } from './components/ofertas/empresa/misofertasempresa/misofertasempresa.component';
 import { DialogofertaComponent } from './components/ofertas/empresa/misofertasempresa/dialogoferta/dialogoferta.component';
 import { EditarOfertaComponent } from './components/ofertas/empresa/editar-oferta/editar-oferta.component';
+import { ListaPostulantesComponent } from './components/empresa/lista-postulantes/lista-postulantes.component';
 
 @NgModule({
   declarations: [
@@ -88,11 +88,11 @@ import { EditarOfertaComponent } from './components/ofertas/empresa/editar-ofert
     AgregarnovedadesComponent,
     OfertasComponent,
     EmpresaComponent,
-    PostulanteComponent,
     UsuarioempresaComponent,
     MisofertasempresaComponent,
     DialogofertaComponent,
     EditarOfertaComponent,
+    ListaPostulantesComponent,
   ],
   imports: [
     BrowserModule,

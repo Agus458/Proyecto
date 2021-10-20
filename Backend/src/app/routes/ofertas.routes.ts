@@ -16,6 +16,8 @@ router.get("/empresa/:id", [isLoggedIn, tieneRol(["Administrador"])], handleRequ
 
 router.get("/postulante", [isLoggedIn, tieneRol(["Postulante"])], handleRequest(ofertasController.getOffertaByPostulante));
 
+router.get("/postulantes/:id", [isLoggedIn, tieneRol(["Empresa"])], handleRequest(ofertasController.getPostulantesOferta));
+
 router.post("/inscribirse/:id", [isLoggedIn, tieneRol(["Postulante"])], handleRequest(ofertasController.inscribirseOfferta));
 
 router.post("/", [isLoggedIn, tieneRol(["Administrador", "Empresa"])], handleRequest(ofertasController.realizarOfferta));

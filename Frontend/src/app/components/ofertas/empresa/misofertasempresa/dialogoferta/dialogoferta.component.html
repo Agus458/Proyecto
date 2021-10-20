@@ -1,32 +1,21 @@
-
-    <h2 mat-dialog-title style="margin-bottom: 0px; color: #026d30;">Puesto o Vacante</h2>
-    <mat-divider style="margin-bottom: 8px;"></mat-divider>
-    <mat-dialog-content class="mat-typography">
-        <h3><strong>Fecha de Publicación:</strong> 00/00/000</h3>
-        <h3><strong>Fecha de Cierre:</strong> 00/00/000</h3>
-        <p><strong>Área de Trabajo: </strong>Area</p>
-        <p><strong>Funciones y Tareas del Puesto: </strong>Build features quickly with simple, declarative templates.
-            Extend
-            the template language with
-            your own components and use a wide array of existing components. Get immediate Angular-specific
-            help and feedback with nearly every IDE and editor. All this comes together so you can focus
-            on building amazing apps rather than trying to make the code work.</p>
-        <p><strong>Requisitos Exclueyentes: </strong>Build features quickly with simple, declarative templates. Extend
-            the template language with
-            your own components and use a wide array of existing components. Get immediate Angular-specific
-            help and feedback with nearly every IDE and editor. All this comes together so you can focus
-            on building amazing apps rather than trying to make the code work.</p>
-        <p><strong>Competencias claves: </strong>Build features quickly with simple, declarative templates. Extend
-            the template language with
-            your own components and use a wide array of existing components. Get immediate Angular-specific
-            help and feedback with nearly every IDE and editor. All this comes together so you can focus
-            on building amazing apps rather than trying to make the code work.</p>
-
-
-    </mat-dialog-content>
-    <mat-dialog-actions align="end">
-        <button mat-button [mat-dialog-close]="true" class="boton">Ver Postulantes</button>
-        <button mat-button [mat-dialog-close]="true" class="boton" routerLink="/editaroferta">Editar</button>
-        <button mat-button mat-dialog-close cdkFocusInitial>Cerrar</button>
-    </mat-dialog-actions>
-
+<h2 mat-dialog-title style="margin-bottom: 0px; color: #026d30;">{{data.nombreOfferta}}</h2>
+<mat-divider style="margin-bottom: 8px;"></mat-divider>
+<mat-dialog-content class="mat-typography">
+    <h3><strong>Fecha de Publicación:</strong> {{data.fechaPublicacion | date: "shortDate"}}</h3>
+    <h3><strong>Fecha de Cierre:</strong> {{data.fechaCierre | date: "shortDate"}}</h3>
+    <h3 *ngIf="authService.getUser()?.tipo == 'Administrador'"><strong>Empresa:</strong> {{data.empresa?.razonSocial}}
+    </h3>
+    <p><strong>Área de Trabajo: </strong> {{data.areaDeTrabajo ? data.areaDeTrabajo.nombre : ""}}</p>
+    <p><strong>Funciones y Tareas del Puesto: </strong> {{data.funcionesDePuesto}}</p>
+    <p><strong>Requisitos Exclueyentes: </strong> {{data.requisitosExcluyente}}</p>
+    <p><strong>Requisitos Valorados: </strong>{{data.requisitosValorados}}</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <ng-container *ngIf="authService.getUser()?.tipo == 'Empresa'">
+        <button mat-button [mat-dialog-close]="true" class="boton" [routerLink]="'/postulantesOferta/'+ data.id">Ver
+            Postulantes</button>
+        <button mat-button [mat-dialog-close]="true" class="boton"
+            [routerLink]="'/editaroferta/'+ data.id">Editar</button>
+    </ng-container>
+    <button mat-button mat-dialog-close cdkFocusInitial>Cerrar</button>
+</mat-dialog-actions>

@@ -30,7 +30,7 @@ export const getOffertaById = async (request: Request, response: Response): Prom
     return response.status(200).json(offerta);
 }
 
-export const getOffertaByPostulante = async (request: Request, response: Response): Promise<Response> => {
+export const getOffertaByEmpresa = async (request: Request, response: Response): Promise<Response> => {
     let empresa;
     if (request.user instanceof Administrador) {
         if (!request.params.id) throw AppError.badRequestError("No se ingreso el id de la empresa");
@@ -47,10 +47,8 @@ export const getOffertaByPostulante = async (request: Request, response: Respons
     return response.status(200).json(offertas);
 }
 
-export const getOffertaByEmpresa = async (request: Request, response: Response): Promise<Response> => {
-    console.log(2);
-
-    const offertas = await ofertasService.getByEmpresa(request.user);
+export const getOffertaByPostulante = async (request: Request, response: Response): Promise<Response> => {
+    const offertas = await ofertasService.getPostulaciones(request.user);
 
     return response.status(200).json(offertas);
 }
@@ -101,4 +99,13 @@ export const inscribirseOfferta = async (request: Request, response: Response): 
     await ofertasService.put(oferta.id, oferta);
 
     return response.status(204).json();
+}
+
+export const getPostulantesOferta = async (request: Request, response: Response): Promise<Response> => {
+    if (!request.params.id) throw AppError.badRequestError("No se ingreso el id de la offerta");
+    if (!validator.isInt(request.params.id)) throw AppError.badRequestError("Id de offerta invalido");
+
+    const postulantes = await ofertasService.getPostulantesOferta(Number.parseInt(request.params.id));
+
+    return response.status(200).json(postulantes);
 }

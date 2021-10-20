@@ -1,18 +1,20 @@
-import { DeepPartial, getRepository, LessThan } from "typeorm";
+import { DeepPartial, getRepository, LessThan, MoreThan } from "typeorm";
 import { Empresa } from "../models/empresa.model";
 import { Oferta } from "../models/oferta.model";
 import { Postulante } from "../models/postulante.model";
 
 export const getAll = async (): Promise<Oferta[]> => {
-    return await getRepository(Oferta).find();
+    return await getRepository(Oferta).find({
+        relations: ["areaDeTrabajo", "empresa"]
+    });
 };
 
 export const get = async (skip?: number, take?: number): Promise<Oferta[]> => {
     return await getRepository(Oferta).find({
         where: {
-            fechaCierre: LessThan(new Date())
+            fechaCierre: MoreThan(new Date())
         },
-        relations: ["empresa"],
+        relations: ["empresa", "areaDeTrabajo"],
         skip,
         take,
         order: {
@@ -24,21 +26,30 @@ export const get = async (skip?: number, take?: number): Promise<Oferta[]> => {
 export const getByEmpresa = async (empresa: Empresa): Promise<Oferta[]> => {
     return await getRepository(Oferta).find({
         where: { empresa },
-        relations: ["postulantes"],
+        relations: ["areaDeTrabajo"],
         order: {
             fechaPublicacion: "DESC"
         }
     });
 }
 
+export const getPostulantesOferta = async (id: number): Promise<Postulante[]> => {
+    return await getRepository(Postulante)
+        .createQueryBuilder("postulante")
+        .leftJoin("postulante.ofertas", "oferta")
+        .where("oferta.id = :id", { id })
+        .getMany();
+}
+
 export const getPostulaciones = async (postulante: Postulante): Promise<Oferta[]> => {
     return await getRepository(Oferta)
-    .createQueryBuilder("oferta")
-    .leftJoinAndSelect("oferta.postulantes", "postulante")
-    .leftJoinAndSelect("oferta.empresa", "empresa")
-    .where("postulante.id = :id", {id: postulante.id})
-    .orderBy("oferta.fechaPublicacion", "DESC")
-    .getMany();
+        .createQueryBuilder("oferta")
+        .leftJoinAndSelect("oferta.postulantes", "postulante")
+        .leftJoinAndSelect("oferta.empresa", "empresa")
+        .leftJoinAndSelect("oferta.areaDeTrabajo", "area")
+        .where("postulante.id = :id", { id: postulante.id })
+        .orderBy("oferta.fechaPublicacion", "DESC")
+        .getMany();
 }
 
 export const getById = async (id: number): Promise<Oferta | undefined> => {
