@@ -57,6 +57,8 @@ import { MisofertasempresaComponent } from './components/ofertas/empresa/misofer
 import { DialogofertaComponent } from './components/ofertas/empresa/misofertasempresa/dialogoferta/dialogoferta.component';
 import { EditarOfertaComponent } from './components/ofertas/empresa/editar-oferta/editar-oferta.component';
 import { ListaPostulantesComponent } from './components/empresa/lista-postulantes/lista-postulantes.component';
+import { HabilitarEmpresaComponent } from './components/empresa/habilitar-empresa/habilitar-empresa.component';
+import { DialogHabilitarEmpresaComponent } from './components/empresa/habilitar-empresa/dialog-habilitar-empresa/dialog-habilitar-empresa.component';
 
 @NgModule({
   declarations: [
@@ -93,6 +95,8 @@ import { ListaPostulantesComponent } from './components/empresa/lista-postulante
     DialogofertaComponent,
     EditarOfertaComponent,
     ListaPostulantesComponent,
+    HabilitarEmpresaComponent,
+    DialogHabilitarEmpresaComponent,
   ],
   imports: [
     BrowserModule,

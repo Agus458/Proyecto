@@ -19,6 +19,7 @@ import { TieneRolGuard } from './guards/tiene-rol/tiene-rol.guard';
 import { MisofertasempresaComponent } from './components/ofertas/empresa/misofertasempresa/misofertasempresa.component';
 import { EditarOfertaComponent } from './components/ofertas/empresa/editar-oferta/editar-oferta.component';
 import { ListaPostulantesComponent } from './components/empresa/lista-postulantes/lista-postulantes.component';
+import { HabilitarEmpresaComponent } from './components/empresa/habilitar-empresa/habilitar-empresa.component';
 
 
 const routes: Routes = [
@@ -43,6 +44,8 @@ const routes: Routes = [
   { path: "novedades", component: NovedadesComponent },
   { path: "agregarnovedad", component: AgregarnovedadesComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador'] } },
   { path: "listarnovedades", component: ListarnovedadesComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador'] } },
+
+  { path: "habilitarEmpresa", component: HabilitarEmpresaComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador'] } },
 
   { path: '**', component: PageNotFoundComponent },
 ];

@@ -18,7 +18,6 @@ export class OfertaService {
     private http: HttpClient,
     private snackBar: MatSnackBar,
     private router: Router,
-    private authService: SocialAuthService
   ) { }
 
   getOfertas(){
