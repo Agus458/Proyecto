@@ -20,6 +20,7 @@ import { MisofertasempresaComponent } from './components/ofertas/empresa/misofer
 import { EditarOfertaComponent } from './components/ofertas/empresa/editar-oferta/editar-oferta.component';
 import { ListaPostulantesComponent } from './components/empresa/lista-postulantes/lista-postulantes.component';
 import { HabilitarEmpresaComponent } from './components/empresa/habilitar-empresa/habilitar-empresa.component';
+import { OfertasComponent } from './components/ofertas/ofertas.component';
 
 
 const routes: Routes = [
@@ -31,6 +32,8 @@ const routes: Routes = [
   { path: "cambiarContrasenia", component: CambiarContraseniaComponent },
   { path: "solicitarEmpresa", component: SolicitarEmpresaComponent },
   { path: "confirmarEmpresa", component: ConfirmarEmpresaComponent },
+
+  { path: "oferta/:id", component: OfertasComponent },
 
   { path: "misdatos", component: DatosPostulanteComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Postulante'] } },
   { path: "miperfil", component: MiPerfilComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Postulante'] } },
