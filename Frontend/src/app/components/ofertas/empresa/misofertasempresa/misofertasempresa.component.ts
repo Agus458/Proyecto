@@ -12,7 +12,7 @@ import { DialogofertaComponent } from './dialogoferta/dialogoferta.component';
 })
 export class MisofertasempresaComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'puesto', 'fechaPublicacion', 'fechaCierre', 'mas'];
+  displayedColumns: string[] = ['id', 'nombre', 'puesto', 'fechaPublicacion', 'fechaCierre', 'mas'];
 
   ofertas: Oferta[] = [];
 
@@ -37,6 +37,8 @@ export class MisofertasempresaComponent implements OnInit {
         error => { }
       );
     } else {
+      this.displayedColumns.splice(this.displayedColumns.length - 1, 0, 'empresa');
+
       this.ofertasService.getAll().subscribe(
         ok => {
           this.ofertas = ok;

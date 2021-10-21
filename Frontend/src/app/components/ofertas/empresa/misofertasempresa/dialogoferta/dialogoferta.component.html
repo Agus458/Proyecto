@@ -14,8 +14,8 @@
     <ng-container *ngIf="authService.getUser()?.tipo == 'Empresa'">
         <button mat-button [mat-dialog-close]="true" class="boton" [routerLink]="'/postulantesOferta/'+ data.id">Ver
             Postulantes</button>
-        <button mat-button [mat-dialog-close]="true" class="boton"
-            [routerLink]="'/editaroferta/'+ data.id">Editar</button>
     </ng-container>
+    <button mat-button [mat-dialog-close]="true" class="boton" [routerLink]="'/editaroferta/'+ data.id">Editar</button>
+    <button mat-button [mat-dialog-close]="true" class="boton" color="warn" (click)="deleteOferta(data.id)">Eliminar</button>
     <button mat-button mat-dialog-close cdkFocusInitial>Cerrar</button>
 </mat-dialog-actions>

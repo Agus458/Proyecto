@@ -15,6 +15,11 @@ export const getPendientes = async (): Promise<Empresa[]> => {
     return await getRepository(Empresa).find({ where: { estado: EstadoUsuario.PENDIENTE } });
 };
 
+// Retorna todas las empresas almacenadas en el sistema.
+export const getAll = async (): Promise<Empresa[]> => {
+    return await getRepository(Empresa).find();
+};
+
 // Retorna la empresa almacenado en el sistema cuyo id sea el ingresado.
 export const getById = async (id: number): Promise<Empresa | undefined> => {
     return await getRepository(Empresa).findOne(id);

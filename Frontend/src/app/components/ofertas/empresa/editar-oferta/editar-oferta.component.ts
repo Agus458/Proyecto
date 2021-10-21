@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Empresa } from 'src/app/models/empresa.model';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { EmpresasService } from 'src/app/services/empresas/empresas.service';
 import { OfertaService } from 'src/app/services/ofertas/oferta.service';
 import { PerfilService } from 'src/app/services/perfil/perfil.service';
 
@@ -17,16 +19,19 @@ export class EditarOfertaComponent implements OnInit {
 
   areas: any[] = [];
 
+  empresas: Empresa[] = [];
+
   ofertaForm: FormGroup = new FormGroup({});
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService,
+    public authService: AuthService,
     private route: ActivatedRoute,
     private ofertasService: OfertaService,
     private perfilService: PerfilService,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private empresasService: EmpresasService
   ) { }
 
   async ngOnInit() {
@@ -53,6 +58,19 @@ export class EditarOfertaComponent implements OnInit {
       console.log(error);
     }
 
+    if(this.authService.getUser()?.tipo == 'Administrador') {
+
+      try {
+        const result = await this.empresasService.getEmpresas().toPromise();
+
+        this.empresas = result;
+      } catch (error) {
+        
+      }
+
+      this.ofertaForm.addControl("empresa", new FormControl('', [Validators.required]));
+    }
+
     const routeParams = this.route.snapshot.paramMap;
     const IdFromRoute = Number(routeParams.get('id'));
 
@@ -67,7 +85,9 @@ export class EditarOfertaComponent implements OnInit {
             oferta.areaDeTrabajo = oferta.areaDeTrabajo.id;
           }
 
-          console.log(oferta);
+          if(oferta.empresa){
+            oferta.empresa = oferta.empresa.id;
+          }
           
           this.ofertaForm.patchValue(oferta);
         }

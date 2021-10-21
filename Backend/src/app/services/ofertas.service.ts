@@ -54,7 +54,7 @@ export const getPostulaciones = async (postulante: Postulante): Promise<Oferta[]
 
 export const getById = async (id: number): Promise<Oferta | undefined> => {
     return await getRepository(Oferta).findOne(id, {
-        relations: ["areaDeTrabajo"]
+        relations: ["areaDeTrabajo", "empresa"]
     });
 };
 

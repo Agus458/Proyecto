@@ -10,6 +10,16 @@
             <td mat-cell *matCellDef="let element"> {{element.id}} </td>
         </ng-container>
 
+        <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let element"> {{element.nombreOfferta}} </td>
+        </ng-container>
+
+        <ng-container *ngIf="authService.getUser()?.tipo == 'Administrador'" matColumnDef="empresa">
+            <th mat-header-cell *matHeaderCellDef> Empresa </th>
+            <td mat-cell *matCellDef="let element"> {{element.empresa.razonSocial}} </td>
+        </ng-container>
+
         <ng-container matColumnDef="puesto">
             <th mat-header-cell *matHeaderCellDef> Puesto </th>
             <td mat-cell *matCellDef="let element"> {{element.puesto}} </td>
@@ -26,7 +36,7 @@
         </ng-container>
 
         <ng-container matColumnDef="mas">
-            <th mat-header-cell *matHeaderCellDef>-.-</th>
+            <th mat-header-cell *matHeaderCellDef><button mat-icon-button type="button" disabled>-.-</button></th>
             <td mat-cell *matCellDef="let element"><button mat-icon-button type="button" color="warn"
                     (click)="openDialog(element)">
                     <mat-icon>menu</mat-icon>

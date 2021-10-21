@@ -49,4 +49,8 @@ export class OfertaService {
     return this.http.put(this.url + `/${id}`, oferta);
   }
 
+  delete(id: number) {
+    return this.http.delete(this.url + `/${id}`);
+  }
+
 }

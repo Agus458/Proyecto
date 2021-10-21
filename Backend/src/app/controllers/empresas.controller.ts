@@ -8,6 +8,11 @@ export const getPendientes = async (request: Request, response: Response): Promi
     return response.json(await empresasService.getPendientes());
 }
 
+export const getAll = async (request: Request, response: Response): Promise<Response> => {
+    return response.json(await empresasService.getAll());
+}
+
+
 export const getById = async (request: Request, response: Response): Promise<Response> => {
     if (!request.params.id) throw AppError.badRequestError("No se ingreso el id de la empresa");
     if (!validator.isInt(request.params.id)) throw AppError.badRequestError("Id de empresa invalido");

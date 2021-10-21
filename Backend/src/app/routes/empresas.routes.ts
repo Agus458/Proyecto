@@ -10,6 +10,8 @@ const router = Router();
 
 router.get("/pendientes", [isLoggedIn, tieneRol(["Administrador"])], handleRequest(empresasController.getPendientes));
 
+router.get("/", [isLoggedIn, tieneRol(["Administrador"])], handleRequest(empresasController.getAll));
+
 router.get("/:id", [isLoggedIn, tieneRol(["Administrador", "Empresa"])], handleRequest(empresasController.getById));
 
 router.put("/", [isLoggedIn, tieneRol(["Empresa"])], handleRequest(empresasController.put));

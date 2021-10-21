@@ -84,6 +84,18 @@ export const ActualizarOfferta = async (request: Request, response: Response): P
     return response.status(204).json();
 }
 
+export const _delete = async (request: Request, response: Response): Promise<Response> => {
+    if (!request.params.id) throw AppError.badRequestError("No se ingreso el id de la offerta");
+    if (!validator.isInt(request.params.id)) throw AppError.badRequestError("Id de offerta invalido");
+
+    const oferta = await ofertasService.getById(Number.parseInt(request.params.id));
+    if (!oferta) throw AppError.badRequestError("No existe ninguna oferta con el id ingresado");
+
+    await ofertasService._delete(oferta.id);
+
+    return response.status(204).json();
+}
+
 export const inscribirseOfferta = async (request: Request, response: Response): Promise<Response> => {
     if (!request.params.id) throw AppError.badRequestError("No se ingreso el id de la offerta");
     if (!validator.isInt(request.params.id)) throw AppError.badRequestError("Id de offerta invalido");

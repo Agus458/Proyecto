@@ -23,16 +23,15 @@
             </mat-card>
 
             <mat-card style="margin-top: 10px;">
-                <mat-card-header>
-                    <mat-card-title>Mi CV</mat-card-title>
-                </mat-card-header>
-                <mat-card-content>
-                    <a style="margin-bottom: 10px;" mat-raised-button *ngIf="generatedPdf" target="_blank"
-                        [href]="generatedPdf | safeUrl" type="button" color="accent">
+                <mat-card-content fxLayout="column" fxLayoutGap="20px" fxLayoutAlign="space-around start">
+                    <h2>Curriculum</h2>
+                    <mat-divider [inset]="true"></mat-divider>
+                    <a mat-raised-button *ngIf="generatedPdf" target="_blank"
+                        [href]="generatedPdf | safeUrl" type="button" color="primary" class="block">
                         <mat-icon>search</mat-icon>Ver CV Generado
                     </a>
-                    <a style="margin-bottom: 10px;" mat-raised-button *ngIf="cv" target="_blank" [href]="cv | safeUrl"
-                        type="button" color="accent">
+                    <a mat-raised-button *ngIf="cv" target="_blank" [href]="cv | safeUrl"
+                        type="button" color="accent" class="block">
                         <mat-icon>search</mat-icon>Ver CV
                     </a>
                 </mat-card-content>

@@ -24,7 +24,7 @@ export class MiPerfilComponent implements OnInit {
     private route: ActivatedRoute
   ) { }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit() {
     const routeParams = this.route.snapshot.paramMap;
     const IdFromRoute = Number(routeParams.get('id'));
 
@@ -35,6 +35,8 @@ export class MiPerfilComponent implements OnInit {
     }
 
     this.postulantes.getPerfilActual().subscribe(async result => {
+      this.postulante = result;
+      
       if (result.imagen) {
         this.imagen = await this.postulantes.getArchivo(proyectConfig.backEndURL + "/" + result.imagen);
       }
@@ -42,11 +44,7 @@ export class MiPerfilComponent implements OnInit {
         this.cv = await this.postulantes.getArchivo(proyectConfig.backEndURL + "/" + result.cv);
       }
 
-      if (result.id) this.generatedPdf = await this.postulantes.generarPdf(result.id);
-
-      this.postulante = result;
-      console.log(this.postulante);
-      
+      if (result.id) this.generatedPdf = await this.postulantes.generarPdf(result.id);      
     });
   }
 

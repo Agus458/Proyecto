@@ -19,6 +19,14 @@
                         <input matInput formControlName="puesto">
                     </mat-form-field>
 
+                    <mat-form-field *ngIf="ofertaForm.controls['empresa']" class="example-full-width" appearance="fill">
+                        <mat-label>Empresa *</mat-label>
+                        <mat-select formControlName="empresa">
+                            <mat-option *ngFor="let empresa of empresas" [value]="empresa.id">{{empresa.razonSocial + " " + empresa.rut}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
                     <mat-form-field class="example-full-width" appearance="fill">
                         <mat-label>Área de Trabajo *</mat-label>
                         <mat-select formControlName="areaDeTrabajo">

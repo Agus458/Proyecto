@@ -5,7 +5,7 @@ export interface Oferta {
     
     id?: number;
 
-    empresa?: Empresa;
+    empresa?: any;
 
     telefonoContacto?: number;
 

@@ -24,7 +24,7 @@ export class Oferta extends BaseEntity {
     @Column({ type: "text" })
     requisitosValorados: string;
 
-    @ManyToMany(() => Postulante, postulante => postulante.ofertas)
+    @ManyToMany(() => Postulante, postulante => postulante.ofertas, { cascade: true })
     @JoinTable()
     postulantes: Postulante[];
 
