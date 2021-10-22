@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CambiarContraseniaComponent } from './components/cambiar-contrasenia/cambiar-contrasenia.component';
+import { CambiarContraseniaComponent } from './components/contrasenia/cambiar-contrasenia/cambiar-contrasenia.component';
 import { ConfirmarEmpresaComponent } from './components/usuarioempresa/confirmar-empresa/confirmar-empresa.component';
 import { DatosPostulanteComponent } from './components/datos-postulante/datos-postulante.component';
 import { IniciarSesionComponent } from './components/iniciar-sesion/iniciar-sesion.component';
@@ -10,17 +10,17 @@ import { AgregarnovedadesComponent } from './components/novedades/admin/agregarn
 import { ListarnovedadesComponent } from './components/novedades/admin/listarnovedades/listarnovedades.component';
 import { NovedadesComponent } from './components/novedades/novedades.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { PostularseComponent } from './components/postularse/postularse.component';
 import { RegistarseComponent } from './components/registarse/registarse.component';
-import { RestablecerContraseniaComponent } from './components/restablecer-contrasenia/restablecer-contrasenia.component';
+import { RestablecerContraseniaComponent } from './components/contrasenia/restablecer-contrasenia/restablecer-contrasenia.component';
 import { SolicitarEmpresaComponent } from './components/usuarioempresa/solicitar-empresa/solicitar-empresa.component';
 import { IsLoggedInGuard } from './guards/is-logged-in/is-logged-in.guard';
 import { TieneRolGuard } from './guards/tiene-rol/tiene-rol.guard';
 import { MisofertasempresaComponent } from './components/ofertas/empresa/misofertasempresa/misofertasempresa.component';
 import { EditarOfertaComponent } from './components/ofertas/empresa/editar-oferta/editar-oferta.component';
-import { ListaPostulantesComponent } from './components/empresa/lista-postulantes/lista-postulantes.component';
 import { HabilitarEmpresaComponent } from './components/empresa/habilitar-empresa/habilitar-empresa.component';
 import { OfertasComponent } from './components/ofertas/ofertas.component';
+import { VistaNovedadComponent } from './components/novedades/vista-novedad/vista-novedad.component';
+import { ListaPostulantesComponent } from './components/ofertas/empresa/lista-postulantes/lista-postulantes.component';
 
 
 const routes: Routes = [
@@ -32,6 +32,7 @@ const routes: Routes = [
   { path: "cambiarContrasenia", component: CambiarContraseniaComponent },
   { path: "solicitarEmpresa", component: SolicitarEmpresaComponent },
   { path: "confirmarEmpresa", component: ConfirmarEmpresaComponent },
+  { path: "vistanovedad/:id", component: VistaNovedadComponent },
 
   { path: "oferta/:id", component: OfertasComponent },
 
