@@ -4,5 +4,8 @@
 
 .sidenav-container {
     height: 100%;
+    opacity: 1;
+    background-size: 10px 10px;
+    background-image: repeating-linear-gradient(45deg, #eeeeee 0, #eeeeee 1px, #e9e9e9 0, #e9e9e9 50%);
 }
 

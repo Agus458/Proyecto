@@ -51,3 +51,9 @@ mat-card-content{
   .example-dd {
     height: 30px;
   }
+
+  .container {
+    background-color: #fcfcfc;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
