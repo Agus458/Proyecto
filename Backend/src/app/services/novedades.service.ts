@@ -1,4 +1,4 @@
-import { DeepPartial, getRepository } from "typeorm";
+import { DeepPartial, getRepository, LessThan, MoreThan } from "typeorm";
 import { Novedad } from "../models/novedad.model";
 
 /* ---------------------------------------< NOVEDADES SERVICE >--------------------------------------- */
@@ -32,4 +32,19 @@ export const put = async (id: number, data: DeepPartial<Novedad>): Promise<void>
 // Elimina una Novedad almacenada en el sistema.
 export const _delete = async (id: number): Promise<void> => {
     await getRepository(Novedad).delete(id);
+};
+
+export const count = async (filters: any): Promise<number> => {
+    const query = getRepository(Novedad).createQueryBuilder("novedades");
+
+    // Filtros
+
+    if (filters.desde && Date.parse(filters.desde) && filters.hasta && Date.parse(filters.hasta)) {
+        query.where("novedades.fechaPublicacion >= :desde", { desde: new Date(filters.desde) });
+        query.andWhere("novedades.fechaPublicacion <= :hasta", { hasta: new Date(filters.hasta) });
+    }
+
+    // Ejecucion
+
+    return await query.getCount();
 };

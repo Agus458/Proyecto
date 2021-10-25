@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, ManyToMany } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, ManyToMany, CreateDateColumn } from "typeorm";
 import { TipoDocumento } from "./enums";
 import { Usuario } from "./usuario.model";
 import { Domicilio } from "./domicilio.model";
@@ -116,4 +116,7 @@ export class Postulante extends Usuario {
 
     @ManyToMany(() => Oferta, oferta => oferta.postulantes)
     ofertas: Oferta[];
+
+    @CreateDateColumn()
+    createdDate: Date;
 }

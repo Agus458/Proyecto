@@ -113,3 +113,18 @@ export const getFiltered = async (filters: any): Promise<{ postulantes: Postulan
 
     return { postulantes: result[0], cantidad: result[1] }
 }
+
+export const getPostulanteFiltered = async (filters: any): Promise<number> => {
+    const query = getRepository(Postulante).createQueryBuilder("postulante");
+
+    // Filtros
+
+    if (filters.desde && Date.parse(filters.desde) && filters.hasta && Date.parse(filters.hasta)) {
+        query.where("postulante.createdDate >= :desde", { desde: new Date(filters.desde) });
+        query.andWhere("postulante.createdDate <= :hasta", { hasta: new Date(filters.hasta) });
+    }
+
+    // Ejecucion
+    
+    return await query.getCount();
+}

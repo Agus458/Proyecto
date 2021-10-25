@@ -18,7 +18,16 @@ export class AdministradorService {
     private router: Router
   ) { }
 
-  habilitarEmpresa(id: number, data: any){
+  habilitarEmpresa(id: number, data: any) {
     return this.http.put(this.url + "/habilitarEmpresa/" + id, data);
+  }
+
+  dashboard(desde?: string, hasta?: string) {
+    return this.http.get(this.url + "/dashboard", {
+      params: desde && hasta ? {
+        desde,
+        hasta
+      } : {}
+    });
   }
 }

@@ -10,4 +10,6 @@ const router = Router();
 
 router.put("/habilitarEmpresa/:id", handleRequest(administradoresController.habilitarEmpresa));
 
+router.get("/dashboard", handleRequest(administradoresController.getDashboard));
+
 export default router;

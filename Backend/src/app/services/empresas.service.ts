@@ -72,3 +72,18 @@ export const put = async (id: number, data: DeepPartial<Empresa>): Promise<Empre
     data.id = id;
     return await getRepository(Empresa).save(data);
 };
+
+export const getEmpresasFiltered = async (filters: any): Promise<number> => {
+    const query = getRepository(Empresa).createQueryBuilder("empresa");
+
+    // Filtros
+
+    if (filters.desde && Date.parse(filters.desde) && filters.hasta && Date.parse(filters.hasta)) {
+        query.where("empresa.createdDate >= :desde", { desde: new Date(filters.desde) });
+        query.andWhere("empresa.createdDate <= :hasta", { hasta: new Date(filters.hasta) });
+    }
+
+    // Ejecucion
+    
+    return await query.getCount();
+}

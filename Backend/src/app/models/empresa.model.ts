@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Localidad } from "./localidad.model";
 import { Oferta } from "./oferta.model";
 import { Usuario } from "./usuario.model";
@@ -37,5 +37,8 @@ export class Empresa extends Usuario {
 
     @OneToMany(() => Oferta, oferta => oferta.empresa)
     ofertas: Oferta[];
+
+    @CreateDateColumn()
+    createdDate: Date;
     
 }

@@ -17,7 +17,7 @@
                 <mat-icon>sticky_note_2</mat-icon>
                 Novedades
             </mat-list-item>
-
+            
             <ng-container *ngIf="authService.getUser()?.tipo == 'Administrador'">
                 <mat-list-item routerLink="/agregarnovedad" routerLinkActive="selected" (click)="sidenav.toggle()">
                     <mat-icon>sticky_note_2</mat-icon>
@@ -30,6 +30,10 @@
                 <mat-list-item routerLink="/habilitarEmpresa" routerLinkActive="selected" (click)="sidenav.toggle()">
                     <mat-icon>sticky_note_2</mat-icon>
                     Habilitar Empresa
+                </mat-list-item>
+                <mat-list-item routerLink="/dashboard" routerLinkActive="selected" (click)="sidenav.toggle()">
+                    <mat-icon>sticky_note_2</mat-icon>
+                    Dashboard
                 </mat-list-item>
             </ng-container>
 

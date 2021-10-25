@@ -13,7 +13,7 @@ export class Oferta extends BaseEntity {
     empresa: Empresa;
 
     @Column()
-    telefonoContacto: number;
+    telefonoContacto: string;
 
     @Column()
     emailContacto: string
@@ -43,7 +43,7 @@ export class Oferta extends BaseEntity {
     @Column()
     funcionesDePuesto: string;
 
-    @Column()
+    @Column({ type: "text" })
     requisitosExcluyente: string;
 
     @Column()

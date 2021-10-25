@@ -62,6 +62,7 @@ import { DialogHabilitarEmpresaComponent } from './components/empresa/habilitar-
 import { PostulanteInfoComponent } from './components/ofertas/empresa/lista-postulantes/postulante-info/postulante-info.component';
 import { CompartirNovedadDialogComponent } from './components/novedades/compartir-novedad-dialog/compartir-novedad-dialog.component';
 import { VistaNovedadComponent } from './components/novedades/vista-novedad/vista-novedad.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -104,6 +105,7 @@ import { VistaNovedadComponent } from './components/novedades/vista-novedad/vist
     PostulanteInfoComponent,
     CompartirNovedadDialogComponent,
     VistaNovedadComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,

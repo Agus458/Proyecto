@@ -4,6 +4,9 @@ import validator from "validator";
 import { AppError } from "../../config/error/appError";
 import { EstadoUsuario } from "../models/enums";
 import * as empresasService from "../services/empresas.service";
+import * as ofertasService from "../services/ofertas.service";
+import * as postulantesService from "../services/postulantes.service";
+import * as novedadesService from "../services/novedades.service";
 
 export const habilitarEmpresa = async (request: Request, response: Response): Promise<Response> => {
     if (!request.params.id) throw AppError.badRequestError("No se ingreso el id de la empresa");
@@ -25,4 +28,14 @@ export const habilitarEmpresa = async (request: Request, response: Response): Pr
     await empresasService.put(empresa.id, empresa);
 
     return response.status(204).json();
+}
+
+export const getDashboard = async (request: Request, response: Response): Promise<Response> => {
+    const ofertas = await ofertasService.getOfertasFiltered(request.query);
+    const postulantesOferta = await ofertasService.getCantPostulantesOfertas(request.query);
+    const postulantes = await postulantesService.getPostulanteFiltered(request.query);
+    const empresas = await empresasService.getEmpresasFiltered(request.query);
+    const novedades = await novedadesService.count(request.query);
+
+    return response.status(200).json({ ofertas: ofertas?.length, postulantes, empresas, novedades, postulantesOferta });
 }
