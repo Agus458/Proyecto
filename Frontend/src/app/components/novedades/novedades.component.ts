@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { proyectConfig } from 'proyectConfig';
 import { Novedad } from 'src/app/models/novedad.model';
 import { NovedadesServicesService } from 'src/app/services/novedades/novedades-services.service';
+import { CompartirNovedadDialogComponent } from './compartir-novedad-dialog/compartir-novedad-dialog.component';
 
 @Component({
   selector: 'app-novedades',
@@ -12,7 +14,7 @@ export class NovedadesComponent implements OnInit {
 
   novedades: Novedad[] = [];
 
-  constructor(private novedadesservice: NovedadesServicesService) { }
+  constructor(private novedadesservice: NovedadesServicesService, private dialog: MatDialog) { }
 
   async ngOnInit() {
     try {
@@ -35,6 +37,15 @@ export class NovedadesComponent implements OnInit {
     }
 
     return undefined;
+  }
+
+  compartir(id: number, novedad: Novedad): void {
+    this.dialog.open(CompartirNovedadDialogComponent, {
+      data: {
+        url: window.location.protocol + "//" + window.location.host + "/vistanovedad/" + id,
+        novedad
+      } 
+    });
   }
 
 }

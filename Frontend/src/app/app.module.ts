@@ -36,15 +36,15 @@ import { PermisosFormComponent } from './components/datos-postulante/forms/permi
 import { PreferenciasLaboralesFormComponent } from './components/datos-postulante/forms/preferencias-laborales-form/preferencias-laborales-form.component';
 import { CVFormComponent } from './components/datos-postulante/forms/cvform/cvform.component';
 import { PostularseComponent } from './components/postularse/postularse.component';
-import { CarruselComponent } from './components/carrusel/carrusel.component';
+import { CarruselComponent } from './components/inicio/carrusel/carrusel.component';
 
 // Interceptors
 import { AuthInterceptor } from './middlewares/auth.interceptor';
 
 // Pipes
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
-import { RestablecerContraseniaComponent } from './components/restablecer-contrasenia/restablecer-contrasenia.component';
-import { CambiarContraseniaComponent } from './components/cambiar-contrasenia/cambiar-contrasenia.component';
+import { RestablecerContraseniaComponent } from './components/contrasenia/restablecer-contrasenia/restablecer-contrasenia.component';
+import { CambiarContraseniaComponent } from './components/contrasenia/cambiar-contrasenia/cambiar-contrasenia.component';
 import { SolicitarEmpresaComponent } from './components/usuarioempresa/solicitar-empresa/solicitar-empresa.component';
 import { ConfirmarEmpresaComponent } from './components/usuarioempresa/confirmar-empresa/confirmar-empresa.component';
 import { NovedadesComponent } from './components/novedades/novedades.component';
@@ -56,9 +56,12 @@ import { UsuarioempresaComponent } from './components/usuarioempresa/usuarioempr
 import { MisofertasempresaComponent } from './components/ofertas/empresa/misofertasempresa/misofertasempresa.component';
 import { DialogofertaComponent } from './components/ofertas/empresa/misofertasempresa/dialogoferta/dialogoferta.component';
 import { EditarOfertaComponent } from './components/ofertas/empresa/editar-oferta/editar-oferta.component';
-import { ListaPostulantesComponent } from './components/empresa/lista-postulantes/lista-postulantes.component';
+import { ListaPostulantesComponent } from './components/ofertas/empresa/lista-postulantes/lista-postulantes.component';
 import { HabilitarEmpresaComponent } from './components/empresa/habilitar-empresa/habilitar-empresa.component';
 import { DialogHabilitarEmpresaComponent } from './components/empresa/habilitar-empresa/dialog-habilitar-empresa/dialog-habilitar-empresa.component';
+import { PostulanteInfoComponent } from './components/ofertas/empresa/lista-postulantes/postulante-info/postulante-info.component';
+import { CompartirNovedadDialogComponent } from './components/novedades/compartir-novedad-dialog/compartir-novedad-dialog.component';
+import { VistaNovedadComponent } from './components/novedades/vista-novedad/vista-novedad.component';
 
 @NgModule({
   declarations: [
@@ -97,6 +100,10 @@ import { DialogHabilitarEmpresaComponent } from './components/empresa/habilitar-
     ListaPostulantesComponent,
     HabilitarEmpresaComponent,
     DialogHabilitarEmpresaComponent,
+    ListaPostulantesComponent,
+    PostulanteInfoComponent,
+    CompartirNovedadDialogComponent,
+    VistaNovedadComponent,
   ],
   imports: [
     BrowserModule,

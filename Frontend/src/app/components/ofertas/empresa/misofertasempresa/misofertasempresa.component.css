@@ -13,3 +13,9 @@ table {
   margin-bottom: 15px;
   margin-right: 5px;
 }
+
+.container {
+  background-color: white;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}

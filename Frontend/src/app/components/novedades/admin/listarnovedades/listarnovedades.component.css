@@ -28,3 +28,9 @@
   .titulo {
     text-align: center !important;
   }
+
+  .container {
+   background-color: #fcfcfc;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }

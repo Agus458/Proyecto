@@ -6,6 +6,11 @@ h1{
     font-weight: 500;
 }
 
+.container {
+   background-color: #fcfcfc;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
 
 .example-card {
     width: 85%;

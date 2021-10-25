@@ -10,8 +10,13 @@
                     <mat-divider [inset]="true"></mat-divider>
 
                     <mat-form-field class="example-full-width" appearance="fill">
-                        <mat-label>Nombre *</mat-label>
+                        <mat-label>Título *</mat-label>
                         <input matInput formControlName="nombreOfferta">
+                    </mat-form-field>
+
+                    <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Descripción</mat-label>
+                        <input matInput formControlName="descripcion">
                     </mat-form-field>
 
                     <mat-form-field class="example-full-width" appearance="fill">
@@ -75,10 +80,7 @@
                         <input matInput formControlName="vacantes">
                     </mat-form-field>
 
-                    <mat-form-field class="example-full-width" appearance="fill">
-                        <mat-label>Descripcion</mat-label>
-                        <input matInput formControlName="descripcion">
-                    </mat-form-field>
+                    
 
                     <mat-form-field class="example-full-width" appearance="fill">
                         <mat-label>Fecha de Cierre</mat-label>
