@@ -1,1 +1,10 @@
-<p>ofertas works!</p>
+<ng-container *ngIf="!oferta; else block">
+    <mat-spinner></mat-spinner>
+</ng-container>
+
+<ng-template #block>
+    <p>{{oferta?.nombreOfferta}}</p>
+    <ng-container>
+        <button mat-flat-button color="primary" (click)="postularse()">Postularse</button>
+    </ng-container>
+</ng-template>

@@ -40,6 +40,10 @@ export class OfertaService {
     return this.http.get<Postulante[]>(this.url + "/postulantes/" + id);
   }
 
+  inscribirse(id: number){
+    return this.http.post(this.url + "/inscribirse/" + id, {});
+  }
+
   postOferta(oferta: Oferta) {
     return this.http.post<Oferta>(this.url, oferta);
   }
