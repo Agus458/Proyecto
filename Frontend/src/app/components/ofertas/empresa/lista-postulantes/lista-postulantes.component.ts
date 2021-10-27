@@ -25,7 +25,7 @@ export class ListaPostulantesComponent implements OnInit {
 
     this.ofertasService.getPostulantesOferta(IdFromRoute).subscribe(
       ok => {
-        this.postulantes = ok;
+        this.postulantes = ok.data;
       }
     );
   }

@@ -29,8 +29,8 @@ export class CarruselComponent implements OnInit {
         if (element.imagen) element.imagen = await this.getImagen(element.imagen);
       }
 
-      const ofertas = await this.ofertasService.getOfertas().toPromise();
-      this.ofertas = ofertas;
+      const dataofertas = await this.ofertasService.getOfertas().toPromise();
+      this.ofertas = dataofertas.data;
     } catch (error) {
 
     }

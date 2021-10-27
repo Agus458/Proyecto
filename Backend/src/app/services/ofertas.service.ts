@@ -4,15 +4,18 @@ import { Empresa } from "../models/empresa.model";
 import { Oferta } from "../models/oferta.model";
 import { Postulante } from "../models/postulante.model";
 import validator from "validator";
+import { Pagination } from "../models/pagination.mode";
 
-export const getAll = async (): Promise<Oferta[]> => {
-    return await getRepository(Oferta).find({
+export const getAll = async (skip?: number, take?: number): Promise<Pagination<Oferta>> => {
+    const result = await getRepository(Oferta).findAndCount({
         relations: ["areaDeTrabajo", "empresa"]
     });
+
+    return { data: result[0], cantidad: result[1] };
 };
 
-export const get = async (skip?: number, take?: number): Promise<Oferta[]> => {
-    return await getRepository(Oferta).find({
+export const get = async (skip?: number, take?: number): Promise<Pagination<Oferta>> => {
+    const result = await getRepository(Oferta).findAndCount({
         where: {
             fechaCierre: MoreThan(new Date())
         },
@@ -23,35 +26,45 @@ export const get = async (skip?: number, take?: number): Promise<Oferta[]> => {
             fechaPublicacion: "DESC"
         }
     });
+
+    return { data: result[0], cantidad: result[1] };
 };
 
-export const getByEmpresa = async (empresa: Empresa): Promise<Oferta[]> => {
-    return await getRepository(Oferta).find({
+export const getByEmpresa = async (empresa: Empresa, skip?: number, take?: number): Promise<Pagination<Oferta>> => {
+    const result = await getRepository(Oferta).findAndCount({
         where: { empresa },
         relations: ["areaDeTrabajo"],
         order: {
             fechaPublicacion: "DESC"
         }
     });
+
+    return { data: result[0], cantidad: result[1] };
 }
 
-export const getPostulantesOferta = async (id: number): Promise<Postulante[]> => {
-    return await getRepository(Postulante)
+export const getPostulantesOferta = async (id: number): Promise<Pagination<Postulante>> => {
+    const result = await getRepository(Postulante)
         .createQueryBuilder("postulante")
-        .leftJoin("postulante.ofertas", "oferta")
+        .leftJoin("postulante.ofertas", "postulantesOferta")
+        .leftJoin("postulantesOferta.oferta", "oferta")
         .where("oferta.id = :id", { id })
-        .getMany();
+        .getManyAndCount();
+
+    return { data: result[0], cantidad: result[1] };
 }
 
-export const getPostulaciones = async (postulante: Postulante): Promise<Oferta[]> => {
-    return await getRepository(Oferta)
+export const getPostulaciones = async (postulante: Postulante, skip?: number, take?: number): Promise<Pagination<Oferta>> => {
+    const result = await getRepository(Oferta)
         .createQueryBuilder("oferta")
-        .leftJoinAndSelect("oferta.postulantes", "postulante")
+        .leftJoinAndSelect("oferta.postulantes", "postulantesOferta")
+        .leftJoinAndSelect("postulantesOferta.postulante", "postulante")
         .leftJoinAndSelect("oferta.empresa", "empresa")
         .leftJoinAndSelect("oferta.areaDeTrabajo", "area")
         .where("postulante.id = :id", { id: postulante.id })
         .orderBy("oferta.fechaPublicacion", "DESC")
-        .getMany();
+        .getManyAndCount();
+
+    return { data: result[0], cantidad: result[1] };
 }
 
 export const getById = async (id: number): Promise<Oferta | undefined> => {
@@ -71,7 +84,7 @@ export const put = async (id: number, data: DeepPartial<Oferta>): Promise<void> 
 };
 
 export const _delete = async (id: number): Promise<void> => {
-    await getRepository(Oferta).delete(id);
+    await getRepository(Oferta).softDelete(id);
 };
 
 export const getOfertasFiltered = async (filters: any): Promise<Oferta[]> => {
@@ -110,7 +123,7 @@ export const getCantPostulantesOfertas = async (filters: any): Promise<number> =
 
     // Ejecucion
 
-    const result = await query.getMany() as any[] ;
+    const result = await query.getMany() as any[];
 
     result.forEach(element => {
         cant += element.cant

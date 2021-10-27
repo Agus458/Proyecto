@@ -1,36 +1,9 @@
-.table {
+table {
   width: 100%;
-  overflow-x: scroll;
 }
-/* Structure */
 
-  .example-container {
-    width: 50%;
-    display: block;
-  }
-  table {
-    width: 100%;
-  }
-  
-  .botones {
-    max-width: 50px;
-  }
-
-  .mat-column-number,
-  .mat-column-state {
-    max-width: 64px;
-  }
-  
-  .mat-column-created {
-    max-width: 124px;
-  }
-  
-  .titulo {
-    text-align: center !important;
-  }
-
-  .container {
-   background-color: #fcfcfc;
-    border-radius: 10px;
-    margin-bottom: 20px;
-  }
+.container {
+  background-color: white;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}

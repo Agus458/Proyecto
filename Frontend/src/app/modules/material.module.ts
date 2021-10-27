@@ -22,9 +22,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
-import {ScrollingModule} from '@angular/cdk/scrolling';
-import {MatDialogModule} from '@angular/material/dialog';
-
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
     imports: [

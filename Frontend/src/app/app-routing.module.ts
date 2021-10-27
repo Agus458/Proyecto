@@ -48,6 +48,7 @@ const routes: Routes = [
 
   { path: "novedades", component: NovedadesComponent },
   { path: "agregarnovedad", component: AgregarnovedadesComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador'] } },
+  { path: "editarnovedad/:id", component: AgregarnovedadesComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador'] } },
   { path: "listarnovedades", component: ListarnovedadesComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador'] } },
 
   { path: "habilitarEmpresa", component: HabilitarEmpresaComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador'] } },

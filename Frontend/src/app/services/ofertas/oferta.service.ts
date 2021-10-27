@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { SocialAuthService } from 'angularx-social-login';
 import { proyectConfig } from 'proyectConfig';
 import { Oferta } from 'src/app/models/oferta.model';
+import { Pagination } from 'src/app/models/pagination.mode';
 import { Postulante } from 'src/app/models/postulante.model';
 
 @Injectable({
@@ -20,24 +21,44 @@ export class OfertaService {
     private router: Router,
   ) { }
 
-  getOfertas(){
-    return this.http.get<Oferta[]>(this.url);
+  getOfertas(skip?: number, take?: number){
+    return this.http.get<Pagination<Oferta>>(this.url, {
+      params: {
+        skip: skip ?? 0,
+        take: take ?? 9
+      }
+    });
   }
 
-  getOfertasEmpresaActual(){
-    return this.http.get<Oferta[]>(this.url + "/empresa");
+  getOfertasEmpresaActual(skip?: number, take?: number){
+    return this.http.get<Pagination<Oferta>>(this.url + "/empresa", {
+      params: {
+        skip: skip ?? 0,
+        take: take ?? 9
+      }
+    });
   }
 
-  getAll(){
-    return this.http.get<Oferta[]>(this.url + "/all");
+  getAll(skip?: number, take?: number){
+    return this.http.get<Pagination<Oferta>>(this.url + "/all", {
+      params: {
+        skip: skip ?? 0,
+        take: take ?? 9
+      }
+    });
   }
 
   getOferta(id: number){
     return this.http.get<Oferta>(this.url + "/" + id);
   }
 
-  getPostulantesOferta(id: number){
-    return this.http.get<Postulante[]>(this.url + "/postulantes/" + id);
+  getPostulantesOferta(id: number, skip?: number, take?: number){
+    return this.http.get<Pagination<Postulante>>(this.url + "/postulantes/" + id, {
+      params: {
+        skip: skip ?? 0,
+        take: take ?? 9
+      }
+    });
   }
 
   inscribirse(id: number){

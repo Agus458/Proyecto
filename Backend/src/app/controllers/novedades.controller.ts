@@ -3,21 +3,14 @@ import validator from "validator";
 
 import { AppError } from "../../config/error/appError";
 import { removerArchivo } from "../libraries/file.library";
+import { validatePagination } from "../libraries/validation.library";
 
 import * as novedadesService from "../services/novedades.service";
 
 /* ---------------------------------------< NOVEDADES CONTROLLER >--------------------------------------- */
 
 export const getAll = async (request: Request, response: Response): Promise<Response> => {
-    let skip = undefined, take = undefined;
-
-    if (request.query.skip) {
-        if (typeof request.query.skip == "string" && validator.isInt(request.query.skip)) { skip = Number.parseInt(request.query.skip) } else { throw AppError.badRequestError("Skip invalido") };
-    }
-
-    if (request.query.take) {
-        if (typeof request.query.take == "string" && validator.isInt(request.query.take)) { take = Number.parseInt(request.query.take) } else { throw AppError.badRequestError("Take invalido") };
-    }
+    const { skip, take } = validatePagination(request.query);
 
     const novedades = await novedadesService.get(skip, take);
 

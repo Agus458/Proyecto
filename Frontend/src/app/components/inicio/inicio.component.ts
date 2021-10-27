@@ -30,7 +30,7 @@ export class InicioComponent implements OnInit {
       }
 
       const ofertas = await this.ofertasService.getOfertas().toPromise();
-      this.ofertas = ofertas;
+      this.ofertas = ofertas.data;
     } catch (error) {
 
     }

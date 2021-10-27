@@ -294,4 +294,16 @@ export const validarPreferenciasLaborales = async (preferenciasLaborales: any, p
     return preferenciasLaborales;
 }
 
+export const validatePagination = (query: any) => {
+    let skip = undefined, take = undefined;
 
+    if (query.skip) {
+        if (typeof query.skip == "string" && validator.isInt(query.skip)) { skip = Number.parseInt(query.skip) } else { throw AppError.badRequestError("Skip invalido") };
+    }
+
+    if (query.take) {
+        if (typeof query.take == "string" && validator.isInt(query.take)) { take = Number.parseInt(query.take) } else { throw AppError.badRequestError("Take invalido") };
+    }
+
+    return { skip, take };
+}

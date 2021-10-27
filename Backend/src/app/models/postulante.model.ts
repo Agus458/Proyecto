@@ -11,6 +11,7 @@ import { Permiso } from "./permiso.model";
 import { NivelEducativo } from "./perfil/nivel-educativo";
 import { Estado } from "./perfil/estado";
 import { Oferta } from "./oferta.model";
+import { PostulanteOferta } from "./postulante-oferta.model";
 
 /* ---------------------------------------< POSTULANTE MODEL >--------------------------------------- */
 
@@ -114,8 +115,8 @@ export class Postulante extends Usuario {
     @OneToMany(() => Permiso, permiso => permiso.postulante, { cascade: true })
     permisos: Permiso[];
 
-    @ManyToMany(() => Oferta, oferta => oferta.postulantes)
-    ofertas: Oferta[];
+    @ManyToOne(() => PostulanteOferta, oferta => oferta.postulante, { cascade: true })
+    ofertas: PostulanteOferta[];
 
     @CreateDateColumn()
     createdDate: Date;

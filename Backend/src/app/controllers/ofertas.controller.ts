@@ -6,15 +6,21 @@ import * as ofertasService from "../services/ofertas.service";
 import * as empresasService from "../services/empresas.service";
 import * as postulantesService from "../services/postulantes.service";
 import { Administrador } from "../models/administrador.model";
+import { validatePagination } from "../libraries/validation.library";
+import { PostulanteOferta } from "../models/postulante-oferta.model";
 
 export const getOffertas = async (request: Request, response: Response): Promise<Response> => {
-    const offerta = await ofertasService.get();
+    const { skip, take } = validatePagination(request.query);
+    
+    const offerta = await ofertasService.get(skip, take);
 
     return response.status(200).json(offerta);
 }
 
 export const getAllOffertas = async (request: Request, response: Response): Promise<Response> => {
-    const offerta = await ofertasService.getAll();
+    const { skip, take } = validatePagination(request.query);
+
+    const offerta = await ofertasService.getAll(skip, take);
 
     return response.status(200).json(offerta);
 }
@@ -31,6 +37,8 @@ export const getOffertaById = async (request: Request, response: Response): Prom
 }
 
 export const getOffertaByEmpresa = async (request: Request, response: Response): Promise<Response> => {
+    const { skip, take } = validatePagination(request.query);
+    
     let empresa;
     if (request.user instanceof Administrador) {
         if (!request.params.id) throw AppError.badRequestError("No se ingreso el id de la empresa");
@@ -42,13 +50,15 @@ export const getOffertaByEmpresa = async (request: Request, response: Response):
         empresa = request.user;
     }
 
-    const offertas = await ofertasService.getByEmpresa(empresa);
+    const offertas = await ofertasService.getByEmpresa(empresa, skip, take);
 
     return response.status(200).json(offertas);
 }
 
 export const getOffertaByPostulante = async (request: Request, response: Response): Promise<Response> => {
-    const offertas = await ofertasService.getPostulaciones(request.user);
+    const { skip, take } = validatePagination(request.query);
+
+    const offertas = await ofertasService.getPostulaciones(request.user, skip, take);
 
     return response.status(200).json(offertas);
 }
@@ -106,7 +116,11 @@ export const inscribirseOfferta = async (request: Request, response: Response): 
     const postulante = await postulantesService.getById(request.user.id);
     if (!postulante) throw AppError.badRequestError("No se encontro el postulante");
 
-    oferta.postulantes.push(postulante);
+    var nuevaPostulacion = new PostulanteOferta();
+    nuevaPostulacion.oferta = oferta;
+    nuevaPostulacion.postulante = postulante;
+
+    oferta.postulantes.push(nuevaPostulacion);
 
     await ofertasService.put(oferta.id, oferta);
 

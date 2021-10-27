@@ -11,8 +11,13 @@ export class NovedadesServicesService {
   url = proyectConfig.backEndURL + "/api/novedades"
   constructor(private http: HttpClient) { }
 
-  getNovedades() {
-    return this.http.get<{ novedades: Novedad[], cantidad: number }>(this.url);
+  getNovedades(skip?: number, take?: number) {
+    return this.http.get<{ novedades: Novedad[], cantidad: number }>(this.url, {
+      params: {
+        skip: skip ?? 0,
+        take: take ?? 9
+      }
+    });
   }
 
   getNovedad(id: number) {

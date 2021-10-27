@@ -1,6 +1,7 @@
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn, ManyToMany, JoinTable, CreateDateColumn } from "typeorm";
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn, ManyToMany, JoinTable, CreateDateColumn, OneToMany, DeleteDateColumn } from "typeorm";
 import { Empresa } from "./empresa.model";
 import { AreaTematica } from "./perfil/area-tematica";
+import { PostulanteOferta } from "./postulante-oferta.model";
 import { Postulante } from "./postulante.model";
 
 @Entity("ofertas")
@@ -24,9 +25,8 @@ export class Oferta extends BaseEntity {
     @Column({ type: "text" })
     requisitosValorados: string;
 
-    @ManyToMany(() => Postulante, postulante => postulante.ofertas, { cascade: true })
-    @JoinTable()
-    postulantes: Postulante[];
+    @OneToMany(() => PostulanteOferta, postulante => postulante.oferta, { cascade: true })
+    postulantes: PostulanteOferta[];
 
     @ManyToOne(() => AreaTematica)
     areaDeTrabajo: AreaTematica;
@@ -43,6 +43,9 @@ export class Oferta extends BaseEntity {
     @Column()
     funcionesDePuesto: string;
 
+    @Column()
+    lugarTrabajo: string;
+
     @Column({ type: "text" })
     requisitosExcluyente: string;
 
@@ -57,4 +60,7 @@ export class Oferta extends BaseEntity {
 
     @Column()
     fechaCierre: Date;
+
+    @DeleteDateColumn()
+    deletedDate?: Date;
 }

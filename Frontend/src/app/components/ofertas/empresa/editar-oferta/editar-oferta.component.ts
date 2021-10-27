@@ -48,7 +48,8 @@ export class EditarOfertaComponent implements OnInit {
       requisitosExcluyente: ['', Validators.required],
       horariodetrabajo: ['', Validators.required],
       rangoSalario: ['', Validators.required],
-      fechaCierre: ['', Validators.required]
+      fechaCierre: ['', Validators.required],
+      lugarTrabajo: ['', Validators.required]
     });
 
     try {

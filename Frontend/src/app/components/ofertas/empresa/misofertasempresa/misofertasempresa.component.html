@@ -1,50 +1,54 @@
-<div class="container"><h1><em>{{authService.getUser()?.tipo == 'Administrador' ? "Ofertas" : "Mis Ofertas"}}</em></h1>
-<mat-divider></mat-divider>
-<button mat-button type="button" class="boton mat-elevation-z8" routerLink="/editaroferta">Agregar Oferta</button>
+<div class="container">
+    <h1><em>{{authService.getUser()?.tipo == 'Administrador' ? "Ofertas" : "Mis Ofertas"}}</em></h1>
+    <mat-divider></mat-divider>
+    <button mat-button type="button" class="boton mat-elevation-z8" routerLink="/editaroferta">Agregar Oferta</button>
 
-<div class="example-container mat-elevation-z8 table">
-    <table mat-table [dataSource]="ofertas">
+    <div class="example-container mat-elevation-z8 table">
+        <table mat-table [dataSource]="ofertas">
 
-        <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef> Id </th>
-            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-        </ng-container>
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> Id </th>
+                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+            </ng-container>
 
-        <ng-container matColumnDef="nombre">
-            <th mat-header-cell *matHeaderCellDef> Nombre </th>
-            <td mat-cell *matCellDef="let element"> {{element.nombreOfferta}} </td>
-        </ng-container>
+            <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                <td mat-cell *matCellDef="let element"> {{element.nombreOfferta}} </td>
+            </ng-container>
 
-        <ng-container *ngIf="authService.getUser()?.tipo == 'Administrador'" matColumnDef="empresa">
-            <th mat-header-cell *matHeaderCellDef> Empresa </th>
-            <td mat-cell *matCellDef="let element"> {{element.empresa.razonSocial}} </td>
-        </ng-container>
+            <ng-container *ngIf="authService.getUser()?.tipo == 'Administrador'" matColumnDef="empresa">
+                <th mat-header-cell *matHeaderCellDef> Empresa </th>
+                <td mat-cell *matCellDef="let element"> {{element.empresa.razonSocial}} </td>
+            </ng-container>
 
-        <ng-container matColumnDef="puesto">
-            <th mat-header-cell *matHeaderCellDef> Puesto </th>
-            <td mat-cell *matCellDef="let element"> {{element.puesto}} </td>
-        </ng-container>
+            <ng-container matColumnDef="puesto">
+                <th mat-header-cell *matHeaderCellDef> Puesto </th>
+                <td mat-cell *matCellDef="let element"> {{element.puesto}} </td>
+            </ng-container>
 
-        <ng-container matColumnDef="fechaPublicacion">
-            <th mat-header-cell *matHeaderCellDef> Fecha Publicación </th>
-            <td mat-cell *matCellDef="let element"> {{element.fechaPublicacion | date:'shortDate' }}</td>
-        </ng-container>
+            <ng-container matColumnDef="fechaPublicacion">
+                <th mat-header-cell *matHeaderCellDef> Fecha Publicación </th>
+                <td mat-cell *matCellDef="let element"> {{element.fechaPublicacion | date:'shortDate' }}</td>
+            </ng-container>
 
-        <ng-container matColumnDef="fechaCierre">
-            <th mat-header-cell *matHeaderCellDef> Fecha Cierre </th>
-            <td mat-cell *matCellDef="let element"> {{element.fechaCierre | date:'shortDate' }}</td>
-        </ng-container>
+            <ng-container matColumnDef="fechaCierre">
+                <th mat-header-cell *matHeaderCellDef> Fecha Cierre </th>
+                <td mat-cell *matCellDef="let element"> {{element.fechaCierre | date:'shortDate' }}</td>
+            </ng-container>
 
-        <ng-container matColumnDef="mas">
-            <th mat-header-cell *matHeaderCellDef><button mat-icon-button type="button" disabled>-.-</button></th>
-            <td mat-cell *matCellDef="let element"><button mat-icon-button type="button" color="warn"
-                    (click)="openDialog(element)">
-                    <mat-icon>menu</mat-icon>
-                </button> </td>
-        </ng-container>
+            <ng-container matColumnDef="mas">
+                <th mat-header-cell *matHeaderCellDef><button mat-icon-button type="button" disabled>-.-</button></th>
+                <td mat-cell *matCellDef="let element"><button mat-icon-button type="button" color="warn"
+                        (click)="openDialog(element)">
+                        <mat-icon>menu</mat-icon>
+                    </button> </td>
+            </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-</div>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+            (page)="paginatorChange($event)" aria-label="Select page">
+        </mat-paginator>
+    </div>
 </div>
