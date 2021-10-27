@@ -22,6 +22,8 @@ import { OfertasComponent } from './components/ofertas/ofertas.component';
 import { VistaNovedadComponent } from './components/novedades/vista-novedad/vista-novedad.component';
 import { ListaPostulantesComponent } from './components/ofertas/empresa/lista-postulantes/lista-postulantes.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { PostulantesgeneralesComponent } from './components/empresa/postulantesgenerales/postulantesgenerales.component';
+import { FiltrosdialogComponent } from './components/empresa/postulantesgenerales/filtrosdialog/filtrosdialog.component';
 
 
 const routes: Routes = [
@@ -34,7 +36,7 @@ const routes: Routes = [
   { path: "solicitarEmpresa", component: SolicitarEmpresaComponent },
   { path: "confirmarEmpresa", component: ConfirmarEmpresaComponent },
   { path: "vistanovedad/:id", component: VistaNovedadComponent },
-
+  { path: "filtrosdialog", component: FiltrosdialogComponent },
   { path: "oferta/:id", component: OfertasComponent },
 
   { path: "misdatos", component: DatosPostulanteComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Postulante'] } },
@@ -44,6 +46,7 @@ const routes: Routes = [
   { path: "editaroferta", component: EditarOfertaComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador', 'Empresa'] } },
   { path: "editaroferta/:id", component: EditarOfertaComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador', 'Empresa'] } },
   { path: "listaofertas", component: MisofertasempresaComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador', 'Empresa'] } },
+  { path: "postulantespublicos", component: PostulantesgeneralesComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador', 'Empresa'] } },
   { path: "postulantesOferta/:id", component: ListaPostulantesComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Empresa'] } },
 
   { path: "novedades", component: NovedadesComponent },

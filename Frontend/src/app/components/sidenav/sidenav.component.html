@@ -46,6 +46,10 @@
                     <mat-icon>sticky_note_2</mat-icon>
                     {{authService.getUser()?.tipo == 'Administrador' ? "Lista Ofertas" : "Mis Ofertas"}}
                 </mat-list-item>
+                <mat-list-item routerLink="/postulantespublicos" routerLinkActive="selected" (click)="sidenav.toggle()">
+                    <mat-icon>sticky_note_2</mat-icon>
+                    Postulantes Publicos
+                </mat-list-item>
             </ng-container>
 
         </mat-nav-list>
