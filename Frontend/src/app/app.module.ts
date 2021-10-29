@@ -63,6 +63,8 @@ import { PostulanteInfoComponent } from './components/ofertas/empresa/lista-post
 import { CompartirNovedadDialogComponent } from './components/novedades/compartir-novedad-dialog/compartir-novedad-dialog.component';
 import { VistaNovedadComponent } from './components/novedades/vista-novedad/vista-novedad.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { PostulantesgeneralesComponent } from './components/empresa/postulantesgenerales/postulantesgenerales.component';
+import { FiltrosdialogComponent } from './components/empresa/postulantesgenerales/filtrosdialog/filtrosdialog.component';
 
 @NgModule({
   declarations: [
@@ -106,6 +108,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     CompartirNovedadDialogComponent,
     VistaNovedadComponent,
     DashboardComponent,
+    PostulantesgeneralesComponent,
+    FiltrosdialogComponent,
   ],
   imports: [
     BrowserModule,

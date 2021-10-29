@@ -1,0 +1,122 @@
+<h1 style="margin-bottom: 0px;">Filtros</h1>
+<mat-divider></mat-divider>
+<h3>(Marca los que no necesites para desactivarlos)</h3>
+<form [formGroup]="filtrosForm">
+    <div fxLayout="column" fxLayoutAlign="start start">
+        <div fxLayout="row" fxLayoutAlign="start start" style="align-items: center;">
+            <mat-checkbox style="margin-top: 15px; margin-right: 10px;"  [formControl]="disableSexo"></mat-checkbox>
+            <mat-form-field appearance="fill">
+                <mat-label>Sexo</mat-label>
+                <mat-select [disabled]="disableSexo.value" formControlName="sexo">
+                    <mat-option value="option1">Hombre</mat-option>
+                    <mat-option value="option3">Mujer</mat-option>
+                    <mat-option value="option3">Otro</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start start" style="align-items: center;" fxLayout.xs="column">
+            <mat-checkbox style="margin-top: 15px; margin-right: 10px;" [formControl]="disableEdad">Edad</mat-checkbox>
+            <mat-form-field appearance="fill" style=" margin-right: 10px;">
+                <mat-label>De</mat-label>
+                <input matInput type="number" [disabled]="disableEdad.value" formControlName="edadmin">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Hasta</mat-label>
+                <input matInput type="number" [disabled]="disableEdad.value" formControlName="edadmax">
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start start" style="align-items: center;">
+            <mat-checkbox style="margin-top: 15px; margin-right: 10px;" [formControl]="disableDepartamento"></mat-checkbox>
+            <mat-form-field appearance="fill">
+                <mat-label>Departamento</mat-label>
+                <mat-select [disabled]="disableDepartamento.value" formControlName="departamento">
+                    <mat-option value="option1">San José</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start start" style="align-items: center;">
+            <mat-checkbox style="margin-top: 15px; margin-right: 10px;" [formControl]="disableLocalidad"></mat-checkbox>
+            <mat-form-field appearance="fill">
+                <mat-label>Localidad</mat-label>
+                <mat-select [disabled]="disableLocalidad.value" formControlName="localidad">
+                    <mat-option value="option1">San José</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start start" style="align-items: center;">
+            <mat-checkbox style="margin-top: 15px; margin-right: 10px;" [formControl]="disableAreaTematica"></mat-checkbox>
+            <mat-form-field appearance="fill">
+                <mat-label>Area de Capacitación</mat-label>
+                <mat-select [disabled]="disableAreaTematica.value" formControlName="areatematica">
+                    <mat-option value="option1">San José</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start start" style="align-items: center;">
+            <mat-checkbox style="margin-top: 15px; margin-right: 10px;" [formControl]="disableNivelEducativo"></mat-checkbox>
+            <mat-form-field appearance="fill">
+                <mat-label>Maximo Nivel Educativo</mat-label>
+                <mat-select [disabled]="disableNivelEducativo.value" formControlName="niveleducativo">
+                    <mat-option value="option1">San José</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start start" style="align-items: center;">
+            <mat-checkbox style="margin-top: 15px; margin-right: 10px;" [formControl]="disableEstadoNivelEducativo"></mat-checkbox>
+            <mat-form-field appearance="fill">
+                <mat-label>Estado Nivel Educativo</mat-label>
+                <mat-select [disabled]="disableEstadoNivelEducativo.value" formControlName="estadonivedu">
+                    <mat-option value="option1">San José</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start start" style="align-items: center;">
+            <mat-checkbox style="margin-top: 15px; margin-right: 10px;" [formControl]="disableIdioma"></mat-checkbox>
+            <mat-form-field appearance="fill">
+                <mat-label>Idiomas</mat-label>
+                <mat-select [formControl]="toppings" multiple [disabled]="disableIdioma.value" formControlName="idioma">
+                    <mat-select-trigger>
+                        {{toppings.value ? toppings.value[0] : ''}}
+                        <span *ngIf="toppings.value?.length > 1" class="example-additional-selection">
+                            (y {{toppings.value.length - 1}} {{toppings.value?.length === 2 ? 'mas' : 'mas'}})
+                        </span>
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start start" style="align-items: center;">
+            <mat-checkbox style="margin-top: 15px; margin-right: 10px;" [formControl]="disableRubro"></mat-checkbox>
+            <mat-form-field appearance="fill">
+                <mat-label>Rubro Experiencia Laboral</mat-label>
+                <mat-select [disabled]="disableRubro.value" formControlName="rubro">
+                    <mat-option value="option1">San José</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start start" style="align-items: center;">
+            <mat-checkbox style="margin-top: 15px; margin-right: 10px;" [formControl]="disableTipoDocumento"></mat-checkbox>
+            <mat-form-field appearance="fill">
+                <mat-label>Tipo de Documento</mat-label>
+                <mat-select [disabled]="disableTipoDocumento.value" formControlName="tipodocumento">
+                    <mat-option [value]="0">Cedula</mat-option>
+                    <mat-option [value]="1">Pasaporte</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start start" style="align-items: center;">
+            <mat-checkbox style="margin-top: 15px; margin-right: 10px;" [formControl]="disableAreaInteres"></mat-checkbox>
+            <mat-form-field appearance="fill">
+                <mat-label>Area de Interes</mat-label>
+                <mat-select [disabled]="disableAreaInteres.value" formControlName="areainteres">
+                    <mat-option *ngFor="let area of areas" [value]="area.id">{{area.nombre}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+</form>
+<div mat-dialog-actions> 
+    <button mat-button mat-dialog-close><strong>Cancelar</strong></button>
+    <button mat-button [mat-dialog-close]="filtrosForm.value"><strong>Filtrar</strong></button>
+  </div>
