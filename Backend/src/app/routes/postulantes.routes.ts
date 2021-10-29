@@ -22,6 +22,8 @@ router.get("/perfil/:id", [isLoggedIn, tieneRol(["Empresa", "Administrador"])], 
 
 router.put("/perfil", [isLoggedIn, tieneRol(["Postulante"])], handleRequest(postulantesController.putPostulante));
 
+router.get("/validarPerfil", [isLoggedIn, tieneRol(["Postulante"])], handleRequest(postulantesController.perfilCompleto));
+
 router.put("/perfil/imagen", [isLoggedIn, tieneRol(["Postulante"]), upload.single("imagen")], handleRequest(postulantesController.putImagen));
 
 router.put("/perfil/cv", [isLoggedIn, tieneRol(["Postulante"]), upload.single("cv")], handleRequest(postulantesController.putCV));

@@ -1,7 +1,6 @@
 import moment from "moment";
 import { DeepPartial, getRepository } from "typeorm";
 import { verifyPassword } from "../libraries/encryptation.library";
-import { Domicilio } from "../models/domicilio.model";
 import { Postulante } from "../models/postulante.model";
 
 /* ---------------------------------------< POSTULANTES SERVICE >--------------------------------------- */

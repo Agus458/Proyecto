@@ -21,7 +21,7 @@ export class OfertaService {
     private router: Router,
   ) { }
 
-  getOfertas(skip?: number, take?: number){
+  getOfertas(skip?: number, take?: number) {
     return this.http.get<Pagination<Oferta>>(this.url, {
       params: {
         skip: skip ?? 0,
@@ -30,7 +30,11 @@ export class OfertaService {
     });
   }
 
-  getOfertasEmpresaActual(skip?: number, take?: number){
+  postulado(oferta: number) {
+    return this.http.get<{ postulado: boolean }>(this.url + "/postulado/" + oferta)
+  }
+
+  getOfertasEmpresaActual(skip?: number, take?: number) {
     return this.http.get<Pagination<Oferta>>(this.url + "/empresa", {
       params: {
         skip: skip ?? 0,
@@ -39,7 +43,7 @@ export class OfertaService {
     });
   }
 
-  getAll(skip?: number, take?: number){
+  getAll(skip?: number, take?: number) {
     return this.http.get<Pagination<Oferta>>(this.url + "/all", {
       params: {
         skip: skip ?? 0,
@@ -48,11 +52,11 @@ export class OfertaService {
     });
   }
 
-  getOferta(id: number){
+  getOferta(id: number) {
     return this.http.get<Oferta>(this.url + "/" + id);
   }
 
-  getPostulantesOferta(id: number, skip?: number, take?: number){
+  getPostulantesOferta(id: number, skip?: number, take?: number) {
     return this.http.get<Pagination<Postulante>>(this.url + "/postulantes/" + id, {
       params: {
         skip: skip ?? 0,
@@ -61,7 +65,7 @@ export class OfertaService {
     });
   }
 
-  inscribirse(id: number){
+  inscribirse(id: number) {
     return this.http.post(this.url + "/inscribirse/" + id, {});
   }
 

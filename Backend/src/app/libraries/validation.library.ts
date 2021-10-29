@@ -307,3 +307,16 @@ export const validatePagination = (query: any) => {
 
     return { skip, take };
 }
+
+export const validarPerfil = (postulante: Postulante) => {
+    if (!postulante.primerNombre) return false;
+    if (!postulante.primerApellido) return false;
+    if (!postulante.primerTelefono) return false;
+    if (!postulante.aceptaTerminos) return false;
+    if (postulante.tipoDocumento == undefined) return false;
+    if (!postulante.documento) return false;
+    if (!postulante.jornadaCompleta && !postulante.jornadaIndiferente && !postulante.jornadaManiana && !postulante.jornadaNoche && !postulante.jornadaTarde) return false;
+    if (!postulante.sexo) return false;
+
+    return true;
+}

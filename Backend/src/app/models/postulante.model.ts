@@ -115,7 +115,7 @@ export class Postulante extends Usuario {
     @OneToMany(() => Permiso, permiso => permiso.postulante, { cascade: true })
     permisos: Permiso[];
 
-    @ManyToOne(() => PostulanteOferta, oferta => oferta.postulante, { cascade: true })
+    @OneToMany(() => PostulanteOferta, oferta => oferta.postulante, { cascade: true })
     ofertas: PostulanteOferta[];
 
     @CreateDateColumn()

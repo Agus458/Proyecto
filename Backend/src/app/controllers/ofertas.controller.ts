@@ -6,12 +6,12 @@ import * as ofertasService from "../services/ofertas.service";
 import * as empresasService from "../services/empresas.service";
 import * as postulantesService from "../services/postulantes.service";
 import { Administrador } from "../models/administrador.model";
-import { validatePagination } from "../libraries/validation.library";
+import { validarPerfil, validatePagination } from "../libraries/validation.library";
 import { PostulanteOferta } from "../models/postulante-oferta.model";
 
 export const getOffertas = async (request: Request, response: Response): Promise<Response> => {
     const { skip, take } = validatePagination(request.query);
-    
+
     const offerta = await ofertasService.get(skip, take);
 
     return response.status(200).json(offerta);
@@ -38,7 +38,7 @@ export const getOffertaById = async (request: Request, response: Response): Prom
 
 export const getOffertaByEmpresa = async (request: Request, response: Response): Promise<Response> => {
     const { skip, take } = validatePagination(request.query);
-    
+
     let empresa;
     if (request.user instanceof Administrador) {
         if (!request.params.id) throw AppError.badRequestError("No se ingreso el id de la empresa");
@@ -67,7 +67,7 @@ export const realizarOfferta = async (request: Request, response: Response): Pro
     let empresa;
 
     if (request.user instanceof Administrador) {
-        if(!request.body.empresa) throw AppError.badRequestError("No se ingreso ninguna empresa");
+        if (!request.body.empresa) throw AppError.badRequestError("No se ingreso ninguna empresa");
 
         empresa = await empresasService.getById(request.body.empresa);
         if (!empresa) throw AppError.badRequestError("No existe ningun empresa con el id ingresado");
@@ -116,6 +116,10 @@ export const inscribirseOfferta = async (request: Request, response: Response): 
     const postulante = await postulantesService.getById(request.user.id);
     if (!postulante) throw AppError.badRequestError("No se encontro el postulante");
 
+    if (!validarPerfil(postulante)) throw AppError.badRequestError("Perfil incompleto");
+
+    if (await ofertasService.postulado(oferta.id, request.user.id)) throw AppError.badRequestError("Ya postulado");
+
     var nuevaPostulacion = new PostulanteOferta();
     nuevaPostulacion.oferta = oferta;
     nuevaPostulacion.postulante = postulante;
@@ -134,4 +138,13 @@ export const getPostulantesOferta = async (request: Request, response: Response)
     const postulantes = await ofertasService.getPostulantesOferta(Number.parseInt(request.params.id));
 
     return response.status(200).json(postulantes);
+}
+
+export const postulado = async (request: Request, response: Response): Promise<Response> => {
+    if (!request.params.id) throw AppError.badRequestError("No se ingreso el id de la offerta");
+    if (!validator.isInt(request.params.id)) throw AppError.badRequestError("Id de offerta invalido");
+
+    const oferta = await ofertasService.postulado(Number.parseInt(request.params.id), request.user.id);
+
+    return response.json({ postulado: oferta != null });
 }

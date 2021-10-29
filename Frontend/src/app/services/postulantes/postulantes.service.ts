@@ -29,6 +29,10 @@ export class PostulantesService {
     return this.postulanteActual;
   }
 
+  validarPerfil() {
+    return this.http.get(this.url + "/validarPerfil");
+  }
+  
   async getArchivo(url: string) {
     let archivo;
 

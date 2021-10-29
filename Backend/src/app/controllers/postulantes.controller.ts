@@ -4,7 +4,7 @@ import pdf from "html-pdf";
 
 import { AppError } from "../../config/error/appError";
 import { removerArchivo } from "../libraries/file.library";
-import { validarCapacitaciones, validarConocimientoInformatico, validarDatosPersonales, validarDomicilio, validarExperienciasLaborales, validarIdiomas, validarPermisos, validarPreferenciasLaborales } from "../libraries/validation.library";
+import { validarCapacitaciones, validarConocimientoInformatico, validarDatosPersonales, validarDomicilio, validarExperienciasLaborales, validarIdiomas, validarPerfil, validarPermisos, validarPreferenciasLaborales } from "../libraries/validation.library";
 import * as postulantesService from "../services/postulantes.service";
 import * as capacitacionesService from "../services/capacitaciones.service";
 import * as conocimientosInformaticosService from "../services/conocimientos.service";
@@ -215,9 +215,9 @@ export const generatePDF = async (request: Request, response: Response): Promise
     if (!postulante) throw AppError.badRequestError("No existe un postulante con el id ingresado");
 
     if (!postulante.perfilPublico) throw AppError.badRequestError("Este perfil es privado");
-    
+
     pdf.create(await profileTemplatePDF(request.protocol + "://" + request.get("Host"), postulante, request.token)).toBuffer((err, res) => {
-        if(err) return Promise.reject;
+        if (err) return Promise.reject;
 
         response.setHeader('Content-Type', 'application/pdf');
         response.setHeader('Content-Disposition', 'attachment; filename=cv.pdf');
@@ -226,4 +226,13 @@ export const generatePDF = async (request: Request, response: Response): Promise
     });
 
     return response;
+}
+
+export const perfilCompleto = async (request: Request, response: Response): Promise<Response> => {
+    const postulante = await postulantesService.getPerfilById(request.user.id);
+
+    if (!postulante) throw AppError.badRequestError("No existe un postulante con el id ingresado");
+    if (!validarPerfil(postulante)) throw AppError.badRequestError("Perfil incompleto");
+
+    return response.json();
 }

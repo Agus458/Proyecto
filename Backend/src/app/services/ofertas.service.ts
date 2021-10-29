@@ -131,3 +131,13 @@ export const getCantPostulantesOfertas = async (filters: any): Promise<number> =
 
     return cant;
 }
+
+export const postulado = async (idOferta: number, idPostulante: number): Promise<Oferta | undefined> => {
+    return await getRepository(Oferta)
+        .createQueryBuilder("oferta")
+        .leftJoin("oferta.postulantes", "postulantesOferta")
+        .leftJoin("postulantesOferta.postulante", "postulante")
+        .where("oferta.id = :idOferta", { idOferta })
+        .andWhere("postulante.id = :idPostulante", { idPostulante })
+        .getOne();
+}
