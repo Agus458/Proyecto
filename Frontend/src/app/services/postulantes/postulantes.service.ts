@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { proyectConfig } from 'proyectConfig';
 import { Observable } from 'rxjs';
+import { Pagination } from 'src/app/models/pagination.mode';
 import { Postulante } from 'src/app/models/postulante.model';
 
 @Injectable({
@@ -31,6 +32,24 @@ export class PostulantesService {
 
   validarPerfil() {
     return this.http.get(this.url + "/validarPerfil");
+  }
+
+  getPostulantesPublicos(skip?: number, take?: number, filters?: any) {
+    const params: any = {
+      skip: skip ?? 0,
+      take: take ?? 9
+    }
+
+    Object.assign(params, filters);
+    if (params?.edad) {
+      params.edadmin = params.edad.edadmin;
+      params.edadmax = params.edad.edadmax;
+      params.edad = undefined;
+    }
+
+    return this.http.get<Pagination<Postulante>>(this.url, {
+      params
+    });
   }
   
   async getArchivo(url: string) {

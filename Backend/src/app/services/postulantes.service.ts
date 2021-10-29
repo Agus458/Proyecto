@@ -1,6 +1,7 @@
 import moment from "moment";
 import { DeepPartial, getRepository } from "typeorm";
 import { verifyPassword } from "../libraries/encryptation.library";
+import { Pagination } from "../models/pagination.mode";
 import { Postulante } from "../models/postulante.model";
 
 /* ---------------------------------------< POSTULANTES SERVICE >--------------------------------------- */
@@ -70,36 +71,51 @@ export const put = async (id: number, data: DeepPartial<Postulante>): Promise<vo
     await getRepository(Postulante).save(data);
 };
 
-export const getFiltered = async (filters: any): Promise<{ postulantes: Postulante[], cantidad: number }> => {
+export const getFiltered = async (filters: any): Promise<Pagination<Postulante>> => {
     const query = getRepository(Postulante).createQueryBuilder("postulante");
 
     // Relaciones
+    query.leftJoin("postulante.domicilio", "domicilio");
+    query.leftJoin("domicilio.pais", "pais");
+    query.leftJoin("domicilio.departamento", "departamento");
+    query.leftJoin("domicilio.localidad", "localidad");
 
-    query.leftJoinAndSelect("postulante.domicilio", "domicilio")
-    query.leftJoinAndSelect("domicilio.pais", "pais")
-    query.leftJoinAndSelect("domicilio.departamento", "departamento")
-    query.leftJoinAndSelect("domicilio.localidad", "localidad")
-    query.leftJoinAndSelect("postulante.capacitaciones", "capacitacion")
-    query.leftJoinAndSelect("postulante.conocimientosInformaticos", "conocimientoInformatico")
-    query.leftJoinAndSelect("postulante.experienciasLaborales", "experienciaLaboral")
-    query.leftJoinAndSelect("postulante.idiomas", "idioma")
-    query.leftJoinAndSelect("postulante.permisos", "permiso")
-    query.leftJoinAndSelect("postulante.preferenciasLaborales", "preferenciaLaboral");
-    query.where("postulante.perfilPublico = true")
+    query.leftJoin("postulante.nivelEducativo", "nivelEducativo");
+    query.leftJoin("postulante.estadoNivelEducativo", "estadoNivelEducativo");
+
+    query.leftJoin("postulante.capacitaciones", "capacitacion");
+    query.leftJoin("capacitacion.areaTematica", "areaTematica");
+
+    query.leftJoin("postulante.experienciasLaborales", "experienciaLaboral");
+    query.leftJoin("experienciaLaboral.rubro", "rubro");
+
+    query.leftJoin("postulante.idiomas", "idioma");
+    query.leftJoin("idioma.nombreIdioma", "nombreIdioma");
+
+    query.leftJoin("postulante.permisos", "permiso");
+    query.leftJoin("permiso.tipoDocumento", "tipoDocumento");
+
+    query.leftJoin("postulante.preferenciasLaborales", "preferenciaLaboral");
+    query.leftJoin("preferenciaLaboral.areasInteres", "areasInteres");
+    
+    query.where("postulante.perfilPublico = true");
 
     // Filtros
 
     if (filters.sexo) query.andWhere("postulante.sexo = :sexo", { sexo: filters.sexo });
-    if (filters.edad) query.andWhere("EXTRACT(DAY FROM ((NOW() - postulante.fechaNacimiento)/365)) = :edad", { edad: filters.edad });
-    if (filters.departamento) query.andWhere("departamento.nombre = :departamento", { departamento: filters.departamento });
-    if (filters.localidad) query.andWhere("localidad.nombre = :localidad", { localidad: filters.localidad });
-    if (filters.areaTematica) query.andWhere("capacitacion.areaTematica = :areaTematica", { areaTematica: filters.areaTematica });
-    if (filters.nivelEducativo) query.andWhere("postulante.nivelEducativo = :nivelEducativo", { nivelEducativo: filters.nivelEducativo });
-    if (filters.estadoNivelEducativo) query.andWhere("postulante.estadoNivelEducativo = :estadoNivelEducativo", { estadoNivelEducativo: filters.estadoNivelEducativo });
-    if (filters.idioma) query.andWhere("idioma.nombreIdioma = :idioma", { idioma: filters.idioma });
-    if (filters.rubro) query.andWhere("experienciaLaboral.rubro = :rubro", { rubro: filters.rubro });
-    if (filters.tipoDocumento) query.andWhere("permiso.tipoDocumento = :tipoDocumento", { tipoDocumento: filters.tipoDocumento });
-    if (filters.areasInteres) query.andWhere("preferenciaLaboral.areasInteres = :areasInteres", { areasInteres: filters.areasInteres });
+    if (filters.edadmin && filters.edadmax) {
+        query.andWhere("EXTRACT(DAY FROM ((NOW() - postulante.fechaNacimiento)/365)) >= :edadmin", { edadmin: filters.edadmin });
+        query.andWhere("EXTRACT(DAY FROM ((NOW() - postulante.fechaNacimiento)/365)) <= :edadmax", { edadmax: filters.edadmax });
+    }
+    if (filters.departamento) query.andWhere("departamento.id = :departamento", { departamento: filters.departamento });
+    if (filters.localidad) query.andWhere("localidad.id = :localidad", { localidad: filters.localidad });
+    if (filters.areaTematica) query.andWhere("areaTematica.id = :areaTematica", { areaTematica: filters.areaTematica });
+    if (filters.nivelEducativo) query.andWhere("nivelEducativo.id = :nivelEducativo", { nivelEducativo: filters.nivelEducativo });
+    if (filters.estadoNivelEducativo) query.andWhere("estadoNivelEducativo.id = :estadoNivelEducativo", { estadoNivelEducativo: filters.estadoNivelEducativo });
+    if (filters.idioma) query.andWhere("nombreIdioma.id = :idioma", { idioma: filters.idioma });
+    if (filters.rubro) query.andWhere("rubro.id = :rubro", { rubro: filters.rubro });
+    if (filters.tipoDocumento) query.andWhere("tipoDocumento.id = :tipoDocumento", { tipoDocumento: filters.tipoDocumento });
+    if (filters.areasInteres) query.andWhere("areasInteres.id = :areasInteres", { areasInteres: filters.areasInteres });
 
     // Paginado
 
@@ -110,7 +126,7 @@ export const getFiltered = async (filters: any): Promise<{ postulantes: Postulan
 
     const result = await query.getManyAndCount();
 
-    return { postulantes: result[0], cantidad: result[1] }
+    return { data: result[0], cantidad: result[1] }
 }
 
 export const getPostulanteFiltered = async (filters: any): Promise<number> => {

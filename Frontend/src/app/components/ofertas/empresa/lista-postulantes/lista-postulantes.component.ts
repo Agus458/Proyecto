@@ -4,6 +4,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute } from '@angular/router';
 import { Postulante } from 'src/app/models/postulante.model';
 import { OfertaService } from 'src/app/services/ofertas/oferta.service';
+import { PostulantesService } from 'src/app/services/postulantes/postulantes.service';
 import { FiltrosdialogComponent } from './filtrosdialog/filtrosdialog.component';
 
 @Component({
@@ -27,6 +28,7 @@ export class ListaPostulantesComponent implements OnInit {
 
   constructor(
     private ofertasService: OfertaService,
+    private postulantesService: PostulantesService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
   ) { }
@@ -39,12 +41,25 @@ export class ListaPostulantesComponent implements OnInit {
   }
 
   getPostulantes(skip: number, take: number, filters?: any) {
-    this.ofertasService.getPostulantesOferta(this.id, skip, take, filters).subscribe(
-      ok => {
-        this.postulantes = ok.data;
-        this.length = ok.cantidad;
-      }
-    );
+    if(this.id){
+      this.ofertasService.getPostulantesOferta(this.id, skip, take, filters).subscribe(
+        ok => {
+          console.log(ok);
+          
+          this.postulantes = ok.data;
+          this.length = ok.cantidad;
+        }
+      );
+    } else {
+      this.postulantesService.getPostulantesPublicos(skip, take, filters).subscribe(
+        ok => {
+          console.log(ok);
+          
+          this.postulantes = ok.data;
+          this.length = ok.cantidad;
+        }
+      );
+    }
   }
 
   openDialog() {

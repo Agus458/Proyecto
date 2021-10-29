@@ -43,13 +43,9 @@ export const getByEmpresa = async (empresa: Empresa, skip?: number, take?: numbe
 }
 
 export const getPostulantesOferta = async (id: number, filters: any): Promise<Pagination<Postulante>> => {
-    console.log(filters);
-
-
     const query = getRepository(Postulante).createQueryBuilder("postulante");
 
     // Relaciones
-
     query.leftJoin("postulante.domicilio", "domicilio");
     query.leftJoin("domicilio.pais", "pais");
     query.leftJoin("domicilio.departamento", "departamento");
@@ -75,9 +71,8 @@ export const getPostulantesOferta = async (id: number, filters: any): Promise<Pa
 
     query.leftJoin("postulante.ofertas", "postulantesOferta");
     query.leftJoin("postulantesOferta.oferta", "oferta");
-
-    query.where("postulante.perfilPublico = true");
-    query.andWhere("oferta.id = :id", { id });
+    
+    query.where("oferta.id = :id", { id });
 
     // Filtros
 
@@ -193,6 +188,17 @@ export const postulado = async (idOferta: number, idPostulante: number): Promise
         .leftJoin("oferta.postulantes", "postulantesOferta")
         .leftJoin("postulantesOferta.postulante", "postulante")
         .where("oferta.id = :idOferta", { idOferta })
+        .andWhere("postulante.id = :idPostulante", { idPostulante })
+        .getOne();
+}
+
+export const postuladoAEmpresa = async (idEmpresa: number, idPostulante: number): Promise<Oferta | undefined> => {
+    return await getRepository(Oferta)
+        .createQueryBuilder("oferta")
+        .leftJoin("oferta.postulantes", "postulantesOferta")
+        .leftJoin("postulantesOferta.postulante", "postulante")
+        .leftJoin("oferta.empresa", "empresa")
+        .where("empresa.id = :idEmpresa", { idEmpresa })
         .andWhere("postulante.id = :idPostulante", { idPostulante })
         .getOne();
 }

@@ -12,7 +12,10 @@ import * as experienciasLaboralesService from "../services/experienciasLaborales
 import * as idiomasService from "../services/idiomas.service";
 import * as permisosService from "../services/permisos.service";
 import * as preferenciasLaboralesService from "../services/preferenciasLaborales.service";
+import * as ofertasService from "../services/ofertas.service";
 import { profileTemplatePDF } from "../libraries/pdf.library";
+import { Administrador } from "../models/administrador.model";
+import { Empresa } from "../models/empresa.model";
 
 /* ---------------------------------------< POSTULANTES CONTROLLER >--------------------------------------- */
 
@@ -32,7 +35,7 @@ export const getPerfilById = async (request: Request, response: Response): Promi
 
     if (!postulante) throw AppError.badRequestError("No existe un postulante con el id ingresado");
 
-    if (!postulante.perfilPublico) throw AppError.badRequestError("Este perfil es privado");
+    if (!postulante.perfilPublico && request.user !instanceof Administrador && (request.user instanceof Empresa && !await ofertasService.postuladoAEmpresa(request.user.id, postulante.id))) throw AppError.badRequestError("Este perfil es privado");
 
     return response.status(200).json(postulante);
 }
@@ -214,7 +217,7 @@ export const generatePDF = async (request: Request, response: Response): Promise
 
     if (!postulante) throw AppError.badRequestError("No existe un postulante con el id ingresado");
 
-    if (!postulante.perfilPublico) throw AppError.badRequestError("Este perfil es privado");
+    if (!postulante.perfilPublico && request.user !instanceof Administrador && (request.user instanceof Empresa && !await ofertasService.postuladoAEmpresa(request.user.id, postulante.id))) throw AppError.badRequestError("Este perfil es privado");
 
     pdf.create(await profileTemplatePDF(request.protocol + "://" + request.get("Host"), postulante, request.token)).toBuffer((err, res) => {
         if (err) return Promise.reject;
