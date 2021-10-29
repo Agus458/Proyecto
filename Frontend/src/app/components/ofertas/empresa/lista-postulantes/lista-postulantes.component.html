@@ -1,4 +1,6 @@
-<h1><em>Postulantes de la Oferta</em></h1>
+<h1><em>Postulantes</em></h1>
+<button mat-flat-button color="accent" type="button" style="margin-bottom: 10px;"
+    (click)="openDialog()">Filtrar</button>
 <mat-divider></mat-divider>
 
 <div class="example-container mat-elevation-z8 table">
@@ -31,4 +33,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+        (page)="paginatorChange($event)" aria-label="Select page">
+    </mat-paginator>
 </div>

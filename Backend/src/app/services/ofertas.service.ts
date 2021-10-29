@@ -42,15 +42,70 @@ export const getByEmpresa = async (empresa: Empresa, skip?: number, take?: numbe
     return { data: result[0], cantidad: result[1] };
 }
 
-export const getPostulantesOferta = async (id: number): Promise<Pagination<Postulante>> => {
-    const result = await getRepository(Postulante)
-        .createQueryBuilder("postulante")
-        .leftJoin("postulante.ofertas", "postulantesOferta")
-        .leftJoin("postulantesOferta.oferta", "oferta")
-        .where("oferta.id = :id", { id })
-        .getManyAndCount();
+export const getPostulantesOferta = async (id: number, filters: any): Promise<Pagination<Postulante>> => {
+    console.log(filters);
 
-    return { data: result[0], cantidad: result[1] };
+
+    const query = getRepository(Postulante).createQueryBuilder("postulante");
+
+    // Relaciones
+
+    query.leftJoin("postulante.domicilio", "domicilio");
+    query.leftJoin("domicilio.pais", "pais");
+    query.leftJoin("domicilio.departamento", "departamento");
+    query.leftJoin("domicilio.localidad", "localidad");
+
+    query.leftJoin("postulante.nivelEducativo", "nivelEducativo");
+    query.leftJoin("postulante.estadoNivelEducativo", "estadoNivelEducativo");
+
+    query.leftJoin("postulante.capacitaciones", "capacitacion");
+    query.leftJoin("capacitacion.areaTematica", "areaTematica");
+
+    query.leftJoin("postulante.experienciasLaborales", "experienciaLaboral");
+    query.leftJoin("experienciaLaboral.rubro", "rubro");
+
+    query.leftJoin("postulante.idiomas", "idioma");
+    query.leftJoin("idioma.nombreIdioma", "nombreIdioma");
+
+    query.leftJoin("postulante.permisos", "permiso");
+    query.leftJoin("permiso.tipoDocumento", "tipoDocumento");
+
+    query.leftJoin("postulante.preferenciasLaborales", "preferenciaLaboral");
+    query.leftJoin("preferenciaLaboral.areasInteres", "areasInteres");
+
+    query.leftJoin("postulante.ofertas", "postulantesOferta");
+    query.leftJoin("postulantesOferta.oferta", "oferta");
+
+    query.where("postulante.perfilPublico = true");
+    query.andWhere("oferta.id = :id", { id });
+
+    // Filtros
+
+    if (filters.sexo) query.andWhere("postulante.sexo = :sexo", { sexo: filters.sexo });
+    if (filters.edadmin && filters.edadmax) {
+        query.andWhere("EXTRACT(DAY FROM ((NOW() - postulante.fechaNacimiento)/365)) >= :edadmin", { edadmin: filters.edadmin });
+        query.andWhere("EXTRACT(DAY FROM ((NOW() - postulante.fechaNacimiento)/365)) <= :edadmax", { edadmax: filters.edadmax });
+    }
+    if (filters.departamento) query.andWhere("departamento.id = :departamento", { departamento: filters.departamento });
+    if (filters.localidad) query.andWhere("localidad.id = :localidad", { localidad: filters.localidad });
+    if (filters.areaTematica) query.andWhere("areaTematica.id = :areaTematica", { areaTematica: filters.areaTematica });
+    if (filters.nivelEducativo) query.andWhere("nivelEducativo.id = :nivelEducativo", { nivelEducativo: filters.nivelEducativo });
+    if (filters.estadoNivelEducativo) query.andWhere("estadoNivelEducativo.id = :estadoNivelEducativo", { estadoNivelEducativo: filters.estadoNivelEducativo });
+    if (filters.idioma) query.andWhere("nombreIdioma.id = :idioma", { idioma: filters.idioma });
+    if (filters.rubro) query.andWhere("rubro.id = :rubro", { rubro: filters.rubro });
+    if (filters.tipoDocumento) query.andWhere("tipoDocumento.id = :tipoDocumento", { tipoDocumento: filters.tipoDocumento });
+    if (filters.areasInteres) query.andWhere("areasInteres.id = :areasInteres", { areasInteres: filters.areasInteres });
+
+    // Paginado
+
+    if (filters.skip) query.skip(filters.skip);
+    if (filters.take) query.take(filters.take);
+
+    // Ejecucion
+
+    const result = await query.getManyAndCount();
+
+    return { data: result[0], cantidad: result[1] }
 }
 
 export const getPostulaciones = async (postulante: Postulante, skip?: number, take?: number): Promise<Pagination<Oferta>> => {

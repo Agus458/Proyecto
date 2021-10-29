@@ -59,12 +59,10 @@ import { EditarOfertaComponent } from './components/ofertas/empresa/editar-ofert
 import { ListaPostulantesComponent } from './components/ofertas/empresa/lista-postulantes/lista-postulantes.component';
 import { HabilitarEmpresaComponent } from './components/empresa/habilitar-empresa/habilitar-empresa.component';
 import { DialogHabilitarEmpresaComponent } from './components/empresa/habilitar-empresa/dialog-habilitar-empresa/dialog-habilitar-empresa.component';
-import { PostulanteInfoComponent } from './components/ofertas/empresa/lista-postulantes/postulante-info/postulante-info.component';
 import { CompartirNovedadDialogComponent } from './components/novedades/compartir-novedad-dialog/compartir-novedad-dialog.component';
 import { VistaNovedadComponent } from './components/novedades/vista-novedad/vista-novedad.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { PostulantesgeneralesComponent } from './components/empresa/postulantesgenerales/postulantesgenerales.component';
-import { FiltrosdialogComponent } from './components/empresa/postulantesgenerales/filtrosdialog/filtrosdialog.component';
+import { FiltrosdialogComponent } from './components/ofertas/empresa/lista-postulantes/filtrosdialog/filtrosdialog.component';
 
 @NgModule({
   declarations: [
@@ -104,11 +102,9 @@ import { FiltrosdialogComponent } from './components/empresa/postulantesgenerale
     HabilitarEmpresaComponent,
     DialogHabilitarEmpresaComponent,
     ListaPostulantesComponent,
-    PostulanteInfoComponent,
     CompartirNovedadDialogComponent,
     VistaNovedadComponent,
     DashboardComponent,
-    PostulantesgeneralesComponent,
     FiltrosdialogComponent,
   ],
   imports: [

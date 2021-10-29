@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { proyectConfig } from 'proyectConfig';
 import { Postulante } from 'src/app/models/postulante.model';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { PostulantesService } from 'src/app/services/postulantes/postulantes.service';
 
 @Component({
@@ -21,6 +22,7 @@ export class MiPerfilComponent implements OnInit {
 
   constructor(
     private postulantes: PostulantesService,
+    public authService: AuthService,
     private route: ActivatedRoute
   ) { }
 

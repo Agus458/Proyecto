@@ -56,12 +56,21 @@ export class OfertaService {
     return this.http.get<Oferta>(this.url + "/" + id);
   }
 
-  getPostulantesOferta(id: number, skip?: number, take?: number) {
+  getPostulantesOferta(id: number, skip?: number, take?: number, filters?: any) {
+    const params: any = {
+      skip: skip ?? 0,
+      take: take ?? 9
+    }
+
+    Object.assign(params, filters);
+    if (params?.edad) {
+      params.edadmin = params.edad.edadmin;
+      params.edadmax = params.edad.edadmax;
+      params.edad = undefined;
+    }
+
     return this.http.get<Pagination<Postulante>>(this.url + "/postulantes/" + id, {
-      params: {
-        skip: skip ?? 0,
-        take: take ?? 9
-      }
+      params
     });
   }
 

@@ -33,7 +33,7 @@ export class OfertasComponent implements OnInit {
     this.ofertasService.getOferta(IdFromRoute).subscribe(
       ok => {
         this.oferta = ok;
-        if (this.oferta.id) {
+        if (this.oferta.id && this.authService.getUser()?.tipo == "Postulante") {
           this.ofertasService.postulado(this.oferta.id).subscribe(
             res => {
               this.postulado = res.postulado;

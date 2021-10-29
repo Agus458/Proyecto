@@ -89,6 +89,20 @@ export const ActualizarOfferta = async (request: Request, response: Response): P
     const oferta = await ofertasService.getById(Number.parseInt(request.params.id));
     if (!oferta) throw AppError.badRequestError("No existe ninguna oferta con el id ingresado");
 
+    let empresa;
+
+    if (request.user instanceof Administrador) {
+        if (!request.body.empresa) throw AppError.badRequestError("No se ingreso ninguna empresa");
+
+        empresa = await empresasService.getById(request.body.empresa);
+        if (!empresa) throw AppError.badRequestError("No existe ningun empresa con el id ingresado");
+    } else {
+        empresa = await empresasService.getById(request.user.id);
+        if (!empresa) throw AppError.badRequestError("No existe ningun empresa con el id ingresado");
+    }
+
+    request.body.empresa = empresa;
+    
     await ofertasService.put(oferta.id, request.body);
 
     return response.status(204).json();
@@ -135,7 +149,7 @@ export const getPostulantesOferta = async (request: Request, response: Response)
     if (!request.params.id) throw AppError.badRequestError("No se ingreso el id de la offerta");
     if (!validator.isInt(request.params.id)) throw AppError.badRequestError("Id de offerta invalido");
 
-    const postulantes = await ofertasService.getPostulantesOferta(Number.parseInt(request.params.id));
+    const postulantes = await ofertasService.getPostulantesOferta(Number.parseInt(request.params.id), request.query);
 
     return response.status(200).json(postulantes);
 }

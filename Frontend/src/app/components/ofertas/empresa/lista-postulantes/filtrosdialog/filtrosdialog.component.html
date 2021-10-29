@@ -1,0 +1,135 @@
+<h1 mat-dialog-title>Filtros</h1>
+<mat-dialog-content>
+    <mat-divider></mat-divider>
+    <br>
+    <form [formGroup]="filtrosForm">
+        <div fxLayout="column" fxLayoutAlign="start start">
+            <div fxLayout="row" fxLayoutAlign="start start" style="align-items: center;" class="block">
+                <mat-checkbox style="margin-top: 15px; margin-right: 10px;" (click)="toggle('sexo')"></mat-checkbox>
+                <mat-form-field appearance="fill">
+                    <mat-label>Sexo</mat-label>
+                    <mat-select formControlName="sexo">
+                        <mat-option value="Femenino">Femenino</mat-option>
+                        <mat-option value="Masculino">Masculino</mat-option>
+                        <mat-option value="Otro">Otro</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start start" style="align-items: center;" fxLayout.xs="column"
+                formGroupName="edad">
+                <mat-checkbox style="margin-top: 15px; margin-right: 10px;" (click)="toggle('edad')">Edad</mat-checkbox>
+                <mat-form-field appearance="fill" style=" margin-right: 10px;">
+                    <mat-label>De</mat-label>
+                    <input matInput type="number" formControlName="edadmin">
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Hasta</mat-label>
+                    <input matInput type="number" formControlName="edadmax">
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start start" style="align-items: center;" class="block">
+                <mat-checkbox style="margin-top: 15px; margin-right: 10px;" (click)="toggle('departamento')">
+                </mat-checkbox>
+                <mat-form-field appearance="fill">
+                    <mat-label>Departamento</mat-label>
+                    <mat-select formControlName="departamento" (selectionChange)="onChangeDepartamento()">
+                        <mat-option *ngFor="let departamento of departamentos" [value]="departamento.id">
+                            {{departamento.nombre}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start start" style="align-items: center;" class="block">
+                <mat-checkbox style="margin-top: 15px; margin-right: 10px;" (click)="toggle('localidad')">
+                </mat-checkbox>
+                <mat-form-field appearance="fill">
+                    <mat-label>Localidad</mat-label>
+                    <mat-select formControlName="localidad">
+                        <mat-option *ngFor="let localidad of localidades" [value]="localidad.id">
+                            {{localidad.nombre}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start start" style="align-items: center;" class="block">
+                <mat-checkbox style="margin-top: 15px; margin-right: 10px;" (click)="toggle('areaTematica')">
+                </mat-checkbox>
+                <mat-form-field appearance="fill">
+                    <mat-label>Area de Capacitación</mat-label>
+                    <mat-select formControlName="areaTematica">
+                        <mat-option *ngFor="let area of areas" [value]="area.id">{{area.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start start" style="align-items: center;" class="block">
+                <mat-checkbox style="margin-top: 15px; margin-right: 10px;" (click)="toggle('nivelEducativo')">
+                </mat-checkbox>
+                <mat-form-field appearance="fill">
+                    <mat-label>Maximo Nivel Educativo</mat-label>
+                    <mat-select formControlName="nivelEducativo">
+                        <mat-option *ngFor="let nivelEducativo of nivelesEducativos" [value]="nivelEducativo.id">
+                            {{nivelEducativo.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start start" style="align-items: center;" class="block">
+                <mat-checkbox style="margin-top: 15px; margin-right: 10px;" (click)="toggle('estadoNivelEducativo')">
+                </mat-checkbox>
+                <mat-form-field appearance="fill">
+                    <mat-label>Estado Nivel Educativo</mat-label>
+                    <mat-select formControlName="estadoNivelEducativo">
+                        <mat-option *ngFor="let estado of estados" [value]="estado.id">{{estado.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start start" style="align-items: center;" class="block">
+                <mat-checkbox style="margin-top: 15px; margin-right: 10px;" (click)="toggle('idioma')"></mat-checkbox>
+                <mat-form-field appearance="fill">
+                    <mat-label>Idiomas</mat-label>
+                    <mat-select formControlName="idioma">
+                        <mat-option *ngFor="let idioma of idiomas" [value]="idioma.id">{{idioma.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start start" style="align-items: center;" class="block">
+                <mat-checkbox style="margin-top: 15px; margin-right: 10px;" (click)="toggle('rubro')"></mat-checkbox>
+                <mat-form-field appearance="fill">
+                    <mat-label>Rubro Experiencia Laboral</mat-label>
+                    <mat-select formControlName="rubro">
+                        <mat-option *ngFor="let area of areas" [value]="area.id">{{area.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start start" style="align-items: center;" class="block">
+                <mat-checkbox style="margin-top: 15px; margin-right: 10px;" (click)="toggle('tipoDocumento')">
+                </mat-checkbox>
+                <mat-form-field appearance="fill">
+                    <mat-label>Tipo de Documento</mat-label>
+                    <mat-select formControlName="tipoDocumento">
+                        <mat-option *ngFor="let tipoDocumento of tiposDocumentos" [value]="tipoDocumento.id">{{tipoDocumento.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start start" style="align-items: center;" class="block">
+                <mat-checkbox style="margin-top: 15px; margin-right: 10px;" (click)="toggle('areasInteres')">
+                </mat-checkbox>
+                <mat-form-field appearance="fill">
+                    <mat-label>Area de Interes</mat-label>
+                    <mat-select formControlName="areasInteres">
+                        <mat-option *ngFor="let area of areas" [value]="area.id">{{area.nombre}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close><strong>Cancelar</strong></button>
+    <button mat-button [mat-dialog-close]="filtrosForm.value"
+        [disabled]="filtrosForm.invalid"><strong>Filtrar</strong></button>
+</mat-dialog-actions>
