@@ -21,6 +21,7 @@ import { NombreIdioma } from "../models/perfil/nombre-idioma.model";
 import { NivelJerarquico } from "../models/perfil/nivel-jerarquico.model";
 import { TipoPermiso } from "../models/perfil/tipo-permiso.model";
 import { CategoriaConocimiento } from "../models/perfil/categoria-conocimiento.model";
+import { Oferta } from "../models/oferta.model";
 
 /*
 
@@ -319,4 +320,20 @@ export const validarPerfil = (postulante: Postulante) => {
     if (!postulante.sexo) return false;
 
     return true;
+}
+
+export const validarOferta = async (oferta: any) => {
+    if (typeof oferta.nombreOfferta != "string") throw AppError.badRequestError("Nombre de oferta invalido o no ingresado");
+    if (typeof oferta.puesto != "string") throw AppError.badRequestError("Puesto de oferta invalido o no ingresado");
+    if (typeof oferta.rangoSalario != "string") throw AppError.badRequestError("Rango salarial de oferta invalido o no ingresado");
+    if (typeof oferta.requisitosExcluyente != "string") throw AppError.badRequestError("Requisitos excluyentes de oferta invalido o no ingresado");
+    if (typeof oferta.requisitosValorados != "string") throw AppError.badRequestError("Requisitos valorados de oferta invalido o no ingresado");
+    if (typeof oferta.telefonoContacto != "string") throw AppError.badRequestError("Telefono de contacto de oferta invalido o no ingresado");
+    if (typeof oferta.vacantes != "number") throw AppError.badRequestError("Vacantes de oferta invalido o no ingresado");
+    if (typeof oferta.descripcion != "string") throw AppError.badRequestError("Descripcion de oferta invalido o no ingresado");
+    if (typeof oferta.areaDeTrabajo != "number" || !await profileService.getById(AreaTematica.prototype, oferta.areaDeTrabajo)) throw AppError.badRequestError("Area de trabajo de oferta invalido o no ingresado");
+    if (typeof oferta.emailContacto != "string" || !validator.isEmail(oferta.emailContacto)) throw AppError.badRequestError("Email de contacto de oferta invalido o no ingresado");
+
+    if (typeof oferta.fechaCierre != "string" || !Date.parse(oferta.fechaCierre)) throw AppError.badRequestError("Nombre de oferta invalido o no ingresado");
+    if (moment(oferta.fechaCierre, "YYYY-MM-DD").isAfter(moment())) throw AppError.badRequestError("Nombre de oferta invalido o no ingresado");
 }

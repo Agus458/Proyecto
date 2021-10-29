@@ -6,7 +6,7 @@ import * as ofertasService from "../services/ofertas.service";
 import * as empresasService from "../services/empresas.service";
 import * as postulantesService from "../services/postulantes.service";
 import { Administrador } from "../models/administrador.model";
-import { validarPerfil, validatePagination } from "../libraries/validation.library";
+import { validarOferta, validarPerfil, validatePagination } from "../libraries/validation.library";
 import { PostulanteOferta } from "../models/postulante-oferta.model";
 
 export const getOffertas = async (request: Request, response: Response): Promise<Response> => {
@@ -77,6 +77,9 @@ export const realizarOfferta = async (request: Request, response: Response): Pro
     }
 
     request.body.empresa = empresa;
+
+    validarOferta(request.body);
+
     await ofertasService.post(request.body);
 
     return response.status(201).json();
@@ -104,6 +107,8 @@ export const ActualizarOfferta = async (request: Request, response: Response): P
     }
 
     request.body.empresa = empresa;
+
+    validarOferta(request.body);
 
     await ofertasService.put(oferta.id, request.body);
 

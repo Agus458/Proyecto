@@ -40,7 +40,7 @@ export class Oferta extends BaseEntity {
     @Column()
     puesto: string;
 
-    @Column()
+    @Column({ type: "text" })
     funcionesDePuesto: string;
 
     @Column()
@@ -53,7 +53,7 @@ export class Oferta extends BaseEntity {
     horariodetrabajo: string;
 
     @Column()
-    rangoSalario: String;
+    rangoSalario: string;
 
     @CreateDateColumn()
     fechaPublicacion: Date;
