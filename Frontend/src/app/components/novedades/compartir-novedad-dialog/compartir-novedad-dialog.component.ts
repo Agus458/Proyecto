@@ -1,5 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Novedad } from 'src/app/models/novedad.model';
+import { Oferta } from 'src/app/models/oferta.model';
 
 
 @Component({
@@ -9,13 +11,17 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class CompartirNovedadDialogComponent implements OnInit {
 
-  
+  tipo: string;
+  titulo: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
   ngOnInit(): void {
+    this.tipo= this.data.class.titulo? 'novedad': 'oferta';
+    this.titulo= this.data.class.titulo? this.data.class.titulo: this.data.class.nombreOfferta;
+    
   }
 
 }

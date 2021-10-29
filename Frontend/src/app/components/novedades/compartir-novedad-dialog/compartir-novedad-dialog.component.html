@@ -2,18 +2,18 @@
 
 <div fxLayout="column" fxLayoutAlign="space-around center">
   <div class="example-button-container">
-    <a [href]="'https://api.whatsapp.com/send?text=¡Mira%20esta%20novedad%20de%20la%20bolsa%20de%20trabajo%20del%20Centro%20Comercial%20e%20Industrial%20de%20San%20José!%0A'+ data.url"
+    <a [href]="'https://api.whatsapp.com/send?text=¡Mira%20esta%20' + tipo + '%20de%20la%20bolsa%20de%20trabajo%20del%20Centro%20Comercial%20e%20Industrial%20de%20San%20José!%0A'+ data.url"
       mat-flat-button style="background-color:#25d366; color: white; margin: 5px 5px 5px 5px; width: 100px;">
       Whatsapp</a>
   </div>
   <div class="example-button-container">
-    <a [href]="'http://www.facebook.com/sharer.php?&p[url]=' + 'https://professor-falken.com/webmasters-y-seo/como-compartir-una-direccion-url-en-facebook-twitter-y-google/' + '&p[title]=' + data.novedad.titulo + '&pp[images][0]=' + data.novedad.imagen"
+    <a [href]="'http://www.facebook.com/sharer.php?&p[url]=' + 'https://professor-falken.com/webmasters-y-seo/como-compartir-una-direccion-url-en-facebook-twitter-y-google/' + '&p[title]=' + titulo"
       mat-flat-button style="background-color: #4267B2; color: white; margin: 5px 5px 5px 5px; width: 100px;">
       Facebook
     </a>
   </div>
   <div class="example-button-container">
-    <a [href]="'http://twitter.com/share?url=' + 'https://professor-falken.com/webmasters-y-seo/como-compartir-una-direccion-url-en-facebook-twitter-y-google/' + '&text=' + '¡Mira%20esta%20novedad%20de%20la%20bolsa%20de%20trabajo%20del%20Centro%20Comercial%20e%20Industrial%20de%20San%20José!%0A' + '-->%20' + data.novedad.titulo"
+    <a [href]="'http://twitter.com/share?url=' + 'https://professor-falken.com/webmasters-y-seo/como-compartir-una-direccion-url-en-facebook-twitter-y-google/' + '&text=' + '¡Mira%20esta%20' + tipo +'%20de%20la%20bolsa%20de%20trabajo%20del%20Centro%20Comercial%20e%20Industrial%20de%20San%20José!%0A' + '-->%20' + titulo"
       mat-flat-button style="background-color: #00acee; color: white; margin: 5px 5px 5px 5px; width: 100px;">
       Twitter
     </a>

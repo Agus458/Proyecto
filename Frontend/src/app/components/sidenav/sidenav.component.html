@@ -52,6 +52,13 @@
                 </mat-list-item>
             </ng-container>
 
+            <ng-container *ngIf="authService.getUser()?.tipo == 'Administrador' || authService.getUser()?.tipo == 'Postulante'">
+                <mat-list-item routerLink="/ofertas" routerLinkActive="selected" (click)="sidenav.toggle()">
+                    <mat-icon>sticky_note_2</mat-icon>
+                    Ofertas
+                </mat-list-item>
+            </ng-container>
+
         </mat-nav-list>
 
     </mat-sidenav>
