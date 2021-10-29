@@ -117,8 +117,6 @@ export const _delete = async (request: Request, response: Response): Promise<Res
     const oferta = await ofertasService.getById(Number.parseInt(request.params.id));
     if (!oferta) throw AppError.badRequestError("No existe ninguna oferta con el id ingresado");
 
-    if(oferta.empresa.id != request.user.id) throw AppError.badRequestError("Esta oferta no le pertenece");
-
     await ofertasService._delete(oferta.id);
 
     return response.status(204).json();

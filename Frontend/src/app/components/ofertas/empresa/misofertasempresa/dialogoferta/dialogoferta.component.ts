@@ -20,7 +20,7 @@ export class DialogofertaComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  deleteOferta(id: any){
+  deleteOferta(id: any) {
     this.ofertaService.delete(id).subscribe();
     window.location.reload();
   }
