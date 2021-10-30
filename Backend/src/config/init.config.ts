@@ -14,6 +14,9 @@ import { NombreIdioma } from "../app/models/perfil/nombre-idioma.model";
 import { NivelJerarquico } from "../app/models/perfil/nivel-jerarquico.model";
 import { TipoPermiso } from "../app/models/perfil/tipo-permiso.model";
 import { CategoriaConocimiento } from "../app/models/perfil/categoria-conocimiento.model";
+import fs from "fs";
+import { baseDir } from "../app/app.server";
+import path from "path";
 
 export const onInit = async () => {
 
@@ -72,4 +75,18 @@ export const onInit = async () => {
         await profileService.post(CategoriaConocimiento.prototype, categoriasConocimientos);
     }
 
+    try {
+        var relative = path.join(baseDir + "/../../uploads/");
+
+        const novedadesPath = path.join(relative + "novedades");
+        !fs.existsSync(novedadesPath) && fs.mkdirSync(novedadesPath, { recursive: true });
+
+        const cvPath = path.join(relative + "perfil/documentos");
+        !fs.existsSync(cvPath) && fs.mkdirSync(cvPath, { recursive: true });
+
+        const imagenesPath = path.join(relative + "perfil/imagenes");
+        !fs.existsSync(imagenesPath) && fs.mkdirSync(imagenesPath, { recursive: true });
+    } catch (error) {
+
+    }
 }
