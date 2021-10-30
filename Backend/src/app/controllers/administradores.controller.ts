@@ -31,11 +31,14 @@ export const habilitarEmpresa = async (request: Request, response: Response): Pr
 }
 
 export const getDashboard = async (request: Request, response: Response): Promise<Response> => {
-    const ofertas = await ofertasService.getOfertasFiltered(request.query);
-    const postulantesOferta = await ofertasService.getCantPostulantesOfertas(request.query);
-    const postulantes = await postulantesService.getPostulanteFiltered(request.query);
-    const empresas = await empresasService.getEmpresasFiltered(request.query);
-    const novedades = await novedadesService.count(request.query);
+    // const ofertas = await ofertasService.getOfertasFiltered(request.query);
+    // const postulantesOferta = await ofertasService.getCantPostulantesOfertas(request.query);
+    // const postulantes = await postulantesService.getPostulanteFiltered(request.query);
+    // const empresas = await empresasService.getEmpresasFiltered(request.query);
+    // const novedades = await novedadesService.count(request.query);
 
-    return response.status(200).json({ ofertas: ofertas?.length, postulantes, empresas, novedades, postulantesOferta });
+    // return response.status(200).json({ ofertas: ofertas?.length, postulantes, empresas, novedades, postulantesOferta });
+
+    await ofertasService.getOfertasByMonth();
+    return response.json();
 }

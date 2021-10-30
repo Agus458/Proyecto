@@ -78,7 +78,7 @@ export const realizarOfferta = async (request: Request, response: Response): Pro
 
     request.body.empresa = empresa;
 
-    validarOferta(request.body);
+    await validarOferta(request.body);
 
     await ofertasService.post(request.body);
 
@@ -108,7 +108,7 @@ export const ActualizarOfferta = async (request: Request, response: Response): P
 
     request.body.empresa = empresa;
 
-    validarOferta(request.body);
+    await validarOferta(request.body);
 
     await ofertasService.put(oferta.id, request.body);
 

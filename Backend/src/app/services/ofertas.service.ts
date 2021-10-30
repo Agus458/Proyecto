@@ -1,10 +1,11 @@
 import moment from "moment";
-import { DeepPartial, getRepository, LessThan, MoreThan } from "typeorm";
+import { Between, DeepPartial, getRepository, LessThan, MoreThan } from "typeorm";
 import { Empresa } from "../models/empresa.model";
 import { Oferta } from "../models/oferta.model";
 import { Postulante } from "../models/postulante.model";
 import validator from "validator";
 import { Pagination } from "../models/pagination.mode";
+import { getPreviousMonths } from "../libraries/date.library";
 
 export const getAll = async (skip?: number, take?: number): Promise<Pagination<Oferta>> => {
     const result = await getRepository(Oferta).findAndCount({
@@ -71,7 +72,7 @@ export const getPostulantesOferta = async (id: number, filters: any): Promise<Pa
 
     query.leftJoin("postulante.ofertas", "postulantesOferta");
     query.leftJoin("postulantesOferta.oferta", "oferta");
-    
+
     query.where("oferta.id = :id", { id });
 
     // Filtros
@@ -201,4 +202,25 @@ export const postuladoAEmpresa = async (idEmpresa: number, idPostulante: number)
         .where("empresa.id = :idEmpresa", { idEmpresa })
         .andWhere("postulante.id = :idPostulante", { idPostulante })
         .getOne();
+}
+
+export const getOfertasByMonth = async () => {
+    const months = getPreviousMonths();
+
+    const result: { month: Date, cant: number }[] = [];
+    for (let index = 0; index < months.length; index++) {
+        const month = months[index];
+
+        result.push({ month, cant: await getCant(month) })
+    }
+
+    console.log(result);
+}
+
+const getCant = async (date: Date): Promise<number> => {
+    return getRepository(Oferta).count({
+        where: {
+            fechaPublicacion: Between(moment(date).utc(true).startOf("month").toDate(), date)
+        }
+    })
 }
