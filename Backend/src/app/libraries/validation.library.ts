@@ -329,11 +329,11 @@ export const validarOferta = async (oferta: any) => {
     if (typeof oferta.requisitosExcluyente != "string") throw AppError.badRequestError("Requisitos excluyentes de oferta invalido o no ingresado");
     if (typeof oferta.requisitosValorados != "string") throw AppError.badRequestError("Requisitos valorados de oferta invalido o no ingresado");
     if (typeof oferta.telefonoContacto != "string") throw AppError.badRequestError("Telefono de contacto de oferta invalido o no ingresado");
-    if (typeof oferta.vacantes != "number") throw AppError.badRequestError("Vacantes de oferta invalido o no ingresado");
+    if (typeof oferta.vacantes != "string" && !validator.isInt(oferta.vacantes)) throw AppError.badRequestError("Vacantes de oferta invalido o no ingresado");
     if (typeof oferta.descripcion != "string") throw AppError.badRequestError("Descripcion de oferta invalido o no ingresado");
     if (typeof oferta.areaDeTrabajo != "number" || !await profileService.getById(AreaTematica.prototype, oferta.areaDeTrabajo)) throw AppError.badRequestError("Area de trabajo de oferta invalido o no ingresado");
     if (typeof oferta.emailContacto != "string" || !validator.isEmail(oferta.emailContacto)) throw AppError.badRequestError("Email de contacto de oferta invalido o no ingresado");
 
-    if (typeof oferta.fechaCierre != "string" || !Date.parse(oferta.fechaCierre)) throw AppError.badRequestError("Nombre de oferta invalido o no ingresado");
-    if (moment(oferta.fechaCierre, "YYYY-MM-DD").isAfter(moment())) throw AppError.badRequestError("Nombre de oferta invalido o no ingresado");
+    if (typeof oferta.fechaCierre != "string" || !Date.parse(oferta.fechaCierre)) throw AppError.badRequestError("Fecha de cierre de oferta invalido o no ingresado");
+    if (moment(oferta.fechaCierre, "YYYY-MM-DD").isBefore(moment())) throw AppError.badRequestError("La fecha de cierre debe ser posterior a la fecha actual");
 }

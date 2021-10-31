@@ -3,9 +3,8 @@ import { Between, DeepPartial, getRepository, LessThan, MoreThan } from "typeorm
 import { Empresa } from "../models/empresa.model";
 import { Oferta } from "../models/oferta.model";
 import { Postulante } from "../models/postulante.model";
-import validator from "validator";
 import { Pagination } from "../models/pagination.mode";
-import { getPreviousMonths } from "../libraries/date.library";
+import { PostulanteOferta } from "../models/postulante-oferta.model";
 
 export const getAll = async (skip?: number, take?: number): Promise<Pagination<Oferta>> => {
     const result = await getRepository(Oferta).findAndCount({
@@ -138,7 +137,7 @@ export const _delete = async (id: number): Promise<void> => {
     await getRepository(Oferta).softDelete(id);
 };
 
-export const getOfertasFiltered = async (filters: any): Promise<Oferta[]> => {
+export const getOfertasFiltered = async (filters: any): Promise<number> => {
     const query = getRepository(Oferta).createQueryBuilder("oferta");
 
     // Relaciones
@@ -154,33 +153,22 @@ export const getOfertasFiltered = async (filters: any): Promise<Oferta[]> => {
 
     // Ejecucion
 
-    return await query.getMany();
+    return await query.getCount();
 }
 
 export const getCantPostulantesOfertas = async (filters: any): Promise<number> => {
-    let cant = 0;
-    const query = getRepository(Oferta).createQueryBuilder("oferta");
-
-    // Relaciones
-    query.leftJoinAndSelect("oferta.postulantes", "postulante");
-    query.loadRelationCountAndMap("oferta.cant", "oferta.postulantes", "cant");
+    const query = getRepository(PostulanteOferta).createQueryBuilder("postulanteOferta");
 
     // Filtros
 
     if (filters.desde && Date.parse(filters.desde) && filters.hasta && Date.parse(filters.hasta)) {
-        query.where("oferta.fechaPublicacion >= :desde", { desde: new Date(filters.desde) });
-        query.andWhere("oferta.fechaCierre <= :hasta", { hasta: new Date(filters.hasta) });
+        query.where("postulanteOferta.createdDate >= :desde", { desde: new Date(filters.desde) });
+        query.andWhere("postulanteOferta.createdDate <= :hasta", { hasta: new Date(filters.hasta) });
     }
 
     // Ejecucion
 
-    const result = await query.getMany() as any[];
-
-    result.forEach(element => {
-        cant += element.cant
-    });
-
-    return cant;
+    return await query.getCount();
 }
 
 export const postulado = async (idOferta: number, idPostulante: number): Promise<Oferta | undefined> => {
@@ -204,23 +192,38 @@ export const postuladoAEmpresa = async (idEmpresa: number, idPostulante: number)
         .getOne();
 }
 
-export const getOfertasByMonth = async () => {
-    const months = getPreviousMonths();
-
+export const getOfertasByMonth = async (months: Date[]) => {
     const result: { month: Date, cant: number }[] = [];
     for (let index = 0; index < months.length; index++) {
         const month = months[index];
 
-        result.push({ month, cant: await getCant(month) })
+        result.push({
+            month,
+            cant: await getRepository(Oferta).count({
+                where: {
+                    fechaPublicacion: Between(moment(month).utc(true).startOf("month").toDate(), month)
+                }
+            })
+        });
     }
 
-    console.log(result);
+    return result;
 }
 
-const getCant = async (date: Date): Promise<number> => {
-    return getRepository(Oferta).count({
-        where: {
-            fechaPublicacion: Between(moment(date).utc(true).startOf("month").toDate(), date)
-        }
-    })
+export const getPostulacionesByMonth = async (months: Date[]) => {
+    const result: { month: Date, cant: number }[] = [];
+    for (let index = 0; index < months.length; index++) {
+        const month = months[index];
+
+        result.push({
+            month,
+            cant: await getRepository(PostulanteOferta).count({
+                where: {
+                    createdDate: Between(moment(month).utc(true).startOf("month").toDate(), month)
+                }
+            })
+        })
+    }
+
+    return result;
 }

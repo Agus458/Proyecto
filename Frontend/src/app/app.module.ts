@@ -61,8 +61,17 @@ import { HabilitarEmpresaComponent } from './components/empresa/habilitar-empres
 import { DialogHabilitarEmpresaComponent } from './components/empresa/habilitar-empresa/dialog-habilitar-empresa/dialog-habilitar-empresa.component';
 import { CompartirNovedadDialogComponent } from './components/novedades/compartir-novedad-dialog/compartir-novedad-dialog.component';
 import { VistaNovedadComponent } from './components/novedades/vista-novedad/vista-novedad.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FiltrosdialogComponent } from './components/ofertas/empresa/lista-postulantes/filtrosdialog/filtrosdialog.component';
+import { ChartsModule } from 'ng2-charts';
+import { DashComponent } from './components/dash/dash.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { LayoutModule } from '@angular/cdk/layout';
+import { CardComponent } from './components/dash/card/card.component';
+import { LineChartComponent } from './components/dash/charts/line-chart/line-chart.component';
 
 @NgModule({
   declarations: [
@@ -104,8 +113,10 @@ import { FiltrosdialogComponent } from './components/ofertas/empresa/lista-postu
     ListaPostulantesComponent,
     CompartirNovedadDialogComponent,
     VistaNovedadComponent,
-    DashboardComponent,
     FiltrosdialogComponent,
+    LineChartComponent,
+    DashComponent,
+    CardComponent,
   ],
   imports: [
     BrowserModule,
@@ -118,7 +129,14 @@ import { FiltrosdialogComponent } from './components/ofertas/empresa/lista-postu
     MatDatepickerModule,
     MatMomentDateModule,
     IvyCarouselModule,
-    SocialLoginModule
+    SocialLoginModule,
+    ChartsModule,
+    MatGridListModule,
+    MatCardModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+    LayoutModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

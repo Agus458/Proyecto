@@ -21,7 +21,7 @@ import { HabilitarEmpresaComponent } from './components/empresa/habilitar-empres
 import { OfertasComponent } from './components/ofertas/ofertas.component';
 import { VistaNovedadComponent } from './components/novedades/vista-novedad/vista-novedad.component';
 import { ListaPostulantesComponent } from './components/ofertas/empresa/lista-postulantes/lista-postulantes.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DashComponent } from './components/dash/dash.component';
 
 const routes: Routes = [
   { path: "", component: InicioComponent },
@@ -51,7 +51,7 @@ const routes: Routes = [
   { path: "listarnovedades", component: ListarnovedadesComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador'] } },
 
   { path: "habilitarEmpresa", component: HabilitarEmpresaComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador'] } },
-  { path: "dashboard", component: DashboardComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador'] } },
+  { path: "dashboard", component: DashComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador'] } },
 
   { path: '**', component: PageNotFoundComponent },
 ];

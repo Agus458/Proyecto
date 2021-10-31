@@ -8,8 +8,10 @@ import { tieneRol } from "../middlewares/tieneRol";
 
 const router = Router();
 
-router.put("/habilitarEmpresa/:id", handleRequest(administradoresController.habilitarEmpresa));
+router.put("/habilitarEmpresa/:id", [isLoggedIn, tieneRol(['Administrador'])], handleRequest(administradoresController.habilitarEmpresa));
 
-router.get("/dashboard", handleRequest(administradoresController.getDashboard));
+router.get("/dashboard", [isLoggedIn, tieneRol(['Administrador'])], handleRequest(administradoresController.getDashboard));
+
+router.get("/charts", [isLoggedIn, tieneRol(['Administrador'])], handleRequest(administradoresController.getChartsData));
 
 export default router;

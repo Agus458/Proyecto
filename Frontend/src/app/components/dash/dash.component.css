@@ -1,0 +1,27 @@
+.grid-container {
+  position: relative;
+  margin: 20px;
+}
+
+.dashboard-header-card {
+  margin: 15px;
+}
+
+.number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.number h1 {
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  padding: 8px;
+
+  background: #fff;
+  border: 1px solid #666;
+  color: #666;
+  text-align: center;
+}

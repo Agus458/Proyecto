@@ -7,6 +7,7 @@ import * as empresasService from "../services/empresas.service";
 import * as ofertasService from "../services/ofertas.service";
 import * as postulantesService from "../services/postulantes.service";
 import * as novedadesService from "../services/novedades.service";
+import { getPreviousMonths } from "../libraries/date.library";
 
 export const habilitarEmpresa = async (request: Request, response: Response): Promise<Response> => {
     if (!request.params.id) throw AppError.badRequestError("No se ingreso el id de la empresa");
@@ -31,14 +32,22 @@ export const habilitarEmpresa = async (request: Request, response: Response): Pr
 }
 
 export const getDashboard = async (request: Request, response: Response): Promise<Response> => {
-    // const ofertas = await ofertasService.getOfertasFiltered(request.query);
-    // const postulantesOferta = await ofertasService.getCantPostulantesOfertas(request.query);
-    // const postulantes = await postulantesService.getPostulanteFiltered(request.query);
-    // const empresas = await empresasService.getEmpresasFiltered(request.query);
-    // const novedades = await novedadesService.count(request.query);
+    return response.status(200).json({
+        "Ofertas":  await ofertasService.getOfertasFiltered(request.query),
+        "Postulantes": await postulantesService.getPostulanteFiltered(request.query),
+        "Empresas": await empresasService.getEmpresasFiltered(request.query),
+        "Novedades": await novedadesService.count(request.query),
+        "Postulaciones a Ofertas": await ofertasService.getCantPostulantesOfertas(request.query),
+    });
+}
 
-    // return response.status(200).json({ ofertas: ofertas?.length, postulantes, empresas, novedades, postulantesOferta });
-
-    await ofertasService.getOfertasByMonth();
-    return response.json();
+export const getChartsData = async (request: Request, response: Response): Promise<Response> => {
+    const months = getPreviousMonths();
+    
+    return response.status(200).json({
+        "Ofertas por Mes": await ofertasService.getOfertasByMonth(months),
+        "Postulaciones a Ofertas por Mes": await ofertasService.getPostulacionesByMonth(months),
+        "Empresas Registradas por Mes": await empresasService.getEmpresasByMonth(months),
+        "Postulantes Registrados por Mes": await postulantesService.getPostulantesByMonth(months)
+    });
 }

@@ -1,0 +1,46 @@
+<div class="grid-container">
+  <mat-card class="dashboard-header-card">
+    <mat-card-header>
+      <h1 mat-card-title>Dashboard</h1>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="dashboardForm" (ngSubmit)="submit()">
+        <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center">
+          <mat-form-field appearance="fill">
+            <mat-label>Desde</mat-label>
+            <input matInput [matDatepicker]="picker" placeholder="00/00/0000" formControlName="desde">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Hasta</mat-label>
+            <input matInput [matDatepicker]="picker2" placeholder="00/00/0000" formControlName="hasta">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+          <button mat-flat-button color="primary" type="submit" [disabled]="dashboardForm.invalid">Buscar</button>
+          <button mat-flat-button color="warn" type="button" [disabled]="!dashboardForm.touched"
+            (click)="clear()">Reset</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  <mat-grid-list cols="{{ ( cardLayout | async )?.columns }}" rowHeight="200px">
+
+    <!--Mini Cards-->
+    <mat-grid-tile *ngFor="let elem of data" [colspan]="( cardLayout | async )?.miniCard?.cols"
+      [rowspan]="( cardLayout | async )?.miniCard?.rows">
+      <app-card title="{{elem.name}}">
+        <div class="number"><h1>{{elem.cant}}</h1></div>
+      </app-card>
+    </mat-grid-tile>
+
+    <!--Charts-->
+    <mat-grid-tile *ngFor="let chart of charts" [colspan]="( cardLayout | async )?.chart?.cols"
+      [rowspan]="( cardLayout | async )?.chart?.rows">
+      <app-card title="{{chart.name}}">
+        <app-line-chart title="{{chart.name}}" [data]="chart.data"></app-line-chart>
+      </app-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

@@ -1,5 +1,5 @@
 import moment from "moment";
-import { DeepPartial, getRepository } from "typeorm";
+import { Between, DeepPartial, getRepository } from "typeorm";
 import { verifyPassword } from "../libraries/encryptation.library";
 import { Pagination } from "../models/pagination.mode";
 import { Postulante } from "../models/postulante.model";
@@ -142,4 +142,22 @@ export const getPostulanteFiltered = async (filters: any): Promise<number> => {
     // Ejecucion
     
     return await query.getCount();
+}
+
+export const getPostulantesByMonth = async (months: Date[]) => {
+    const result: { month: Date, cant: number }[] = [];
+    for (let index = 0; index < months.length; index++) {
+        const month = months[index];
+
+        result.push({
+            month,
+            cant: await getRepository(Postulante).count({
+                where: {
+                    createdDate: Between(moment(month).utc(true).startOf("month").toDate(), month)
+                }
+            })
+        })
+    }
+
+    return result;
 }

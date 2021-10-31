@@ -23,11 +23,15 @@ export class AdministradorService {
   }
 
   dashboard(desde?: string, hasta?: string) {
-    return this.http.get(this.url + "/dashboard", {
+    return this.http.get<any>(this.url + "/dashboard", {
       params: desde && hasta ? {
         desde,
         hasta
       } : {}
     });
+  }
+
+  charts() {
+    return this.http.get<any>(this.url + "/charts");
   }
 }
