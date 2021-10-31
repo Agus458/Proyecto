@@ -51,3 +51,20 @@ export const getChartsData = async (request: Request, response: Response): Promi
         "Postulantes Registrados por Mes": await postulantesService.getPostulantesByMonth(months)
     });
 }
+
+export const deshabilitarEmpresa = async (request: Request, response: Response): Promise<Response> => {
+    if (!request.params.id) throw AppError.badRequestError("No se ingreso el id de la empresa");
+    if (!validator.isInt(request.params.id)) throw AppError.badRequestError("Id de empresa invalido");
+
+    const empresa = await empresasService.getById(Number.parseInt(request.params.id));
+
+    if (!empresa) throw AppError.badRequestError("No existe ninguna empresa con el id ingresado");
+
+    if (empresa.estado != EstadoUsuario.ACTIVO) throw AppError.badRequestError("La empresa seleccionada no esta activa");
+
+    empresa.estado = EstadoUsuario.INACTIVO;
+
+    await empresasService.put(empresa.id, empresa);
+
+    return response.status(204).json();
+}

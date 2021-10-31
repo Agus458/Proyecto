@@ -77,7 +77,7 @@ export class ListaPostulantesComponent implements OnInit {
   paginatorChange(event?: PageEvent) {
     if (event) {
       const skip = event.pageIndex * event.pageSize;
-      this.getPostulantes(skip, event.pageSize);
+      this.getPostulantes(skip, event.pageSize, this.filtros);
     }
   }
 

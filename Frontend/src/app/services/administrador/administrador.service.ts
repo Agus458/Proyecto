@@ -22,6 +22,10 @@ export class AdministradorService {
     return this.http.put(this.url + "/habilitarEmpresa/" + id, data);
   }
 
+  deshabilitarEmpresa(id: number) {
+    return this.http.put(this.url + "/deshabilitarEmpresa/" + id, {});
+  }
+
   dashboard(desde?: string, hasta?: string) {
     return this.http.get<any>(this.url + "/dashboard", {
       params: desde && hasta ? {

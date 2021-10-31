@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>Filtros</h1>
+<mat-dialog-content>
+    <mat-divider></mat-divider>
+    <br>
+    <form [formGroup]="filtrosForm">
+        <div fxLayout="column" fxLayoutAlign="start start">
+            <div fxLayout="row" fxLayoutAlign="start start" style="align-items: center;" class="block">
+                <mat-checkbox style="margin-top: 15px; margin-right: 10px;" (click)="toggle('estado')">
+                </mat-checkbox>
+                <mat-form-field appearance="fill">
+                    <mat-label>Estado</mat-label>
+                    <mat-select formControlName="estado">
+                        <mat-option [value]="0">Activa</mat-option>
+                        <mat-option [value]="1">Inactiva</mat-option>
+                        <mat-option [value]="2">Pendiente</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close><strong>Cancelar</strong></button>
+    <button mat-button [mat-dialog-close]="filtrosForm.value"
+        [disabled]="filtrosForm.invalid"><strong>Filtrar</strong></button>
+</mat-dialog-actions>

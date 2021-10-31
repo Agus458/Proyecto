@@ -1,4 +1,6 @@
-<h1>Empresas Pendientes</h1>
+<h1>Empresas</h1>
+<button mat-flat-button color="accent" type="button" style="margin-bottom: 10px;"
+    (click)="openDialogFilters()">Filtrar</button>
 <mat-divider style="padding-bottom: 20px;"></mat-divider>
 
 <div class="example-container mat-elevation-z8 table">
@@ -19,17 +21,24 @@
             <td mat-cell *matCellDef="let element"> {{element.razonSocial}}</td>
         </ng-container>
 
+        <ng-container matColumnDef="estado">
+            <th mat-header-cell *matHeaderCellDef> Estado </th>
+            <td mat-cell *matCellDef="let element"> {{getEstado(element.estado)}}</td>
+        </ng-container>
+
         <ng-container matColumnDef="mas">
             <th mat-header-cell *matHeaderCellDef><button mat-icon-button type="button" disabled>-.-</button></th>
             <td mat-cell *matCellDef="let element">
-                <button mat-icon-button type="button" color="warn"
-                    (click)="openDialog(element)">
+                <button mat-icon-button type="button" color="warn" (click)="openDialog(element)">
                     <mat-icon>menu</mat-icon>
-                </button> 
+                </button>
             </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
+    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+        (page)="paginatorChange($event)" aria-label="Select page">
+    </mat-paginator>
 </div>

@@ -3,22 +3,26 @@ import { Between, DeepPartial, getRepository } from "typeorm";
 import { verifyPassword } from "../libraries/encryptation.library";
 import { Empresa } from "../models/empresa.model";
 import { EstadoUsuario } from "../models/enums";
+import { Pagination } from "../models/pagination.mode";
 
 /* ---------------------------------------< EMPRESAS SERVICE >--------------------------------------- */
 
-// Retorna todos las empresas almacenados en el sistema.
-export const get = async (): Promise<Empresa[]> => {
-    return await getRepository(Empresa).find();
-};
-
-// Retorna todas las empresas pendientes almacenadas en el sistema.
-export const getPendientes = async (): Promise<Empresa[]> => {
-    return await getRepository(Empresa).find({ where: { estado: EstadoUsuario.PENDIENTE } });
-};
-
 // Retorna todas las empresas almacenadas en el sistema.
-export const getAll = async (): Promise<Empresa[]> => {
-    return await getRepository(Empresa).find();
+export const getAll = async (filters: any): Promise<Pagination<Empresa>> => {
+    const query = getRepository(Empresa).createQueryBuilder("empresa");
+
+    if (filters.estado && EstadoUsuario[filters.estado]) query.andWhere("empresa.estado = :estado", { estado: filters.estado });
+
+    // Paginado
+
+    if (filters.skip) query.skip(filters.skip);
+    if (filters.take) query.take(filters.take);
+
+    // Ejecucion
+
+    const result = await query.getManyAndCount();
+
+    return { data: result[0], cantidad: result[1] }
 };
 
 // Retorna la empresa almacenado en el sistema cuyo id sea el ingresado.
@@ -85,7 +89,7 @@ export const getEmpresasFiltered = async (filters: any): Promise<number> => {
     }
 
     // Ejecucion
-    
+
     return await query.getCount();
 }
 

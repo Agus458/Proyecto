@@ -72,6 +72,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { LayoutModule } from '@angular/cdk/layout';
 import { CardComponent } from './components/dash/card/card.component';
 import { LineChartComponent } from './components/dash/charts/line-chart/line-chart.component';
+import { FiltersEmpresaDialogComponent } from './components/empresa/filters-empresa-dialog/filters-empresa-dialog.component';
 
 @NgModule({
   declarations: [
@@ -117,6 +118,7 @@ import { LineChartComponent } from './components/dash/charts/line-chart/line-cha
     LineChartComponent,
     DashComponent,
     CardComponent,
+    FiltersEmpresaDialogComponent,
   ],
   imports: [
     BrowserModule,

@@ -10,6 +10,8 @@ export interface Empresa {
 
     razonSocial?: string;
 
+    estado?: number;
+
     socia?: boolean;
 
     telefono?: string
@@ -20,4 +22,5 @@ export interface Empresa {
 
     nombreFantasia?: string;
 
+    fechaVencimiento?: Date;
 }

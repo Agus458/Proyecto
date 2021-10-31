@@ -15,8 +15,10 @@
         
     </mat-dialog-content>
     <mat-dialog-actions align="end">
-        <button mat-button [mat-dialog-close]="true" class="boton" color="warn" type="submit"
-            [disabled]="habilitarEmpresaForm.invalid">Habilitar Empresa</button>
+        <button mat-button [mat-dialog-close]="true" class="boton" color="warn" type="button"
+            [disabled]="data.estado != 0" (click)="deshabilitarEmpresa()">Deshabilitar Empresa</button>
+        <button mat-button [mat-dialog-close]="true" class="boton" color="primary" type="submit"
+            [disabled]="habilitarEmpresaForm.invalid || data.estado != 2">Habilitar Empresa</button>
         <button mat-button mat-dialog-close cdkFocusInitial type="button">Cerrar</button>
     </mat-dialog-actions>
 </form>

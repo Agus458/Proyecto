@@ -64,7 +64,7 @@ export class EditarOfertaComponent implements OnInit {
       try {
         const result = await this.empresasService.getEmpresas().toPromise();
 
-        this.empresas = result;
+        this.empresas = result.data;
       } catch (error) {
         
       }

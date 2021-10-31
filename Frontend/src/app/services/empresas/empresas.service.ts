@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { SocialAuthService } from 'angularx-social-login';
 import { proyectConfig } from 'proyectConfig';
 import { Empresa } from 'src/app/models/empresa.model';
+import { Pagination } from 'src/app/models/pagination.mode';
 
 @Injectable({
   providedIn: 'root'
@@ -20,11 +21,16 @@ export class EmpresasService {
     private authService: SocialAuthService
   ) { }
 
-  getEmpresas(){
-    return this.http.get<Empresa[]>(this.url);
-  }
+  getEmpresas(skip?: number, take?: number, filters?: any) {
+    const params: any = {
+      skip: skip ?? 0,
+      take: take ?? 10
+    }
 
-  getPendientes(){
-    return this.http.get<Empresa[]>(this.url + "/pendientes");
+    Object.assign(params, filters);
+
+    return this.http.get<Pagination<Empresa>>(this.url, {
+      params
+    });
   }
 }

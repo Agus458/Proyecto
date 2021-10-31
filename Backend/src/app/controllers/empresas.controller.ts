@@ -1,15 +1,12 @@
 import { Request, Response } from "express";
 import validator from "validator";
 import { AppError } from "../../config/error/appError";
+import { EstadoUsuario } from "../models/enums";
 import * as empresasService from "../services/empresas.service";
 import * as usuariosService from "../services/usuarios.service";
 
-export const getPendientes = async (request: Request, response: Response): Promise<Response> => {
-    return response.json(await empresasService.getPendientes());
-}
-
 export const getAll = async (request: Request, response: Response): Promise<Response> => {
-    return response.json(await empresasService.getAll());
+    return response.json(await empresasService.getAll(request.query));
 }
 
 
