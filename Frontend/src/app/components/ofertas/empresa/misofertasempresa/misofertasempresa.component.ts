@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
+import * as moment from 'moment';
 import { Oferta } from 'src/app/models/oferta.model';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { OfertaService } from 'src/app/services/ofertas/oferta.service';
@@ -18,7 +19,7 @@ export class MisofertasempresaComponent implements OnInit {
   pageSize = 10;
   pageSizeOptions: number[] = [5, 10, 25, 100];
 
-  displayedColumns: string[] = ['id', 'nombre', 'puesto', 'fechaPublicacion', 'fechaCierre', 'mas'];
+  displayedColumns: string[] = ['id', 'nombre', 'puesto', 'fechaPublicacion', 'fechaCierre', 'estado', 'mas'];
 
   ofertas: Oferta[] = [];
 
@@ -67,7 +68,7 @@ export class MisofertasempresaComponent implements OnInit {
     this.getOfertas(0, 9);
   }
 
-  delete(id: number) {
-
+  estado(fecha: Date) {
+    return moment(fecha).isBefore(moment()) ? "Finalizada" : "Activa"
   }
 }

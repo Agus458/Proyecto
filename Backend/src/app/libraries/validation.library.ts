@@ -329,7 +329,7 @@ export const validarOferta = async (oferta: any) => {
     if (typeof oferta.requisitosExcluyente != "string") throw AppError.badRequestError("Requisitos excluyentes de oferta invalido o no ingresado");
     if (typeof oferta.requisitosValorados != "string") throw AppError.badRequestError("Requisitos valorados de oferta invalido o no ingresado");
     if (typeof oferta.telefonoContacto != "string") throw AppError.badRequestError("Telefono de contacto de oferta invalido o no ingresado");
-    if (typeof oferta.vacantes != "string" && !validator.isInt(oferta.vacantes)) throw AppError.badRequestError("Vacantes de oferta invalido o no ingresado");
+    if (typeof oferta.vacantes != "string" && !validator.isInt(oferta.vacantes.toString())) throw AppError.badRequestError("Vacantes de oferta invalido o no ingresado");
     if (typeof oferta.descripcion != "string") throw AppError.badRequestError("Descripcion de oferta invalido o no ingresado");
     if (typeof oferta.areaDeTrabajo != "number" || !await profileService.getById(AreaTematica.prototype, oferta.areaDeTrabajo)) throw AppError.badRequestError("Area de trabajo de oferta invalido o no ingresado");
     if (typeof oferta.emailContacto != "string" || !validator.isEmail(oferta.emailContacto)) throw AppError.badRequestError("Email de contacto de oferta invalido o no ingresado");

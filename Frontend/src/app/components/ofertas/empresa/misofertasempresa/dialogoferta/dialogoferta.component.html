@@ -16,6 +16,7 @@
             Postulantes</button>
     </ng-container>
     <button mat-button [mat-dialog-close]="true" class="boton" [routerLink]="'/editaroferta/'+ data.id">Editar</button>
+    <button mat-button [mat-dialog-close]="true" class="boton" color="warn" [disabled]="finalizada" (click)="finish(data.id)">Finalizar</button>
     <ng-container *ngIf="authService.getUser()?.tipo == 'Administrador'">
         <button mat-button [mat-dialog-close]="true" class="boton" color="warn"
             (click)="deleteOferta(data.id)">Eliminar</button>

@@ -30,4 +30,6 @@ router.get("/:id", [], handleRequest(ofertasController.getOffertaById));
 
 router.delete("/:id", [isLoggedIn, tieneRol(["Administrador"])], handleRequest(ofertasController._delete));
 
+router.post("/finish/:id", [isLoggedIn, tieneRol(["Administrador", "Empresa"])], handleRequest(ofertasController.finish));
+
 export default router;

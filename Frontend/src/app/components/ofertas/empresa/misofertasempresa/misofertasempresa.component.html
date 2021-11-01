@@ -36,6 +36,11 @@
                 <td mat-cell *matCellDef="let element"> {{element.fechaCierre | date:'shortDate' }}</td>
             </ng-container>
 
+            <ng-container matColumnDef="estado">
+                <th mat-header-cell *matHeaderCellDef> Estado </th>
+                <td mat-cell *matCellDef="let element">{{estado(element.fechaCierre)}}</td>
+            </ng-container>
+
             <ng-container matColumnDef="mas">
                 <th mat-header-cell *matHeaderCellDef><button mat-icon-button type="button" disabled>-.-</button></th>
                 <td mat-cell *matCellDef="let element"><button mat-icon-button type="button" color="warn"

@@ -125,7 +125,7 @@ export const getPostulaciones = async (postulante: Postulante, skip?: number, ta
 
 export const getById = async (id: number): Promise<Oferta | undefined> => {
     return await getRepository(Oferta).findOne(id, {
-        relations: ["areaDeTrabajo", "empresa", "postulantes"]
+        relations: ["areaDeTrabajo", "empresa", "postulantes", "postulantes.postulante"]
     });
 };
 

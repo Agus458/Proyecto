@@ -8,6 +8,7 @@ import * as postulantesService from "../services/postulantes.service";
 import { Administrador } from "../models/administrador.model";
 import { validarOferta, validarPerfil, validatePagination } from "../libraries/validation.library";
 import { PostulanteOferta } from "../models/postulante-oferta.model";
+import { Empresa } from "../models/empresa.model";
 
 export const getOffertas = async (request: Request, response: Response): Promise<Response> => {
     const { skip, take } = validatePagination(request.query);
@@ -168,4 +169,25 @@ export const postulado = async (request: Request, response: Response): Promise<R
     const oferta = await ofertasService.postulado(Number.parseInt(request.params.id), request.user.id);
 
     return response.json({ postulado: oferta != null });
+}
+
+export const finish = async (request: Request, response: Response): Promise<Response> => {
+    if (!request.params.id) throw AppError.badRequestError("No se ingreso el id de la offerta");
+    if (!validator.isInt(request.params.id)) throw AppError.badRequestError("Id de offerta invalido");
+
+    const oferta = await ofertasService.getById(Number.parseInt(request.params.id));
+    if (!oferta) throw AppError.badRequestError("No existe ninguna oferta con el id ingresado");
+
+    if (request.user instanceof Empresa) {
+        const empresa = await empresasService.getById(request.user.id);
+        if (!empresa) throw AppError.badRequestError("No existe ninguna empresa con el id ingresado");
+
+        if (oferta.empresa.id != empresa.id) throw AppError.badRequestError("Esta oferta no le pertenece");
+    }
+
+    oferta.fechaCierre = new Date();
+
+    await ofertasService.put(oferta.id, oferta);
+
+    return response.status(204).json();
 }

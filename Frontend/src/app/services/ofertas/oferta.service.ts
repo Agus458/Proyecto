@@ -103,4 +103,7 @@ export class OfertaService {
     return this.http.delete(this.url + `/${id}`);
   }
 
+  finish(id: number) {
+    return this.http.post(this.url + `/finish/${id}`, {});
+  }
 }
