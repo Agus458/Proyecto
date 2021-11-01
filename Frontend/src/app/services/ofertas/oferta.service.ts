@@ -21,12 +21,16 @@ export class OfertaService {
     private router: Router,
   ) { }
 
-  getOfertas(skip?: number, take?: number) {
+  getOfertas(skip?: number, take?: number, filters?: any) {
+    const params: any = {
+      skip: skip ?? 0,
+      take: take ?? 9
+    }
+
+    Object.assign(params, filters);
+
     return this.http.get<Pagination<Oferta>>(this.url, {
-      params: {
-        skip: skip ?? 0,
-        take: take ?? 9
-      }
+      params
     });
   }
 

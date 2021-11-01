@@ -14,18 +14,24 @@ export const getAll = async (skip?: number, take?: number): Promise<Pagination<O
     return { data: result[0], cantidad: result[1] };
 };
 
-export const get = async (skip?: number, take?: number): Promise<Pagination<Oferta>> => {
-    const result = await getRepository(Oferta).findAndCount({
-        where: {
-            fechaCierre: MoreThan(new Date())
-        },
-        relations: ["empresa", "areaDeTrabajo"],
-        skip,
-        take,
-        order: {
-            fechaPublicacion: "DESC"
-        }
-    });
+export const get = async (filters: any): Promise<Pagination<Oferta>> => {
+    const query = getRepository(Oferta).createQueryBuilder("oferta");
+
+    // Relaciones
+    query.leftJoinAndSelect("oferta.empresa", "empresa");
+    query.leftJoinAndSelect("oferta.areaDeTrabajo", "areaDeTrabajo");
+    query.where("oferta.fechaCierre > :now", { now: new Date() });
+
+    if (filters.areaDeTrabajo) query.andWhere("areaDeTrabajo.id = :areaDeTrabajo", { areaDeTrabajo: filters.areaDeTrabajo });
+
+    // Paginado
+
+    if (filters.skip) query.skip(filters.skip);
+    if (filters.take) query.take(filters.take);
+
+    // Ejecucion
+
+    const result = await query.getManyAndCount();
 
     return { data: result[0], cantidad: result[1] };
 };

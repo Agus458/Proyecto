@@ -75,6 +75,7 @@ import { LineChartComponent } from './components/dash/charts/line-chart/line-cha
 import { FiltersEmpresaDialogComponent } from './components/empresa/filters-empresa-dialog/filters-empresa-dialog.component';
 import { PostulacionesComponent } from './components/postulaciones/postulaciones.component';
 import { PortalofertasComponent } from './components/ofertas/postulante/portalofertas/portalofertas.component';
+import { FiltroPortalDialogComponent } from './components/ofertas/postulante/portalofertas/filtro-portal-dialog/filtro-portal-dialog.component';
 
 @NgModule({
   declarations: [
@@ -123,6 +124,7 @@ import { PortalofertasComponent } from './components/ofertas/postulante/portalof
     FiltersEmpresaDialogComponent,
     PostulacionesComponent,
     PortalofertasComponent,
+    FiltroPortalDialogComponent,
   ],
   imports: [
     BrowserModule,

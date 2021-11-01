@@ -1,5 +1,7 @@
 <div class="container">
     <h1><em>OFERTAS DE TRABAJO</em></h1>
+    <button mat-flat-button color="accent" type="button" style="margin-bottom: 10px;"
+        (click)="openDialog()">Filtrar</button>
     <mat-divider></mat-divider>
     <div fxLayout="row wrap" fxLayoutAlign="space-evenly start" fxLayout.xs="column" fxLayoutAlign.xs="center center">
         <div *ngFor="let oferta of ofertas;" fxFlex.gt-md="25" fxFlexAlign.lt-md="100" fxLayout="column"
@@ -24,4 +26,7 @@
             </mat-card>
         </div>
     </div>
+    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+        (page)="paginatorChange($event)" aria-label="Select page">
+    </mat-paginator>
 </div>

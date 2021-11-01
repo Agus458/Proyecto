@@ -12,7 +12,7 @@ import { PostulanteOferta } from "../models/postulante-oferta.model";
 export const getOffertas = async (request: Request, response: Response): Promise<Response> => {
     const { skip, take } = validatePagination(request.query);
 
-    const offerta = await ofertasService.get(skip, take);
+    const offerta = await ofertasService.get(request.query);
 
     return response.status(200).json(offerta);
 }
@@ -103,7 +103,7 @@ export const ActualizarOfferta = async (request: Request, response: Response): P
         empresa = await empresasService.getById(request.user.id);
         if (!empresa) throw AppError.badRequestError("No existe ningun empresa con el id ingresado");
 
-        if(oferta.empresa.id != empresa.id) throw AppError.badRequestError("Esta oferta no le pertenece");
+        if (oferta.empresa.id != empresa.id) throw AppError.badRequestError("Esta oferta no le pertenece");
     }
 
     request.body.empresa = empresa;
