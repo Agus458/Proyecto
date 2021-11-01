@@ -74,6 +74,7 @@ import { CardComponent } from './components/dash/card/card.component';
 import { LineChartComponent } from './components/dash/charts/line-chart/line-chart.component';
 import { FiltersEmpresaDialogComponent } from './components/empresa/filters-empresa-dialog/filters-empresa-dialog.component';
 import { PostulacionesComponent } from './components/postulaciones/postulaciones.component';
+import { PortalofertasComponent } from './components/ofertas/postulante/portalofertas/portalofertas.component';
 
 @NgModule({
   declarations: [
@@ -121,6 +122,7 @@ import { PostulacionesComponent } from './components/postulaciones/postulaciones
     CardComponent,
     FiltersEmpresaDialogComponent,
     PostulacionesComponent,
+    PortalofertasComponent,
   ],
   imports: [
     BrowserModule,

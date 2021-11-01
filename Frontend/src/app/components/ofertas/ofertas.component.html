@@ -3,13 +3,36 @@
 </ng-container>
 
 <ng-template #block>
-    <p>{{oferta?.nombreOfferta}}</p>
-    <ng-container *ngIf="authService.getUser()?.tipo == 'Postulante'">
-        <div *ngIf="!postulado; else elseBlock">
-            <button mat-flat-button [color]="'primary'" (click)="postularse()">Postularse</button>
-        </div>
-        <ng-template #elseBlock>
-            <button mat-flat-button [color]="'warn'">Ya estas postulado</button>
-        </ng-template>
-    </ng-container>
+    
+        <mat-card>
+            <h2>{{oferta?.nombreOfferta}}</h2>
+            <mat-card-subtitle>Publicado el: {{oferta?.fechaPublicacion | date: "shortDate"}}</mat-card-subtitle>
+            <h3>{{oferta?.descripcion}}</h3>
+            <h3><strong>Puesto: </strong> {{oferta?.puesto}}</h3>
+            <h3><strong>Area de Trabajo: </strong> {{oferta?.areaDeTrabajo.nombre}}</h3>
+            <h3><strong>Funciones y Tareas: </strong></h3>
+            <h3>{{oferta?.funcionesDePuesto}}</h3>
+            <h3><strong>Requisitos Excluyentes: </strong></h3>
+            <h3> {{oferta?.requisitosExcluyente}}</h3>
+            <h3><strong>Requisitos Valorados: </strong> </h3>
+            <h3>{{oferta?.requisitosValorados}}</h3>
+            <h3><strong>Horarios del Trabajo: </strong> {{oferta?.horariodetrabajo}}</h3>
+            <h3><strong>Rango Salarial: </strong> {{oferta?.rangoSalario}}</h3>
+            <h3><strong>Lugar de Trabajo: </strong> {{oferta?.lugarTrabajo}}</h3>
+            <h3><strong>Disponible hasta el: </strong> {{oferta?.horariodetrabajo}}</h3>
+            
+
+
+            <ng-container *ngIf="authService.getUser()?.tipo == 'Postulante'">
+                <div *ngIf="!postulado; else elseBlock">
+                    <button mat-flat-button [color]="'primary'" (click)="postularse()">Postularse</button>
+                    <button mat-flat-button [color]="'primary'" (click)="compartir()">Compartir</button>
+                </div>
+                <ng-template #elseBlock>
+                    <button mat-flat-button [color]="'warn'">Ya estas postulado</button>
+                    <button mat-flat-button [color]="'primary'" (click)="compartir()">Compartir</button>
+                </ng-template>
+            </ng-container>
+        </mat-card>
+
 </ng-template>

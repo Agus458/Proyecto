@@ -1,7 +1,7 @@
 import { Empresa } from "./empresa.model";
 import { Postulante } from "./postulante.model";
 
-export interface Oferta {
+export class Oferta {
     
     id?: number;
 
@@ -32,6 +32,8 @@ export interface Oferta {
     horariodetrabajo?: string;
 
     rangoSalario?: String;
+
+    lugarTrabajo?: string;
 
     fechaPublicacion?: Date;
 

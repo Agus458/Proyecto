@@ -23,6 +23,8 @@ import { VistaNovedadComponent } from './components/novedades/vista-novedad/vist
 import { ListaPostulantesComponent } from './components/ofertas/empresa/lista-postulantes/lista-postulantes.component';
 import { DashComponent } from './components/dash/dash.component';
 import { PostulacionesComponent } from './components/postulaciones/postulaciones.component';
+import { PortalofertasComponent } from './components/ofertas/postulante/portalofertas/portalofertas.component';
+
 
 const routes: Routes = [
   { path: "", component: InicioComponent },
@@ -41,6 +43,7 @@ const routes: Routes = [
   { path: "miperfil", component: MiPerfilComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Postulante'] } },
   { path: "postulante/:id", component: MiPerfilComponent, canActivate: [IsLoggedInGuard] },
 
+  { path: "ofertas", component: PortalofertasComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador','Postulante'] } },
   { path: "editaroferta", component: EditarOfertaComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador', 'Empresa'] } },
   { path: "editaroferta/:id", component: EditarOfertaComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador', 'Empresa'] } },
   { path: "listaofertas", component: MisofertasempresaComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador', 'Empresa'] } },
