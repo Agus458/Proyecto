@@ -73,6 +73,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { CardComponent } from './components/dash/card/card.component';
 import { LineChartComponent } from './components/dash/charts/line-chart/line-chart.component';
 import { FiltersEmpresaDialogComponent } from './components/empresa/filters-empresa-dialog/filters-empresa-dialog.component';
+import { PostulacionesComponent } from './components/postulaciones/postulaciones.component';
 
 @NgModule({
   declarations: [
@@ -119,6 +120,7 @@ import { FiltersEmpresaDialogComponent } from './components/empresa/filters-empr
     DashComponent,
     CardComponent,
     FiltersEmpresaDialogComponent,
+    PostulacionesComponent,
   ],
   imports: [
     BrowserModule,

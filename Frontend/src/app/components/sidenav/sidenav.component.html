@@ -14,40 +14,47 @@
 
         <mat-nav-list>
             <mat-list-item routerLink="/novedades" routerLinkActive="selected" (click)="sidenav.toggle()">
-                <mat-icon>sticky_note_2</mat-icon>
+                <mat-icon>auto_awesome_mosaic</mat-icon>
                 Novedades
             </mat-list-item>
             
+            <ng-container *ngIf="authService.getUser()?.tipo == 'Postulante'">
+                <mat-list-item routerLink="/postulaciones" routerLinkActive="selected" (click)="sidenav.toggle()">
+                    <mat-icon>auto_awesome_motion</mat-icon>
+                    Postulaciones
+                </mat-list-item>
+            </ng-container>
+
             <ng-container *ngIf="authService.getUser()?.tipo == 'Administrador'">
                 <mat-list-item routerLink="/agregarnovedad" routerLinkActive="selected" (click)="sidenav.toggle()">
-                    <mat-icon>sticky_note_2</mat-icon>
+                    <mat-icon>post_add</mat-icon>
                     Agregar Novedad
                 </mat-list-item>
                 <mat-list-item routerLink="/listarnovedades" routerLinkActive="selected" (click)="sidenav.toggle()">
-                    <mat-icon>sticky_note_2</mat-icon>
+                    <mat-icon>auto_awesome_motion</mat-icon>
                     Listar Novedades
                 </mat-list-item>
-                <mat-list-item routerLink="/habilitarEmpresa" routerLinkActive="selected" (click)="sidenav.toggle()">
-                    <mat-icon>sticky_note_2</mat-icon>
-                    Habilitar Empresa
+                <mat-list-item routerLink="/empresas" routerLinkActive="selected" (click)="sidenav.toggle()">
+                    <mat-icon>add_business</mat-icon>
+                    Empresas
                 </mat-list-item>
                 <mat-list-item routerLink="/dashboard" routerLinkActive="selected" (click)="sidenav.toggle()">
-                    <mat-icon>sticky_note_2</mat-icon>
+                    <mat-icon>dashboard_customize</mat-icon>
                     Dashboard
                 </mat-list-item>
             </ng-container>
 
             <ng-container *ngIf="authService.getUser()?.tipo == 'Administrador' || authService.getUser()?.tipo == 'Empresa'">
                 <mat-list-item routerLink="/editaroferta" routerLinkActive="selected" (click)="sidenav.toggle()">
-                    <mat-icon>sticky_note_2</mat-icon>
+                    <mat-icon>library_add</mat-icon>
                     Agregar Oferta
                 </mat-list-item>
                 <mat-list-item routerLink="/listaofertas" routerLinkActive="selected" (click)="sidenav.toggle()">
-                    <mat-icon>sticky_note_2</mat-icon>
+                    <mat-icon>card_travel</mat-icon>
                     {{authService.getUser()?.tipo == 'Administrador' ? "Lista Ofertas" : "Mis Ofertas"}}
                 </mat-list-item>
                 <mat-list-item routerLink="/postulantespublicos" routerLinkActive="selected" (click)="sidenav.toggle()">
-                    <mat-icon>sticky_note_2</mat-icon>
+                    <mat-icon>person_add</mat-icon>
                     Postulantes Publicos
                 </mat-list-item>
             </ng-container>

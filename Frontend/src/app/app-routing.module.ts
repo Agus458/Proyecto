@@ -22,6 +22,7 @@ import { OfertasComponent } from './components/ofertas/ofertas.component';
 import { VistaNovedadComponent } from './components/novedades/vista-novedad/vista-novedad.component';
 import { ListaPostulantesComponent } from './components/ofertas/empresa/lista-postulantes/lista-postulantes.component';
 import { DashComponent } from './components/dash/dash.component';
+import { PostulacionesComponent } from './components/postulaciones/postulaciones.component';
 
 const routes: Routes = [
   { path: "", component: InicioComponent },
@@ -36,6 +37,7 @@ const routes: Routes = [
   { path: "oferta/:id", component: OfertasComponent },
 
   { path: "misdatos", component: DatosPostulanteComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Postulante'] } },
+  { path: "postulaciones", component: PostulacionesComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Postulante'] } },
   { path: "miperfil", component: MiPerfilComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Postulante'] } },
   { path: "postulante/:id", component: MiPerfilComponent, canActivate: [IsLoggedInGuard] },
 
@@ -50,7 +52,7 @@ const routes: Routes = [
   { path: "editarnovedad/:id", component: AgregarnovedadesComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador'] } },
   { path: "listarnovedades", component: ListarnovedadesComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador'] } },
 
-  { path: "habilitarEmpresa", component: HabilitarEmpresaComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador'] } },
+  { path: "empresas", component: HabilitarEmpresaComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador'] } },
   { path: "dashboard", component: DashComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador'] } },
 
   { path: '**', component: PageNotFoundComponent },

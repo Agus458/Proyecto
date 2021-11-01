@@ -52,6 +52,15 @@ export class OfertaService {
     });
   }
 
+  getOfertasPostulante(skip?: number, take?: number) {
+    return this.http.get<Pagination<Oferta>>(this.url + "/postulante", {
+      params: {
+        skip: skip ?? 0,
+        take: take ?? 10
+      }
+    });
+  }
+
   getOferta(id: number) {
     return this.http.get<Oferta>(this.url + "/" + id);
   }

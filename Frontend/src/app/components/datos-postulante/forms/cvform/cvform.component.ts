@@ -24,8 +24,8 @@ export class CVFormComponent implements OnInit {
   async ngOnInit() {
     this.cvForm = this.formBuilder.group({
       cvPerfil: [''],
-      perfilPublico: [false, [Validators.required]],
-      aceptaTerminos: [false, [Validators.required]]
+      perfilPublico: [{ value: false }, [Validators.required]],
+      aceptaTerminos: [{ value: false }, [Validators.required]]
     })
 
     try {
@@ -36,7 +36,7 @@ export class CVFormComponent implements OnInit {
         this.cv = await this.postulantesService.getArchivo(proyectConfig.backEndURL + "/" + result.cv);
       }
 
-    } catch (error) {}
+    } catch (error) { }
 
     this.formReady.emit(this.cvForm);
   }
