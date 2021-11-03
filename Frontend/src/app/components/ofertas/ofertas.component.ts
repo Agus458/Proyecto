@@ -55,7 +55,7 @@ export class OfertasComponent implements OnInit {
     if (this.oferta?.id) {
       this.ofertasService.inscribirse(this.oferta.id).subscribe(
         ok => {
-          this.snackBar.open("Postulacion exitoso!", "Close", { duration: 5000 });
+          this.snackBar.open("Postulacion exitosa!", "Close", { duration: 5000 });
           this.router.navigate(['/']);
         },
         error => {

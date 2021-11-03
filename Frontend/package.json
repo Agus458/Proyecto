@@ -27,7 +27,7 @@
     "angularx-social-login": "^4.0.1",
     "chart.js": "^2.9.3",
     "moment": "^2.29.1",
-    "ng2-charts": "^2.2.3",
+    "ng2-charts": "^2.4.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
