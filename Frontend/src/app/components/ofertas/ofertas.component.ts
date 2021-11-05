@@ -7,6 +7,7 @@ import { OfertaService } from 'src/app/services/ofertas/oferta.service';
 import { PostulantesService } from 'src/app/services/postulantes/postulantes.service';
 import { MatDialog } from '@angular/material/dialog';
 import { CompartirNovedadDialogComponent } from '../novedades/compartir-novedad-dialog/compartir-novedad-dialog.component';
+import { AdministradorService } from 'src/app/services/administrador/administrador.service';
 
 @Component({
   selector: 'app-ofertas',
@@ -18,7 +19,7 @@ export class OfertasComponent implements OnInit {
   postulado: boolean = true;
 
   oferta: Oferta | undefined;
-  
+
 
   constructor(
     private route: ActivatedRoute,
@@ -27,7 +28,8 @@ export class OfertasComponent implements OnInit {
     public ofertasService: OfertaService,
     private snackBar: MatSnackBar,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private administradoresService: AdministradorService
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -38,7 +40,7 @@ export class OfertasComponent implements OnInit {
       ok => {
         this.oferta = ok;
         console.log(this.oferta);
-        
+
         if (this.oferta.id && this.authService.getUser()?.tipo == "Postulante") {
           this.ofertasService.postulado(this.oferta.id).subscribe(
             res => {
@@ -48,7 +50,7 @@ export class OfertasComponent implements OnInit {
         }
       }
     )
-    
+
   }
 
   postularse() {
@@ -71,9 +73,16 @@ export class OfertasComponent implements OnInit {
   compartir(): void {
     this.dialog.open(CompartirNovedadDialogComponent, {
       data: {
-        url: window.location.protocol + "//" + window.location.host + "/ofertas/" + this.oferta?.id,
+        url: window.location.protocol + "//" + window.location.host + "/oferta/" + this.oferta?.id,
         class: this.oferta
-      } 
+      }
     });
+  }
+
+  difundir() {
+    if (this.oferta) {
+      const link = window.location.protocol + "//" + window.location.host + "/oferta/" + this.oferta.id
+      this.administradoresService.difundir(this.oferta.nombreOfferta, "Mira esta Oferta de la bolsa de trabajo del centro comercial de San Jose", link).subscribe();
+    }
   }
 }

@@ -38,4 +38,8 @@ export class AdministradorService {
   charts() {
     return this.http.get<any>(this.url + "/charts");
   }
+
+  difundir(titulo: string, contenido: string, link: string) {
+    return this.http.post(this.url + "/difundir", { titulo, contenido, link });
+  }
 }

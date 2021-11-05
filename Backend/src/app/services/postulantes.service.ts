@@ -1,6 +1,7 @@
 import moment from "moment";
 import { Between, DeepPartial, getRepository } from "typeorm";
 import { verifyPassword } from "../libraries/encryptation.library";
+import { EstadoUsuario } from "../models/enums";
 import { Pagination } from "../models/pagination.mode";
 import { Postulante } from "../models/postulante.model";
 
@@ -9,6 +10,16 @@ import { Postulante } from "../models/postulante.model";
 // Retorna todos los postulantes almacenados en el sistema.
 export const get = async (): Promise<Postulante[]> => {
     return await getRepository(Postulante).find();
+};
+
+export const getSubscribed = async (): Promise<Postulante[]> => {
+    return await getRepository(Postulante).find({
+        select: ["email"],
+        where: {
+            estado: EstadoUsuario.ACTIVO,
+            recivirEmails: true
+        }
+    });
 };
 
 // Retorna el postulante almacenado en el sistema cuyo id sea el ingresado.

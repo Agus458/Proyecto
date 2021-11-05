@@ -8,6 +8,7 @@ import * as ofertasService from "../services/ofertas.service";
 import * as postulantesService from "../services/postulantes.service";
 import * as novedadesService from "../services/novedades.service";
 import { getPreviousMonths } from "../libraries/date.library";
+import { newsLetterTemplate, sendEmail } from "../libraries/email.library";
 
 export const habilitarEmpresa = async (request: Request, response: Response): Promise<Response> => {
     if (!request.params.id) throw AppError.badRequestError("No se ingreso el id de la empresa");
@@ -33,7 +34,7 @@ export const habilitarEmpresa = async (request: Request, response: Response): Pr
 
 export const getDashboard = async (request: Request, response: Response): Promise<Response> => {
     return response.status(200).json({
-        "Ofertas":  await ofertasService.getOfertasFiltered(request.query),
+        "Ofertas": await ofertasService.getOfertasFiltered(request.query),
         "Postulantes": await postulantesService.getPostulanteFiltered(request.query),
         "Empresas": await empresasService.getEmpresasFiltered(request.query),
         "Novedades": await novedadesService.count(request.query),
@@ -43,7 +44,7 @@ export const getDashboard = async (request: Request, response: Response): Promis
 
 export const getChartsData = async (request: Request, response: Response): Promise<Response> => {
     const months = getPreviousMonths();
-    
+
     return response.status(200).json({
         "Ofertas por Mes": await ofertasService.getOfertasByMonth(months),
         "Postulaciones a Ofertas por Mes": await ofertasService.getPostulacionesByMonth(months),
@@ -67,4 +68,17 @@ export const deshabilitarEmpresa = async (request: Request, response: Response):
     await empresasService.put(empresa.id, empresa);
 
     return response.status(204).json();
+}
+
+export const difundir = async (request: Request, response: Response): Promise<Response> => {
+    const postulantes = await postulantesService.getSubscribed();
+
+    const { titulo, contenido, link } = request.body;
+    console.log(link);
+
+    postulantes.forEach(postulante => {
+        sendEmail(postulante.email, titulo, newsLetterTemplate(titulo, contenido, link));
+    });
+
+    return response.status(200).json();
 }

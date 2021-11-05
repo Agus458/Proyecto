@@ -25,13 +25,16 @@
 
             <ng-container *ngIf="authService.getUser()?.tipo == 'Postulante'">
                 <div *ngIf="!postulado; else elseBlock">
-                    <button mat-flat-button [color]="'primary'" (click)="postularse()">Postularse</button>
-                    <button mat-flat-button [color]="'primary'" (click)="compartir()">Compartir</button>
+                    <button mat-flat-button [color]="'primary'" (click)="postularse()">Postularse</button>                   
                 </div>
                 <ng-template #elseBlock>
                     <button mat-flat-button [color]="'warn'">Ya estas postulado</button>
-                    <button mat-flat-button [color]="'primary'" (click)="compartir()">Compartir</button>
                 </ng-template>
+            </ng-container>
+            <button mat-flat-button [color]="'primary'" (click)="compartir()">Compartir</button>
+            
+            <ng-container *ngIf="authService.getUser()?.tipo == 'Administrador'">
+                <button mat-flat-button [color]="'primary'" (click)="difundir()">Difundir</button>
             </ng-container>
         </mat-card>
 

@@ -19,7 +19,7 @@ export class Oferta {
 
     areaDeTrabajo?: any;
 
-    nombreOfferta?: string;
+    nombreOfferta: string;
 
     descripcion?: string;
 

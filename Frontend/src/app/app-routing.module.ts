@@ -35,7 +35,6 @@ const routes: Routes = [
   { path: "cambiarContrasenia", component: CambiarContraseniaComponent },
   { path: "solicitarEmpresa", component: SolicitarEmpresaComponent },
   { path: "confirmarEmpresa", component: ConfirmarEmpresaComponent },
-  { path: "vistanovedad/:id", component: VistaNovedadComponent },
   { path: "oferta/:id", component: OfertasComponent },
 
   { path: "misdatos", component: DatosPostulanteComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Postulante'] } },
@@ -54,7 +53,8 @@ const routes: Routes = [
   { path: "agregarnovedad", component: AgregarnovedadesComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador'] } },
   { path: "editarnovedad/:id", component: AgregarnovedadesComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador'] } },
   { path: "listarnovedades", component: ListarnovedadesComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador'] } },
-
+  { path: "novedad/:id", component: VistaNovedadComponent },
+  
   { path: "empresas", component: HabilitarEmpresaComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador'] } },
   { path: "dashboard", component: DashComponent, canActivate: [IsLoggedInGuard, TieneRolGuard], data: { roles: ['Administrador'] } },
 

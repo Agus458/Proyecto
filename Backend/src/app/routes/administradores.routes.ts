@@ -14,6 +14,8 @@ router.put("/deshabilitarEmpresa/:id", [isLoggedIn, tieneRol(['Administrador'])]
 
 router.get("/dashboard", [isLoggedIn, tieneRol(['Administrador'])], handleRequest(administradoresController.getDashboard));
 
+router.post("/difundir", [isLoggedIn, tieneRol(['Administrador'])], handleRequest(administradoresController.difundir));
+
 router.get("/charts", [isLoggedIn, tieneRol(['Administrador'])], handleRequest(administradoresController.getChartsData));
 
 export default router;
