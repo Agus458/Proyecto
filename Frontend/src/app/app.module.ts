@@ -164,7 +164,7 @@ import { FiltroPortalDialogComponent } from './components/ofertas/postulante/por
           {
             id: FacebookLoginProvider.PROVIDER_ID,
             provider: new FacebookLoginProvider(
-              'clientId'
+              '257693316206059'
             )
           }
         ]

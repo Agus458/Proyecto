@@ -50,4 +50,11 @@ export class MiPerfilComponent implements OnInit {
     });
   }
 
+  deshabilitar() {
+    this.postulantes.deshabilitar().subscribe(
+      ok => {
+        this.authService.cerrarSesion();
+      }
+    );
+  }
 }

@@ -34,6 +34,10 @@ export class PostulantesService {
     return this.http.get(this.url + "/validarPerfil");
   }
 
+  deshabilitar() {
+    return this.http.post(this.url + "/deshabilitar", {});
+  }
+
   getPostulantesPublicos(skip?: number, take?: number, filters?: any) {
     const params: any = {
       skip: skip ?? 0,

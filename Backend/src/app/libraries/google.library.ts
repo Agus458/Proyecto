@@ -14,3 +14,16 @@ export const verifyGoogleIdToken = async (idToken: "string"): Promise<boolean> =
 
     return false;
 }
+
+export const verifyFacebookIdToken = async (idToken: "string"): Promise<boolean> => {
+    try {
+        await fetch(`graph.facebook.com/debug_token?
+        input_token=${idToken}
+        &access_token=${process.env.FACEBOOK_ID}`);
+        return true;
+    } catch (error) {
+
+    }
+
+    return false;
+}

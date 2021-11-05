@@ -37,4 +37,12 @@ export class RegistarseComponent implements OnInit {
     return this.registrarseForm.get("contraseniaRepetida");
   }
 
+  signInWithGoogle(): void {
+    this.authService.signInWithGoogle();
+  }
+
+  signInWithFB(): void {
+    this.authService.signInWithFB();
+  }
+
 }

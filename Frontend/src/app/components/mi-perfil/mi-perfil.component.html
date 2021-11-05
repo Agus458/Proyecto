@@ -17,6 +17,7 @@
                 </mat-card-content>
                 <mat-card-actions *ngIf="authService.getUser()?.tipo == 'Postulante'">
                     <button mat-button routerLink="/misdatos">Editar</button>
+                    <button mat-button color="warn" (click)="deshabilitar()">Deshabilitar</button>
                 </mat-card-actions>
             </mat-card>
 

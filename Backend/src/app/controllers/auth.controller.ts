@@ -16,7 +16,7 @@ import * as solicitudesEmpresaService from "../services/solicitudesEmpresa.servi
 import { createToken, verifyToken } from "../libraries/tokens.library";
 import { EstadoUsuario } from "../models/enums";
 import { resetTemplate, sendEmail, solicitudTemplate } from "../libraries/email.library";
-import { verifyGoogleIdToken } from "../libraries/google.library";
+import { verifyFacebookIdToken, verifyGoogleIdToken } from "../libraries/google.library";
 import { Empresa } from "../models/empresa.model";
 import moment from "moment";
 import { request } from "http";
@@ -71,7 +71,7 @@ export const solicitarEmpresa = async (request: Request, response: Response): Pr
     const pass = request.body.contrasenia;
 
     let empresa = await empresasService.getByRut(request.body.rut);
-    
+
     if (!empresa) {
         request.body.contrasenia = await encryptPassword(request.body.contrasenia);
         request.body.estado = EstadoUsuario.PENDIENTE;
@@ -94,7 +94,7 @@ export const solicitarEmpresa = async (request: Request, response: Response): Pr
         empresa = await empresasService.post(request.body);
     }
 
-    if(!await verifyPassword(pass, empresa.contrasenia)) throw AppError.badRequestError("Contraseña Invalida");
+    if (!await verifyPassword(pass, empresa.contrasenia)) throw AppError.badRequestError("Contraseña Invalida");
 
     if (moment().isBefore(moment(empresa.vencimiento)) && empresa.estado == EstadoUsuario.ACTIVO) throw AppError.badRequestError("Empresa Activa");
 
@@ -121,14 +121,14 @@ export const confirmarSolicitud = async (request: Request, response: Response): 
     const empresa = await empresasService.getByRut(rest.rut);
     if (!empresa) throw AppError.badRequestError("No existe la empresa");
 
-    if(!empresa.email || empresa.email != request.body.email){
+    if (!empresa.email || empresa.email != request.body.email) {
         if (!request.body.email) throw AppError.badRequestError("No se ingreso el email");
         if (!validator.isEmail(request.body.email)) throw AppError.badRequestError("El email ingresado no es valido");
-    
+
         if (await usuariosService.getByEmail(request.body.email)) throw AppError.badRequestError("Ya existe un usuario con el email ingresado");
     }
 
-    if(!await verifyPassword(request.body.contrasenia, empresa.contrasenia)) throw AppError.badRequestError("Contraseña Invalida");
+    if (!await verifyPassword(request.body.contrasenia, empresa.contrasenia)) throw AppError.badRequestError("Contraseña Invalida");
 
     const data = verifyToken(token, process.env.SECRET + empresa.contrasenia as string);
     if (!data) throw AppError.badRequestError("Token ya utilizado o invalido");
@@ -191,6 +191,8 @@ export const iniciarSocial = async (request: Request, response: Response): Promi
 
     if (request.body.user.provider == "GOOGLE") {
         if (! await verifyGoogleIdToken(request.body.user.idToken)) throw AppError.badRequestError("Token de sesion invalido");
+    } else if (request.body.user.provider == "FACEBOOK") {
+        if (! await verifyFacebookIdToken(request.body.user.idToken)) throw AppError.badRequestError("Token de sesion invalido");
     } else {
         throw AppError.badRequestError("Proveedor Invalido");
     }
@@ -204,6 +206,8 @@ export const iniciarSocial = async (request: Request, response: Response): Promi
             contrasenia: await encryptPassword(crypto.randomBytes(20).toString('hex')),
             estado: EstadoUsuario.ACTIVO
         });
+    } else {
+        if (usuario.estado != EstadoUsuario.ACTIVO) throw AppError.badRequestError("El usuario no se encuentra activo");
     }
 
     const { token, exp } = createToken(usuario.email);

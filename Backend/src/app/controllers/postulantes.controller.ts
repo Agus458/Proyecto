@@ -16,6 +16,7 @@ import * as ofertasService from "../services/ofertas.service";
 import { profileTemplatePDF } from "../libraries/pdf.library";
 import { Administrador } from "../models/administrador.model";
 import { Empresa } from "../models/empresa.model";
+import { EstadoUsuario } from "../models/enums";
 
 /* ---------------------------------------< POSTULANTES CONTROLLER >--------------------------------------- */
 
@@ -236,6 +237,18 @@ export const perfilCompleto = async (request: Request, response: Response): Prom
 
     if (!postulante) throw AppError.badRequestError("No existe un postulante con el id ingresado");
     if (!validarPerfil(postulante)) throw AppError.badRequestError("Perfil incompleto");
+
+    return response.json();
+}
+
+export const deshabilitar = async (request: Request, response: Response): Promise<Response> => {
+    const postulante = await postulantesService.getPerfilById(request.user.id);
+
+    if (!postulante) throw AppError.badRequestError("No existe un postulante con el id ingresado");
+
+    postulante.estado = EstadoUsuario.INACTIVO;
+
+    await postulantesService.put(postulante.id, postulante);
 
     return response.json();
 }
