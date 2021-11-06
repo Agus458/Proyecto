@@ -9,6 +9,7 @@ import { Administrador } from "../models/administrador.model";
 import { validarOferta, validarPerfil, validatePagination } from "../libraries/validation.library";
 import { PostulanteOferta } from "../models/postulante-oferta.model";
 import { Empresa } from "../models/empresa.model";
+import moment from "moment";
 
 export const getOffertas = async (request: Request, response: Response): Promise<Response> => {
     const { skip, take } = validatePagination(request.query);
@@ -141,6 +142,8 @@ export const inscribirseOfferta = async (request: Request, response: Response): 
     if (!validarPerfil(postulante)) throw AppError.badRequestError("Perfil incompleto");
 
     if (await ofertasService.postulado(oferta.id, request.user.id)) throw AppError.badRequestError("Ya postulado");
+
+    if(moment(oferta.fechaCierre).isBefore(moment())) throw AppError.badRequestError("Oferta expirada");
 
     var nuevaPostulacion = new PostulanteOferta();
     nuevaPostulacion.oferta = oferta;

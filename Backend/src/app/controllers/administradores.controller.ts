@@ -38,7 +38,7 @@ export const getDashboard = async (request: Request, response: Response): Promis
         "Postulantes": await postulantesService.getPostulanteFiltered(request.query),
         "Empresas": await empresasService.getEmpresasFiltered(request.query),
         "Novedades": await novedadesService.count(request.query),
-        "Postulaciones a Ofertas": await ofertasService.getCantPostulantesOfertas(request.query),
+        "Postulaciones": await ofertasService.getCantPostulantesOfertas(request.query),
     });
 }
 
@@ -47,7 +47,7 @@ export const getChartsData = async (request: Request, response: Response): Promi
 
     return response.status(200).json({
         "Ofertas por Mes": await ofertasService.getOfertasByMonth(months),
-        "Postulaciones a Ofertas por Mes": await ofertasService.getPostulacionesByMonth(months),
+        "Postulaciones por Mes": await ofertasService.getPostulacionesByMonth(months),
         "Empresas Registradas por Mes": await empresasService.getEmpresasByMonth(months),
         "Postulantes Registrados por Mes": await postulantesService.getPostulantesByMonth(months)
     });

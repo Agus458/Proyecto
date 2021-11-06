@@ -16,8 +16,7 @@ export class LineChartComponent implements OnInit {
   public lineChartData: ChartDataSets[] = [];
   public lineChartLabels: Label[] = [];
   public lineChartOptions: ChartOptions = {
-    responsive: true,
-    maintainAspectRatio: false
+    responsive: true
   };
   public lineChartColors: Color[] = [
     {
@@ -41,6 +40,9 @@ export class LineChartComponent implements OnInit {
     this.lineChartData = [
       { data: values, label: this.title },
     ];
+
+    console.log(this.lineChartData);
+    
   }
 
   private random_rgba() {
