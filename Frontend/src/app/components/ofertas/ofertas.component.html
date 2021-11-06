@@ -7,8 +7,9 @@
         <mat-card>
             <h2>{{oferta?.nombreOfferta}}</h2>
             <mat-card-subtitle>Publicado el: {{oferta?.fechaPublicacion | date: "shortDate"}}</mat-card-subtitle>
-            <h3>{{oferta?.descripcion}}</h3>
+            <h3><strong>Descripción: </strong> {{oferta?.descripcion}}</h3>
             <h3><strong>Puesto: </strong> {{oferta?.puesto}}</h3>
+            <h3><strong>Empresa: </strong> {{oferta?.empresa?.visibilidad ? oferta?.empresa?.razonSocial : oferta?.empresa?.nombreFantasia}}</h3>
             <h3><strong>Area de Trabajo: </strong> {{oferta?.areaDeTrabajo.nombre}}</h3>
             <h3><strong>Funciones y Tareas: </strong></h3>
             <h3>{{oferta?.funcionesDePuesto}}</h3>
