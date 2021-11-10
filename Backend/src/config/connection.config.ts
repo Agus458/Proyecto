@@ -1,14 +1,21 @@
-import { createConnections } from "typeorm";
+import { ConnectionOptions, createConnections, getConnection } from "typeorm";
 import { onInit } from "./init.config";
+import { testConnection } from "./test.connection.config";
 
 /* ---------------------------------------< DATABASE CONFIGURATION >--------------------------------------- */
 
-export const connect = async () => {
-    await createConnections().then(() => {
-        console.log("Base de Datos Conectada");
-    }).catch(error => {
-        console.log(error);
-    });
+const connection = {
+    async create(options?: ConnectionOptions[]) {
+        await createConnections(options).then(async () => {
+            await onInit();
 
-    await onInit();
-}
+            console.log("Base de Datos Conectada");
+        }).catch(e => console.log(e));
+    },
+
+    isTest() {
+        if (process.env.ENV == "test") return testConnection;
+    }
+};
+
+export default connection;

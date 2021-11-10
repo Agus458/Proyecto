@@ -6,43 +6,43 @@ import dotenv from "dotenv";
 
 import routes from "./app.routes";
 import { notFound } from "../config/notFound.config";
-import { connect } from "../config/connection.config";
 import filesRoutes from "./routes/files.routes";
+import connection from "../config/connection.config";
 
 /* ---------------------------------------< APP CONFIGURATION >--------------------------------------- */
 
 // Permite que el servidor pueda leer archivos .env.
 dotenv.config();
 
-const app = express();
-
-// Se almacena le valor del puerto a utilizar.
-app.set("port", process.env.PORT || 3000);
-
 // Connexion a la base de datos.
-connect();
+export default connection.create(connection.isTest()).then(() => {
+    const app = express();
 
-/* ------------------------------------------< MIDDLEWARES >------------------------------------------ */
+    // Se almacena le valor del puerto a utilizar.
+    app.set("port", process.env.PORT || 3000);
 
-// Permite que la aplicación se comunique con otros servidores.
-app.use(cors());
+    /* ------------------------------------------< MIDDLEWARES >------------------------------------------ */
 
-// Provee un logger de peticiones.
-app.use(morgan("dev"));
+    // Permite que la aplicación se comunique con otros servidores.
+    app.use(cors());
 
-// Permite que la aplicación entienda el formato json.
-app.use(express.json());
+    // Provee un logger de peticiones.
+    app.use(morgan("dev"));
 
-/* ---------------------------------------------< ROUTES >--------------------------------------------- */
+    // Permite que la aplicación entienda el formato json.
+    app.use(express.json());
 
-// Rutas de la aplicacion.
-app.use("/api", routes);
+    /* ---------------------------------------------< ROUTES >--------------------------------------------- */
 
-app.use("/uploads", filesRoutes);
+    // Rutas de la aplicacion.
+    app.use("/api", routes);
 
-// Ruta por defecto cuando la uri no coincide con ninguna de las expuestas.
-app.use(notFound);
+    app.use("/uploads", filesRoutes);
 
-export default app;
+    // Ruta por defecto cuando la uri no coincide con ninguna de las expuestas.
+    app.use(notFound);
+
+    return app;
+});
 
 export const baseDir = __dirname;
