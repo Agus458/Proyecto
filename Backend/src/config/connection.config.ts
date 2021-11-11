@@ -1,6 +1,5 @@
 import { ConnectionOptions, createConnections, getConnection } from "typeorm";
 import { onInit } from "./init.config";
-import { testConnection } from "./test.connection.config";
 
 /* ---------------------------------------< DATABASE CONFIGURATION >--------------------------------------- */
 
@@ -13,9 +12,9 @@ const connection = {
         }).catch(e => console.log(e));
     },
 
-    isTest() {
-        if (process.env.ENV == "test") return testConnection;
-    }
+    async close() {
+        await getConnection().close();
+    },
 };
 
 export default connection;

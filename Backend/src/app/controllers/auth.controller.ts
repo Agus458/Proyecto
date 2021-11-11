@@ -24,8 +24,8 @@ import { request } from "http";
 /* ---------------------------------------< AUTH CONTROLLER >--------------------------------------- */
 
 export const registrarse = async (request: Request, response: Response): Promise<Response> => {
-    if (!request.body.email) throw AppError.badRequestError("No se ingreso el email");
-    if (!request.body.contrasenia) throw AppError.badRequestError("No se ingreso la contraseña");
+    if (typeof request.body.email != "string") throw AppError.badRequestError("No se ingreso el email");
+    if (typeof request.body.contrasenia != "string") throw AppError.badRequestError("No se ingreso la contraseña");
     if (!validator.isEmail(request.body.email)) throw AppError.badRequestError("El email ingresado no es valido");
 
     if (await usuariosService.getByEmail(request.body.email)) throw AppError.badRequestError("Ya existe un usuario con el email ingresado");
@@ -41,8 +41,8 @@ export const registrarse = async (request: Request, response: Response): Promise
 }
 
 export const iniciarSesion = async (request: Request, response: Response): Promise<Response> => {
-    if (!request.body.email) throw AppError.badRequestError("No se ingreso el email");
-    if (!request.body.contrasenia) throw AppError.badRequestError("No se ingreso la contraseña");
+    if (typeof request.body.email != "string") throw AppError.badRequestError("No se ingreso el email");
+    if (typeof request.body.contrasenia != "string") throw AppError.badRequestError("No se ingreso la contraseña");
 
     const usuario = await usuariosService.getByEmailContrasenia(request.body.email, request.body.contrasenia);
 
@@ -65,7 +65,7 @@ export const iniciarSesion = async (request: Request, response: Response): Promi
 }
 
 export const solicitarEmpresa = async (request: Request, response: Response): Promise<Response> => {
-    if (!request.body.rut) throw AppError.badRequestError("No se ingreso el rut de la empresa");
+    if (typeof request.body.rut != "string") throw AppError.badRequestError("No se ingreso el rut de la empresa");
     if (typeof request.body.contrasenia != "string") throw AppError.badRequestError("No se ingreso la contrasenia de la empresa");
 
     const pass = request.body.contrasenia;
