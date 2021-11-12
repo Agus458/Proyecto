@@ -41,9 +41,8 @@ export const validarDatosPersonales = async (data: any) => {
     if (data.primerApellido && typeof data.primerApellido != "string") throw AppError.badRequestError("Primer Apellido invalido");
     if (data.segundoApellido && typeof data.segundoApellido != "string") throw AppError.badRequestError("Segundo Apellido invalido");
 
-    console.log(data.fechaNacimiento, data.fechaNacimiento == "");
     if (data.fechaNacimiento) {
-        if (typeof data.fechaNacimiento != "string" || data.fechaNacimiento == "" || !Date.parse(data.fechaNacimiento)) throw AppError.badRequestError("Fecha de nacimiento invalida. Formato Valido: YYYY-MM-DD");
+        if (typeof data.fechaNacimiento != "string" || !Date.parse(data.fechaNacimiento)) throw AppError.badRequestError("Fecha de nacimiento invalida. Formato Valido: YYYY-MM-DD");
         const fechaNacimiento = moment(data.fechaNacimiento, "YYYY-MM-DD");
         if (fechaNacimiento.isAfter(moment())) throw AppError.badRequestError("Fecha de nacimiento debe ser anterior a la fecha actual");
         data.fechaNacimiento = fechaNacimiento.toDate();
@@ -250,7 +249,7 @@ export const validarPermisos = async (permisos: any, postulante: Postulante) => 
             if (permisoGuardado.postulante.id != postulante.id) throw AppError.badRequestError("El permiso con el id: " + permiso.id + " no pretenece al usuario");
         }
         if (!permiso.tipoDocumento || typeof permiso.tipoDocumento != "number" || ! await profileService.getById(TipoPermiso.prototype, permiso.tipoDocumento)) throw AppError.badRequestError("Tipo de Documento de permiso invalido o no ingresado");
-        if (typeof permiso.vigencia != "string") throw AppError.badRequestError("Vigencia de permiso invalido o no ingresado");
+        if (typeof permiso.vigencia != "string" || !Date.parse(permiso.vigencia)) throw AppError.badRequestError("Vigencia de permiso invalido o no ingresado");
         if (permiso.especificacion && typeof permiso.especificacion != "string") throw AppError.badRequestError("Especificacion de permiso invalido o no ingresado");
 
         permiso.postulante = postulante;

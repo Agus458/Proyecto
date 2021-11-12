@@ -19,6 +19,7 @@ export class PostulantesHelper {
         fechaNacimiento: "2000-09-04",
         nivelEducativo: 7,
         estadoNivelEducativo: 1,
+        orientacion: "Cientifico",
         primerTelefono: "099727357",
         segundoTelefono: "1234654654",
         recivirEmails: true,
@@ -40,40 +41,225 @@ export class PostulantesHelper {
                 tipoDuracion: "Semanas",
                 estadoCurso: 1
             }
+        ],
+        conocimientosInformaticos: [
+            {
+                nombreAplicacion: "NodeJS",
+                categoria: 1,
+                nivelConocimiento: "Alto"
+            }
+        ],
+        idiomas: [
+            {
+                nombreIdioma: 1,
+                habla: "Fluido",
+                comprensionAuditiva: "Fluido",
+                comprensionLectora: "Fluido",
+                escritura: "Fluido",
+            }
+        ],
+        permisos: [
+            {
+                tipoDocumento: 1,
+                vigencia: "2022-12-21",
+                especificacion: "Descripcion"
+            }
         ]
     }
 
     static invalidPerfilRequests = [
+        { primerNombre: 1243 },
+        { fechaNacimiento: 1243 },
+        { fechaNacimiento: "2022-09-04" },
+        { primerApellido: 1243 },
+        { nivelEducativo: 1243 },
+        { nivelEducativo: {} },
+        { estadoNivelEducativo: 1243 },
+        { estadoNivelEducativo: [] },
+        { domicilio: 1243 },
         {
-            primerNombre: 1243,
+            domicilio: {
+                pais: "dsaj"
+            }
         },
         {
-            fechaNacimiento: "",
+            domicilio: {
+                pais: "dsaj",
+                direccion: "Rapetti"
+            }
         },
         {
-            fechaNacimiento: 1243,
+            domicilio: {
+                pais: 1,
+                departamento: "sadad",
+                direccion: "Rapetti"
+            }
         },
         {
-            fechaNacimiento: "2022-09-04",
+            domicilio: {
+                pais: 1,
+                departamento: 2,
+                localidad: "sad",
+                direccion: "Rapetti"
+            }
         },
         {
-            primerApellido: 1243,
+            domicilio: {
+                pais: 90,
+                departamento: 100,
+                localidad: 213,
+                direccion: "Rapetti"
+            }
+        },
+        { capacitaciones: 1243 },
+        { capacitaciones: [123] },
+        {
+            capacitaciones: [{
+                nombreCurso: "BootCamp",
+                institucion: "UTEC",
+                areaTematica: "1",
+                anioInicio: {},
+                duracion: true,
+                tipoDuracion: "Semanas",
+                estadoCurso: 1
+            }]
         },
         {
-            nivelEducativo: 1243,
+            capacitaciones: [{
+                nombreCurso: "BootCamp",
+                institucion: "UTEC",
+                areaTematica: 1,
+                anioInicio: 2021,
+                duracion: true,
+                tipoDuracion: "Semanas",
+                estadoCurso: 1
+            }]
         },
         {
-            nivelEducativo: {},
+            capacitaciones: {
+                nombreCurso: "BootCamp",
+                institucion: "UTEC",
+                areaTematica: 1,
+                anioInicio: 2021,
+                duracion: 10,
+                tipoDuracion: "Semanas",
+                estadoCurso: 1
+            }
         },
         {
-            estadoNivelEducativo: 1243,
+            conocimientosInformaticos: {}
         },
         {
-            estadoNivelEducativo: [],
+            conocimientosInformaticos: [{}]
         },
         {
-            domicilio: 1243,
+            conocimientosInformaticos: [{ nombreAplicacion: "NodeJS" }]
         },
+        {
+            conocimientosInformaticos: [{ nombreAplicacion: 123 }]
+        },
+        {
+            conocimientosInformaticos: [{
+                nombreAplicacion: "NodeJS",
+                categoria: 1123
+            }]
+        },
+        {
+            conocimientosInformaticos: [{
+                nombreAplicacion: "NodeJS",
+                categoria: "1123"
+            }]
+        },
+        {
+            conocimientosInformaticos: [{
+                nombreAplicacion: "NodeJS",
+                categoria: 1
+            }]
+        },
+        {
+            idiomas: {}
+        },
+        {
+            idiomas: [{}]
+        },
+        {
+            idiomas: [{
+                nombreIdioma: 200,
+            }]
+        },
+        {
+            idiomas: [{
+                nombreIdioma: "200",
+            }]
+        },
+        {
+            idiomas: [{
+                nombreIdioma: 1,
+                habla: 123,
+            }]
+        },
+        {
+            idiomas: [{
+                nombreIdioma: 1,
+                habla: "Fluido",
+                comprensionAuditiva: 231,
+            }]
+        },
+        {
+            idiomas: [{
+                nombreIdioma: 1,
+                habla: "Fluido",
+                comprensionAuditiva: "Fluido",
+                comprensionLectora: {},
+            }]
+        },
+        {
+            idiomas: [{
+                nombreIdioma: 1,
+                habla: "Fluido",
+                comprensionAuditiva: "Fluido",
+                comprensionLectora: "Fluido",
+                escritura: ["Fluido"],
+            }]
+        },
+        {
+            permisos: {}
+        },
+        {
+            permisos: [{}]
+        },
+        {
+            permisos: [{ tipoDocumento: "1" }]
+        },
+        {
+            permisos: [{ tipoDocumento: 1123 }]
+        },
+        {
+            permisos: [
+                {
+                    tipoDocumento: 1,
+                    vigencia: 213
+                }
+            ]
+        },
+        {
+            permisos: [
+                {
+                    tipoDocumento: 1,
+                    vigencia: "dsadsa",
+                    especificacion: "Descripcion"
+                }
+            ]
+        },
+        {
+            permisos: [
+                {
+                    tipoDocumento: 1,
+                    vigencia: "2022-12-21",
+                    especificacion: 321321
+                }
+            ]
+        }
     ]
 
 }

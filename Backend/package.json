@@ -9,7 +9,7 @@
     "dev": "tsc-watch --onSuccess \"node dist/index.js\"",
     "test": "tsc && jest --silent --verbose",
     "test:watch": "npm test -- --watch",
-    "test:coverage": "npm test -- --collectCoverage"
+    "test:coverage": "npm test -- --coverage"
   },
   "author": "",
   "license": "ISC",
