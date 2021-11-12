@@ -61,7 +61,7 @@ export class NovedadesComponent implements OnInit {
     this.dialog.open(CompartirNovedadDialogComponent, {
       data: {
         url: window.location.protocol + "//" + window.location.host + "/vistanovedad/" + id,
-        novedad
+        class: novedad,
       }
     });
   }

@@ -56,6 +56,7 @@ export class MisofertasempresaComponent implements OnInit {
         ok => {
           this.ofertas = ok.data;
           this.length = ok.cantidad;
+          console.log(this.ofertas);
         },
         error => { }
       );
@@ -64,7 +65,7 @@ export class MisofertasempresaComponent implements OnInit {
 
   ngOnInit() {
     if (this.authService.getUser()?.tipo == "Administrador") this.displayedColumns.splice(this.displayedColumns.length - 1, 0, 'empresa');
-
+    
     this.getOfertas(0, 9);
   }
 
