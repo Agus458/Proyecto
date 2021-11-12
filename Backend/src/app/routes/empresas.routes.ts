@@ -14,9 +14,4 @@ router.get("/:id", [isLoggedIn, tieneRol(["Administrador", "Empresa"])], handleR
 
 router.put("/", [isLoggedIn, tieneRol(["Empresa"])], handleRequest(empresasController.put));
 
-router.put("/",[isLoggedIn,tieneRol(["Empresa"])], handleRequest(empresasController.put));
-
 export default router;
-
-
-

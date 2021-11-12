@@ -66,7 +66,7 @@ describe("POST registrarse", () => {
 
     describe("valid request", () => {
 
-        test("eturn auth info of te created user", async () => {
+        test("return auth info of the created user", async () => {
             const result = await api.post("/api/auth/registrarse").send(postulante)
                 .expect(201)
                 .expect("Content-Type", /application\/json/);

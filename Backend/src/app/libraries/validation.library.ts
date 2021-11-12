@@ -23,21 +23,11 @@ import { TipoPermiso } from "../models/perfil/tipo-permiso.model";
 import { CategoriaConocimiento } from "../models/perfil/categoria-conocimiento.model";
 import { Oferta } from "../models/oferta.model";
 
-/*
-
-//#region validaciondeEmpresa
-export const validarDatosOfferta = async(data:any)
-{
-const offeta = await offertaService.getById(request)
-}
-//#endregion
-*/
 // Valida que los datos personales del postulante sean correctos.
 export const validarDatosPersonales = async (data: any) => {
     if (data.tipoDocumento || data.documento) {
-        if (typeof data.tipoDocumento == "undefined") throw AppError.badRequestError("Falta el tipo del documento del postulante");
         if (typeof data.tipoDocumento != "number" || !TipoDocumento[data.tipoDocumento]) throw AppError.badRequestError("Tipo de documento invalido");
-        if (!data.documento) throw AppError.badRequestError("Falta el documento del postulante");
+        if (typeof data.documento != "string") throw AppError.badRequestError("Falta el documento del postulante");
 
         if (data.tipoDocumento.valueOf() == TipoDocumento.CI.valueOf() && (!validator.isInt(data.documento) || !validator.isLength(data.documento, { max: 8, min: 8 }))) throw AppError.badRequestError("Cedula invalida");
     }
@@ -51,8 +41,9 @@ export const validarDatosPersonales = async (data: any) => {
     if (data.primerApellido && typeof data.primerApellido != "string") throw AppError.badRequestError("Primer Apellido invalido");
     if (data.segundoApellido && typeof data.segundoApellido != "string") throw AppError.badRequestError("Segundo Apellido invalido");
 
+    console.log(data.fechaNacimiento, data.fechaNacimiento == "");
     if (data.fechaNacimiento) {
-        if (typeof data.fechaNacimiento != "string" || !Date.parse(data.fechaNacimiento)) throw AppError.badRequestError("Fecha de nacimiento invalida. Formato Valido: YYYY-MM-DD");
+        if (typeof data.fechaNacimiento != "string" || data.fechaNacimiento == "" || !Date.parse(data.fechaNacimiento)) throw AppError.badRequestError("Fecha de nacimiento invalida. Formato Valido: YYYY-MM-DD");
         const fechaNacimiento = moment(data.fechaNacimiento, "YYYY-MM-DD");
         if (fechaNacimiento.isAfter(moment())) throw AppError.badRequestError("Fecha de nacimiento debe ser anterior a la fecha actual");
         data.fechaNacimiento = fechaNacimiento.toDate();
@@ -114,8 +105,6 @@ export const validarDomicilio = async (domicilio: any, domicilioPostulante: any)
 
     return domicilio;
 }
-
-
 
 // Valida que las capacitaciones sean correctas.
 export const validarCapacitaciones = async (capacitaciones: any, postulante: Postulante) => {

@@ -77,7 +77,7 @@ export const putPostulante = async (request: Request, response: Response): Promi
 
     await postulantesService.put(postulante.id, request.body);
 
-    return response.status(201).json();
+    return response.status(204).json();
 }
 
 export const putImagen = async (request: Request, response: Response): Promise<Response> => {

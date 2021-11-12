@@ -1,5 +1,3 @@
-import { SuperTest, Test } from "supertest"
-
 export const admin = {
     email: "admin@admin.com",
     contrasenia: "admin"
