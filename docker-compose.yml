@@ -27,7 +27,7 @@ services:
     build: ./Frontend
     container_name: frontend
     ports:
-      - '4200:80'
+      - '80:80'
     links:
       - backend
 
