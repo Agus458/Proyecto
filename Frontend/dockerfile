@@ -1,0 +1,22 @@
+#Step 1
+
+FROM node:14 as node
+
+WORKDIR /app
+
+COPY . .
+
+RUN npm cache clean --force
+
+RUN npm install
+
+RUN npm run build
+
+
+# Step 2
+
+FROM nginx:alpine
+
+COPY --from=node /app/dist/Front /usr/share/nginx/html
+
+EXPOSE 80
