@@ -15,7 +15,7 @@ services:
 
   backend:
     build: ./Backend
-    image: bolsadetrabajocontainerregistry.azurecr.io/agus458proyectofinal_backend:v1
+    image: bolsadetrabajocontainerregistry.azurecr.io/agus458proyectofinal_backend
     container_name: backend
     environment:
       - HOST=host.docker.internal
@@ -26,7 +26,7 @@ services:
 
   frontend:
     build: ./Frontend
-    image: bolsadetrabajocontainerregistry.azurecr.io/agus458proyectofinal_frontend:v1
+    image: bolsadetrabajocontainerregistry.azurecr.io/agus458proyectofinal_frontend
     container_name: frontend
     ports:
       - '80:80'
