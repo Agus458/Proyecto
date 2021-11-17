@@ -238,7 +238,7 @@ export const perfilCompleto = async (request: Request, response: Response): Prom
     if (!postulante) throw AppError.badRequestError("No existe un postulante con el id ingresado");
     if (!validarPerfil(postulante)) throw AppError.badRequestError("Perfil incompleto");
 
-    return response.json();
+    return response.status(200).json();
 }
 
 export const deshabilitar = async (request: Request, response: Response): Promise<Response> => {

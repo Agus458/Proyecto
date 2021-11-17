@@ -1,3 +1,12 @@
+import { getRepository } from "typeorm";
+import { Capacitacion } from "../../src/app/models/capacitacion.model";
+import { ConocimientoInformatico } from "../../src/app/models/conocimiento-informatico.model";
+import { ExperienciaLaboral } from "../../src/app/models/experiencia-laboral.model";
+import { Idioma } from "../../src/app/models/idioma.model";
+import { Permiso } from "../../src/app/models/permiso.model";
+import { Postulante } from "../../src/app/models/postulante.model";
+import { PreferenciaLaboral } from "../../src/app/models/preferenciaLaboral.model";
+
 export class PostulantesHelper {
 
     static tokenPostulante: string;
@@ -31,6 +40,7 @@ export class PostulantesHelper {
             localidad: 2,
             direccion: "Rapetti"
         },
+        jornadaCompleta: true,
         capacitaciones: [
             {
                 nombreCurso: "BootCamp",
@@ -65,6 +75,13 @@ export class PostulantesHelper {
                 especificacion: "Descripcion"
             }
         ]
+    }
+
+    static perfilIncompleto = {
+        tipoDocumento: 0,
+        documento: "50072560",
+        primerNombre: "Agustin",
+        segundoNombre: "Nicolas"
     }
 
     static invalidPerfilRequests = [
@@ -262,4 +279,13 @@ export class PostulantesHelper {
         }
     ]
 
+    static async clear() {
+        await getRepository(Capacitacion).delete({});
+        await getRepository(ConocimientoInformatico).delete({});
+        await getRepository(Idioma).delete({});
+        await getRepository(Permiso).delete({});
+        await getRepository(PreferenciaLaboral).delete({});
+        await getRepository(ExperienciaLaboral).delete({});
+        await getRepository(Postulante).delete({});
+    }
 }

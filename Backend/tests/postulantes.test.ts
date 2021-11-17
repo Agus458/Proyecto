@@ -145,3 +145,62 @@ describe("PUT perfil", () => {
     });
 
 });
+
+
+
+describe("GET validarPerfil", () => {
+
+    describe("valid request", () => {
+
+        beforeAll(async () => {
+            await supertest(app)
+                .put("/api/postulantes/perfil")
+                .send(PostulantesHelper.perfil)
+                .set('Authorization', `Bearer ${PostulantesHelper.tokenPostulante}`)
+                .expect(204);
+        });
+
+        test("return 200", async () => {
+            await supertest(app)
+                .get("/api/postulantes/validarPerfil")
+                .set('Authorization', `Bearer ${PostulantesHelper.tokenPostulante}`)
+                .expect(200);
+        });
+
+    });
+
+    describe("invalid request", () => {
+
+        beforeAll(async () => {
+            await PostulantesHelper.clear();
+
+            let result = await api.post("/api/auth/registrarse").send(postulante)
+                .expect(201)
+                .expect("Content-Type", /application\/json/);
+
+            PostulantesHelper.tokenPostulante = result.body.token;
+
+            await supertest(app)
+                .put("/api/postulantes/perfil")
+                .send(PostulantesHelper.perfilIncompleto)
+                .set('Authorization', `Bearer ${PostulantesHelper.tokenPostulante}`)
+                .expect(204);
+        });
+
+        test("return 400", async () => {
+            await supertest(app)
+                .get("/api/postulantes/validarPerfil")
+                .set('Authorization', `Bearer ${PostulantesHelper.tokenPostulante}`)
+                .expect(400);
+        });
+
+        test("return 403 with admin", async () => {
+            await supertest(app)
+                .get("/api/postulantes/validarPerfil")
+                .set('Authorization', `Bearer ${PostulantesHelper.tokenAdmin}`)
+                .expect(403);
+        });
+
+    });
+
+});
