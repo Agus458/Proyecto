@@ -1,6 +1,7 @@
+import path from "path";
 import supertest from "supertest";
 import { getRepository } from "typeorm";
-import app from "../src/app/app.server";
+import app, { baseDir } from "../src/app/app.server";
 import { Postulante } from "../src/app/models/postulante.model";
 import connection from "../src/config/connection.config";
 import { testConnection } from "../src/config/test.connection.config";
@@ -146,7 +147,83 @@ describe("PUT perfil", () => {
 
 });
 
+describe("PUT imagen", () => {
 
+    describe("valid request", () => {
+
+        test("return no content", async () => {
+            await supertest(app)
+                .put("/api/postulantes/perfil/imagen")
+                .attach("imagen", path.join(baseDir + "/../../tests/helpers/files/Lago-Moraine-Parque-Nacional-Banff-Alberta-Canada.jpg"))
+                .set('Authorization', `Bearer ${PostulantesHelper.tokenPostulante}`)
+                .expect(201);
+        });
+
+        test("return the profile of the postulante with the image", async () => {
+            const result = await supertest(app)
+                .get("/api/postulantes/perfil")
+                .set('Authorization', `Bearer ${PostulantesHelper.tokenPostulante}`)
+                .expect(200)
+                .expect("Content-Type", /application\/json/);
+
+            expect(result.body).toBeInstanceOf(Object);
+            expect(result.body.imagen).toBeDefined();
+            expect(result.body.imagen).toContain("uploads/perfil/imagenes")
+        });
+
+    });
+
+    describe("invalid valid requests", () => {
+
+        test("return 403 without authorization", async () => {
+            await supertest(app)
+                .put("/api/postulantes/perfil/imagen")
+                .set('Authorization', `Bearer ${PostulantesHelper.tokenAdmin}`)
+                .expect(403);
+        });
+
+    });
+
+});
+
+describe("PUT cv", () => {
+
+    describe("valid request", () => {
+
+        test("return no content", async () => {
+            await supertest(app)
+                .put("/api/postulantes/perfil/cv")
+                .attach("cv", path.join(baseDir + "/../../tests/helpers/files/8d776ded-b670-476d-bf02-6f4c3b5cb0f2.pdf"))
+                .set('Authorization', `Bearer ${PostulantesHelper.tokenPostulante}`)
+                .expect(201);
+        });
+
+        test("return the profile of the postulante with the image", async () => {
+            const result = await supertest(app)
+                .get("/api/postulantes/perfil")
+                .set('Authorization', `Bearer ${PostulantesHelper.tokenPostulante}`)
+                .expect(200)
+                .expect("Content-Type", /application\/json/);
+
+            expect(result.body).toBeInstanceOf(Object);
+            expect(result.body.cv).toBeDefined();
+            expect(result.body.cv).toContain("uploads/perfil/documentos")
+        });
+
+    });
+
+    describe("invalid valid requests", () => {
+
+        test("return 403 without authorization", async () => {
+            await supertest(app)
+                .put("/api/postulantes/perfil/cv")
+                .set('Authorization', `Bearer ${PostulantesHelper.tokenAdmin}`)
+                .expect(403);
+        });
+
+    });
+
+});
 
 describe("GET validarPerfil", () => {
 
