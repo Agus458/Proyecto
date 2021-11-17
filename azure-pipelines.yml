@@ -15,8 +15,8 @@ variables:
   vmImageName: 'ubuntu-latest'
 
 stages:
-- stage: Build
-  displayName: Build
+- stage: Build and Push
+  displayName: Build and Push
   jobs:
   - job: Build
     displayName: Build
@@ -32,15 +32,6 @@ stages:
         action: 'Build services'
         additionalImageTags: '$(tag)'
         includeLatestTag: true
-
-- stage: Push
-  displayName: Push
-  jobs:
-  - job: Push
-    displayName: Push
-    pool:
-      vmImage: $(vmImageName)
-    steps:
     - task: DockerCompose@0
       inputs:
         containerregistrytype: 'Azure Container Registry'
