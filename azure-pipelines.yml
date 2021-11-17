@@ -49,11 +49,11 @@ stages:
         action: 'Push services'
         additionalImageTags: '$(tag)'
       
-- stage: Push
-  displayName: Push
+- stage: Run
+  displayName: Run
   jobs:
-  - job: Push
-    displayName: Push
+  - job: Run
+    displayName: Run
     pool:
       vmImage: $(vmImageName)
     steps:
