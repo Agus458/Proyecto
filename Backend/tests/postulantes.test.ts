@@ -5,7 +5,7 @@ import app, { baseDir } from "../src/app/app.server";
 import { Postulante } from "../src/app/models/postulante.model";
 import connection from "../src/config/connection.config";
 import { testConnection } from "../src/config/test.connection.config";
-import { admin, postulante } from "./helpers/auth.helper";
+import { admin, postulante, postulante2 } from "./helpers/auth.helper";
 import { PostulantesHelper } from "./helpers/postulantes.helper";
 
 const api = supertest(app);
@@ -18,6 +18,12 @@ beforeAll(async () => {
         .expect("Content-Type", /application\/json/);
 
     PostulantesHelper.tokenPostulante = result.body.token;
+
+    result = await api.post("/api/auth/registrarse").send(postulante2)
+        .expect(201)
+        .expect("Content-Type", /application\/json/);
+
+    PostulantesHelper.tokenPostulante2 = result.body.token;
 
     result = await api.post("/api/auth/iniciarSesion").send(admin)
         .expect(200)
@@ -92,6 +98,14 @@ describe("GET perfil by Id", () => {
             await supertest(app)
                 .get(`/api/postulantes/perfil/${PostulantesHelper.last}`)
                 .expect(403)
+                .expect("Content-Type", /application\/json/)
+        });
+
+        test("return 400 invalid id", async () => {
+            await supertest(app)
+                .get(`/api/postulantes/perfil/asd`)
+                .set('Authorization', `Bearer ${PostulantesHelper.tokenAdmin}`)
+                .expect(400)
                 .expect("Content-Type", /application\/json/)
         });
 
@@ -219,6 +233,117 @@ describe("PUT cv", () => {
                 .put("/api/postulantes/perfil/cv")
                 .set('Authorization', `Bearer ${PostulantesHelper.tokenAdmin}`)
                 .expect(403);
+        });
+
+    });
+
+});
+
+describe("DELETE capacitacion", () => {
+
+    describe("valid request", () => {
+
+        test("return 200", async () => {
+            await supertest(app)
+                .delete("/api/postulantes/perfil/capacitacion/1")
+                .set('Authorization', `Bearer ${PostulantesHelper.tokenPostulante}`)
+                .expect(200);
+
+            const res = await supertest(app)
+                .get("/api/postulantes/perfil")
+                .set('Authorization', `Bearer ${PostulantesHelper.tokenPostulante}`)
+                .expect(200)
+                .expect("Content-Type", /application\/json/);
+
+            expect(res.body.capacitaciones).toBeDefined();
+            expect(res.body.capacitaciones).toBeInstanceOf(Array);
+            expect(res.body.capacitaciones).toHaveLength(PostulantesHelper.perfil.capacitaciones.length - 1);
+        });
+
+    });
+
+    describe("invalid valid requests", () => {
+
+        test("return 403 without authorization", async () => {
+            await supertest(app)
+                .delete("/api/postulantes/perfil/capacitacion/:id")
+                .expect(403);
+        });
+
+        test("return 400 capacitacion id invalido", async () => {
+            await supertest(app)
+                .delete("/api/postulantes/perfil/capacitacion/asd")
+                .set('Authorization', `Bearer ${PostulantesHelper.tokenPostulante}`)
+                .expect(400);
+        });
+
+        test("return 400 capacitacion inexistente", async () => {
+            await supertest(app)
+                .delete("/api/postulantes/perfil/capacitacion/40")
+                .set('Authorization', `Bearer ${PostulantesHelper.tokenPostulante}`)
+                .expect(400);
+        });
+
+        test("return 400 capacitacion de otro", async () => {
+            await supertest(app)
+                .put("/api/postulantes/perfil")
+                .send({ capacitaciones: PostulantesHelper.perfil.capacitaciones })
+                .set('Authorization', `Bearer ${PostulantesHelper.tokenPostulante2}`)
+                .expect(204);
+
+            await supertest(app)
+                .delete("/api/postulantes/perfil/capacitacion/2")
+                .set('Authorization', `Bearer ${PostulantesHelper.tokenPostulante}`)
+                .expect(400);
+        });
+
+    });
+
+});
+
+describe("DELETE conocimientoInformatico", () => {
+
+    describe("valid request", () => {
+
+        test("return 200", async () => {
+            await supertest(app)
+                .delete("/api/postulantes/perfil/conocimientoInformatico/1")
+                .set('Authorization', `Bearer ${PostulantesHelper.tokenPostulante}`)
+                .expect(200);
+
+            const res = await supertest(app)
+                .get("/api/postulantes/perfil")
+                .set('Authorization', `Bearer ${PostulantesHelper.tokenPostulante}`)
+                .expect(200)
+                .expect("Content-Type", /application\/json/);
+
+            expect(res.body.conocimientosInformaticos).toBeDefined();
+            expect(res.body.conocimientosInformaticos).toBeInstanceOf(Array);
+            expect(res.body.conocimientosInformaticos).toHaveLength(PostulantesHelper.perfil.conocimientosInformaticos.length - 1);
+        });
+
+    });
+
+    describe("invalid valid requests", () => {
+
+        test("return 403 without authorization", async () => {
+            await supertest(app)
+                .delete("/api/postulantes/perfil/conocimientoInformatico/1")
+                .expect(403);
+        });
+
+        test("return 400 conocimiento Informatico id invalido", async () => {
+            await supertest(app)
+                .delete("/api/postulantes/perfil/conocimientoInformatico/asd")
+                .set('Authorization', `Bearer ${PostulantesHelper.tokenPostulante}`)
+                .expect(400);
+        });
+
+        test("return 400 conocimiento Informatico inexistente", async () => {
+            await supertest(app)
+                .delete("/api/postulantes/perfil/conocimientoInformatico/40")
+                .set('Authorization', `Bearer ${PostulantesHelper.tokenPostulante}`)
+                .expect(400);
         });
 
     });

@@ -11,6 +11,8 @@ export class PostulantesHelper {
 
     static tokenPostulante: string;
 
+    static tokenPostulante2: string;
+
     static tokenAdmin: string;
 
     static tokenEmpresa: string;

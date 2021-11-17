@@ -8,6 +8,11 @@ export const postulante = {
     contrasenia: "1234"
 }
 
+export const postulante2 = {
+    email: "user2@mail.com",
+    contrasenia: "1234"
+}
+
 export const invalidIniciarSesion = [
     {},
     {email: ""},
