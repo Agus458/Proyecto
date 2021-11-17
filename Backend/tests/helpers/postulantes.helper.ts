@@ -35,7 +35,7 @@ export class PostulantesHelper {
         segundoTelefono: "1234654654",
         recivirEmails: true,
         aceptaTerminos: true,
-        perfilPublico: false,
+        perfilPublico: true,
         domicilio: {
             pais: 1,
             departamento: 2,
@@ -75,6 +75,30 @@ export class PostulantesHelper {
                 tipoDocumento: 1,
                 vigencia: "2022-12-21",
                 especificacion: "Descripcion"
+            }
+        ],
+        experienciasLaborales: [
+            {
+                nombreEmpresa: "Empresa",
+                cargo: "Developer",
+                rubro: 1,
+                nivelJerarquico: 2,
+                tareasRealizadas: "lorem",
+                fechaInicio: "2021-03-20",
+                trabajando: false,
+                fechaFin: "2021-09-04",
+                nombreReferencia: "Nombre",
+                apellidoReferencia: "Apellido",
+                cargoReferencia: "Cargo",
+                telefonoReferencia: "telefono",
+                emailReferencia: "email"
+            }
+        ],
+        preferenciasLaborales: [
+            {
+                puestoPreferido: "Desarrollador",
+                areasInteres: 1,
+                aspiracionSalarial: 3000
             }
         ]
     }
@@ -276,6 +300,288 @@ export class PostulantesHelper {
                     tipoDocumento: 1,
                     vigencia: "2022-12-21",
                     especificacion: 321321
+                }
+            ]
+        }, {
+            experienciasLaborales: [
+                {
+                    nombreEmpresa: "Empresa",
+                    cargo: "Developer",
+                    rubro: "1",
+                    nivelJerarquico: 2,
+                    tareasRealizadas: "lorem",
+                    fechaInicio: "2021-03-20",
+                    trabajando: false,
+                    fechaFin: "2021-09-04",
+                    nombreReferencia: "Nombre",
+                    apellidoReferencia: "Apellido",
+                    cargoReferencia: "Cargo",
+                    telefonoReferencia: "telefono",
+                    emailReferencia: "email"
+                }
+            ],
+        },
+        {
+            experienciasLaborales: [
+                {
+                    nombreEmpresa: {},
+                    cargo: "Developer",
+                    rubro: 1,
+                    nivelJerarquico: 2,
+                    tareasRealizadas: "lorem",
+                    fechaInicio: "2021-03-20",
+                    trabajando: false,
+                    fechaFin: "2021-09-04",
+                    nombreReferencia: "Nombre",
+                    apellidoReferencia: "Apellido",
+                    cargoReferencia: "Cargo",
+                    telefonoReferencia: "telefono",
+                    emailReferencia: "email"
+                }
+            ],
+        },
+        {
+            experienciasLaborales: [
+                {
+                    nombreEmpresa: "Empresa",
+                    cargo: true,
+                    rubro: 1,
+                    nivelJerarquico: 2,
+                    tareasRealizadas: "lorem",
+                    fechaInicio: "2021-03-20",
+                    trabajando: false,
+                    fechaFin: "2021-09-04",
+                    nombreReferencia: "Nombre",
+                    apellidoReferencia: "Apellido",
+                    cargoReferencia: "Cargo",
+                    telefonoReferencia: "telefono",
+                    emailReferencia: "email"
+                }
+            ],
+        },
+        {
+            experienciasLaborales: [
+                {
+                    nombreEmpresa: "Empresa",
+                    cargo: "Developer",
+                    rubro: 1,
+                    nivelJerarquico: 2,
+                    tareasRealizadas: "lorem",
+                    fechaInicio: "asd",
+                    trabajando: false,
+                    fechaFin: "2021-09-04",
+                    nombreReferencia: "Nombre",
+                    apellidoReferencia: "Apellido",
+                    cargoReferencia: "Cargo",
+                    telefonoReferencia: "telefono",
+                    emailReferencia: "email"
+                }
+            ],
+        },
+        {
+            experienciasLaborales: [
+                {
+                    nombreEmpresa: "Empresa",
+                    cargo: "Developer",
+                    rubro: 1,
+                    nivelJerarquico: 2,
+                    tareasRealizadas: "lorem",
+                    fechaInicio: "2022-03-20",
+                    trabajando: false,
+                    fechaFin: "2021-09-04",
+                    nombreReferencia: "Nombre",
+                    apellidoReferencia: "Apellido",
+                    cargoReferencia: "Cargo",
+                    telefonoReferencia: "telefono",
+                    emailReferencia: "email"
+                }
+            ],
+        },
+        {
+            experienciasLaborales: [
+                {
+                    nombreEmpresa: "Empresa",
+                    cargo: "Developer",
+                    rubro: 1,
+                    nivelJerarquico: 2,
+                    tareasRealizadas: "lorem",
+                    fechaInicio: "2021-03-20",
+                    trabajando: false,
+                    fechaFin: "2022-09-04",
+                    nombreReferencia: "Nombre",
+                    apellidoReferencia: "Apellido",
+                    cargoReferencia: "Cargo",
+                    telefonoReferencia: "telefono",
+                    emailReferencia: "email"
+                }
+            ],
+        },
+        {
+            experienciasLaborales: [
+                {
+                    nombreEmpresa: "Empresa",
+                    cargo: "Developer",
+                    rubro: 1,
+                    nivelJerarquico: 2,
+                    tareasRealizadas: "lorem",
+                    fechaInicio: "2021-03-20",
+                    trabajando: false,
+                    fechaFin: "2021-09-04",
+                    nombreReferencia: 123,
+                    apellidoReferencia: "Apellido",
+                    cargoReferencia: "Cargo",
+                    telefonoReferencia: "telefono",
+                    emailReferencia: "email"
+                }
+            ],
+        },
+        {
+            experienciasLaborales: [
+                {
+                    nombreEmpresa: "Empresa",
+                    cargo: "Developer",
+                    rubro: 1,
+                    nivelJerarquico: 2,
+                    tareasRealizadas: "lorem",
+                    fechaInicio: "2021-03-20",
+                    trabajando: false,
+                    fechaFin: "2021-09-04",
+                    nombreReferencia: "Nombre",
+                    apellidoReferencia: {},
+                    cargoReferencia: "Cargo",
+                    telefonoReferencia: "telefono",
+                    emailReferencia: "email"
+                }
+            ],
+        },
+        {
+            experienciasLaborales: [
+                {
+                    nombreEmpresa: "Empresa",
+                    cargo: "Developer",
+                    rubro: 1,
+                    nivelJerarquico: 2,
+                    tareasRealizadas: "lorem",
+                    fechaInicio: "2021-03-20",
+                    trabajando: false,
+                    fechaFin: "2021-09-04",
+                    nombreReferencia: "Nombre",
+                    apellidoReferencia: "Apellido",
+                    cargoReferencia: [],
+                    telefonoReferencia: "telefono",
+                    emailReferencia: "email"
+                }
+            ],
+        },
+        {
+            experienciasLaborales: [
+                {
+                    nombreEmpresa: "Empresa",
+                    cargo: "Developer",
+                    rubro: 1,
+                    nivelJerarquico: 2,
+                    tareasRealizadas: "lorem",
+                    fechaInicio: "2021-03-20",
+                    trabajando: false,
+                    fechaFin: "2021-09-04",
+                    nombreReferencia: "Nombre",
+                    apellidoReferencia: "Apellido",
+                    cargoReferencia: "Cargo",
+                    telefonoReferencia: true,
+                    emailReferencia: "email"
+                }
+            ],
+        },
+        {
+            experienciasLaborales: [
+                {
+                    nombreEmpresa: "Empresa",
+                    cargo: "Developer",
+                    rubro: 1,
+                    nivelJerarquico: 2,
+                    tareasRealizadas: "lorem",
+                    fechaInicio: "2021-03-20",
+                    trabajando: false,
+                    fechaFin: "2021-09-04",
+                    nombreReferencia: "Nombre",
+                    apellidoReferencia: "Apellido",
+                    cargoReferencia: "Cargo",
+                    telefonoReferencia: "telefono",
+                    emailReferencia: 789
+                }
+            ],
+        },
+        {
+            experienciasLaborales: [
+                {
+                    nombreEmpresa: "Empresa",
+                    cargo: "Developer",
+                    rubro: 123,
+                    nivelJerarquico: 2,
+                    tareasRealizadas: "lorem",
+                    fechaInicio: "2021-03-20",
+                    trabajando: false,
+                    fechaFin: "2021-09-04",
+                    nombreReferencia: "Nombre",
+                    apellidoReferencia: "Apellido",
+                    cargoReferencia: "Cargo",
+                    telefonoReferencia: "telefono",
+                    emailReferencia: 789
+                }
+            ],
+        },
+        {
+            experienciasLaborales: [
+                {
+                    nombreEmpresa: "Empresa",
+                    cargo: "Developer",
+                    rubro: 1,
+                    nivelJerarquico: 1234,
+                    tareasRealizadas: "lorem",
+                    fechaInicio: "2021-03-20",
+                    trabajando: false,
+                    fechaFin: "2021-09-04",
+                    nombreReferencia: "Nombre",
+                    apellidoReferencia: "Apellido",
+                    cargoReferencia: "Cargo",
+                    telefonoReferencia: "telefono",
+                    emailReferencia: 789
+                }
+            ],
+        },
+        {
+            preferenciasLaborales: [
+                {
+                    puestoPreferido: true,
+                    areasInteres: 1,
+                    aspiracionSalarial: 3000
+                }
+            ]
+        },
+        {
+            preferenciasLaborales: [
+                {
+                    puestoPreferido: "Desarrollador",
+                    areasInteres: 223,
+                    aspiracionSalarial: 3000
+                }
+            ]
+        },
+        {
+            preferenciasLaborales: [
+                {
+                    puestoPreferido: "Desarrollador",
+                    areasInteres: "1",
+                    aspiracionSalarial: 3000
+                }
+            ]
+        },
+        {
+            preferenciasLaborales: [
+                {
+                    puestoPreferido: "Desarrollador",
+                    areasInteres: 1,
+                    aspiracionSalarial: "3000"
                 }
             ]
         }
