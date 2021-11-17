@@ -9,11 +9,6 @@ resources:
 - repo: self
 
 variables:
-  # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: 'df69ffb2-942f-4453-8b75-b36e088fc13a'
-  imageRepository: 'agusproyectofinal'
-  containerRegistry: 'bolsadetrabajocontainerregistry.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/docker-compose.yml'
   tag: '$(Build.BuildId)'
 
   # Agent VM image name
@@ -21,7 +16,7 @@ variables:
 
 stages:
 - stage: Build
-  displayName: Build and push stage
+  displayName: Build
   jobs:
   - job: Build
     displayName: Build
@@ -29,31 +24,43 @@ stages:
       vmImage: $(vmImageName)
     steps:
     - task: DockerCompose@0
-      displayName: Build services
       inputs:
-        action: Build services
-        dockerComposeFile: $(dockerfilePath)
-        azureContainerRegistry: $(containerRegistry)
-        projectName: $(Build.Repository.Name)
-        qualifyImageNames: true
-        additionalImageTags: $(tag)
+        containerregistrytype: 'Azure Container Registry'
+        azureSubscription: 'Azure for Students(c0f87bca-394b-46e7-98d3-31e177e2d273)'
+        azureContainerRegistry: '{"loginServer":"bolsadetrabajocontainerregistry.azurecr.io", "id" : "/subscriptions/c0f87bca-394b-46e7-98d3-31e177e2d273/resourceGroups/bolsa-de-trabajo/providers/Microsoft.ContainerRegistry/registries/BolsaDeTrabajoContainerRegistry"}'
+        dockerComposeFile: '**/docker-compose.yml'
+        action: 'Build services'
+        additionalImageTags: '$(tag)'
+
+- stage: Push
+  displayName: Push
+  jobs:
+  - job: Push
+    displayName: Push
+    pool:
+      vmImage: $(vmImageName)
+    steps:
     - task: DockerCompose@0
-      displayName: Push services
       inputs:
-        action: Push services
-        azureContainerRegistry: $(containerRegistry)
-        dockerComposeFile: $(dockerfilePath)
-        projectName: $(Build.Repository.Name)
-        qualifyImageNames: true
-        additionalImageTags: $(tag)
+        containerregistrytype: 'Azure Container Registry'
+        azureSubscription: 'Azure for Students(c0f87bca-394b-46e7-98d3-31e177e2d273)'
+        azureContainerRegistry: '{"loginServer":"bolsadetrabajocontainerregistry.azurecr.io", "id" : "/subscriptions/c0f87bca-394b-46e7-98d3-31e177e2d273/resourceGroups/bolsa-de-trabajo/providers/Microsoft.ContainerRegistry/registries/BolsaDeTrabajoContainerRegistry"}'
+        dockerComposeFile: '**/docker-compose.yml'
+        action: 'Push services'
+        additionalImageTags: '$(tag)'
+      
+- stage: Push
+  displayName: Push
+  jobs:
+  - job: Push
+    displayName: Push
+    pool:
+      vmImage: $(vmImageName)
+    steps:
     - task: DockerCompose@0
-      displayName: Run services
       inputs:
-        action: Run services
-        azureContainerRegistry: $(containerRegistry)
-        dockerComposeFile: $(dockerfilePath)
-        projectName: $(Build.Repository.Name)
-        qualifyImageNames: true
-        buildImages: true
-        abortOnContainerExit: true
-        detached: false
+        containerregistrytype: 'Azure Container Registry'
+        azureSubscription: 'Azure for Students(c0f87bca-394b-46e7-98d3-31e177e2d273)'
+        azureContainerRegistry: '{"loginServer":"bolsadetrabajocontainerregistry.azurecr.io", "id" : "/subscriptions/c0f87bca-394b-46e7-98d3-31e177e2d273/resourceGroups/bolsa-de-trabajo/providers/Microsoft.ContainerRegistry/registries/BolsaDeTrabajoContainerRegistry"}'
+        dockerComposeFile: '**/docker-compose.yml'
+        action: 'Run services'
