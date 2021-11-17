@@ -31,6 +31,7 @@ stages:
         dockerComposeFile: '**/docker-compose.yml'
         action: 'Build services'
         additionalImageTags: '$(tag)'
+        includeLatestTag: true
 
 - stage: Push
   displayName: Push
@@ -48,6 +49,7 @@ stages:
         dockerComposeFile: '**/docker-compose.yml'
         action: 'Push services'
         additionalImageTags: '$(tag)'
+        includeLatestTag: true
       
 - stage: Run
   displayName: Run
