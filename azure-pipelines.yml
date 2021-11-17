@@ -31,7 +31,7 @@ stages:
         dockerComposeFile: '**/docker-compose.yml'
         action: 'Build services'
         additionalImageTags: '$(tag)'
-        includeLatestTag: true
+        includeLatestTag: false
 
 - stage: Push
   displayName: Push
@@ -48,8 +48,8 @@ stages:
         azureContainerRegistry: '{"loginServer":"bolsadetrabajocontainerregistry.azurecr.io", "id" : "/subscriptions/c0f87bca-394b-46e7-98d3-31e177e2d273/resourceGroups/bolsa-de-trabajo/providers/Microsoft.ContainerRegistry/registries/BolsaDeTrabajoContainerRegistry"}'
         dockerComposeFile: '**/docker-compose.yml'
         action: 'Push services'
-        additionalImageTags: '$(tag)'
-        includeLatestTag: true
+        additionalImageTags: 'v1'
+        includeLatestTag: false
       
 - stage: Run
   displayName: Run
