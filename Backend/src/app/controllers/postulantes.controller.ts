@@ -24,7 +24,7 @@ import { EstadoUsuario } from "../models/enums";
 
 export const getPerfil = async (request: Request, response: Response): Promise<Response> => {
     const postulante = await postulantesService.getPerfilById(request.user.id);
-
+    if (!postulante) throw AppError.badRequestError("No existe un postulante con el id ingresado");
     return response.status(200).json(postulante);
 }
 
@@ -242,5 +242,5 @@ export const deshabilitar = async (request: Request, response: Response): Promis
 
     await postulantesService.put(postulante.id, postulante);
 
-    return response.json();
+    return response.status(200).json();
 }

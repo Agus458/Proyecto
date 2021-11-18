@@ -15,19 +15,21 @@ export const postulante2 = {
 
 export const invalidIniciarSesion = [
     {},
-    {email: ""},
-    {contrasenia: ""},
-    {email: "admin@mail.com", contrasenia: ""},
-    {email: "admin@admin.com", contrasenia: "1234"},
-    {email: 123, contrasenia: true},
-    {email: {}, contrasenia: []},
+    { email: "" },
+    { contrasenia: "" },
+    { email: "admin@mail.com", contrasenia: "" },
+    { email: "admin@admin.com", contrasenia: "1234" },
+    { email: 123, contrasenia: true },
+    { email: {}, contrasenia: [] },
 ]
+
+export const empresa = { rut: "1234", contrasenia: "1234" }
 
 export const invalidRegistrar = [
     {},
-    {email: ""},
-    {contrasenia: ""},
+    { email: "" },
+    { contrasenia: "" },
     postulante,
-    {email: 123, contrasenia: true},
-    {email: {}, contrasenia: []},
+    { email: 123, contrasenia: true },
+    { email: {}, contrasenia: [] },
 ]

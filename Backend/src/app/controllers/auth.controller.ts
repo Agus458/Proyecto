@@ -143,7 +143,9 @@ export const confirmarSolicitud = async (request: Request, response: Response): 
 
     usuariosService.actualizar(empresa);
 
-    sendEmail("aguperaza458@gmail.com", "Solicitud de Empresa", solicitudTemplate(empresa));
+    if(process.env.ADMINMAIL && !process.env.TESTING){
+        sendEmail(process.env.ADMINMAIL, "Solicitud de Empresa", solicitudTemplate(empresa));
+    }
 
     return response.status(200).json();
 }
