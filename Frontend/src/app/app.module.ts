@@ -76,6 +76,8 @@ import { FiltersEmpresaDialogComponent } from './components/empresa/filters-empr
 import { PostulacionesComponent } from './components/postulaciones/postulaciones.component';
 import { PortalofertasComponent } from './components/ofertas/postulante/portalofertas/portalofertas.component';
 import { FiltroPortalDialogComponent } from './components/ofertas/postulante/portalofertas/filtro-portal-dialog/filtro-portal-dialog.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -144,7 +146,13 @@ import { FiltroPortalDialogComponent } from './components/ofertas/postulante/por
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
-    LayoutModule
+    LayoutModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

@@ -5,7 +5,7 @@ import { Empresa } from "../src/app/models/empresa.model";
 import { Postulante } from "../src/app/models/postulante.model";
 import connection from "../src/config/connection.config";
 import { testConnection } from "../src/config/test.connection.config";
-import { admin, empresa, invalidIniciarSesion, invalidRegistrar, postulante } from "./helpers/auth.helper";
+import { admin, empresa, invalidIniciarSesion, invalidRegistrar, postulante, solicitudEmpresa } from "./helpers/auth.helper";
 
 const api = supertest(app);
 
@@ -111,11 +111,17 @@ describe("POST solicitarEmpresa", () => {
 
         test("return 200 and token for confirmation", async () => {
             const res = await api.post("/api/auth/solicitarEmpresa")
-                .send(empresa)
+                .send(solicitudEmpresa)
                 .expect(200);
 
             expect(res.body.token).toBeDefined();
             expect(res.body.token).toEqual(expect.any(String));
+        });
+
+        test("return 200 and confirm", async () => {
+            await api.post("/api/auth/confirmarSolicitud")
+                .send(empresa)
+                .expect(200);
         });
 
     });

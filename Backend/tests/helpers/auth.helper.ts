@@ -23,7 +23,11 @@ export const invalidIniciarSesion = [
     { email: {}, contrasenia: [] },
 ]
 
-export const empresa = { rut: "1234", contrasenia: "1234" }
+export const solicitudEmpresa = { rut: "1234", contrasenia: "1234" }
+
+export const empresa = {
+    
+}
 
 export const invalidRegistrar = [
     {},
