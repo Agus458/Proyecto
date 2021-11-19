@@ -667,22 +667,6 @@ describe("GET publicos", () => {
 
 });
 
-// describe("GET generatePDF", () => {
-
-//     describe("valid request", () => {
-
-//         test("return 200", async () => {
-//             await supertest(app)
-//                 .post("/api/postulantes/generatePDF/1")
-//                 .set('Authorization', `Bearer ${PostulantesHelper.tokenAdmin}`)
-//                 .expect(200)
-//                 .expect("Content-Type", /application\/pdf/);
-//         });
-
-//     });
-
-// });
-
 describe("GET validarPerfil", () => {
 
     describe("valid request", () => {

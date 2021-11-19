@@ -14,10 +14,14 @@ export const getEmpresa = async (rut: string) => {
 }
 
 export const getLocalidad = async (id: number) => {
-    return await getConnection("appsocios")
-        .createQueryBuilder()
-        .select()
-        .from("localidad", "localidad")
-        .where("localidad.id = :id", { id })
-        .getRawOne();
+    try {
+        return await getConnection("appsocios")
+            .createQueryBuilder()
+            .select()
+            .from("localidad", "localidad")
+            .where("localidad.id = :id", { id })
+            .getRawOne();
+    } catch (error) {
+
+    }
 }

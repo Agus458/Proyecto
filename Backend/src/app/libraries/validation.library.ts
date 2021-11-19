@@ -313,12 +313,15 @@ export const validarPerfil = (postulante: Postulante) => {
 export const validarOferta = async (oferta: any) => {
     if (typeof oferta.nombreOfferta != "string") throw AppError.badRequestError("Nombre de oferta invalido o no ingresado");
     if (typeof oferta.puesto != "string") throw AppError.badRequestError("Puesto de oferta invalido o no ingresado");
-    if (typeof oferta.rangoSalario != "string") throw AppError.badRequestError("Rango salarial de oferta invalido o no ingresado");
+    if (typeof oferta.rangoSalario != "string" || !validator.isFloat(oferta.rangoSalario)) throw AppError.badRequestError("Rango salarial de oferta invalido o no ingresado");
     if (typeof oferta.requisitosExcluyente != "string") throw AppError.badRequestError("Requisitos excluyentes de oferta invalido o no ingresado");
     if (typeof oferta.requisitosValorados != "string") throw AppError.badRequestError("Requisitos valorados de oferta invalido o no ingresado");
     if (typeof oferta.telefonoContacto != "string") throw AppError.badRequestError("Telefono de contacto de oferta invalido o no ingresado");
     if (typeof oferta.vacantes != "string" && !validator.isInt(oferta.vacantes.toString())) throw AppError.badRequestError("Vacantes de oferta invalido o no ingresado");
     if (typeof oferta.descripcion != "string") throw AppError.badRequestError("Descripcion de oferta invalido o no ingresado");
+    if (typeof oferta.funcionesDePuesto != "string") throw AppError.badRequestError("Funciones De Puesto de oferta invalido o no ingresado");
+    if (typeof oferta.lugarTrabajo != "string") throw AppError.badRequestError("Lugar de Trabajo de oferta invalido o no ingresado");
+    if (typeof oferta.horariodetrabajo != "string") throw AppError.badRequestError("Horario de trabajo de oferta invalido o no ingresado");
     if (typeof oferta.areaDeTrabajo != "number" || !await profileService.getById(AreaTematica.prototype, oferta.areaDeTrabajo)) throw AppError.badRequestError("Area de trabajo de oferta invalido o no ingresado");
     if (typeof oferta.emailContacto != "string" || !validator.isEmail(oferta.emailContacto)) throw AppError.badRequestError("Email de contacto de oferta invalido o no ingresado");
 
