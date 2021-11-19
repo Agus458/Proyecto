@@ -1,12 +1,16 @@
 import { getConnection } from "typeorm";
 
 export const getEmpresa = async (rut: string) => {
-    return await getConnection("appsocios")
-        .createQueryBuilder()
-        .select()
-        .from("empresa", "empresa")
-        .where("empresa.rut = :rut", { rut })
-        .getRawOne();
+    try {
+        return await getConnection("appsocios")
+            .createQueryBuilder()
+            .select()
+            .from("empresa", "empresa")
+            .where("empresa.rut = :rut", { rut })
+            .getRawOne();
+    } catch (error) {
+
+    }
 }
 
 export const getLocalidad = async (id: number) => {

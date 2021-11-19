@@ -24,19 +24,18 @@ import { EstadoUsuario } from "../models/enums";
 
 export const getPerfil = async (request: Request, response: Response): Promise<Response> => {
     const postulante = await postulantesService.getPerfilById(request.user.id);
-
+    if (!postulante) throw AppError.badRequestError("No existe un postulante con el id ingresado");
     return response.status(200).json(postulante);
 }
 
 export const getPerfilById = async (request: Request, response: Response): Promise<Response> => {
-    if (!request.params.id) throw AppError.badRequestError("No se ingreso el id del postulante");
-    if (!validator.isInt(request.params.id)) throw AppError.badRequestError("El id ingresado no es valido");
+    if (typeof request.params.id != "string" || !validator.isInt(request.params.id)) throw AppError.badRequestError("El id ingresado no es valido o no ingresado");
 
     const postulante = await postulantesService.getPerfilById(Number.parseInt(request.params.id));
 
     if (!postulante) throw AppError.badRequestError("No existe un postulante con el id ingresado");
 
-    if (!postulante.perfilPublico && request.user !instanceof Administrador && (request.user instanceof Empresa && !await ofertasService.postuladoAEmpresa(request.user.id, postulante.id))) throw AppError.badRequestError("Este perfil es privado");
+    if (!postulante.perfilPublico && request.user! instanceof Administrador && (request.user instanceof Empresa && !await ofertasService.postuladoAEmpresa(request.user.id, postulante.id))) throw AppError.badRequestError("Este perfil es privado");
 
     return response.status(200).json(postulante);
 }
@@ -77,7 +76,7 @@ export const putPostulante = async (request: Request, response: Response): Promi
 
     await postulantesService.put(postulante.id, request.body);
 
-    return response.status(201).json();
+    return response.status(204).json();
 }
 
 export const putImagen = async (request: Request, response: Response): Promise<Response> => {
@@ -117,8 +116,7 @@ export const putCV = async (request: Request, response: Response): Promise<Respo
 export const deleteCapacitcion = async (request: Request, response: Response): Promise<Response> => {
     const postulante = await postulantesService.getPerfilById(request.user.id);
     if (!postulante) throw AppError.badRequestError("No se encontro el postulante");
-    if (!request.params.id) throw AppError.badRequestError("No se ingreso el id");
-    if (!validator.isInt(request.params.id)) throw AppError.badRequestError("El id ingresado no es valido");
+    if (typeof request.params.id != "string" || !validator.isInt(request.params.id)) throw AppError.badRequestError("El id ingresado no es valido o no ingresado");
 
     const capacitacionGuardado = await capacitacionesService.getById(Number.parseInt(request.params.id));
     if (!capacitacionGuardado) throw AppError.badRequestError("No existe una Capacitacion con el id: " + request.params.id);
@@ -132,8 +130,7 @@ export const deleteCapacitcion = async (request: Request, response: Response): P
 export const deleteConocimientoInformatico = async (request: Request, response: Response): Promise<Response> => {
     const postulante = await postulantesService.getPerfilById(request.user.id);
     if (!postulante) throw AppError.badRequestError("No se encontro el postulante");
-    if (!request.params.id) throw AppError.badRequestError("No se ingreso el id");
-    if (!validator.isInt(request.params.id)) throw AppError.badRequestError("El id ingresado no es valido");
+    if (typeof request.params.id != "string" || !validator.isInt(request.params.id)) throw AppError.badRequestError("El id ingresado no es valido o no ingresado");
 
     const conocimientoGuardado = await conocimientosInformaticosService.getById(Number.parseInt(request.params.id));
     if (!conocimientoGuardado) throw AppError.badRequestError("No existe un Conocimiento Informatico con el id: " + request.params.id);
@@ -147,8 +144,7 @@ export const deleteConocimientoInformatico = async (request: Request, response: 
 export const deleteExperienciaLaboral = async (request: Request, response: Response): Promise<Response> => {
     const postulante = await postulantesService.getPerfilById(request.user.id);
     if (!postulante) throw AppError.badRequestError("No se encontro el postulante");
-    if (!request.params.id) throw AppError.badRequestError("No se ingreso el id");
-    if (!validator.isInt(request.params.id)) throw AppError.badRequestError("El id ingresado no es valido");
+    if (typeof request.params.id != "string" || !validator.isInt(request.params.id)) throw AppError.badRequestError("El id ingresado no es valido o no ingresado");
 
     const saved = await experienciasLaboralesService.getById(Number.parseInt(request.params.id));
     if (!saved) throw AppError.badRequestError("No existe una Experiencia Laboral con el id: " + request.params.id);
@@ -162,8 +158,7 @@ export const deleteExperienciaLaboral = async (request: Request, response: Respo
 export const deleteIdioma = async (request: Request, response: Response): Promise<Response> => {
     const postulante = await postulantesService.getPerfilById(request.user.id);
     if (!postulante) throw AppError.badRequestError("No se encontro el postulante");
-    if (!request.params.id) throw AppError.badRequestError("No se ingreso el id");
-    if (!validator.isInt(request.params.id)) throw AppError.badRequestError("El id ingresado no es valido");
+    if (typeof request.params.id != "string" || !validator.isInt(request.params.id)) throw AppError.badRequestError("El id ingresado no es valido o no ingresado");
 
     const saved = await idiomasService.getById(Number.parseInt(request.params.id));
     if (!saved) throw AppError.badRequestError("No existe un Idioma con el id: " + request.params.id);
@@ -177,8 +172,7 @@ export const deleteIdioma = async (request: Request, response: Response): Promis
 export const deletePermiso = async (request: Request, response: Response): Promise<Response> => {
     const postulante = await postulantesService.getPerfilById(request.user.id);
     if (!postulante) throw AppError.badRequestError("No se encontro el postulante");
-    if (!request.params.id) throw AppError.badRequestError("No se ingreso el id");
-    if (!validator.isInt(request.params.id)) throw AppError.badRequestError("El id ingresado no es valido");
+    if (typeof request.params.id != "string" || !validator.isInt(request.params.id)) throw AppError.badRequestError("El id ingresado no es valido o no ingresado");
 
     const saved = await permisosService.getById(Number.parseInt(request.params.id));
     if (!saved) throw AppError.badRequestError("No existe un Permiso con el id: " + request.params.id);
@@ -192,8 +186,7 @@ export const deletePermiso = async (request: Request, response: Response): Promi
 export const deletePreferenciaLaboral = async (request: Request, response: Response): Promise<Response> => {
     const postulante = await postulantesService.getPerfilById(request.user.id);
     if (!postulante) throw AppError.badRequestError("No se encontro el postulante");
-    if (!request.params.id) throw AppError.badRequestError("No se ingreso el id");
-    if (!validator.isInt(request.params.id)) throw AppError.badRequestError("El id ingresado no es valido");
+    if (typeof request.params.id != "string" || !validator.isInt(request.params.id)) throw AppError.badRequestError("El id ingresado no es valido o no ingresado");
 
     const saved = await preferenciasLaboralesService.getById(Number.parseInt(request.params.id));
     if (!saved) throw AppError.badRequestError("No existe una Preferencia Laboral con el id: " + request.params.id);
@@ -211,14 +204,13 @@ export const getPostulantes = async (request: Request, response: Response): Prom
 }
 
 export const generatePDF = async (request: Request, response: Response): Promise<Response> => {
-    if (!request.params.id) throw AppError.badRequestError("No se ingreso el id del postulante");
-    if (!validator.isInt(request.params.id)) throw AppError.badRequestError("El id ingresado no es valido");
+    if (typeof request.params.id != "string" || !validator.isInt(request.params.id)) throw AppError.badRequestError("El id ingresado no es valido o no ingresado");
 
     const postulante = await postulantesService.getPerfilById(Number.parseInt(request.params.id));
 
     if (!postulante) throw AppError.badRequestError("No existe un postulante con el id ingresado");
 
-    if (!postulante.perfilPublico && request.user !instanceof Administrador && (request.user instanceof Empresa && !await ofertasService.postuladoAEmpresa(request.user.id, postulante.id))) throw AppError.badRequestError("Este perfil es privado");
+    if (!postulante.perfilPublico && request.user! instanceof Administrador && (request.user instanceof Empresa && !await ofertasService.postuladoAEmpresa(request.user.id, postulante.id))) throw AppError.badRequestError("Este perfil es privado");
 
     pdf.create(await profileTemplatePDF(request.protocol + "://" + request.get("Host"), postulante, request.token)).toBuffer((err, res) => {
         if (err) return Promise.reject;
@@ -238,7 +230,7 @@ export const perfilCompleto = async (request: Request, response: Response): Prom
     if (!postulante) throw AppError.badRequestError("No existe un postulante con el id ingresado");
     if (!validarPerfil(postulante)) throw AppError.badRequestError("Perfil incompleto");
 
-    return response.json();
+    return response.status(200).json();
 }
 
 export const deshabilitar = async (request: Request, response: Response): Promise<Response> => {
@@ -250,5 +242,5 @@ export const deshabilitar = async (request: Request, response: Response): Promis
 
     await postulantesService.put(postulante.id, postulante);
 
-    return response.json();
+    return response.status(200).json();
 }

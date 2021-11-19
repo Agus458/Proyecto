@@ -20,6 +20,7 @@ import { verifyFacebookIdToken, verifyGoogleIdToken } from "../libraries/google.
 import { Empresa } from "../models/empresa.model";
 import moment from "moment";
 import { request } from "http";
+import { validarEmpresa } from "../libraries/validation.library";
 
 /* ---------------------------------------< AUTH CONTROLLER >--------------------------------------- */
 
@@ -122,7 +123,7 @@ export const confirmarSolicitud = async (request: Request, response: Response): 
     if (!empresa) throw AppError.badRequestError("No existe la empresa");
 
     if (!empresa.email || empresa.email != request.body.email) {
-        if (!request.body.email) throw AppError.badRequestError("No se ingreso el email");
+        if (typeof request.body.email != "string") throw AppError.badRequestError("No se ingreso el email");
         if (!validator.isEmail(request.body.email)) throw AppError.badRequestError("El email ingresado no es valido");
 
         if (await usuariosService.getByEmail(request.body.email)) throw AppError.badRequestError("Ya existe un usuario con el email ingresado");
@@ -133,6 +134,8 @@ export const confirmarSolicitud = async (request: Request, response: Response): 
     const data = verifyToken(token, process.env.SECRET + empresa.contrasenia as string);
     if (!data) throw AppError.badRequestError("Token ya utilizado o invalido");
 
+    await validarEmpresa(request.body);
+
     empresa.email = request.body.email;
     empresa.nombreFantasia = request.body.nombreFantasia;
     empresa.localidad = request.body.localidad;
@@ -140,10 +143,13 @@ export const confirmarSolicitud = async (request: Request, response: Response): 
     empresa.telefono = request.body.telefono;
     empresa.visibilidad = request.body.visibilidad;
     empresa.contrasenia = await encryptPassword(request.body.contrasenia);
+    empresa.socia = false;
 
-    usuariosService.actualizar(empresa);
+    await usuariosService.actualizar(empresa);
 
-    sendEmail("aguperaza458@gmail.com", "Solicitud de Empresa", solicitudTemplate(empresa));
+    if (process.env.ADMINMAIL && !process.env.TESTING) {
+        sendEmail(process.env.ADMINMAIL, "Solicitud de Empresa", solicitudTemplate(empresa));
+    }
 
     return response.status(200).json();
 }

@@ -216,7 +216,7 @@ export const profileTemplatePDF = async (host: string, data: Postulante, token: 
     
             <div class="card mb-5">
                 <div class="card-body content">
-                    <h2 class="card-title">Expreiencias Laborales</h2>
+                    <h2 class="card-title">Experiencias Laborales</h2>
                     <hr>
                     <ul class="list-group">
                         ${data.experienciasLaborales ?

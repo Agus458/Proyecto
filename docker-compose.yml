@@ -1,0 +1,37 @@
+version: '3.7'
+
+services:
+  postgres-db:
+    image: "postgres:12"
+    container_name: postgres-db
+    volumes:
+      - bolsa-de-trabajo-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: bolsa-de-trabajo
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+
+  backend:
+    build: ./Backend
+    image: bolsadetrabajoregistry.azurecr.io/backend
+    container_name: backend
+    environment:
+      - HOST=host.docker.internal
+    ports:
+      - '3000:3000'
+    links:
+      - postgres-db
+
+  frontend:
+    build: ./Frontend
+    image: bolsadetrabajoregistry.azurecr.io/frontend
+    container_name: frontend
+    ports:
+      - '80:80'
+    links:
+      - backend
+
+volumes:
+  bolsa-de-trabajo-data:

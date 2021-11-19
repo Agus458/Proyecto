@@ -23,21 +23,11 @@ import { TipoPermiso } from "../models/perfil/tipo-permiso.model";
 import { CategoriaConocimiento } from "../models/perfil/categoria-conocimiento.model";
 import { Oferta } from "../models/oferta.model";
 
-/*
-
-//#region validaciondeEmpresa
-export const validarDatosOfferta = async(data:any)
-{
-const offeta = await offertaService.getById(request)
-}
-//#endregion
-*/
 // Valida que los datos personales del postulante sean correctos.
 export const validarDatosPersonales = async (data: any) => {
     if (data.tipoDocumento || data.documento) {
-        if (typeof data.tipoDocumento == "undefined") throw AppError.badRequestError("Falta el tipo del documento del postulante");
         if (typeof data.tipoDocumento != "number" || !TipoDocumento[data.tipoDocumento]) throw AppError.badRequestError("Tipo de documento invalido");
-        if (!data.documento) throw AppError.badRequestError("Falta el documento del postulante");
+        if (typeof data.documento != "string") throw AppError.badRequestError("Falta el documento del postulante");
 
         if (data.tipoDocumento.valueOf() == TipoDocumento.CI.valueOf() && (!validator.isInt(data.documento) || !validator.isLength(data.documento, { max: 8, min: 8 }))) throw AppError.badRequestError("Cedula invalida");
     }
@@ -114,8 +104,6 @@ export const validarDomicilio = async (domicilio: any, domicilioPostulante: any)
 
     return domicilio;
 }
-
-
 
 // Valida que las capacitaciones sean correctas.
 export const validarCapacitaciones = async (capacitaciones: any, postulante: Postulante) => {
@@ -261,7 +249,7 @@ export const validarPermisos = async (permisos: any, postulante: Postulante) => 
             if (permisoGuardado.postulante.id != postulante.id) throw AppError.badRequestError("El permiso con el id: " + permiso.id + " no pretenece al usuario");
         }
         if (!permiso.tipoDocumento || typeof permiso.tipoDocumento != "number" || ! await profileService.getById(TipoPermiso.prototype, permiso.tipoDocumento)) throw AppError.badRequestError("Tipo de Documento de permiso invalido o no ingresado");
-        if (typeof permiso.vigencia != "string") throw AppError.badRequestError("Vigencia de permiso invalido o no ingresado");
+        if (typeof permiso.vigencia != "string" || !Date.parse(permiso.vigencia)) throw AppError.badRequestError("Vigencia de permiso invalido o no ingresado");
         if (permiso.especificacion && typeof permiso.especificacion != "string") throw AppError.badRequestError("Especificacion de permiso invalido o no ingresado");
 
         permiso.postulante = postulante;
@@ -336,4 +324,12 @@ export const validarOferta = async (oferta: any) => {
 
     if (typeof oferta.fechaCierre != "string" || !Date.parse(oferta.fechaCierre)) throw AppError.badRequestError("Fecha de cierre de oferta invalido o no ingresado");
     if (moment(oferta.fechaCierre, "YYYY-MM-DD").isBefore(moment())) throw AppError.badRequestError("La fecha de cierre debe ser posterior a la fecha actual");
+}
+
+export const validarEmpresa = async (data: any) => {
+    if (typeof data.razonSocial != "string") throw AppError.badRequestError("Razon Social de empresa invalido o no ingresado");
+    if (typeof data.telefono != "string") throw AppError.badRequestError("Telefono de empresa invalido o no ingresado");
+    if (typeof data.localidad != "number" || !await localidadesService.getById(data.localidad)) throw AppError.badRequestError("Localidad de empresa invalido o no ingresado");
+    if (typeof data.visibilidad != "boolean") throw AppError.badRequestError("Visibilidad de empresa invalido o no ingresado");
+    if (typeof data.nombreFantasia != "string") throw AppError.badRequestError("Nombre de Fantasia de empresa invalido o no ingresado");
 }

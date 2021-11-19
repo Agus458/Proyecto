@@ -1,0 +1,11 @@
+.git
+
+tests
+
+node_modules
+
+.gitignore
+
+*.md
+
+/coverage

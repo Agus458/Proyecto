@@ -63,6 +63,7 @@ export const getByEmailContrasenia = async (email: string, contrasenia: string):
 // Retorna el perfil completo del postulante almacenado en el sistema cuyo id sea el ingresado.
 export const getPerfilById = async (id: number): Promise<Postulante | undefined> => {
     const postulante: any = await getRepository(Postulante).findOne(id, {
+        where: { estado: EstadoUsuario.ACTIVO },
         relations: ["domicilio", "domicilio.pais", "domicilio.departamento", "domicilio.localidad", "capacitaciones", "capacitaciones.areaTematica", "capacitaciones.estadoCurso", "conocimientosInformaticos", "conocimientosInformaticos.categoria", "idiomas", "idiomas.nombreIdioma", "experienciasLaborales", "experienciasLaborales.nivelJerarquico", "experienciasLaborales.rubro", "preferenciasLaborales", "preferenciasLaborales.areasInteres", "permisos", "permisos.tipoDocumento", "nivelEducativo", "estadoNivelEducativo"]
     });
 
@@ -108,7 +109,7 @@ export const getFiltered = async (filters: any): Promise<Pagination<Postulante>>
 
     query.leftJoin("postulante.preferenciasLaborales", "preferenciaLaboral");
     query.leftJoin("preferenciaLaboral.areasInteres", "areasInteres");
-    
+
     query.where("postulante.perfilPublico = true");
 
     // Filtros
@@ -151,7 +152,7 @@ export const getPostulanteFiltered = async (filters: any): Promise<number> => {
     }
 
     // Ejecucion
-    
+
     return await query.getCount();
 }
 
