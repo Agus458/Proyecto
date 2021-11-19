@@ -325,3 +325,11 @@ export const validarOferta = async (oferta: any) => {
     if (typeof oferta.fechaCierre != "string" || !Date.parse(oferta.fechaCierre)) throw AppError.badRequestError("Fecha de cierre de oferta invalido o no ingresado");
     if (moment(oferta.fechaCierre, "YYYY-MM-DD").isBefore(moment())) throw AppError.badRequestError("La fecha de cierre debe ser posterior a la fecha actual");
 }
+
+export const validarEmpresa = async (data: any) => {
+    if (typeof data.razonSocial != "string") throw AppError.badRequestError("Razon Social de empresa invalido o no ingresado");
+    if (typeof data.telefono != "string") throw AppError.badRequestError("Telefono de empresa invalido o no ingresado");
+    if (typeof data.localidad != "number" || !await localidadesService.getById(data.localidad)) throw AppError.badRequestError("Localidad de empresa invalido o no ingresado");
+    if (typeof data.visibilidad != "boolean") throw AppError.badRequestError("Visibilidad de empresa invalido o no ingresado");
+    if (typeof data.nombreFantasia != "string") throw AppError.badRequestError("Nombre de Fantasia de empresa invalido o no ingresado");
+}

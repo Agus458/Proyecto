@@ -5,7 +5,7 @@ import { Empresa } from "../src/app/models/empresa.model";
 import { Postulante } from "../src/app/models/postulante.model";
 import connection from "../src/config/connection.config";
 import { testConnection } from "../src/config/test.connection.config";
-import { admin, empresa, invalidIniciarSesion, invalidRegistrar, postulante, solicitudEmpresa } from "./helpers/auth.helper";
+import { admin, empresa, invalidConfirmarEmpresa, invalidIniciarSesion, invalidRegistrar, invalidSolicitudEmpresa, postulante, solicitudEmpresa } from "./helpers/auth.helper";
 
 const api = supertest(app);
 
@@ -16,14 +16,6 @@ beforeAll(async () => {
 afterAll(async () => {
     await connection.close();
 });
-
-beforeEach(async () => {
-    let repository: any = getRepository(Postulante);
-    await repository.delete({});
-
-    repository = getRepository(Empresa);
-    await repository.delete({});
-})
 
 describe("POST iniciarSesion", () => {
 
@@ -56,7 +48,7 @@ describe("POST iniciarSesion", () => {
 
                 expect(result.body.message).toBeDefined();
             }
-        })
+        });
 
     })
 
@@ -85,12 +77,6 @@ describe("POST registrarse", () => {
 
     describe("invalid valid requests", () => {
 
-        beforeEach(async () => {
-            await api.post("/api/auth/registrarse").send(postulante)
-                .expect(201)
-                .expect("Content-Type", /application\/json/);
-        })
-
         test("return 400 when invalid", async () => {
             for await (const body of invalidRegistrar) {
                 const result = await api.post("/api/auth/registrarse").send(body)
@@ -105,7 +91,9 @@ describe("POST registrarse", () => {
 
 })
 
-describe("POST solicitarEmpresa", () => {
+describe("POST registrar empresa", () => {
+
+    let token = "";
 
     describe("valid request", () => {
 
@@ -116,12 +104,35 @@ describe("POST solicitarEmpresa", () => {
 
             expect(res.body.token).toBeDefined();
             expect(res.body.token).toEqual(expect.any(String));
+
+            await api.post("/api/auth/confirmarSolicitud")
+                .send(Object.assign({ token: res.body.token }, empresa))
+                .expect(200);
         });
 
-        test("return 200 and confirm", async () => {
-            await api.post("/api/auth/confirmarSolicitud")
-                .send(empresa)
+    });
+
+    describe("invalid request", () => {
+
+        test("return 400", async () => {
+            for await (const body of invalidSolicitudEmpresa) {
+                await api.post("/api/auth/solicitarEmpresa")
+                    .send(body)
+                    .expect(400);
+            }
+
+            const res = await api.post("/api/auth/solicitarEmpresa")
+                .send(solicitudEmpresa)
                 .expect(200);
+
+            token = res.body.token;
+
+            for await (const body of invalidConfirmarEmpresa(token)) {
+                await api.post("/api/auth/confirmarSolicitud")
+                    .send(body)
+                    .expect(400);
+            }
+
         });
 
     });
