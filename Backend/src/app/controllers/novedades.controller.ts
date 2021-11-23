@@ -26,11 +26,18 @@ export const getById = async (request: Request, response: Response): Promise<Res
 }
 
 export const post = async (request: Request, response: Response): Promise<Response> => {
+    if(typeof request.body.titulo != "string") throw AppError.badRequestError("No se ingreso el titulo de la novedad");
+    if(typeof request.body.contenido != "string") throw AppError.badRequestError("No se ingreso el contenido de la novedad");
+
     return response.status(201).json(await novedadesService.post(request.body));
 }
 
 export const put = async (request: Request, response: Response): Promise<Response> => {
     if (typeof request.params.id != "string" || !validator.isInt(request.params.id)) throw AppError.badRequestError("Id invalido");
+    if(typeof request.body.titulo != "string") throw AppError.badRequestError("No se ingreso el titulo de la novedad");
+    if(typeof request.body.contenido != "string") throw AppError.badRequestError("No se ingreso el contenido de la novedad");
+
+    if(!await novedadesService.getById(Number.parseInt(request.params.id))) throw AppError.badRequestError("No existe la novedad");
 
     await novedadesService.put(Number.parseInt(request.params.id), request.body);
 
