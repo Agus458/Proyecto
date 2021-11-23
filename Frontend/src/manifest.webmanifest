@@ -1,8 +1,8 @@
 {
-  "name": "Front",
-  "short_name": "Front",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "name": "Bolsa de Trabajo CCSJ",
+  "short_name": "Bolsa de Trabajo",
+  "theme_color": "#026d30",
+  "background_color": "#026d30",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",

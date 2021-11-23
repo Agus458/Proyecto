@@ -161,7 +161,7 @@ describe("PUT perfil", () => {
 
 });
 
-describe.skip("PUT imagen", () => {
+describe("PUT imagen", () => {
 
     describe("valid request", () => {
 
@@ -200,7 +200,7 @@ describe.skip("PUT imagen", () => {
 
 });
 
-describe.skip("PUT cv", () => {
+describe("PUT cv", () => {
 
     describe("valid request", () => {
 

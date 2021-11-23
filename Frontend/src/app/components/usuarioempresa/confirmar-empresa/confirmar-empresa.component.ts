@@ -62,7 +62,7 @@ export class ConfirmarEmpresaComponent implements OnInit {
       nombreFantasia: ['', Validators.required],
       localidad: ['', Validators.required],
       departamento: ['', Validators.required],
-      visivilidad: [false, Validators.required]
+      visibilidad: [false, Validators.required]
     });
     
     this.confirmarSolicitudForm.patchValue(this.empresa);

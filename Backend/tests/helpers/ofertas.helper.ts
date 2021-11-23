@@ -4,6 +4,8 @@ export class OfertasHelper {
     public static tokenAdmin = "";
     public static tokenEmpresa = "";
 
+    public static tomorrow = new Date().setDate(new Date().getDate() + 1);
+
     public static oferta = {
         nombreOfferta: "Oferta",
         puesto: "Desarrollador",
@@ -15,7 +17,7 @@ export class OfertasHelper {
         descripcion: "Ut imperdiet vitae eros et interdum. Duis justo enim, lacinia in odio nec, congue varius lorem. Integer quis varius tellus. Integer sed aliquet nisi.",
         areaDeTrabajo: 1,
         emailContacto: "mail@mail.com",
-        fechaCierre: "2021-12-01",
+        fechaCierre: new Date(this.tomorrow),
         funcionesDePuesto: "Ut imperdiet vitae eros et interdum. Duis justo enim, lacinia in odio nec, congue varius lorem. Integer quis varius tellus. Integer sed aliquet nisi.",
         lugarTrabajo: "Oficina",
         horariodetrabajo: "18:00 a 20:00"

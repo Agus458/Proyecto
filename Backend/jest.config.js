@@ -8,4 +8,9 @@ module.exports = {
   maxWorkers: 1,
   preset: 'ts-jest',
   testEnvironment: 'node',
+  coveragePathIgnorePatterns: [
+    "<rootDir>/node_modules",
+    "<rootDir>/dist",
+    "<rootDir>/test/helpers"
+  ]
 };
