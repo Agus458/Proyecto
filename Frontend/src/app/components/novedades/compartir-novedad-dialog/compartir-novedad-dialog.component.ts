@@ -19,6 +19,8 @@ export class CompartirNovedadDialogComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.data);
+    
     this.tipo= this.data.class.titulo? 'novedad': 'oferta';
     this.titulo= this.data.class.titulo? this.data.class.titulo: this.data.class.nombreOfferta;
     

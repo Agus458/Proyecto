@@ -1,7 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; margin: 0; }
-body { 
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
     margin: 0;
     font-family: 'Raleway', sans-serif;
 }
@@ -19,8 +23,7 @@ body {
 }
 
 .navbar {
-    background: rgb(9,99,48) !important;
-    
+    background: rgb(9, 99, 48) !important;
 }
 
 .link {
@@ -59,4 +62,20 @@ body {
 
 mat-card-subtitle {
     color: #4e0022 !important;
+}
+
+table {
+    width: 100%;
+    overflow: auto;
+}
+
+.table {
+    overflow: auto !important;
+}
+
+.mat-header-cell {
+    padding-right: 10px !important;
+}
+.mat-cell {
+    padding-right: 10px !important;
 }

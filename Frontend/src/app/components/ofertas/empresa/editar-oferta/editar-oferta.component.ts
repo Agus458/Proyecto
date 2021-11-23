@@ -39,7 +39,7 @@ export class EditarOfertaComponent implements OnInit {
       telefonoContacto: ['', Validators.required],
       emailContacto: ['', Validators.required],
       vacantes: ['', Validators.required],
-      requisitosValorados: ['', Validators.required],
+      requisitosValorados: [''],
       areaDeTrabajo: ['', Validators.required],
       nombreOfferta: ['', Validators.required],
       descripcion: ['', Validators.required],
@@ -47,7 +47,7 @@ export class EditarOfertaComponent implements OnInit {
       funcionesDePuesto: ['', Validators.required],
       requisitosExcluyente: ['', Validators.required],
       horariodetrabajo: ['', Validators.required],
-      rangoSalario: ['', Validators.required],
+      rangoSalario: ['',],
       fechaCierre: ['', Validators.required],
       lugarTrabajo: ['', Validators.required]
     });

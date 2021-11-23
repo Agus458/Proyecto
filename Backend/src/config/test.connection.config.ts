@@ -3,18 +3,17 @@ import { ConnectionOptions } from "typeorm";
 export const testConnection: ConnectionOptions[] = [
     {
         name: 'default',
-        type: 'postgres',
+        type: 'mysql',
         host: 'localhost',
-        port: 5432,
-        username: 'postgres',
-        password: 'root',
+        port: 3306,
+        username: 'root',
+        password: 'tisj',
         database: 'tests',
         dropSchema: true,
         logging: false,
         synchronize: true,
         entities: [
-            "dist/app/models/**/*.js",
-            "src/app/models/**/*.ts",
+            "dist/app/models/**/*.js"
         ]
     }
 ]

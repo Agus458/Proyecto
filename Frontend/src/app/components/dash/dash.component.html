@@ -5,7 +5,7 @@
     </mat-card-header>
     <mat-card-content>
       <form [formGroup]="dashboardForm" (ngSubmit)="submit()">
-        <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center">
+        <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center" fxLayout.xs="column">
           <mat-form-field appearance="fill">
             <mat-label>Desde</mat-label>
             <input matInput [matDatepicker]="picker" placeholder="00/00/0000" formControlName="desde">
