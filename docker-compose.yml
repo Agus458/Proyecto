@@ -15,7 +15,7 @@ services:
 
   backend:
     build: ./Backend
-    image: bolsadetrabajoregistry.azurecr.io/backend
+    image: agu458/bolsa-de-trabajo-back
     container_name: backend
     environment:
       - HOST=host.docker.internal
@@ -28,7 +28,7 @@ services:
 
   frontend:
     build: ./Frontend
-    image: bolsadetrabajoregistry.azurecr.io/frontend
+    image: agu458/bolsa-de-trabajo-front
     container_name: frontend
     ports:
       - '80:80'
