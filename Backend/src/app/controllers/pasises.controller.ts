@@ -22,6 +22,17 @@ export const getPaisById = async (request: Request, response: Response): Promise
     return response.status(200).json(pais);
 }
 
+export const getPaisByNombre = async (request: Request, response: Response): Promise<Response> => {
+    if (!request.params.nombre) throw AppError.badRequestError("No se ingreso el nombre del pais");
+    if (typeof request.params.nombre != "string") throw AppError.badRequestError("Nombre de pais invalido");
+
+    const pais = await paisesService.getByNombre(request.params.nombre);
+
+    if (!pais) throw AppError.badRequestError("No existe ningun pais con el nombre ingresado");
+
+    return response.status(200).json(pais);
+}
+
 export const postPais = async (request: Request, response: Response): Promise<Response> => {
     if(!request.body.nombre) throw AppError.badRequestError("No se ingreso el nombre del pais");
     

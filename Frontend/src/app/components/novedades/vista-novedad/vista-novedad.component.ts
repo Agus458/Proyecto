@@ -45,7 +45,14 @@ export class VistaNovedadComponent implements OnInit {
   }
 
   compartir(): void {
-    this.dialog.open(CompartirNovedadDialogComponent);
+    if (this.novedad) {
+      this.dialog.open(CompartirNovedadDialogComponent, {
+        data: {
+          url: window.location.protocol + "//" + window.location.host + "/vistanovedad/" + this.novedad.id,
+          class: this.novedad,
+        }
+      });
+    }
   }
 
   difundir() {

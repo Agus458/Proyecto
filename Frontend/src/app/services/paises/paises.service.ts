@@ -21,4 +21,8 @@ export class PaisesService {
     return this.http.get<Pais[]>(this.url);
   }
 
+  getByNombre(nombre: string): Observable<Pais> {
+    return this.http.get<Pais>(this.url + "/nombre/" + nombre);
+  }
+
 }

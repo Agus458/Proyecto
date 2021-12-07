@@ -12,7 +12,7 @@ export class Empresa extends Usuario {
     id: number;
 
     @Column({ unique: true })
-    rut: number;
+    rut: string;
 
     @Column({ nullable: true })
     vencimiento: Date;

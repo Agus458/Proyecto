@@ -6,6 +6,7 @@ import { Localidad } from 'src/app/models/localidad.model';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { DepartamentosService } from 'src/app/services/departamentos/departamentos.service';
 import { LocalidadesService } from 'src/app/services/localidades/localidades.service';
+import { PaisesService } from 'src/app/services/paises/paises.service';
 
 @Component({
   selector: 'app-confirmar-empresa',
@@ -30,6 +31,7 @@ export class ConfirmarEmpresaComponent implements OnInit {
     private authService: AuthService,
     private departamentosService: DepartamentosService,
     private localidadesService: LocalidadesService,
+    private paisesService: PaisesService,
   ) { }
 
   ngOnInit(): void {
@@ -46,9 +48,13 @@ export class ConfirmarEmpresaComponent implements OnInit {
       }
     }
     
-    this.departamentosService.getByPais(1).subscribe(
-      result => {
-        this.departamentos = result;
+    this.paisesService.getByNombre("Uruguay").subscribe(
+      ok => {
+        this.departamentosService.getByPais(ok.id).subscribe(
+          result => {
+            this.departamentos = result;
+          }
+        );
       }
     );
 

@@ -66,7 +66,9 @@ export const iniciarSesion = async (request: Request, response: Response): Promi
 }
 
 export const solicitarEmpresa = async (request: Request, response: Response): Promise<Response> => {
-    if (typeof request.body.rut != "string") throw AppError.badRequestError("No se ingreso el rut de la empresa");
+    if (typeof request.body.rut != "string" || !validator.isInt(request.body.rut) || !validator.isLength(request.body.rut, {
+        max: 12
+    })) throw AppError.badRequestError("No se ingreso el rut de la empresa");
     if (typeof request.body.contrasenia != "string") throw AppError.badRequestError("No se ingreso la contrasenia de la empresa");
 
     const pass = request.body.contrasenia;

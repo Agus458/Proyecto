@@ -12,6 +12,8 @@ router.get("/", [], handleRequest(paisesController.getPaises));
 
 router.get("/:id", [], handleRequest(paisesController.getPaisById));
 
+router.get("/nombre/:nombre", [], handleRequest(paisesController.getPaisByNombre));
+
 router.post("/", [isLoggedIn, tieneRol(["Administrador"])], handleRequest(paisesController.postPais));
 
 router.put("/:id", [isLoggedIn, tieneRol(["Administrador"])], handleRequest(paisesController.putPais));
