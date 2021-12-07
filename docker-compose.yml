@@ -19,6 +19,8 @@ services:
     container_name: backend
     environment:
       - HOST=host.docker.internal
+      - FRONT_URL=https://g1front.ccisanjose.com.uy
+      - TESTING=false
     ports:
       - '3000:3000'
     links:

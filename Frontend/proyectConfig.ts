@@ -1,3 +1,3 @@
 export const proyectConfig = {
-    backEndURL: "http://localhost:3000"
+    backEndURL: "https://g1back.ccisanjose.com.uy"
 }
