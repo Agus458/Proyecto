@@ -36,7 +36,7 @@ beforeAll(async () => {
 
     await api.put("/api/administradores/habilitarEmpresa/1")
         .set('Authorization', `Bearer ${OfertasHelper.tokenAdmin}`)
-        .send({ fechaVencimiento: "2021-12-01" })
+        .send({ fechaVencimiento: new Date(new Date().setDate(new Date().getDate() + 1)) })
         .expect(204)
 
     result = await api.post("/api/auth/iniciarSesion").send({ email: empresa.email, contrasenia: empresa.contrasenia })
@@ -490,7 +490,7 @@ describe("GET postulado", () => {
         expect(res.body.postulado).toBeDefined();
         expect(res.body.postulado).toEqual(false);
     });
-    
+
     test("return 400", async () => {
         await supertest(app)
             .get("/api/ofertas/postulado/sdadsa")
