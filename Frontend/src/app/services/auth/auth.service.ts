@@ -106,8 +106,28 @@ export class AuthService {
     }
   }
 
-  signInWithFB(): void {
-    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+  async signInWithFB(): Promise<void> {
+    try {
+      const user = await this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+      this.http.post<any>(this.url + "/iniciarSocial", { user }).subscribe(
+        result => {
+          localStorage.setItem("token", result.token);
+          localStorage.setItem("exp", result.exp);
+          localStorage.setItem("usuario", JSON.stringify(result.usuario));
+
+          this.snackBar.open("Login exitoso!", "Close", { duration: 5000 });
+
+          this.router.navigateByUrl("/");
+        },
+        error => {
+          this.snackBar.open(error.error.message, "Close", { duration: 5000 });
+        }
+      );
+    } catch (error) {
+      console.log(error);
+
+      this.snackBar.open("Error al Iniciar por Facebook", "Close", { duration: 5000 });
+    }
   }
 
   restablecerContrasenia(email: string) {
