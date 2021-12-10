@@ -149,7 +149,7 @@ export const confirmarSolicitud = async (request: Request, response: Response): 
 
     await usuariosService.actualizar(empresa);
 
-    if (process.env.ADMINMAIL && !process.env.TESTING) {
+    if (process.env.ADMINMAIL) {
         sendEmail(process.env.ADMINMAIL, "Solicitud de Empresa", solicitudTemplate(empresa));
     }
 
