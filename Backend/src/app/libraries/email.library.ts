@@ -54,7 +54,7 @@ export const resetTemplate = (token: string) => {
                                                 para usted para restablecer su contraseña . Para restablecer su contraseña, haga clic en el
                                                 siguiente enlace y siga las instrucciones.
                                             </p>
-                                            <a href="${process.env.FRONT_URL + 'cambiarContrasenia?token=' + token}"
+                                            <a href="${process.env.FRONT_URL + '/cambiarContrasenia?token=' + token}"
                                                 style="background:#20e277;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">
                                                 RESTABLECER CONTRASEÑA
                                             </a>
