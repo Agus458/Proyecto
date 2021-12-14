@@ -5,7 +5,7 @@
         <mat-divider [inset]="true"></mat-divider>
 
         <form (ngSubmit)="ngOnSubmit()">
-            <mat-stepper orientation="vertical" [linear]="false" #stepper>
+            <mat-stepper orientation="vertical" [linear]="true" #stepper>
 
                 <mat-step [stepControl]="datosPersonalesForm">
                     <ng-template matStepLabel>Datos Personales</ng-template>

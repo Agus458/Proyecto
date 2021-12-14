@@ -6,6 +6,7 @@ import { Departamento } from 'src/app/models/departamento.model';
 import { Localidad } from 'src/app/models/localidad.model';
 import { DepartamentosService } from 'src/app/services/departamentos/departamentos.service';
 import { LocalidadesService } from 'src/app/services/localidades/localidades.service';
+import { PaisesService } from 'src/app/services/paises/paises.service';
 import { PerfilService } from 'src/app/services/perfil/perfil.service';
 
 @Component({
@@ -36,12 +37,17 @@ export class FiltrosdialogComponent implements OnInit {
     private perfilService: PerfilService,
     private departamentosService: DepartamentosService,
     private localidadesService: LocalidadesService,
+    private paisesService: PaisesService
   ) { }
 
   async ngOnInit(): Promise<void> {
-    this.departamentosService.getByPais(1).subscribe(
-      result => {
-        this.departamentos = result;
+    this.paisesService.getByNombre("Uruguay").subscribe(
+      ok => {
+        this.departamentosService.getByPais(ok.id).subscribe(
+          result => {
+            this.departamentos = result;
+          }
+        );
       }
     );
 
