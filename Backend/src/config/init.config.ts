@@ -79,13 +79,19 @@ export const onInit = async () => {
         var relative = path.join(baseDir + "/../../uploads/");
 
         const novedadesPath = path.join(relative + "novedades");
-        !fs.existsSync(novedadesPath) && fs.mkdirSync(novedadesPath, { recursive: true });
+        if (!fs.existsSync(novedadesPath)) {
+            fs.mkdirSync(novedadesPath, { recursive: true });
+        }
 
         const cvPath = path.join(relative + "perfil/documentos");
-        !fs.existsSync(cvPath) && fs.mkdirSync(cvPath, { recursive: true });
+        if (!fs.existsSync(cvPath)) {
+            fs.mkdirSync(cvPath, { recursive: true });
+        }
 
         const imagenesPath = path.join(relative + "perfil/imagenes");
-        !fs.existsSync(imagenesPath) && fs.mkdirSync(imagenesPath, { recursive: true });
+        if (!fs.existsSync(imagenesPath)) {
+            fs.mkdirSync(imagenesPath, { recursive: true });
+        }
     } catch (error) {
 
     }
