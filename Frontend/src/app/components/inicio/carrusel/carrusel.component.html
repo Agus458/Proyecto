@@ -1,7 +1,7 @@
 <body class="container">
     <h1><em>ULTIMAS NOVEDADES</em></h1>
     <mat-divider></mat-divider>
-    <carousel [cellsToShow]="ismobile.getMobile() ? 1 : 3" [height]="ismobile.getMobile() ? 480 : 610">
+    <carousel [cellsToShow]="ismobile.getMobile() ? 1 : 3" [height]="ismobile.getMobile() ? 620 : 610">
         <div class="carousel-cell" *ngFor="let novedad of novedades;">
             <mat-card class="example-card">
                 <ng-container *ngIf="novedad.imagen; else error">

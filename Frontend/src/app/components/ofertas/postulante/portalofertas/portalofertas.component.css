@@ -12,13 +12,6 @@ h1{
     margin-bottom: 30px;
 }
 
-.example-card {
-    width: 85%;
-    max-height: 700px;
-    margin: 10px 10px 10px 10px;
-
-}
-
 .example-header-image {
     background-size: cover;
 }

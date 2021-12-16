@@ -3,7 +3,7 @@
     <button mat-flat-button color="accent" type="button" style="margin-bottom: 10px;"
         (click)="openDialog()">Filtrar</button>
     <mat-divider></mat-divider>
-    <div fxLayout="row wrap" fxLayoutAlign="space-evenly start" fxLayout.xs="column" fxLayoutAlign.xs="center center">
+    <div fxLayout="row wrap" fxLayoutAlign="space-evenly start" fxLayout.xs="column" fxLayoutAlign.xs="center center" fxLayoutGap="2px">
         <div *ngFor="let oferta of ofertas;" fxFlex.gt-md="25" fxFlexAlign.lt-md="100" fxLayout="column"
             fxLayoutAlign="space-evenly start">
             <mat-card class="example-card">
