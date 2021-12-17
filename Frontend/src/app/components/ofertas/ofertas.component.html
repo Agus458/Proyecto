@@ -20,13 +20,17 @@
             <h3><strong>Horarios del Trabajo: </strong> {{oferta?.horariodetrabajo}}</h3>
             <h3><strong>Rango Salarial: </strong> {{oferta?.rangoSalario}}</h3>
             <h3><strong>Lugar de Trabajo: </strong> {{oferta?.lugarTrabajo}}</h3>
-            <h3><strong>Disponible hasta el: </strong> {{oferta?.horariodetrabajo}}</h3>
+            <h3><strong>Disponible hasta el: </strong> {{oferta?.fechaCierre}}</h3>
             
 
 
             <ng-container *ngIf="authService.getUser()?.tipo == 'Postulante'">
                 <div *ngIf="!postulado; else elseBlock">
-                    <button mat-flat-button [color]="'primary'" (click)="postularse()">Postularse</button>                   
+                    <button *ngIf="!terminada; else elseTerminada" mat-flat-button [color]="'primary'" (click)="postularse()">Postularse</button>
+                    
+                    <ng-template #elseTerminada>
+                        <button mat-flat-button [color]="'warn'">Oferta finalizada</button>
+                    </ng-template>                   
                 </div>
                 <ng-template #elseBlock>
                     <button mat-flat-button [color]="'warn'">Ya estas postulado</button>

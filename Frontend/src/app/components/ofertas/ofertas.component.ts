@@ -8,6 +8,7 @@ import { PostulantesService } from 'src/app/services/postulantes/postulantes.ser
 import { MatDialog } from '@angular/material/dialog';
 import { CompartirNovedadDialogComponent } from '../novedades/compartir-novedad-dialog/compartir-novedad-dialog.component';
 import { AdministradorService } from 'src/app/services/administrador/administrador.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-ofertas',
@@ -17,6 +18,7 @@ import { AdministradorService } from 'src/app/services/administrador/administrad
 export class OfertasComponent implements OnInit {
 
   postulado: boolean = true;
+  terminada: boolean = true;
 
   oferta: Oferta | undefined;
 
@@ -47,6 +49,10 @@ export class OfertasComponent implements OnInit {
               this.postulado = res.postulado;
             }
           );
+
+          if (ok.fechaCierre) {
+            this.terminada = moment(ok.fechaCierre).isBefore();
+          }
         }
       }
     )
